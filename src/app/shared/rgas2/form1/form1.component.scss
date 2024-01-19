@@ -1,0 +1,18 @@
+.b1{
+  border: 1px solid black;
+}
+::ng-deep .mat-form-field-label{
+  font-weight: 700 !important;
+}
+::ng-deep .theme--dark .mat-form-field-label{
+  color: white;
+}
+
+::ng-deep .theme--light .mat-form-field-label{
+  color: black;
+}
+::ng-deep .mat-form-field-wrapper{
+  margin: 0;
+  padding: 0;
+}
+
