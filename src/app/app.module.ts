@@ -29,6 +29,22 @@ import { TitleComponent } from './shared/title/title.component';
 import { Form1Component } from './shared/rgas2/form1/form1.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SubTitleComponent } from './shared/sub-title/sub-title.component';
+
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { YearPickerComponent } from './shared/year-picker/year-picker.component';
+import { MonthSelectComponent } from './shared/dialogs/month-select/month-select.component';
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD-MMM-YY',
+  },
+  display: {
+    dateInput: 'DD-MMM-YY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "red",
   bgsPosition: POSITION.bottomCenter,
@@ -37,7 +53,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsType: SPINNER.chasingDots, // foreground spinner type
   pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
   pbThickness: 5, // progress bar thickness
-  minTime:100
+  minTime: 100
 };
 @NgModule({
   declarations: [
@@ -53,7 +69,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     Rgas2Component,
     TitleComponent,
     Form1Component,
-    SubTitleComponent
+    SubTitleComponent,
+    YearPickerComponent,
+    MonthSelectComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +95,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FlexLayoutModule
 
   ],
-  providers: [],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ],
   bootstrap: [AppComponent],
   exports: [
 

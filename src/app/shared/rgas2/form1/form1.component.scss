@@ -16,3 +16,14 @@
   padding: 0;
 }
 
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-label { margin-top:-15px; }
+::ng-deep label.ng-star-inserted { transform: translateY(-0.59375em) scale(.75) !important; }
+
+
+::ng-deep .theme--light .bg-1{
+  background-color: rgb(196, 196, 196);
+}
+::ng-deep .theme--dark .bg-1{
+  background-color: rgb(138, 138, 138);
+}
