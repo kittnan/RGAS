@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -6,16 +6,14 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class HttpModelsService {
+export class HttpDefectService {
 
   private URL = environment.API;
-  private SUB = 'models'
+  private SUB = 'defect'
   constructor(private http: HttpClient) { }
 
-  get(params:HttpParams): Observable<any> {
-    return this.http.get(`${this.URL}/${this.SUB}`,{
-      params:params
-    });
+  get(): Observable<any> {
+    return this.http.get(`${this.URL}/${this.SUB}`);
   }
   create(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/create`, data);

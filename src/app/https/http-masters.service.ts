@@ -6,10 +6,10 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class HttpModelsService {
+export class HttpMastersService {
 
   private URL = environment.API;
-  private SUB = 'models'
+  private SUB = 'masters'
   constructor(private http: HttpClient) { }
 
   get(params:HttpParams): Observable<any> {
@@ -20,10 +20,8 @@ export class HttpModelsService {
   create(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/create`, data);
   }
-  import(data: any): Observable<any> {
-    return this.http.post(`${this.URL}/${this.SUB}/import`, data);
-  }
   update(data: any): Observable<any> {
-    return this.http.put(`${this.URL}/${this.SUB}/update`, data);
+    return this.http.post(`${this.URL}/${this.SUB}/update`, data);
   }
+
 }

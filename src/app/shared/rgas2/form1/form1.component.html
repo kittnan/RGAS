@@ -55,15 +55,14 @@
   </button>
 
 
-  <form [formGroup]="claimInfoCtrl" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch"  >
+  <form [formGroup]="claimInfoCtrl" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
       <app-sub-title fxFlex="100" [title]="'Claim Information'" class="mt-2 mb-2"></app-sub-title>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Claim Notification No.</mat-label>
-          <input matInput  formControlName="claimNo">
-
+          <input matInput formControlName="claimNo">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -89,14 +88,17 @@
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <app-autocomplete *ngIf="modelOptionString.length>0" fxFlex="100" [title]="'KTC Model Code'"
+          [options]="modelOptionString" [myControl]="modelCode"
+          (myControlChange)="onChangeModelCode($event)"></app-autocomplete>
+        <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>KTC Model Code</mat-label>
           <mat-select formControlName="modelCode">
-            <mat-option *ngFor="let item of tempOption" [value]="item.value">
-              {{item.viewValue}}
+            <mat-option *ngFor="let item of modelOption" [value]="item['Model']">
+              {{item.Model}}
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -120,10 +122,13 @@
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <app-autocomplete *ngIf="customerOptionString.length>0" fxFlex="100" [title]="'Type'"
+          [options]="customerOptionString" [myControl]="type"></app-autocomplete>
+
+        <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Type</mat-label>
           <input matInput formControlName="type">
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -177,8 +182,8 @@
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Function/ Appearance</mat-label>
           <mat-select formControlName="functionAppearance">
-            <mat-option *ngFor="let item of tempOption" [value]="item.value">
-              {{item.viewValue}}
+            <mat-option *ngFor="let item of functionAppearanceOptionString" [value]="item">
+              {{item}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -192,8 +197,8 @@
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Returning Style</mat-label>
           <mat-select formControlName="returnStyle">
-            <mat-option *ngFor="let item of tempOption" [value]="item.value">
-              {{item.viewValue}}
+            <mat-option *ngFor="let item of returningStyleOption" [value]="item.itemValue">
+              {{item.itemName}} : {{item.itemValue}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -219,8 +224,8 @@
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Model Classification</mat-label>
           <mat-select formControlName="modelClassification">
-            <mat-option *ngFor="let item of tempOption" [value]="item.value">
-              {{item.viewValue}}
+            <mat-option *ngFor="let item of modelClassificationOption" [value]="item.itemValue">
+              {{item.itemName}} : {{item.itemValue}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -231,7 +236,7 @@
 
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Production Month</mat-label>
-          <input readonly matInput formControlName="productionMonth" (click)="monthSelectProductionMonth()">
+          <input readonly matInput formControlName="productionMonth" (click)="monthSelectProductionMonth('productionMonth')">
         </mat-form-field>
 
       </div>
@@ -254,8 +259,8 @@
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Commercial Distribution</mat-label>
           <mat-select formControlName="commercialDistribution">
-            <mat-option *ngFor="let item of tempOption" [value]="item.value">
-              {{item.viewValue}}
+            <mat-option *ngFor="let item of commercialDistributionOption" [value]="item.itemValue">
+              {{item.itemName}} : {{item.itemValue}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -285,18 +290,28 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Use Appearancelication</mat-label>
-          <input matInput [required]="true">
+          <mat-select formControlName="useAppearance">
+            <mat-option *ngFor="let item of useAppearancelicationOption" [value]="item.itemValue">
+              {{item.itemName}} : {{item.itemValue}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="70" appearance="outline" floatLabel="always">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
           <mat-label>Transportation Cost</mat-label>
           <input matInput [required]="true">
         </mat-form-field>
-        <mat-form-field fxFlex="30" appearance="outline" floatLabel="always">
+
+        <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
           <mat-label>Unit</mat-label>
-          <input matInput [required]="true">
+          <mat-select formControlName="unit">
+            <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
+              {{item.itemName}} : {{item.itemValue}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
+
       </div>
 
     </div>
@@ -314,15 +329,19 @@
 
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-form-field fxFlex="100"  appearance="outline" floatLabel="always">
           <mat-label>Occurred Location</mat-label>
-          <input matInput [required]="true">
+          <mat-select formControlName="occurredLocation">
+            <mat-option *ngFor="let item of occurredLocationOption" [value]="item.itemValue">
+              {{item.itemName}} : {{item.itemValue}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Cost Month</mat-label>
-          <input readonly matInput [required]="true" (click)="monthSelectProductionMonth()">
+          <input readonly matInput [required]="true" (click)="monthSelectProductionMonth('costMonth')">
 
           <!-- <mat-select>
             <mat-option *ngFor="let month of monthOption" [value]="month.value">
@@ -349,9 +368,14 @@
 
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+
+        <mat-form-field fxFlex="100"  appearance="outline" floatLabel="always">
           <mat-label>Importance (Claim Rank)</mat-label>
-          <input matInput [required]="true">
+          <mat-select formControlName="importance">
+            <mat-option *ngFor="let item of claimRankOptionString" [value]="item">
+             {{item}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">

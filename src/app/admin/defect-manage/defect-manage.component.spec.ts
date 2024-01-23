@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RgasComponent } from './rgas.component';
+import { DefectManageComponent } from './defect-manage.component';
 
-describe('RgasComponent', () => {
-  let component: RgasComponent;
-  let fixture: ComponentFixture<RgasComponent>;
+describe('DefectManageComponent', () => {
+  let component: DefectManageComponent;
+  let fixture: ComponentFixture<DefectManageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RgasComponent ]
+      declarations: [ DefectManageComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RgasComponent);
+    fixture = TestBed.createComponent(DefectManageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

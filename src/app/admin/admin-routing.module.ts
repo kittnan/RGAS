@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserManageComponent } from './users/user-manage/user-manage.component';
 import { UserNewComponent } from './users/user-new/user-new.component';
 import { ModelsManageComponent } from './models-manage/models-manage.component';
+import { MastersComponent } from './masters/masters.component';
+import { DefectManageComponent } from './defect-manage/defect-manage.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,14 @@ const routes: Routes = [
   {
     path: 'models-manage',
     component: ModelsManageComponent,
+  },
+  {
+    path: 'defect-manage',
+    component: DefectManageComponent,
+  },
+  {
+    path: 'masters',
+    component: MastersComponent,
   },
 ];
 

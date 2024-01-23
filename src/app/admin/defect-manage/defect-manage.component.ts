@@ -1,27 +1,32 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import * as Exceljs from 'exceljs'
 import { lastValueFrom } from 'rxjs';
-import { HttpModelsService } from 'src/app/https/http-models.service';
+import { HttpDefectService } from 'src/app/https/http-defect.service';
+import * as Exceljs from 'exceljs'
+
 @Component({
-  selector: 'app-models-manage',
-  templateUrl: './models-manage.component.html',
-  styleUrls: ['./models-manage.component.scss']
+  selector: 'app-defect-manage',
+  templateUrl: './defect-manage.component.html',
+  styleUrls: ['./defect-manage.component.scss']
 })
-export class ModelsManageComponent implements OnInit {
-  displayedColumns: string[] = ['No', 'Model', 'KYD Cd', 'Model Name', 'Biz Segment', 'Process', 'Customer', 'Classification', 'Project Name'];
+export class DefectManageComponent implements OnInit {
+
+  displayedColumns: string[] = ['No', 'Function/Appearance', 'Defect phenomenon(Major classification)', 'Detailed phenomenon(Middle classification)', 'Cause(Minor classfication)', 'Defect code'];
   dataSource = new MatTableDataSource([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(
-    private $model: HttpModelsService
+    private $defect: HttpDefectService
   ) { }
 
   async ngOnInit(): Promise<void> {
-    let params: HttpParams = new HttpParams()
-    const resData = await lastValueFrom(this.$model.get(params))
-    this.dataSource = new MatTableDataSource(resData)
+    const resData = await lastValueFrom(this.$defect.get())
+    this.dataSource = new MatTableDataSource(resData.map((item:any,index:number)=>{
+      return {
+        ...item,
+        No:index+1
+      }
+    }))
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
     }, 300);
@@ -36,7 +41,7 @@ export class ModelsManageComponent implements OnInit {
     await wb.xlsx.load(file);
     const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
     const data = await this.excelSheetToObject(ws)
-    const resData = await lastValueFrom(this.$model.import(data))
+    const resData = await lastValueFrom(this.$defect.import(data))
     console.log("🚀 ~ resData:", resData)
   }
   excelSheetToObject(ws: Exceljs.Worksheet | undefined) {

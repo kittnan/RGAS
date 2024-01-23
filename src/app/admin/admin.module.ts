@@ -9,6 +9,8 @@ import { UserManageComponent } from './users/user-manage/user-manage.component';
 import { UserNewComponent } from './users/user-new/user-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
+import { MastersComponent } from './masters/masters.component';
+import { DefectManageComponent } from './defect-manage/defect-manage.component';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { MaterialModule } from '../material/material.module';
     AdminComponent,
     ModelsManageComponent,
     UserManageComponent,
-    UserNewComponent
+    UserNewComponent,
+    MastersComponent,
+    DefectManageComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +29,8 @@ import { MaterialModule } from '../material/material.module';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule
+  ],
+  exports: [
   ]
 })
 export class AdminModule { }

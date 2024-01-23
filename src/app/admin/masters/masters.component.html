@@ -1,0 +1,120 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+    <app-title [title]="'Manage-Masters'" class="w-full"></app-title>
+  </div>
+  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center" class="mt-4">
+
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Select group name</mat-label>
+      <mat-select [(ngModel)]="selectedGroupName" (selectionChange)="onChangeGroupName($event)">
+        <ng-container *ngFor="let item of groupNameOption; let i=index">
+          <mat-option class="capitalize " [value]="item">
+            {{item}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" style="margin-left: 10px;" (click)="onNewItem()">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <mat-icon class="mat-18">control_point</mat-icon>
+        <span>New</span>
+      </div>
+    </button>
+
+    <button *ngIf="newItem && newItem.length>0" mat-raised-button class="btn-success" style="margin-left: 10px;" (click)="onSubmitNewItem()">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <mat-icon class="mat-18">done_all</mat-icon>
+        <span>Save</span>
+      </div>
+    </button>
+
+    <div class="flex-auto" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
+    </div>
+    <mat-form-field appearance="outline" floatLabel="always" class="flex-auto custom-form">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #search>
+    </mat-form-field>
+  </div>
+  <ng-container *ngIf="newItem && newItem.length>0">
+    <div *ngFor="let item of newItem; let i=index" fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center"
+      fxLayoutGap="5" class="mt-4">
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Group Name</mat-label>
+        <input matInput [disabled]="true" [(ngModel)]="item.groupName">
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Item Name</mat-label>
+        <input matInput [(ngModel)]="item.itemName">
+      </mat-form-field>
+      <mat-form-field appearance="outline" floatLabel="always">
+        <mat-label>Item Value</mat-label>
+        <input matInput [(ngModel)]="item.itemValue">
+      </mat-form-field>
+      <section>
+        <mat-slide-toggle [(ngModel)]="item.checked" color="primary">
+          Status
+        </mat-slide-toggle>
+      </section>
+      <button mat-icon-button color="warn" (click)="onClickDeleteNewItem(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+  </ng-container>
+
+
+  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center" class="overflow-auto mt-4">
+    <table mat-table fxFlex="100" [dataSource]="dataSource" class="mat-elevation-z2">
+      <ng-container matColumnDef="No">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let element;let index = index"> {{index+1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="groupName">
+        <th mat-header-cell *matHeaderCellDef> groupName </th>
+        <td mat-cell *matCellDef="let element"> {{element['groupName']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="itemName">
+        <th mat-header-cell *matHeaderCellDef> itemName </th>
+        <td mat-cell *matCellDef="let element;let index = index">
+          <span class="cursor-pointer text-link hover:underline" (click)="onChangeItemName(element)">
+            {{element['itemName']}}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="itemValue">
+        <th mat-header-cell *matHeaderCellDef> itemValue </th>
+        <td mat-cell *matCellDef="let element;let index = index">
+          <span class="cursor-pointer text-link hover:underline" (click)="onChangeItemValue(element)">
+            {{element['itemValue']}}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> status </th>
+        <td mat-cell *matCellDef="let element">
+          <section>
+            <mat-slide-toggle (change)="onChangeSlide($event,element)" color="primary" [checked]="element['checked']">
+            </mat-slide-toggle>
+          </section>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{search.value}}"
+        </td>
+      </tr>
+    </table>
+    <mat-paginator fxFlex="100" [pageSizeOptions]="[10, 20,50,dataSource.data.length]" showFirstLastButtons
+      aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+</div>

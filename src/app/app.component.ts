@@ -1,7 +1,6 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
-
 interface SideItem {
   title: string,
   icon: string,
@@ -49,6 +48,34 @@ export class AppComponent {
           title: 'Manage',
           icon: 'manage_accounts',
           path: 'admin/models-manage',
+          items: []
+        },
+
+      ]
+    },
+    {
+      title: 'Defect',
+      icon: 'groups',
+      path: '',
+      items: [
+        {
+          title: 'Defect',
+          icon: 'manage_accounts',
+          path: 'admin/defect-manage',
+          items: []
+        },
+
+      ]
+    },
+    {
+      title: 'Masters',
+      icon: 'groups',
+      path: '',
+      items: [
+        {
+          title: 'masters',
+          icon: 'manage_accounts',
+          path: 'admin/masters',
           items: []
         },
 

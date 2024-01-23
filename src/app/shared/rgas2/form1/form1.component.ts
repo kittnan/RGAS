@@ -6,6 +6,10 @@ import * as moment from 'moment';
 import { MonthSelectComponent } from '../../dialogs/month-select/month-select.component';
 
 import * as ExcelJS from 'exceljs'
+import { HttpModelsService } from 'src/app/https/http-models.service';
+import { HttpParams } from '@angular/common/http';
+import { Observable, lastValueFrom } from 'rxjs';
+import { HttpMastersService } from 'src/app/https/http-masters.service';
 
 const YEAR_MODE_FORMATS = {
   parse: {
@@ -64,7 +68,7 @@ export class Form1Component implements OnInit {
     modelNo: new FormControl(null, Validators.required),
     productNo: new FormControl(),
     customerNo: new FormControl(),
-    modelCode: new FormControl(null, Validators.required),
+    modelCode: new FormControl('', Validators.required),
     analysisPIC: new FormControl(null, Validators.required),
     customerName: new FormControl(null, Validators.required),
     type: new FormControl(),
@@ -87,6 +91,7 @@ export class Form1Component implements OnInit {
     claimRegisterDate: new FormControl(),
     useAppearance: new FormControl(),
     transportationCost: new FormControl(),
+    unit: new FormControl(),
     receiveInfoDate: new FormControl(),
     occurredLocation: new FormControl(),
     costMonth: new FormControl(),
@@ -96,12 +101,66 @@ export class Form1Component implements OnInit {
 
   })
 
-  constructor(
-    public dialog: MatDialog
-  ) { }
+  modelOption: any[] = []
+  modelOptionString: string[] = []
 
-  ngOnInit(): void {
+  customerOptionString: string[] = []
+
+  functionAppearanceOptionString: string[] = ['Function', 'Appearance']
+
+  returningStyleOption: any = []
+
+  modelClassificationOption: any = []
+
+  commercialDistributionOption: any = []
+
+  useAppearancelicationOption: any = []
+
+  currencyOption: any = []
+
+  occurredLocationOption: any = []
+
+  claimRankOptionString: string[] = ['S >= 3 pcs', 'A = 2 pcs', 'B = 1 pc']
+
+
+
+  // modelOptionString!: Observable<string[]>
+
+  // modelCodeCtrl: FormControl<string> = this.claimInfoCtrl.get('modelCode') as FormControl<string>;
+
+  constructor(
+    public dialog: MatDialog,
+    private $model: HttpModelsService,
+    private $master: HttpMastersService
+  ) {
+
+  }
+
+  async ngOnInit(): Promise<void> {
     this.claimInfoCtrl.markAllAsTouched()
+
+    this.modelOption = await lastValueFrom(this.$model.get(new HttpParams()))
+    // this.modelOptionString = new Observable<string[]>((observer) => {
+    //   const data: string[] = this.modelOption.map((item: any) => item['Model'].toString())
+    //   observer.next(data)
+    //   observer.complete()
+    // })
+    this.modelOptionString = this.modelOption.map((item: any) => item['Model'].toString())
+    let customerOptionString: string[] = this.modelOption.map((item: any) => item['Customer'] ? item['Customer'] : '').filter((item: any) => item)
+    this.customerOptionString = [...new Set(customerOptionString.map(item => item))];
+
+    this.returningStyleOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['returningStyle']))))
+
+    this.modelClassificationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['modelClassification']))))
+
+    this.commercialDistributionOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['commercialDistribution']))))
+
+    this.useAppearancelicationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['useAppearancelication']))))
+
+    this.currencyOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['currency']))))
+
+    this.occurredLocationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['occurredLocation']))))
+
   }
 
 
@@ -141,21 +200,34 @@ export class Form1Component implements OnInit {
       const worksheet: ExcelJS.Worksheet | undefined = workbook.getWorksheet(1);
 
       if (worksheet) {
-        console.log("🚀 ~ worksheet:", worksheet)
-        const claimNo: any = worksheet.getCell('J2').value
-        console.log("🚀 ~ claimNo:", claimNo)
-        this.dataExcelRead.location = worksheet.getCell('AV15').value
-        console.log("🚀 ~ this.dataExcelRead:", this.dataExcelRead)
+        const claimNo: any = this.getValueOfCell('J2', worksheet)
+        const customerNo: any = this.getValueOfCell('AQ14', worksheet)
+        let productType = this.getValueOfCell('J8', worksheet)
+        let model: any = this.modelOption.find((item: any) => item['KYD Cd'] == productType)
+        const customerName: any = this.getValueOfCell('W10', worksheet)
 
         this.claimInfoCtrl.patchValue({
-          claimNo: claimNo?.result ? claimNo.result : claimNo.value,
-          modelNo: '2'
+          claimNo: claimNo,
+          customerNo: customerNo,
+          modelCode: model ? model.Model : null,
+          modelNo: model ? model['Model Name'] : null,
+          customerName: customerName,
+          saleCompany: this.getValueOfCell('AQ23', worksheet),
+          qty: this.getValueOfCell('AV17', worksheet),
+          productLotNo: this.getValueOfCell('M26', worksheet)
+
         })
       }
       console.log('Excel file successfully read.');
     } catch (error) {
       console.error('Error reading Excel file:', error);
     }
+  }
+
+  getValueOfCell(address: string, ws: ExcelJS.Worksheet) {
+    let value: any = ws.getCell(address).value
+    value = value?.result ? value.result : value.value
+    return value
   }
   foo() {
     console.log(this.claimInfoCtrl.value);
@@ -170,8 +242,40 @@ export class Form1Component implements OnInit {
     return option.id === value.id;
   }
 
-  async monthSelectProductionMonth() {
+  async monthSelectProductionMonth(key: string) {
     const month = await this.monthSelect()
-    this.claimInfoCtrl.get('productionMonth')?.patchValue(month)
+    this.claimInfoCtrl.get(key)?.patchValue(month)
   }
+
+  onChangeModelCode($event: FormControl<any>) {
+    let value: any = $event.value
+    const founded: any = this.modelOption.find((item: any) => item['Model'] == value)
+    if (founded) {
+      this.claimInfoCtrl.get('modelNo')?.patchValue(founded['Model Name'])
+    } else {
+      this.claimInfoCtrl.get('modelNo')?.patchValue('')
+    }
+  }
+  onChangeCustomer($event: FormControl<any>) {
+    let value: any = $event.value
+    const founded: any = this.modelOption.find((item: any) => item['Model'] == value)
+    if (founded) {
+      this.claimInfoCtrl.get('modelNo')?.patchValue(founded['Model Name'])
+    } else {
+      this.claimInfoCtrl.get('modelNo')?.patchValue('')
+    }
+  }
+
+
+
+  public get modelCode(): FormControl<any> {
+    return this.claimInfoCtrl.get('modelCode') as FormControl<any>;
+  }
+  public get type(): FormControl<any> {
+    return this.claimInfoCtrl.get('type') as FormControl<any>;
+  }
+
+
+
+
 }

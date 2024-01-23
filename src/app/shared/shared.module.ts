@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Rgas1Component } from '../rgas/rgas1/rgas1.component';
 import { Rgas2Component } from '../rgas/rgas2/rgas2.component';
 import { RgasManageComponent } from '../rgas/rgas-manage/rgas-manage.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 
 
 let items = [
@@ -29,7 +30,8 @@ let items = [
 
 @NgModule({
   declarations: [
-    ...items
+    ...items,
+    AutocompleteComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +45,8 @@ let items = [
     ...items,
     MaterialModule,
     FlexLayoutModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AutocompleteComponent
   ]
 })
 export class SharedModule { }

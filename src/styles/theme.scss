@@ -87,13 +87,55 @@ $vt-primary2: (
 
 $primary: mat-palette($vt-primary);
 // $accent: mat-palette($mat-pink, A200, A100, A400);
-$accent: mat-palette($vt-success,A200, A100, A400);
+$accent: mat-palette($vt-success, A200, A100, A400);
 
 .theme {
   &--light {
     $theme: mat-light-theme($primary, $accent);
 
     @include angular-material-theme($theme);
+
+    .text-link {
+      color: #299bff;
+    }
+
+    .btn-success {
+      background-color: rgb(185 255 185);
+      color: black;
+    }
+
+    .btn-danger {
+      background-color: #fb7676;
+      color: white;
+    }
+
+    .mat-cell {
+      padding: 10px;
+    }
+
+    .mat-header-cell {
+      padding: 10px;
+      font-weight: 900;
+      text-transform: capitalize;
+    }
+
+    thead {
+      background-color: aquamarine !important;
+    }
+
+    .mat-form-field-wrapper {
+      padding: 0 !important;
+    }
+
+    // fix bug underline of paginator
+    // .mat-form-field-appearance-legacy .mat-form-field-underline {
+    //   height: 0;
+    // }
+    .mat-form-field-appearance-legacy .mat-form-field-underline{
+      bottom: 0.25rem;
+    }
+
+
   }
 
   &--dark {
@@ -102,5 +144,47 @@ $accent: mat-palette($vt-success,A200, A100, A400);
     color: white;
 
     @include angular-material-theme($theme);
+
+    .text-link {
+      color: #42ceff;
+    }
+
+    .btn-success {
+      background-color: rgb(185 255 185);
+      color: black;
+    }
+
+    .btn-danger {
+      background-color: #fb7676;
+      color: white;
+    }
+
+    .mat-cell {
+      padding: 10px;
+    }
+
+    .mat-header-cell {
+      padding: 10px;
+      font-weight: 900;
+      text-transform: capitalize;
+      color: black;
+    }
+
+    .mat-table thead {
+      background-color: rgb(127, 168, 255) !important;
+    }
+
+    .mat-form-field-wrapper {
+      padding: 0 !important;
+    }
+
+      // fix bug underline of paginator
+      // .mat-form-field-appearance-legacy .mat-form-field-underline {
+      //   height: 0;
+      // }
+      .mat-form-field-appearance-legacy .mat-form-field-underline{
+        bottom: 0.25rem;
+      }
+
   }
 }

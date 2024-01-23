@@ -1,0 +1,19 @@
+::ng-deep .theme--light >  td:first-child {
+  background-color: rgb(189, 189, 189);
+}
+
+// fix bug underline of paginator
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline{
+  height: 0;
+}
+
+::ng-deep .mat-form-field-wrapper{
+  padding-bottom: 0;
+}
+::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-label { margin-top:-15px; }
+::ng-deep label.ng-star-inserted { transform: translateY(-0.59375em) scale(.75) !important; }
+
+::ng-deep .mat-option-text{
+  font-size: small;
+}

@@ -4,6 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { LoginComponent } from './shared/login/login.component';
 import { AdminModule } from './admin/admin.module';
+import { Rgas2Component } from './rgas/rgas2/rgas2.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => AdminModule,
     canActivate: [],
+  },
+  {
+    path: 'rgas2',
+    component: Rgas2Component
   },
   // {
   //   path: 'models',
