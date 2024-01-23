@@ -28,13 +28,27 @@ export class AppComponent {
         {
           title: 'New',
           icon: 'person_add_alt',
-          path: 'users/new',
+          path: 'admin/users-new',
           items: []
         },
         {
           title: 'Manage',
           icon: 'manage_accounts',
-          path: 'users/manage',
+          path: 'admin/users-manage',
+          items: []
+        },
+
+      ]
+    },
+    {
+      title: 'Model',
+      icon: 'groups',
+      path: '',
+      items: [
+        {
+          title: 'Manage',
+          icon: 'manage_accounts',
+          path: 'admin/models-manage',
           items: []
         },
 

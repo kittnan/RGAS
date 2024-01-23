@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       const { username, password }: any = this.loginForm.value;
       console.log(this.loginForm.value);
       localStorage.setItem('RGAS_login','ok')
-      this.router.navigate(['/users']).then(()=>location.reload())
+      this.router.navigate(['/admin']).then(()=>location.reload())
 
     } catch (error) {
       console.log("🚀 ~ error:", error)

@@ -1,0 +1,102 @@
+<div class="flex justify-center items-start flex-wrap">
+  <div class="flex justify-center items-start w-full">
+    <app-title [title]="'New-User'" class="w-full"></app-title>
+  </div>
+  <div fxFlex="60" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5">
+    <form [formGroup]="userForm" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
+        <app-sub-title fxFlex="100" [title]="'User Information'" class="mt-2 mb-2"></app-sub-title>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mb-2">
+          <button mat-button (click)="onClickUserManage()" class="me-2">
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+              <mat-icon class="mat-18">
+                keyboard_return
+              </mat-icon>
+              <span>
+                Manage
+              </span>
+            </div>
+          </button>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="end stretch" class="mt-1 mb-2">
+          <button mat-flat-button color="primary" (click)="onSubmit()" class="me-2">
+            <!-- <button mat-flat-button color="primary" (click)="onSubmit()" class="me-2" [disabled]="userForm.invalid"> -->
+            <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+              <mat-icon class="mat-18">
+                done_all
+              </mat-icon>
+              <span>
+                Submit
+              </span>
+            </div>
+          </button>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>employee code</mat-label>
+            <input matInput formControlName="employeeCode">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>email</mat-label>
+            <input matInput formControlName="email" type="email" placeholder="kittinan-k@kyocera.co.th">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>firstName</mat-label>
+            <input matInput formControlName="firstName">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>lastName</mat-label>
+            <input matInput formControlName="lastName">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>corporate</mat-label>
+            <mat-select formControlName="corporate">
+              <mat-option *ngFor="let item of corporateOption" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>department</mat-label>
+            <input matInput formControlName="department">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>sectionName</mat-label>
+            <input matInput formControlName="sectionName">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>sectionCode</mat-label>
+            <input matInput formControlName="sectionCode">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>access</mat-label>
+            <mat-select formControlName="access" multiple (selectionChange)="onSelected()">
+              <mat-option *ngFor="let item of accessOption" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="100" fxFlex.gt-md="45"></div>
+      </div>
+    </form>
+  </div>
+</div>
