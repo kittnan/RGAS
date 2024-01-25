@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import * as moment from 'moment';
@@ -23,13 +23,12 @@ const YEAR_MODE_FORMATS = {
   },
 };
 
-
 @Component({
-  selector: 'app-form1',
-  templateUrl: './form1.component.html',
-  styleUrls: ['./form1.component.scss'],
+  selector: 'app-form1-multiple',
+  templateUrl: './form1-multiple.component.html',
+  styleUrls: ['./form1-multiple.component.scss']
 })
-export class Form1Component implements OnInit {
+export class Form1MultipleComponent implements OnInit {
   monthOption = [
     { name: 'January', value: 1 },
     { name: 'February', value: 2 },
@@ -63,43 +62,82 @@ export class Form1Component implements OnInit {
 
   dataExcelRead: any = {}
 
-  formGroup: FormGroup = new FormGroup({
-    claimNo: new FormControl(null, Validators.required),
-    modelNo: new FormControl(null, Validators.required),
-    productNo: new FormControl(),
-    customerNo: new FormControl(),
-    modelCode: new FormControl('', Validators.required),
-    analysisPIC: new FormControl(null, Validators.required),
-    customerName: new FormControl(null, Validators.required),
-    type: new FormControl(),
-    descriptionJP: new FormControl(),
-    saleCompany: new FormControl(),
-    sideNo: new FormControl(null, Validators.required),
-    descriptionENG: new FormControl(null, Validators.required),
-    salePIC: new FormControl(),
-    qty: new FormControl(null, Validators.required),
-    functionAppearance: new FormControl(),
-    returnStyle: new FormControl(),
-    productLotNo: new FormControl(null, Validators.required),
-    AWBNo: new FormControl(),
-    modelClassification: new FormControl(),
-    productionMonth: new FormControl(),
-    InvNo: new FormControl(),
-    calendarYear: new FormControl(),
-    commercialDistribution: new FormControl(),
-    dateReceiveInv: new FormControl(),
-    claimRegisterDate: new FormControl(),
-    useAppearance: new FormControl(),
-    transportationCost: new FormControl(),
-    unit: new FormControl(),
-    receiveInfoDate: new FormControl(),
-    occurredLocation: new FormControl(),
-    costMonth: new FormControl(),
-    dueDate: new FormControl(),
-    importance: new FormControl(),
-    files: new FormControl(),
 
-  })
+  item: any = {
+    claimNo: null,
+    modelNo: null,
+    productNo: null,
+    customerNo: null,
+    modelCode: null,
+    analysisPIC: null,
+    customerName: null,
+    type: null,
+    descriptionJP: null,
+    saleCompany: null,
+    sideNo: null,
+    descriptionENG: null,
+    salePIC: null,
+    qty: null,
+    functionAppearance: null,
+    returnStyle: null,
+    productLotNo: null,
+    AWBNo: null,
+    modelClassification: null,
+    productionMonth: null,
+    InvNo: null,
+    calendarYear: null,
+    commercialDistribution: null,
+    dateReceiveInv: null,
+    claimRegisterDate: null,
+    useAppearance: null,
+    transportationCost: null,
+    unit: null,
+    receiveInfoDate: null,
+    occurredLocation: null,
+    costMonth: null,
+    dueDate: null,
+    importance: null,
+    files: null,
+
+  }
+  // formGroup: FormGroup = new FormGroup({
+  //   claimNo: new FormControl(null, Validators.required),
+  //   modelNo: new FormControl(null, Validators.required),
+  //   productNo: new FormControl(),
+  //   customerNo: new FormControl(),
+  //   modelCode: new FormControl('', Validators.required),
+  //   analysisPIC: new FormControl(null, Validators.required),
+  //   customerName: new FormControl(null, Validators.required),
+  //   type: new FormControl(),
+  //   descriptionJP: new FormControl(),
+  //   saleCompany: new FormControl(),
+  //   sideNo: new FormControl(null, Validators.required),
+  //   descriptionENG: new FormControl(null, Validators.required),
+  //   salePIC: new FormControl(),
+  //   qty: new FormControl(null, Validators.required),
+  //   functionAppearance: new FormControl(),
+  //   returnStyle: new FormControl(),
+  //   productLotNo: new FormControl(null, Validators.required),
+  //   AWBNo: new FormControl(),
+  //   modelClassification: new FormControl(),
+  //   productionMonth: new FormControl(),
+  //   InvNo: new FormControl(),
+  //   calendarYear: new FormControl(),
+  //   commercialDistribution: new FormControl(),
+  //   dateReceiveInv: new FormControl(),
+  //   claimRegisterDate: new FormControl(),
+  //   useAppearance: new FormControl(),
+  //   transportationCost: new FormControl(),
+  //   unit: new FormControl(),
+  //   receiveInfoDate: new FormControl(),
+  //   occurredLocation: new FormControl(),
+  //   costMonth: new FormControl(),
+  //   dueDate: new FormControl(),
+  //   importance: new FormControl(),
+  //   files: new FormControl(),
+
+  // })
+
 
   modelOption: any[] = []
   modelOptionString: string[] = []
@@ -128,8 +166,12 @@ export class Form1Component implements OnInit {
 
   // modelCodeCtrl: FormControl<string> = this.claimInfoCtrl.get('modelCode') as FormControl<string>;
 
-
+  allItems!: any[]
+  itemNowNumber: number = 1
+  itemMax: number = 1
+  itemMin: number = 1
   @ViewChild('fileUpload', { static: true }) fileUpload!: ElementRef;
+
 
   constructor(
     public dialog: MatDialog,
@@ -140,7 +182,8 @@ export class Form1Component implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.formGroup.markAllAsTouched()
+
+    // this.formGroup.markAllAsTouched()
 
     this.modelOption = await lastValueFrom(this.$model.get(new HttpParams()))
     // this.modelOptionString = new Observable<string[]>((observer) => {
@@ -164,6 +207,8 @@ export class Form1Component implements OnInit {
 
     this.occurredLocationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['occurredLocation']))))
 
+    this.allItems = [this.item, this.item]
+    this.itemMax = this.allItems.length
   }
 
 
@@ -172,7 +217,7 @@ export class Form1Component implements OnInit {
   }
 
   emitYear(e: any) {
-    this.formGroup.get('calendarYear')?.patchValue(e)
+    this.item.get('calendarYear')?.patchValue(e)
   }
 
   monthSelect() {
@@ -203,7 +248,8 @@ export class Form1Component implements OnInit {
         let model: any = this.modelOption.find((item: any) => item['KYD Cd'] == productType)
         const customerName: any = this.getValueOfCell('W10', worksheet)
 
-        this.formGroup.patchValue({
+        this.itemMax = Number(this.getValueOfCell('AV17', worksheet))
+        this.item.patchValue({
           claimNo: claimNo,
           customerNo: customerNo,
           modelCode: model ? model.Model : null,
@@ -227,14 +273,9 @@ export class Form1Component implements OnInit {
     value = value?.result ? value.result : value
     return value
   }
-  foo() {
-    console.log(this.formGroup.value);
-
-  }
-
   clearValue(key: string) {
-    console.log(this.formGroup.get(key));
-    this.formGroup.get(key)?.patchValue(null)
+    console.log(this.item.get(key));
+    this.item.get(key)?.patchValue(null)
   }
   public objectComparisonFunction = function (option: any, value: any): boolean {
     return option.id === value.id;
@@ -242,38 +283,58 @@ export class Form1Component implements OnInit {
 
   async monthSelectProductionMonth(key: string) {
     const month = await this.monthSelect()
-    this.formGroup.get(key)?.patchValue(month)
+    this.item.get(key)?.patchValue(month)
   }
 
   onChangeModelCode($event: FormControl<any>) {
     let value: any = $event.value
     const founded: any = this.modelOption.find((item: any) => item['Model'] == value)
     if (founded) {
-      this.formGroup.get('modelNo')?.patchValue(founded['Model Name'])
+      this.item.get('modelNo')?.patchValue(founded['Model Name'])
     } else {
-      this.formGroup.get('modelNo')?.patchValue('')
+      this.item.get('modelNo')?.patchValue('')
     }
   }
   onChangeCustomer($event: FormControl<any>) {
     let value: any = $event.value
     const founded: any = this.modelOption.find((item: any) => item['Model'] == value)
     if (founded) {
-      this.formGroup.get('modelNo')?.patchValue(founded['Model Name'])
+      this.item.get('modelNo')?.patchValue(founded['Model Name'])
     } else {
-      this.formGroup.get('modelNo')?.patchValue('')
+      this.item.get('modelNo')?.patchValue('')
     }
   }
 
+  onNextItem() {
+    let newItemNumber: number = this.itemNowNumber
+    newItemNumber = newItemNumber + 1
+    if (newItemNumber <= this.itemMax) {
+      this.itemNowNumber = newItemNumber
+    }
+  }
+  onPreviousItem() {
+    let newItemNumber: number = this.itemNowNumber
+    newItemNumber = newItemNumber - 1
+    if (newItemNumber >= this.itemMin) {
+      this.itemNowNumber = newItemNumber
+    }
+  }
+  onFirstItem() {
+    this.itemNowNumber = this.itemMin
+  }
+  onLastItem() {
+    this.itemNowNumber = this.itemMax
+  }
 
+  emit(event: FormGroup, index: number) {
+    this.allItems[index] = event
+  }
 
   public get modelCode(): FormControl<any> {
-    return this.formGroup.get('modelCode') as FormControl<any>;
+    return this.item.get('modelCode') as FormControl<any>;
   }
   public get type(): FormControl<any> {
-    return this.formGroup.get('type') as FormControl<any>;
+    return this.item.get('type') as FormControl<any>;
   }
-
-
-
 
 }

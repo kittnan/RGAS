@@ -14,6 +14,7 @@ import { Rgas1Component } from '../rgas/rgas1/rgas1.component';
 import { Rgas2Component } from '../rgas/rgas2/rgas2.component';
 import { RgasManageComponent } from '../rgas/rgas-manage/rgas-manage.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { Form1MultipleComponent } from './rgas2/form1-multiple/form1-multiple.component';
 
 
 let items = [
@@ -31,7 +32,8 @@ let items = [
 @NgModule({
   declarations: [
     ...items,
-    AutocompleteComponent
+    AutocompleteComponent,
+    Form1MultipleComponent,
   ],
   imports: [
     CommonModule,
@@ -46,7 +48,8 @@ let items = [
     MaterialModule,
     FlexLayoutModule,
     ReactiveFormsModule,
-    AutocompleteComponent
+    AutocompleteComponent,
+    Form1MultipleComponent,
   ]
 })
 export class SharedModule { }

@@ -55,7 +55,7 @@
   </button>
 
 
-  <form [formGroup]="claimInfoCtrl" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+  <div [formGroup]="formGroup" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
       <app-sub-title fxFlex="100" [title]="'Claim Information'" class="mt-2 mb-2"></app-sub-title>
@@ -91,14 +91,6 @@
         <app-autocomplete *ngIf="modelOptionString.length>0" fxFlex="100" [title]="'KTC Model Code'"
           [options]="modelOptionString" [myControl]="modelCode"
           (myControlChange)="onChangeModelCode($event)"></app-autocomplete>
-        <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>KTC Model Code</mat-label>
-          <mat-select formControlName="modelCode">
-            <mat-option *ngFor="let item of modelOption" [value]="item['Model']">
-              {{item.Model}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -124,11 +116,6 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <app-autocomplete *ngIf="customerOptionString.length>0" fxFlex="100" [title]="'Type'"
           [options]="customerOptionString" [myControl]="type"></app-autocomplete>
-
-        <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Type</mat-label>
-          <input matInput formControlName="type">
-        </mat-form-field> -->
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -236,7 +223,8 @@
 
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Production Month</mat-label>
-          <input readonly matInput formControlName="productionMonth" (click)="monthSelectProductionMonth('productionMonth')">
+          <input readonly matInput formControlName="productionMonth"
+            (click)="monthSelectProductionMonth('productionMonth')">
         </mat-form-field>
 
       </div>
@@ -268,7 +256,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Date Received Inv.</mat-label>
-          <input matInput formControlName="calendarYear" [matDatepicker]="dateReceive_dp">
+          <input matInput formControlName="dateReceiveInv" [matDatepicker]="dateReceive_dp">
           <mat-datepicker-toggle matSuffix [for]="dateReceive_dp"></mat-datepicker-toggle>
           <mat-datepicker #dateReceive_dp></mat-datepicker>
         </mat-form-field>
@@ -329,7 +317,7 @@
 
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100"  appearance="outline" floatLabel="always">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Occurred Location</mat-label>
           <mat-select formControlName="occurredLocation">
             <mat-option *ngFor="let item of occurredLocationOption" [value]="item.itemValue">
@@ -341,13 +329,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Cost Month</mat-label>
-          <input readonly matInput [required]="true" (click)="monthSelectProductionMonth('costMonth')">
-
-          <!-- <mat-select>
-            <mat-option *ngFor="let month of monthOption" [value]="month.value">
-              {{month.name}}
-            </mat-option>
-          </mat-select> -->
+          <input readonly matInput formControlName="costMonth" (click)="monthSelectProductionMonth('costMonth')">
         </mat-form-field>
       </div>
 
@@ -369,11 +351,11 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
-        <mat-form-field fxFlex="100"  appearance="outline" floatLabel="always">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Importance (Claim Rank)</mat-label>
           <mat-select formControlName="importance">
             <mat-option *ngFor="let item of claimRankOptionString" [value]="item">
-             {{item}}
+              {{item}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -383,7 +365,7 @@
     </div>
 
 
-  </form>
+  </div>
 
 
 

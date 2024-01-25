@@ -1,0 +1,61 @@
+<div class="flex flex-wrap justify-center items-start w-full mt-1">
+  <div class="flex justify-center items-center w-full gap-3">
+    <button mat-icon-button (click)="onFirstItem()">
+      <mat-icon>keyboard_double_arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onPreviousItem()">
+      <mat-icon>arrow_back_ios_new</mat-icon>
+    </button>
+
+    <span class="font-black">
+      {{itemNowNumber}}
+    </span>
+    <button mat-icon-button (click)="onNextItem()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onLastItem()">
+      <mat-icon>keyboard_double_arrow_right</mat-icon>
+    </button>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
+    <app-sub-title fxFlex="100" [title]="'Claim Status'" class="mt-2 mb-2"></app-sub-title>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 b1">
+        Submit customer
+      </mat-card>
+      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
+        Closed/Pending
+      </mat-card>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 b1">
+        <button mat-raised-button color="primary" (click)="fileUpload.click()">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
+            Upload OBL !!!
+            <mat-icon class="mat-18">upload</mat-icon>
+          </div>
+          <input type="file" hidden #fileUpload accept=".xlsx" (change)="onUploadFile($event)">
+        </button>
+      </mat-card>
+      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
+        Closed/Pending
+      </mat-card>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1 p-2">
+        Auto show analysis lead time "More than 2 months with red background color or Less than 2 months with green
+        background color"
+
+      </mat-card>
+      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1 p-2">
+        Auto show analysis lead time "More than 1.5 months with red background color or Less than 1.5 months with
+        green
+        background color
+      </mat-card>
+    </div>
+  </div>
+  <div *ngIf="allItems.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
+    <!-- <app-form1 [(item)]="allItems[itemNowNumber-1]"></app-form1> -->
+  </div>
+
+</div>
