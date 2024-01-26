@@ -1,15 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import * as moment from 'moment';
-import { MonthSelectComponent } from '../../dialogs/month-select/month-select.component';
-
-import * as ExcelJS from 'exceljs'
-import { HttpModelsService } from 'src/app/https/http-models.service';
 import { HttpParams } from '@angular/common/http';
-import { Observable, lastValueFrom } from 'rxjs';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import * as ExcelJS from 'exceljs';
+import * as moment from 'moment';
+import { lastValueFrom } from 'rxjs';
 import { HttpMastersService } from 'src/app/https/http-masters.service';
+import { HttpModelsService } from 'src/app/https/http-models.service';
+
+import { MonthSelectComponent } from '../../dialogs/month-select/month-select.component';
 
 const YEAR_MODE_FORMATS = {
   parse: {
@@ -30,23 +28,47 @@ const YEAR_MODE_FORMATS = {
   styleUrls: ['./form1.component.scss'],
 })
 export class Form1Component implements OnInit {
-  monthOption = [
-    { name: 'January', value: 1 },
-    { name: 'February', value: 2 },
-    { name: 'March', value: 3 },
-    { name: 'April', value: 4 },
-    { name: 'May', value: 5 },
-    { name: 'June', value: 6 },
-    { name: 'July', value: 7 },
-    { name: 'August', value: 8 },
-    { name: 'September', value: 9 },
-    { name: 'October', value: 10 },
-    { name: 'November', value: 11 },
-    { name: 'December', value: 12 }
-  ];
 
-  costMonth: any = ''
+  @Input() form: any = {
+    claimNo: null,
+    modelNo: null,
+    productNo: null,
+    customerNo: null,
+    modelCode: null,
+    analysisPIC: null,
+    customerName: null,
+    type: null,
+    descriptionJP: null,
+    saleCompany: null,
+    sideNo: null,
+    descriptionENG: null,
+    salePIC: null,
+    qty: null,
+    functionAppearance: null,
+    returnStyle: null,
+    productLotNo: null,
+    AWBNo: null,
+    modelClassification: null,
+    productionMonth: null,
+    InvNo: null,
+    calendarYear: null,
+    commercialDistribution: null,
+    dateReceiveInv: null,
+    claimRegisterDate: null,
+    useAppearance: null,
+    transportationCost: null,
+    unit: null,
+    receiveInfoDate: null,
+    occurredLocation: null,
+    costMonth: null,
+    dueDate: null,
+    importance: null,
+    files: null,
+    status: null
 
+  }
+  @Output() formChange: EventEmitter<any> = new EventEmitter()
+  @Output() maxChange: EventEmitter<any> = new EventEmitter()
   tempOption: any[] = [
     {
       value: '1',
@@ -57,49 +79,6 @@ export class Form1Component implements OnInit {
       viewValue: '22222'
     },
   ]
-
-
-  date: FormControl = new FormControl('')
-
-  dataExcelRead: any = {}
-
-  formGroup: FormGroup = new FormGroup({
-    claimNo: new FormControl(null, Validators.required),
-    modelNo: new FormControl(null, Validators.required),
-    productNo: new FormControl(),
-    customerNo: new FormControl(),
-    modelCode: new FormControl('', Validators.required),
-    analysisPIC: new FormControl(null, Validators.required),
-    customerName: new FormControl(null, Validators.required),
-    type: new FormControl(),
-    descriptionJP: new FormControl(),
-    saleCompany: new FormControl(),
-    sideNo: new FormControl(null, Validators.required),
-    descriptionENG: new FormControl(null, Validators.required),
-    salePIC: new FormControl(),
-    qty: new FormControl(null, Validators.required),
-    functionAppearance: new FormControl(),
-    returnStyle: new FormControl(),
-    productLotNo: new FormControl(null, Validators.required),
-    AWBNo: new FormControl(),
-    modelClassification: new FormControl(),
-    productionMonth: new FormControl(),
-    InvNo: new FormControl(),
-    calendarYear: new FormControl(),
-    commercialDistribution: new FormControl(),
-    dateReceiveInv: new FormControl(),
-    claimRegisterDate: new FormControl(),
-    useAppearance: new FormControl(),
-    transportationCost: new FormControl(),
-    unit: new FormControl(),
-    receiveInfoDate: new FormControl(),
-    occurredLocation: new FormControl(),
-    costMonth: new FormControl(),
-    dueDate: new FormControl(),
-    importance: new FormControl(),
-    files: new FormControl(),
-
-  })
 
   modelOption: any[] = []
   modelOptionString: string[] = []
@@ -134,13 +113,12 @@ export class Form1Component implements OnInit {
   constructor(
     public dialog: MatDialog,
     private $model: HttpModelsService,
-    private $master: HttpMastersService
+    private $master: HttpMastersService,
   ) {
 
   }
 
   async ngOnInit(): Promise<void> {
-    this.formGroup.markAllAsTouched()
 
     this.modelOption = await lastValueFrom(this.$model.get(new HttpParams()))
     // this.modelOptionString = new Observable<string[]>((observer) => {
@@ -167,26 +145,11 @@ export class Form1Component implements OnInit {
   }
 
 
-  setYear(e: moment.Moment) {
-    this.date.setValue(e.format('YYYY'))
-  }
 
-  emitYear(e: any) {
-    this.formGroup.get('calendarYear')?.patchValue(e)
-  }
 
-  monthSelect() {
-    return new Promise(resolve => {
-      this.dialog.open(MonthSelectComponent).afterClosed().subscribe((res: any) => {
-        if (res) {
-          resolve(moment(`2020-${res}-01`).format('MMMM'))
-        } else {
-          resolve(null)
-        }
-      })
-    })
-  }
 
+
+  // todo upload OBL
   async onUploadFile($event: any) {
     let file: any = $event.target.files[0] as File;
     const workbook = new ExcelJS.Workbook();
@@ -203,7 +166,8 @@ export class Form1Component implements OnInit {
         let model: any = this.modelOption.find((item: any) => item['KYD Cd'] == productType)
         const customerName: any = this.getValueOfCell('W10', worksheet)
 
-        this.formGroup.patchValue({
+        this.form = {
+          ...this.form,
           claimNo: claimNo,
           customerNo: customerNo,
           modelCode: model ? model.Model : null,
@@ -213,7 +177,8 @@ export class Form1Component implements OnInit {
           qty: this.getValueOfCell('AV17', worksheet),
           productLotNo: this.getValueOfCell('M26', worksheet)
 
-        })
+        }
+        this.maxChange.emit(this.form.qty)
         this.fileUpload.nativeElement.value = ''
       }
       console.log('Excel file successfully read.');
@@ -221,59 +186,50 @@ export class Form1Component implements OnInit {
       console.error('Error reading Excel file:', error);
     }
   }
-
+  // todo excel fn
   getValueOfCell(address: string, ws: ExcelJS.Worksheet) {
     let value: any = ws.getCell(address).value
     value = value?.result ? value.result : value
     return value
   }
-  foo() {
-    console.log(this.formGroup.value);
 
-  }
-
-  clearValue(key: string) {
-    console.log(this.formGroup.get(key));
-    this.formGroup.get(key)?.patchValue(null)
-  }
+  // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
     return option.id === value.id;
   }
 
   async monthSelectProductionMonth(key: string) {
     const month = await this.monthSelect()
-    this.formGroup.get(key)?.patchValue(month)
+    this.form[key] = month
   }
 
-  onChangeModelCode($event: FormControl<any>) {
-    let value: any = $event.value
+  monthSelect() {
+    return new Promise(resolve => {
+      this.dialog.open(MonthSelectComponent).afterClosed().subscribe((res: any) => {
+        if (res) {
+          resolve(moment(`2020-${res}-01`).format('MMMM'))
+        } else {
+          resolve(null)
+        }
+      })
+    })
+  }
+  onChangeModelCode($event: any) {
+    let value: any = $event
     const founded: any = this.modelOption.find((item: any) => item['Model'] == value)
     if (founded) {
-      this.formGroup.get('modelNo')?.patchValue(founded['Model Name'])
+      this.form['modelNo'] = founded['Model Name']
     } else {
-      this.formGroup.get('modelNo')?.patchValue('')
+      this.form['modelNo'] = ''
     }
   }
-  onChangeCustomer($event: FormControl<any>) {
-    let value: any = $event.value
-    const founded: any = this.modelOption.find((item: any) => item['Model'] == value)
-    if (founded) {
-      this.formGroup.get('modelNo')?.patchValue(founded['Model Name'])
-    } else {
-      this.formGroup.get('modelNo')?.patchValue('')
-    }
+  emitYear(e: any, key: string) {
+    this.form[key] = e
   }
 
-
-
-  public get modelCode(): FormControl<any> {
-    return this.formGroup.get('modelCode') as FormControl<any>;
+  // todo test fn
+  foo() {
+    console.log(this.form);
+    this.formChange.emit(this.form)
   }
-  public get type(): FormControl<any> {
-    return this.formGroup.get('type') as FormControl<any>;
-  }
-
-
-
-
 }

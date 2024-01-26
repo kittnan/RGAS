@@ -10,11 +10,14 @@ import { map, startWith } from 'rxjs/operators';
 export class AutocompleteComponent implements OnInit {
 
   filteredOptions!: Observable<string[]>;
-  @Input() myControl :FormControl= new FormControl('');
+  myControl: FormControl = new FormControl('');
+  myControlChange: EventEmitter<FormControl> = new EventEmitter()
+  @Input() value: any
   @Input() title: string = 'title'
   @Input() options: string[] = ['One', 'Two', 'Three'];
-  @Output() myControlChange: EventEmitter<FormControl> = new EventEmitter()
+  @Output() valueChange: EventEmitter<any> = new EventEmitter()
   ngOnInit() {
+    this.myControl.patchValue(this.value)
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value.toString() || '')),
@@ -26,7 +29,8 @@ export class AutocompleteComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
   onChange() {
-    this.myControlChange.emit(this.myControl)
+    // this.myControlChange.emit(this.myControl.value)
+    this.valueChange.emit(this.myControl.value)
   }
 
 }

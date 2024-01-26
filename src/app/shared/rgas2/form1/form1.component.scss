@@ -2,10 +2,11 @@
   border: 1px solid black;
 }
 ::ng-deep .mat-form-field-label{
-  font-weight: 700 !important;
+  font-weight: 600 !important;
 }
 ::ng-deep .theme--dark .mat-form-field-label{
-  color: white;
+  // color: #5cb4ff;
+  color: #1276ce;
 }
 
 ::ng-deep .theme--light .mat-form-field-label{
@@ -14,6 +15,12 @@
 ::ng-deep .mat-form-field-wrapper{
   margin: 0;
   padding: 0;
+}
+::ng-deep .theme--light .mat-input-element{
+  font-size: 14px;
+}
+::ng-deep .theme--dark .mat-input-element{
+  font-size: 14px;
 }
 
 ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}

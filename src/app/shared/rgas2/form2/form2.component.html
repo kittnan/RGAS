@@ -1,0 +1,361 @@
+<div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-2 mb-4">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
+    <app-sub-title fxFlex="100" [title]="'Analysis Result'" class="mt-2 mb-2"></app-sub-title>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start start" class="me-8">
+
+        <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Part Receive Date</mat-label>
+            <input matInput [matDatepicker]="partReceiveDate_dp">
+            <mat-datepicker-toggle matSuffix [for]="partReceiveDate_dp"></mat-datepicker-toggle>
+            <mat-datepicker #partReceiveDate_dp></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>PIC</mat-label>
+            <mat-select [compareWith]="objectComparisonFunction">
+              <mat-option *ngFor="let item of tempOption" [value]="item">
+                {{item.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>RGA No.</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>KTC Analysis Result</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="60" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus adipisci necessitatibus, officia culpa
+        quibusdam laudantium sit quos veniam consectetur, sed iste modi ex deserunt ipsum! Neque laboriosam in
+        dignissimos ab nihil praesentium qui modi numquam sint? Dicta excepturi architecto et ipsum voluptatum fugiat
+        quisquam a, quaerat eius accusamus doloribus provident rerum ducimus, impedit distinctio eveniet animi id
+        placeat magni! Eius aperiam autem vel ipsa, tenetur excepturi consequatur at sint aspernatur, sed sit deleniti
+        consequuntur nisi ipsum reiciendis quidem! Excepturi deleniti assumenda unde magni officia sed vero quisquam
+        beatae debitis maxime expedita autem, praesentium sint blanditiis incidunt iure explicabo id fuga.
+      </div>
+
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Appearance Check Result </mat-label>
+          <mat-select [compareWith]="objectComparisonFunction">
+            <mat-option *ngFor="let item of option1" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis By</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis Date</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>File Upload</mat-label>
+          <button mat-icon-button matSuffix (click)="appearanceFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input matInput type="text">
+          <input type="file" hidden #appearanceFile>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Function Check Result </mat-label>
+          <mat-select [compareWith]="objectComparisonFunction">
+            <mat-option *ngFor="let item of option2" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis By</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis Date</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>File Upload</mat-label>
+          <button mat-icon-button matSuffix (click)="functionFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input matInput type="text">
+          <input type="file" hidden #functionFile>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Electrical Value Check Result </mat-label>
+          <mat-select [compareWith]="objectComparisonFunction">
+            <mat-option *ngFor="let item of option2" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis By</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis Date</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>File Upload</mat-label>
+          <button mat-icon-button matSuffix (click)="electricalFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input matInput type="text">
+          <input type="file" hidden #electricalFile>
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Disassembly Check Result </mat-label>
+          <mat-select [compareWith]="objectComparisonFunction">
+            <mat-option *ngFor="let item of option2" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis By</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis Date</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>File Upload</mat-label>
+          <button mat-icon-button matSuffix (click)="disassemblyFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input matInput type="text">
+          <input type="file" hidden #disassemblyFile>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Microscope Check Result </mat-label>
+          <mat-select [compareWith]="objectComparisonFunction">
+            <mat-option *ngFor="let item of option2" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis By</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis Date</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>File Upload</mat-label>
+          <button mat-icon-button matSuffix (click)="microscopeFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input matInput type="text">
+          <input type="file" hidden #microscopeFile>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Technical Analysis Result </mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Analysis Report No.</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>File Upload</mat-label>
+          <button mat-icon-button matSuffix (click)="technicalFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input matInput type="text">
+          <input type="file" hidden #technicalFile>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      </div>
+
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Supplier Analysis Result </mat-label>
+          <mat-select [compareWith]="objectComparisonFunction">
+            <mat-option *ngFor="let item of option3" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>File Upload</mat-label>
+          <button mat-icon-button matSuffix (click)="appearanceFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input matInput type="text">
+          <input type="file" hidden #appearanceFile>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>FAR / PNN Number </mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Issue Date</mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+
+
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>KTC Judgment </mat-label>
+          <mat-select [compareWith]="objectComparisonFunction">
+            <mat-option *ngFor="let item of option3" [value]="item">
+              {{item}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      </div>
+
+
+    </div>
+
+  </div>
+</div>

@@ -1,7 +1,7 @@
 <form fxFlex="100">
   <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
     <mat-label>{{title}}</mat-label>
-    <input type="text" matInput  [formControl]="myControl" [matAutocomplete]="auto" (input)="onChange()" >
+    <input type="text" matInput  [formControl]="myControl" [matAutocomplete]="auto" (input)="onChange()" (keyup)="onChange()" >
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="onChange()">
         {{option}}

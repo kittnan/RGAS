@@ -15,6 +15,8 @@ import { Rgas2Component } from '../rgas/rgas2/rgas2.component';
 import { RgasManageComponent } from '../rgas/rgas-manage/rgas-manage.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { Form1MultipleComponent } from './rgas2/form1-multiple/form1-multiple.component';
+import { Form2Component } from './rgas2/form2/form2.component';
+import { Form3Component } from './rgas2/form3/form3.component';
 
 
 let items = [
@@ -34,6 +36,8 @@ let items = [
     ...items,
     AutocompleteComponent,
     Form1MultipleComponent,
+    Form2Component,
+    Form3Component,
   ],
   imports: [
     CommonModule,
@@ -50,6 +54,8 @@ let items = [
     ReactiveFormsModule,
     AutocompleteComponent,
     Form1MultipleComponent,
+    Form2Component,
+    Form3Component,
   ]
 })
 export class SharedModule { }

@@ -1,9 +1,52 @@
-<div class="flex justify-center items-start flex-wrap">
+<!-- <div class="flex justify-center items-start flex-wrap">
   <div class="flex justify-center items-start w-full">
     <app-title [title]="'RGAS-2'" class="w-full"></app-title>
   </div>
   <div class="flex justify-center items-start w-full">
-    <app-form1 class="w-full"></app-form1>
-    <!-- <app-form1-multiple class="w-full"></app-form1-multiple> -->
+    <div class="flex justify-center items-center w-full gap-3">
+      <mat-icon class="mat-18 cursor-pointer">
+        arrow_back_ios_new
+      </mat-icon>
+      <span class="font-black">
+        1
+      </span>
+      <mat-icon class="mat-18 cursor-pointer">
+        arrow_forward_ios
+      </mat-icon>
+    </div>
+    <div class="flex justify-center items-center w-full">
+      <app-form1 class="w-full"></app-form1>
+    </div>
+  </div>
+</div> -->
+
+<div fxLayout="row wrap" fxLayoutAlign="center start">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+    <app-title fxFlex="100" [title]="'RGAS-2'"></app-title>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+    <button mat-icon-button (click)="onFirstItem()">
+      <mat-icon>keyboard_double_arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onPreviousItem()">
+      <mat-icon>arrow_back_ios_new</mat-icon>
+    </button>
+
+    <span class="font-black cursor-pointer me-2" *ngFor="let item of itemNumberList; let i=index"
+      [ngClass]="{'text-red': itemNowNumber===i+1 }" (click)="onChooseItem(i+1)">
+      {{item}}
+    </span>
+    <button mat-icon-button (click)="onNextItem()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onLastItem()">
+      <mat-icon>keyboard_double_arrow_right</mat-icon>
+    </button>
+  </div>
+  <div *ngIf="allItems && allItems.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <app-form1 fxFlex="100" [(form)]="allItems[itemNowNumber-1]" (maxChange)="onMaxChange($event)"></app-form1>
+  </div>
+  <div *ngIf="allItems && allItems.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <app-form2 fxFlex="100"></app-form2>
   </div>
 </div>
