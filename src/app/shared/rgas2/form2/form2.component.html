@@ -8,7 +8,7 @@
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Part Receive Date</mat-label>
-            <input matInput [matDatepicker]="partReceiveDate_dp">
+            <input matInput [matDatepicker]="partReceiveDate_dp" [(ngModel)]="form.partReceivingDate">
             <mat-datepicker-toggle matSuffix [for]="partReceiveDate_dp"></mat-datepicker-toggle>
             <mat-datepicker #partReceiveDate_dp></mat-datepicker>
           </mat-form-field>
@@ -18,7 +18,7 @@
 
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>PIC</mat-label>
-            <mat-select [compareWith]="objectComparisonFunction">
+            <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.PIC">
               <mat-option *ngFor="let item of tempOption" [value]="item">
                 {{item.viewValue}}
               </mat-option>
@@ -29,25 +29,150 @@
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>RGA No.</mat-label>
-            <input matInput>
+            <input matInput [(ngModel)]="form.rgaNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>KTC Analysis Result</mat-label>
-            <input matInput>
+            <input matInput [(ngModel)]="form.ktcAnalysisResult">
           </mat-form-field>
         </div>
 
       </div>
-      <div fxFlex="100" fxFlex.gt-md="60" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus adipisci necessitatibus, officia culpa
-        quibusdam laudantium sit quos veniam consectetur, sed iste modi ex deserunt ipsum! Neque laboriosam in
-        dignissimos ab nihil praesentium qui modi numquam sint? Dicta excepturi architecto et ipsum voluptatum fugiat
-        quisquam a, quaerat eius accusamus doloribus provident rerum ducimus, impedit distinctio eveniet animi id
-        placeat magni! Eius aperiam autem vel ipsa, tenetur excepturi consequatur at sint aspernatur, sed sit deleniti
-        consequuntur nisi ipsum reiciendis quidem! Excepturi deleniti assumenda unde magni officia sed vero quisquam
-        beatae debitis maxime expedita autem, praesentium sint blanditiis incidunt iure explicabo id fuga.
+      <div fxFlex="100" fxFlex.gt-md="65" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2">
+          <button mat-raised-button color="primary">
+            Print Label
+          </button>
+        </div>
+
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2 p-1 bg-white">
+          <div fxLayoutAlign="start start" class="label-detail" style="width: 900px; height: 225px;">
+            <div class="flex justify-center items-center bf" style="width: 225px; height: 225px;">
+              <img [src]="form.qrcode" alt="" style="width: 100%; height: 100%;">
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="bt br bb"
+              style="width:575px; height: 225px;">
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="font-black bb">
+                RGA TAG
+              </div>
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  Claim no.
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
+                  Claim no.
+                </div>
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  RGA no.
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
+                  RGA no.
+                </div>
+              </div>
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  Customer
+                </div>
+                <div fxFlex="85" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1">
+                  Customer
+                </div>
+              </div>
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  Model no.
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
+                  Model no.
+                </div>
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  Model Name
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
+                  Model Name
+                </div>
+              </div>
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  Product no.
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
+                  Product no.
+                </div>
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  Site no.
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
+                  Site no.
+                </div>
+              </div>
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  Lot no.
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
+                  Lot no.
+                </div>
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  Defective mode
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
+                  Defective mode
+                </div>
+              </div>
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  Disposition
+                </div>
+                <div fxFlex="85" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input type="checkbox" class="me-2 cursor-pointer">
+                    <span>
+                      Repair / Rework
+                    </span>
+                  </div>
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input type="checkbox" class="me-2 cursor-pointer">
+                    <span>
+                      Claim to supplier
+                    </span>
+                  </div>
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input type="checkbox" class="me-2 cursor-pointer">
+                    <span>
+                      Scrap
+                    </span>
+                  </div>
+                  <div fxFlex="33" fxLayoutAlign="start center">
+                    <input type="checkbox" class="me-2 cursor-pointer">
+                    <span>
+                      Return to customer
+                    </span>
+                  </div>
+                  <div fxFlex="66" fxLayoutAlign="start center">
+                    <input type="checkbox" class="me-2 cursor-pointer">
+                    <span>
+                      Other
+                    </span>
+                    <input type="text" name="" id="">
+                  </div>
+                </div>
+              </div>
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                  PIC
+                </div>
+                <div fxFlex="85" fxLayout="row wrap" fxLayoutAlign="center center" class="font-medium ">
+                  <span>
+                    เอาข้อมูลมาจาก sheet "RGAS-2" ช่อง PIC
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -56,7 +181,7 @@
 
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Appearance Check Result </mat-label>
-          <mat-select [compareWith]="objectComparisonFunction">
+          <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.appearance.result">
             <mat-option *ngFor="let item of option1" [value]="item">
               {{item}}
             </mat-option>
@@ -68,14 +193,14 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.appearance.analysisBy">
         </mat-form-field>
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.appearance.analysisDate">
         </mat-form-field>
       </div>
 
@@ -98,7 +223,7 @@
 
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Function Check Result </mat-label>
-          <mat-select [compareWith]="objectComparisonFunction">
+          <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.function.result">
             <mat-option *ngFor="let item of option2" [value]="item">
               {{item}}
             </mat-option>
@@ -110,14 +235,14 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.function.analysisBy">
         </mat-form-field>
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.function.analysisDate">
         </mat-form-field>
       </div>
 
@@ -141,7 +266,7 @@
 
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Electrical Value Check Result </mat-label>
-          <mat-select [compareWith]="objectComparisonFunction">
+          <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.electrical.result">
             <mat-option *ngFor="let item of option2" [value]="item">
               {{item}}
             </mat-option>
@@ -153,14 +278,14 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.electrical.analysisBy">
         </mat-form-field>
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.electrical.analysisDate">
         </mat-form-field>
       </div>
 
@@ -184,7 +309,7 @@
 
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Disassembly Check Result </mat-label>
-          <mat-select [compareWith]="objectComparisonFunction">
+          <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.disassembly.result">
             <mat-option *ngFor="let item of option2" [value]="item">
               {{item}}
             </mat-option>
@@ -196,14 +321,14 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.disassembly.analysisBy">
         </mat-form-field>
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.disassembly.analysisDate">
         </mat-form-field>
       </div>
 
@@ -225,7 +350,7 @@
 
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Microscope Check Result </mat-label>
-          <mat-select [compareWith]="objectComparisonFunction">
+          <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.microscope.result">
             <mat-option *ngFor="let item of option2" [value]="item">
               {{item}}
             </mat-option>
@@ -237,14 +362,14 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.microscope.analysisBy">
         </mat-form-field>
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.microscope.analysisDate">
         </mat-form-field>
       </div>
 
@@ -265,14 +390,14 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Technical Analysis Result </mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.technical.result">
         </mat-form-field>
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Report No.</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.technical.analysisReportNo">
         </mat-form-field>
       </div>
 
@@ -295,7 +420,7 @@
 
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Supplier Analysis Result </mat-label>
-          <mat-select [compareWith]="objectComparisonFunction">
+          <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.supplier.result">
             <mat-option *ngFor="let item of option3" [value]="item">
               {{item}}
             </mat-option>
@@ -319,14 +444,16 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>FAR / PNN Number </mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.supplier.farPnnNumber">
         </mat-form-field>
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Issue Date</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="form.supplier.issueDate" [matDatepicker]="supplierIssueDate_dp">
+          <mat-datepicker-toggle matSuffix [for]="supplierIssueDate_dp"></mat-datepicker-toggle>
+          <mat-datepicker #supplierIssueDate_dp></mat-datepicker>
         </mat-form-field>
       </div>
 
@@ -338,7 +465,7 @@
 
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>KTC Judgment </mat-label>
-          <mat-select [compareWith]="objectComparisonFunction">
+          <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.ktcJudgment">
             <mat-option *ngFor="let item of option3" [value]="item">
               {{item}}
             </mat-option>
@@ -355,6 +482,12 @@
       </div>
 
 
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        Submit
+      </button>
     </div>
 
   </div>

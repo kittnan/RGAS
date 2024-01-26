@@ -9,18 +9,47 @@ import { HttpModelsService } from 'src/app/https/http-models.service';
 
 import { MonthSelectComponent } from '../../dialogs/month-select/month-select.component';
 
-const YEAR_MODE_FORMATS = {
-  parse: {
-    dateInput: 'YYYY',
-  },
-  display: {
-    dateInput: 'YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
 
+
+interface FORM1 {
+  [key: string]: any,
+  claimNo: any,
+  modelNo: any,
+  productNo: any,
+  customerNo: any,
+  modelCode: any,
+  analysisPIC: any,
+  customerName: any,
+  type: any,
+  descriptionJP: any,
+  saleCompany: any,
+  sideNo: any,
+  descriptionENG: any,
+  salePIC: any,
+  qty: any,
+  functionAppearance: any,
+  returnStyle: any,
+  productLotNo: any,
+  AWBNo: any,
+  modelClassification: any,
+  productionMonth: any,
+  InvNo: any,
+  calendarYear: any,
+  commercialDistribution: any,
+  dateReceiveInv: any,
+  claimRegisterDate: any,
+  useAppearance: any,
+  transportationCost: any,
+  unit: any,
+  receiveInfoDate: any,
+  occurredLocation: any,
+  costMonth: any,
+  dueDate: any,
+  importance: any,
+  files: any,
+  status: any,
+  index?: any
+}
 
 @Component({
   selector: 'app-form1',
@@ -29,7 +58,7 @@ const YEAR_MODE_FORMATS = {
 })
 export class Form1Component implements OnInit {
 
-  @Input() form: any = {
+  @Input() form: FORM1 = {
     claimNo: null,
     modelNo: null,
     productNo: null,
@@ -232,4 +261,5 @@ export class Form1Component implements OnInit {
     console.log(this.form);
     this.formChange.emit(this.form)
   }
+
 }

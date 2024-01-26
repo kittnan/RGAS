@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fadeInOnEnterAnimation } from 'angular-animations';
@@ -38,5 +38,7 @@ export class LoginComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
+
+
 
 }

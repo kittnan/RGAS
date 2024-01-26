@@ -1,1 +1,487 @@
-<p>form3 works!</p>
+<div class="flex flex-wrap justify-center items-start w-full mt-1">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <app-sub-title fxFlex="100" [title]="'Report'" class="mt-2 mb-2"></app-sub-title>
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
+      class="me-8 bg-green-300 p-2 rounded-md">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+        <span class="font-black">
+          Pre Report
+        </span>
+      </div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label>Due Date</mat-label>
+        <input matInput [(ngModel)]="form.preReport.dueDate" [matDatepicker]="preReportDueDate_dp">
+        <mat-datepicker-toggle matSuffix [for]="preReportDueDate_dp"></mat-datepicker-toggle>
+        <mat-datepicker #preReportDueDate_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label>Date Submit To Customer</mat-label>
+        <input matInput [(ngModel)]="form.preReport.dateSubmitToCustomer"
+          [matDatepicker]="preReportDateSubmitToCustomer_dp">
+        <mat-datepicker-toggle matSuffix [for]="preReportDateSubmitToCustomer_dp"></mat-datepicker-toggle>
+        <mat-datepicker #preReportDateSubmitToCustomer_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Files</mat-label>
+        <button mat-icon-button matSuffix (click)="preReportFile.click()">
+          <mat-icon>attach_file</mat-icon>
+        </button>
+        <input matInput type="text">
+        <input type="file" hidden #preReportFile>
+      </mat-form-field>
+
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+        <button mat-raised-button color="primary">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let interim of form.interims; let i=index">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
+        class="me-8 bg-green-300 p-2 rounded-md">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+          <span class="font-black">
+            Interim Report
+          </span>
+        </div>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Due Date</mat-label>
+          <input matInput [(ngModel)]="interim.dueDate" [matDatepicker]="interimDueDate_dp">
+          <mat-datepicker-toggle matSuffix [for]="interimDueDate_dp"></mat-datepicker-toggle>
+          <mat-datepicker #interimDueDate_dp></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Date Submit To Customer</mat-label>
+          <input matInput [(ngModel)]="interim.dateSubmitToCustomer" [matDatepicker]="interimDateSubmitToCustomer_dp">
+          <mat-datepicker-toggle matSuffix [for]="interimDateSubmitToCustomer_dp"></mat-datepicker-toggle>
+          <mat-datepicker #interimDateSubmitToCustomer_dp></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Files</mat-label>
+          <button mat-icon-button matSuffix (click)="interimFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input matInput type="text">
+          <input type="file" hidden #interimFile>
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+          <button mat-raised-button color="warn" style="margin-left: 10px;">
+            <mat-icon class="mat-18">delete</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" style="margin-left: 10px;">Send</button>
+
+        </div>
+      </div>
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+      <button *ngIf="form.interims.length== i+1 " mat-raised-button class="btn-success" style="margin-top: 10px;"
+        (click)="onAddNewInterim()"><mat-icon>add</mat-icon>
+      </button>
+
+    </div>
+
+  </ng-container>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
+      class="me-8 bg-green-300 p-2 rounded-md">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+        <span class="font-black">
+          Final report (Date submit to customer)
+        </span>
+      </div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label>Due Date</mat-label>
+        <input matInput [(ngModel)]="form.finalReport.dueDate" [matDatepicker]="finalReportDueDate_dp">
+        <mat-datepicker-toggle matSuffix [for]="finalReportDueDate_dp"></mat-datepicker-toggle>
+        <mat-datepicker #finalReportDueDate_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label>Date Submit To Customer</mat-label>
+        <input matInput [(ngModel)]="form.finalReport.dateSubmitToCustomer"
+          [matDatepicker]="finalReportDateSubmitToCustomer_dp">
+        <mat-datepicker-toggle matSuffix [for]="finalReportDateSubmitToCustomer_dp"></mat-datepicker-toggle>
+        <mat-datepicker #finalReportDateSubmitToCustomer_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Files</mat-label>
+        <button mat-icon-button matSuffix (click)="finalReportFile.click()">
+          <mat-icon>attach_file</mat-icon>
+        </button>
+        <input matInput type="text">
+        <input type="file" hidden #finalReportFile>
+      </mat-form-field>
+
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+        <button mat-raised-button color="primary">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
+      class="me-8 bg-green-300 p-2 rounded-md">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+        <span class="font-black">
+          Final report (Date up load in OBL III)
+        </span>
+      </div>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label>Due Date</mat-label>
+        <input matInput [(ngModel)]="form.finalReportOBL.dueDate" [matDatepicker]="finalReportOBLDueDate_dp">
+        <mat-datepicker-toggle matSuffix [for]="finalReportOBLDueDate_dp"></mat-datepicker-toggle>
+        <mat-datepicker #finalReportOBLDueDate_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label>Date Submit To Customer</mat-label>
+        <input matInput [(ngModel)]="form.finalReportOBL.dateSubmitToCustomer"
+          [matDatepicker]="finalReportOBLDateSubmitToCustomer_dp">
+        <mat-datepicker-toggle matSuffix [for]="finalReportOBLDateSubmitToCustomer_dp"></mat-datepicker-toggle>
+        <mat-datepicker #finalReportOBLDateSubmitToCustomer_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Files</mat-label>
+        <button mat-icon-button matSuffix (click)="finalReportOBLFile.click()">
+          <mat-icon>attach_file</mat-icon>
+        </button>
+        <input matInput type="text">
+        <input type="file" hidden #finalReportOBLFile>
+      </mat-form-field>
+
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+        <button mat-raised-button color="primary">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let questionAnswer of form.questionAnswers; let i=index">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
+        class="me-8 bg-green-300 p-2 rounded-md">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+          <span class="font-black">
+            Question & Answer
+          </span>
+        </div>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Due Date</mat-label>
+          <input matInput [(ngModel)]="questionAnswer.dueDate" [matDatepicker]="questionAnswerDueDate_dp">
+          <mat-datepicker-toggle matSuffix [for]="questionAnswerDueDate_dp"></mat-datepicker-toggle>
+          <mat-datepicker #questionAnswerDueDate_dp></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Date Submit To Customer</mat-label>
+          <input matInput [(ngModel)]="questionAnswer.dateSubmitToCustomer"
+            [matDatepicker]="questionAnswerDueSubmitToCustomer_dp">
+          <mat-datepicker-toggle matSuffix [for]="questionAnswerDueSubmitToCustomer_dp"></mat-datepicker-toggle>
+          <mat-datepicker #questionAnswerDueSubmitToCustomer_dp></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Files</mat-label>
+          <button mat-icon-button matSuffix (click)="questionAnswerFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input matInput type="text">
+          <input type="file" hidden #questionAnswerFile>
+        </mat-form-field>
+
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+          <button mat-raised-button color="warn" style="margin-left: 10px;">
+            <mat-icon class="mat-18">delete</mat-icon>
+          </button>
+          <button mat-raised-button color="primary" style="margin-left: 10px;">Send</button>
+
+        </div>
+      </div>
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+      <button *ngIf="form.questionAnswers.length== i+1 " mat-raised-button class="btn-success" style="margin-top: 10px;"
+        (click)="onAddNewQuestionAnswer()"><mat-icon>add</mat-icon>
+      </button>
+
+    </div>
+
+  </ng-container>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>NG</mat-label>
+        <input matInput [(ngModel)]="form.ng">
+        <span matSuffix>pcs</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Defect phenomenon (Major classification)</mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Defect details classification (5M1E)</mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Not accepted</mat-label>
+        <input matInput [(ngModel)]="form.ng">
+        <span matSuffix>pcs</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Detailed phenomenon (Middle classification) </mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Defect cause classification (5M1E)</mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>No abnormality</mat-label>
+        <input matInput [(ngModel)]="form.ng">
+        <span matSuffix>pcs</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Cause (Minor classfication) </mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Rule 3-principle ※ Occureence</mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Within spec</mat-label>
+        <input matInput [(ngModel)]="form.ng">
+        <span matSuffix>pcs</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Occurrence process category </mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Rule 3-principle ※ Outflow</mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Not recurred</mat-label>
+        <input matInput [(ngModel)]="form.ng">
+        <span matSuffix>pcs</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Occurrence process category details </mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>IATF no.</mat-label>
+        <input matInput>
+      </mat-form-field>
+    </div>
+  </div>
+
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Difference between Report and Real cause</mat-label>
+        <input matInput>
+        <span matSuffix>pcs</span>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Maker name </mat-label>
+        <mat-select [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of tempOption" [value]="item.value">
+            {{item.valueView}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Caused by Customer </mat-label>
+        <input matInput>
+        <span matSuffix>pcs</span>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Out of Warranty by Customer </mat-label>
+        <input matInput>
+        <span matSuffix>pcs</span>
+      </mat-form-field>
+    </div>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>Root cause </mat-label>
+        <input matInput>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let rootCauseAction of form.rootCauseActions; let i=index">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Root cause action </mat-label>
+          <input matInput>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>Effective date</mat-label>
+          <input matInput [matDatepicker]="rootCauseActionEffectiveDate_dp">
+          <mat-datepicker-toggle matSuffix [for]="rootCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
+          <mat-datepicker #rootCauseActionEffectiveDate_dp></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+      <button *ngIf="form.rootCauseActions.length== i+1 " mat-raised-button class="btn-success" style="margin-top: 10px;"
+        (click)="onAddNewRootCauseAction()"><mat-icon>add</mat-icon>
+      </button>
+
+    </div>
+  </ng-container>
+
+
+
+
+</div>
