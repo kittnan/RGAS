@@ -11,13 +11,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 b1">
-        <button mat-raised-button color="primary" (click)="fileUpload.click()">
-          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
-            Upload OBL !!!
-            <mat-icon class="mat-18">upload</mat-icon>
-          </div>
-          <input type="file" hidden #fileUpload accept=".xlsx" (change)="onUploadFile($event)">
-        </button>
+        Up load OBL III
       </mat-card>
       <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
         Closed/Pending
@@ -43,6 +37,15 @@
 
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <app-sub-title fxFlex="100" [title]="'Claim Information'" class="mt-2 mb-2"></app-sub-title>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-2 mb-2">
+        <button mat-raised-button color="primary" (click)="fileUploadOBL.click()">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
+            Upload OBL !!!
+            <mat-icon class="mat-18">upload</mat-icon>
+          </div>
+          <input type="file" hidden #fileUploadOBL accept=".xlsx" (change)="onUploadFile($event)">
+        </button>
+      </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Claim Notification No.</mat-label>
@@ -73,15 +76,15 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <app-autocomplete *ngIf="modelOptionString.length>0" fxFlex="100" [title]="'KTC Model Code'"
-          [options]="modelOptionString" [(value)]="form.modelCode"
+          [options]="modelOptionString" [myControl]="modelCodeForm"
           (valueChange)="onChangeModelCode($event)"></app-autocomplete>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis PIC</mat-label>
           <mat-select [(ngModel)]="form.analysisPIC" [compareWith]="objectComparisonFunction">
-            <mat-option *ngFor="let item of tempOption" [value]="item">
-              {{item.viewValue}}
+            <mat-option *ngFor="let user of analysisPICOption" [value]="user">
+              {{user.firstName}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -143,7 +146,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Q'ty</mat-label>
-          <input matInput [(ngModel)]="form.qty">
+          <input matInput type="number" [min]="1" [(ngModel)]="form.qty">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -199,8 +202,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Production Month</mat-label>
-          <input readonly matInput [(ngModel)]="form.productionMonth"
-            (click)="monthSelectProductionMonth('productionMonth')">
+          <input readonly matInput [(ngModel)]="form.productionMonth" (click)="onMonthChange('productionMonth')">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -215,8 +217,11 @@
 
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <app-year-picker fxFlex="100" [label]="'Calendar Year'"
-          (yearEmit)="emitYear($event,'calendarYear')"></app-year-picker>
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Calendar Year</mat-label>
+          <input readonly matInput [(ngModel)]="form.calendarYear" (click)="onMonthChange('calendarYear')">
+        </mat-form-field>
+
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -261,7 +266,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
           <mat-label>Transportation Cost</mat-label>
-          <input matInput [(ngModel)]="form.transportationCost">
+          <input matInput type="number" [min]="0" [(ngModel)]="form.transportationCost">
         </mat-form-field>
         <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
           <mat-label>Unit</mat-label>
@@ -298,7 +303,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Cost Month</mat-label>
-          <input readonly matInput [(ngModel)]="form.costMonth" (click)="monthSelectProductionMonth('costMonth')">
+          <input readonly matInput [(ngModel)]="form.costMonth" (click)="onMonthChange('costMonth')">
         </mat-form-field>
       </div>
     </div>
@@ -330,8 +335,28 @@
       </div>
     </div>
 
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label>File Upload</mat-label>
+          <button mat-icon-button matSuffix (click)="informationFile.click()">
+            <mat-icon>attach_file</mat-icon>
+          </button>
+          <input [disabled]="!form.registerNo" [readonly]="true" matInput type="text" (click)="informationFile.click()">
+          <input type="file" hidden #informationFile (change)="onUploadFileClaimInformation($event)">
+          <mat-hint *ngIf="!form.registerNo">Please save!!</mat-hint>
+        </mat-form-field>
+      </div>
+      <div fxFlex="auto"></div>
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+      <app-file-list fxFlex="100" [files]="form.files" ></app-file-list>
+
+    </div>
+
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
-      <button mat-raised-button color="primary" (click)="foo()">
+      <button mat-raised-button color="primary" (click)="onsubmit()">
         Save {{form.index}}
       </button>
     </div>

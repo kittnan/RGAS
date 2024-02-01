@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { Form3MenuComponent } from './form3-menu/form3-menu.component';
 
 @Component({
   selector: 'app-form3',
@@ -45,8 +47,17 @@ export class Form3Component implements OnInit {
         index: 1
       }
     ],
+    leakCauseActions: [
+      {
+        value: null,
+        date: null,
+        index: 1
+      }
+    ],
   }
-  constructor() { }
+  constructor(
+    private _bottomSheet: MatBottomSheet
+  ) { }
 
   ngOnInit(): void {
   }
@@ -55,19 +66,31 @@ export class Form3Component implements OnInit {
     this.form.interims.push({ ...this.tempObj, index: this.form.interims.length + 1 })
   }
   onAddNewQuestionAnswer() {
-    this.form.questionAnswers.push({ ...this.tempObj, index: this.form.interims.length + 1 })
+    this.form.questionAnswers.push({ ...this.tempObj, index: this.form.questionAnswers.length + 1 })
   }
   onAddNewRootCauseAction() {
     this.form.rootCauseActions.push({
       value: null,
       date: null,
-      index: this.form.interims.length + 1
+      index: this.form.rootCauseActions.length + 1
+    })
+  }
+  onAddNewLeakCauseAction() {
+    this.form.leakCauseActions.push({
+      value: null,
+      date: null,
+      index: this.form.leakCauseActions.length + 1
     })
   }
 
   // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
     return option.id === value.id;
+  }
+
+  // todo open bottom sheet
+  openBottomSheet(): void {
+    this._bottomSheet.open(Form3MenuComponent);
   }
 
 

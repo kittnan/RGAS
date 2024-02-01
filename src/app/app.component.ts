@@ -1,6 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LocalStoreService } from './services/local-store.service';
 interface SideItem {
   title: string,
   icon: string,
@@ -110,27 +111,19 @@ export class AppComponent {
 
   ]
 
-  // fillerContent = Array.from(
-  //   {length: 50},
-  //   () =>
-  //     `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-  //      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-  //      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-  //      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-  //      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-  // );
   login: boolean = false
   private _mobileQueryListener: () => void;
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
-    private router: Router) {
+    private router: Router,
+    private $local: LocalStoreService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('RGAS_login') == 'ok') {
+    if (localStorage.getItem('RGAS_user')) {
       this.login = true
     } else {
       this.login = false
@@ -156,7 +149,19 @@ export class AppComponent {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   onLogout() {
-    localStorage.removeItem('RGAS_login')
+    this.$local.removeAllLocalStore()
     this.router.navigate(['/login']).then(() => location.reload())
+  }
+
+  // todo show user login nane
+  displayName() {
+    let userLogin: any = localStorage.getItem('RGAS_user')
+    userLogin = userLogin ? JSON.parse(userLogin) : null
+    if (userLogin) {
+      let firstName = userLogin.firstName ? userLogin.firstName : ''
+      let lastName = userLogin.lastName ? userLogin.lastName[0] : ''
+      return `${firstName}-${lastName}`
+    }
+    return ''
   }
 }

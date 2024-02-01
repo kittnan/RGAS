@@ -8,8 +8,10 @@ import { HttpMastersService } from 'src/app/https/http-masters.service';
 import { HttpModelsService } from 'src/app/https/http-models.service';
 
 import { MonthSelectComponent } from '../../dialogs/month-select/month-select.component';
-
-
+import { FormControl } from '@angular/forms';
+import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
+import { environment } from 'src/environments/environment';
+import { HttpUsersService } from 'src/app/https/http-users.service';
 
 interface FORM1 {
   [key: string]: any,
@@ -48,7 +50,9 @@ interface FORM1 {
   importance: any,
   files: any,
   status: any,
-  index?: any
+  index?: any,
+  no?: any,
+  registerNo?: any
 }
 
 @Component({
@@ -57,7 +61,8 @@ interface FORM1 {
   styleUrls: ['./form1.component.scss'],
 })
 export class Form1Component implements OnInit {
-
+  // todo path file server
+  pathFile = environment.pathSaveFile
   @Input() form: FORM1 = {
     claimNo: null,
     modelNo: null,
@@ -92,12 +97,15 @@ export class Form1Component implements OnInit {
     costMonth: null,
     dueDate: null,
     importance: null,
-    files: null,
+    files: [],
     status: null
 
   }
+  // todo form output event
   @Output() formChange: EventEmitter<any> = new EventEmitter()
   @Output() maxChange: EventEmitter<any> = new EventEmitter()
+
+  // todo temp option
   tempOption: any[] = [
     {
       value: '1',
@@ -109,27 +117,43 @@ export class Form1Component implements OnInit {
     },
   ]
 
+  // todo model option
   modelOption: any[] = []
   modelOptionString: string[] = []
 
+  // todo customer option
   customerOptionString: string[] = []
 
+  // todo function option
   functionAppearanceOptionString: string[] = ['Function', 'Appearance']
 
+  // todo return style option
   returningStyleOption: any = []
 
+  // todo model classification option
   modelClassificationOption: any = []
 
+  // todo model commercial option
   commercialDistributionOption: any = []
 
+  // todo model use appearance option
   useAppearancelicationOption: any = []
 
+  // todo model currency option
   currencyOption: any = []
 
+  // todo model occur option
   occurredLocationOption: any = []
 
+  // todo claim rank option
   claimRankOptionString: string[] = ['S >= 3 pcs', 'A = 2 pcs', 'B = 1 pc']
 
+  // todo analysis PIC option
+  analysisPICOption: any[] = []
+
+
+  // todo form model code
+  modelCodeForm: FormControl = new FormControl()
 
 
   // modelOptionString!: Observable<string[]>
@@ -137,25 +161,58 @@ export class Form1Component implements OnInit {
   // modelCodeCtrl: FormControl<string> = this.claimInfoCtrl.get('modelCode') as FormControl<string>;
 
 
-  @ViewChild('fileUpload', { static: true }) fileUpload!: ElementRef;
+  // todo element files control
+  @ViewChild('fileUploadOBL', { static: true }) fileUploadOBL!: ElementRef;
+  @ViewChild('informationFile', { static: true }) informationFile!: ElementRef;
+
+
+  folders: any[] = [
+    {
+      name: 'Photos',
+      updated: new Date('1/1/16'),
+      action: 'action'
+    },
+    {
+      name: 'Recipes',
+      updated: new Date('1/17/16'),
+      action: 'action'
+    },
+    {
+      name: 'Work',
+      updated: new Date('1/28/16'),
+      action: 'action'
+    },
+    {
+      name: 'Work',
+      updated: new Date('1/28/16'),
+      action: 'action'
+    },
+    {
+      name: 'Work',
+      updated: new Date('1/28/16'),
+      action: 'action'
+    },
+  ];
+
 
   constructor(
     public dialog: MatDialog,
     private $model: HttpModelsService,
     private $master: HttpMastersService,
+    private $fileUpload: HttpFileUploadService,
+    private $user: HttpUsersService
   ) {
 
   }
 
   async ngOnInit(): Promise<void> {
-
     this.modelOption = await lastValueFrom(this.$model.get(new HttpParams()))
     // this.modelOptionString = new Observable<string[]>((observer) => {
     //   const data: string[] = this.modelOption.map((item: any) => item['Model'].toString())
     //   observer.next(data)
     //   observer.complete()
     // })
-    this.modelOptionString = this.modelOption.map((item: any) => item['Model'].toString())
+    this.modelOptionString = this.modelOption.map((item: any) => item['Model Name']).filter((item: any) => item)
     let customerOptionString: string[] = this.modelOption.map((item: any) => item['Customer'] ? item['Customer'] : '').filter((item: any) => item)
     this.customerOptionString = [...new Set(customerOptionString.map(item => item))];
 
@@ -171,6 +228,8 @@ export class Form1Component implements OnInit {
 
     this.occurredLocationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['occurredLocation']))))
 
+    let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
+    this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
   }
 
 
@@ -189,30 +248,73 @@ export class Form1Component implements OnInit {
       const worksheet: ExcelJS.Worksheet | undefined = workbook.getWorksheet(1);
 
       if (worksheet) {
-        const claimNo: any = this.getValueOfCell('J2', worksheet)
-        const customerNo: any = this.getValueOfCell('AQ14', worksheet)
-        let productType = this.getValueOfCell('J8', worksheet)
-        let model: any = this.modelOption.find((item: any) => item['KYD Cd'] == productType)
-        const customerName: any = this.getValueOfCell('W10', worksheet)
-
+        let modelCode = this.getValueOfCell('W8', worksheet)
+        let model: any = this.modelOption.find((item: any) => item['Model Name'] == modelCode)
+        let dueDate = this.getValueOfCell('R17', worksheet)
+        dueDate = dueDate ? moment(dueDate) : null
         this.form = {
           ...this.form,
-          claimNo: claimNo,
-          customerNo: customerNo,
-          modelCode: model ? model.Model : null,
-          modelNo: model ? model['Model Name'] : null,
-          customerName: customerName,
-          saleCompany: this.getValueOfCell('AQ23', worksheet),
+          claimNo: this.getValueOfCell('J2', worksheet),
+          customerNo: this.getValueOfCell('AQ14', worksheet),
+          customerName: this.getValueOfCell('W10', worksheet),
+          saleCompany: this.getValueOfCell('W12', worksheet),
+          salePIC: this.getValueOfCell('BC7', worksheet),
+          dueDate: dueDate,
+
+          modelCode: modelCode ? modelCode : null,
+          modelNo: model ? model['Model'] : null,
           qty: this.getValueOfCell('AV17', worksheet),
-          productLotNo: this.getValueOfCell('M26', worksheet)
+          productLotNo: this.getValueOfCell('M26', worksheet),
+          occurredLocation: this.getValueOfCell('R15', worksheet),
+
+          descriptionJP: this.getValueOfCell('J32', worksheet),
+          descriptionENG: this.getValueOfCell('J37', worksheet),
+
 
         }
-        this.maxChange.emit(this.form.qty)
-        this.fileUpload.nativeElement.value = ''
+        this.modelCodeForm.patchValue(modelCode)
+        console.log("🚀 ~ this.form:", this.form)
+        // this.maxChange.emit(this.form.qty)
+        this.fileUploadOBL.nativeElement.value = ''
       }
       console.log('Excel file successfully read.');
     } catch (error) {
       console.error('Error reading Excel file:', error);
+    }
+  }
+
+  // todo upload claim information file
+  async onUploadFileClaimInformation($event: any) {
+    try {
+      let file: any = $event.target.files[0] as File;
+      if (file) {
+        const formData: FormData = new FormData()
+        formData.append('path', `${this.pathFile}/${this.form.registerNo}/`)
+        formData.append('file', file)
+        const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+        const newFile = {
+          ...resFile[0],
+          index: 1,
+          date: new Date(),
+        }
+        if (this.form.files && this.form.files.some((item: any) => item.filename == newFile.filename)) {
+          const index = this.form.files.findIndex((item: any) => item.filename == newFile.filename)
+          this.form.files[index] = newFile
+        } else {
+          this.form.files = !this.form.files ? [newFile] : [...this.form.files, {
+            ...resFile[0],
+            index: this.form.files.length + 1,
+            date: new Date(),
+          }]
+        }
+        this.informationFile.nativeElement.value = ''
+      }
+
+
+      console.log("🚀 ~ this.form:", this.form)
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+
     }
   }
   // todo excel fn
@@ -227,7 +329,7 @@ export class Form1Component implements OnInit {
     return option.id === value.id;
   }
 
-  async monthSelectProductionMonth(key: string) {
+  async onMonthChange(key: string) {
     const month = await this.monthSelect()
     this.form[key] = month
   }
@@ -245,20 +347,21 @@ export class Form1Component implements OnInit {
   }
   onChangeModelCode($event: any) {
     let value: any = $event
-    const founded: any = this.modelOption.find((item: any) => item['Model'] == value)
+    const founded: any = this.modelOption.find((item: any) => item['Model Name'] == value)
+    this.form['modelCode'] = value
     if (founded) {
-      this.form['modelNo'] = founded['Model Name']
+      this.form['modelNo'] = founded['Model'].toString()
     } else {
       this.form['modelNo'] = ''
     }
+
   }
   emitYear(e: any, key: string) {
     this.form[key] = e
   }
 
-  // todo test fn
-  foo() {
-    console.log(this.form);
+  // todo on submit
+  onsubmit() {
     this.formChange.emit(this.form)
   }
 

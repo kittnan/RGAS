@@ -90,13 +90,13 @@ export class Rgas2Component implements OnInit {
     const newArray2 = Array.from({ length: this.itemMax }, (_, index) => index + 1);
     this.itemNumberList = newArray2
   }
-  onMaxChange(max: number) {
+  onMaxChange(emitMax: number) {
     this.allItems = []
-    this.itemMax = max
-    for (let i = 0; i < max; i++) {
-      this.addAllItemsForm()
+    this.itemMax = emitMax
+    for (let i = 0; i < emitMax; i++) {
+      // this.addAllItemsForm()
     }
-    this.updateItemNumberList()
+    // this.updateItemNumberList()
   }
 
   // todo for toggle form

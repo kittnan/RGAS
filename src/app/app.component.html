@@ -1,7 +1,7 @@
 <div *ngIf="login" class="example-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">DEVELOP</h1>
+    <h1 class="example-app-name">RGAS</h1>
     <div class="flex-auto"></div>
     <div class="flex justify-around items-center me-4 gap-1">
       <mat-slide-toggle color="warn" [checked]="theme" (change)="toggleTheme()">
@@ -14,8 +14,8 @@
         <mat-icon class="mat-18">
           contact_mail
         </mat-icon>
-        <span class="text-sm">
-          Kittinan
+        <span class="text-sm capitalize">
+          {{displayName()}}
         </span>
       </div>
     </button>

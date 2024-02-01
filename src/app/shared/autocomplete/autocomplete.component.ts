@@ -10,8 +10,8 @@ import { map, startWith } from 'rxjs/operators';
 export class AutocompleteComponent implements OnInit {
 
   filteredOptions!: Observable<string[]>;
-  myControl: FormControl = new FormControl('');
   myControlChange: EventEmitter<FormControl> = new EventEmitter()
+  @Input()myControl: FormControl = new FormControl('');
   @Input() value: any
   @Input() title: string = 'title'
   @Input() options: string[] = ['One', 'Two', 'Three'];

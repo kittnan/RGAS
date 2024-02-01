@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RgasManageComponent } from './rgas-manage.component';
+import { OperatorRgas1Component } from './operator-rgas1.component';
 
-describe('RgasManageComponent', () => {
-  let component: RgasManageComponent;
-  let fixture: ComponentFixture<RgasManageComponent>;
+describe('OperatorRgas1Component', () => {
+  let component: OperatorRgas1Component;
+  let fixture: ComponentFixture<OperatorRgas1Component>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RgasManageComponent ]
+      declarations: [ OperatorRgas1Component ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(RgasManageComponent);
+    fixture = TestBed.createComponent(OperatorRgas1Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

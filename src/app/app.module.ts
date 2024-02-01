@@ -22,6 +22,8 @@ import { MaterialModule } from './material/material.module';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './shared/login/login.component';
+import { SectionHeadComponent } from './pages/section-head/section-head.component';
+import { DepartmentHeadComponent } from './pages/department-head/department-head.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -48,7 +50,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   declarations: [
     AppComponent,
     NotfoundComponent,
-    LoginComponent
+    LoginComponent,
+    SectionHeadComponent,
+    DepartmentHeadComponent
   ],
   imports: [
     BrowserModule,

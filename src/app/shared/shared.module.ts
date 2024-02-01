@@ -12,11 +12,12 @@ import { YearPickerComponent } from './year-picker/year-picker.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Rgas1Component } from '../rgas/rgas1/rgas1.component';
 import { Rgas2Component } from '../rgas/rgas2/rgas2.component';
-import { RgasManageComponent } from '../rgas/rgas-manage/rgas-manage.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { Form1MultipleComponent } from './rgas2/form1-multiple/form1-multiple.component';
 import { Form2Component } from './rgas2/form2/form2.component';
 import { Form3Component } from './rgas2/form3/form3.component';
+import { Form3MenuComponent } from './rgas2/form3/form3-menu/form3-menu.component';
+import { FileListComponent } from './file-list/file-list.component';
 
 
 let items = [
@@ -27,7 +28,6 @@ let items = [
   TitleComponent,
   Rgas1Component,
   Rgas2Component,
-  RgasManageComponent
 
 ]
 
@@ -38,6 +38,8 @@ let items = [
     Form1MultipleComponent,
     Form2Component,
     Form3Component,
+    Form3MenuComponent,
+    FileListComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ let items = [
     Form1MultipleComponent,
     Form2Component,
     Form3Component,
+    FileListComponent,
   ]
 })
 export class SharedModule { }

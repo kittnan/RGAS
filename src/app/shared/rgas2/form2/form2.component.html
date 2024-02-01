@@ -19,8 +19,8 @@
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>PIC</mat-label>
             <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.PIC">
-              <mat-option *ngFor="let item of tempOption" [value]="item">
-                {{item.viewValue}}
+              <mat-option *ngFor="let user of analysisPICOption" [value]="user">
+                {{user.firstName}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -198,9 +198,12 @@
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.appearance.analysisDate">
+          <input matInput [(ngModel)]="form.appearance.analysisDate" [matDatepicker]="appearance_dp">
+          <mat-datepicker-toggle matSuffix [for]="appearance_dp"></mat-datepicker-toggle>
+          <mat-datepicker #appearance_dp></mat-datepicker>
         </mat-form-field>
       </div>
 
@@ -212,8 +215,12 @@
             <mat-icon>attach_file</mat-icon>
           </button>
           <input matInput type="text">
-          <input type="file" hidden #appearanceFile>
+          <input type="file" hidden #appearanceFile (change)="onUploadFile($event,'appearance')">
         </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+        <app-file-list fxFlex="100" [files]="form.appearance.files"></app-file-list>
       </div>
 
     </div>
@@ -242,7 +249,9 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.function.analysisDate">
+          <input matInput [(ngModel)]="form.function.analysisDate" [matDatepicker]="function_dp">
+          <mat-datepicker-toggle matSuffix [for]="function_dp"></mat-datepicker-toggle>
+          <mat-datepicker #function_dp></mat-datepicker>
         </mat-form-field>
       </div>
 
@@ -254,8 +263,11 @@
             <mat-icon>attach_file</mat-icon>
           </button>
           <input matInput type="text">
-          <input type="file" hidden #functionFile>
+          <input type="file" hidden #functionFile (change)="onUploadFile($event,'function')">
         </mat-form-field>
+      </div>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+        <app-file-list fxFlex="100" [files]="form.function.files"></app-file-list>
       </div>
 
     </div>
@@ -285,7 +297,9 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.electrical.analysisDate">
+          <input matInput [(ngModel)]="form.electrical.analysisDate" [matDatepicker]="electrical_dp">
+          <mat-datepicker-toggle matSuffix [for]="electrical_dp"></mat-datepicker-toggle>
+          <mat-datepicker #electrical_dp></mat-datepicker>
         </mat-form-field>
       </div>
 
@@ -297,9 +311,13 @@
             <mat-icon>attach_file</mat-icon>
           </button>
           <input matInput type="text">
-          <input type="file" hidden #electricalFile>
+          <input type="file" hidden #electricalFile (change)="onUploadFile($event,'electrical')">
         </mat-form-field>
       </div>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+        <app-file-list fxFlex="100" [files]="form.electrical.files"></app-file-list>
+      </div>
+
 
     </div>
 
@@ -328,7 +346,9 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.disassembly.analysisDate">
+          <input matInput [(ngModel)]="form.disassembly.analysisDate" [matDatepicker]="disassembly_dp">
+          <mat-datepicker-toggle matSuffix [for]="disassembly_dp"></mat-datepicker-toggle>
+          <mat-datepicker #disassembly_dp></mat-datepicker>
         </mat-form-field>
       </div>
 
@@ -340,8 +360,11 @@
             <mat-icon>attach_file</mat-icon>
           </button>
           <input matInput type="text">
-          <input type="file" hidden #disassemblyFile>
+          <input type="file" hidden #disassemblyFile (change)="onUploadFile($event,'disassembly')">
         </mat-form-field>
+      </div>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+        <app-file-list fxFlex="100" [files]="form.disassembly.files"></app-file-list>
       </div>
 
     </div>
@@ -369,7 +392,9 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.microscope.analysisDate">
+          <input matInput [(ngModel)]="form.microscope.analysisDate" [matDatepicker]="microscope_dp">
+          <mat-datepicker-toggle matSuffix [for]="microscope_dp"></mat-datepicker-toggle>
+          <mat-datepicker #microscope_dp></mat-datepicker>
         </mat-form-field>
       </div>
 
@@ -381,8 +406,11 @@
             <mat-icon>attach_file</mat-icon>
           </button>
           <input matInput type="text">
-          <input type="file" hidden #microscopeFile>
+          <input type="file" hidden #microscopeFile (change)="onUploadFile($event,'microscope')">
         </mat-form-field>
+      </div>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+        <app-file-list fxFlex="100" [files]="form.microscope.files"></app-file-list>
       </div>
 
     </div>
@@ -408,10 +436,15 @@
             <mat-icon>attach_file</mat-icon>
           </button>
           <input matInput type="text">
-          <input type="file" hidden #technicalFile>
+          <input type="file" hidden #technicalFile (change)="onUploadFile($event,'technical')">
         </mat-form-field>
       </div>
+
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      </div>
+
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+        <app-file-list fxFlex="100" [files]="form.technical.files"></app-file-list>
       </div>
 
     </div>
@@ -433,12 +466,16 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>File Upload</mat-label>
-          <button mat-icon-button matSuffix (click)="appearanceFile.click()">
+          <button mat-icon-button matSuffix (click)="supplierFile.click()">
             <mat-icon>attach_file</mat-icon>
           </button>
           <input matInput type="text">
-          <input type="file" hidden #appearanceFile>
+          <input type="file" hidden #supplierFile (change)="onUploadFile($event,'supplier')">
         </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+        <app-file-list fxFlex="100" [files]="form.supplier.files"></app-file-list>
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
@@ -484,7 +521,7 @@
 
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
       <button mat-raised-button color="primary" (click)="onSubmit()">
         Submit
       </button>

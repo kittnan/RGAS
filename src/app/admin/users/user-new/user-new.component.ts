@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+import { HttpUsersService } from 'src/app/https/http-users.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
@@ -65,7 +67,8 @@ export class UserNewComponent implements OnInit {
 
   })
   constructor(
-    private router: Router
+    private router: Router,
+    private $user: HttpUsersService
   ) { }
 
   ngOnInit(): void {
@@ -81,13 +84,26 @@ export class UserNewComponent implements OnInit {
       showCancelButton: true
     }).then((v: SweetAlertResult) => {
       if (v.isConfirmed) {
-        alert('submit')
+        this.create()
       }
     })
 
   }
+  async create() {
+    try {
+      await lastValueFrom(this.$user.create(this.userForm.value))
+      Swal.fire({
+        title: 'User created',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(()=>location.reload())
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
   onClickUserManage() {
-    this.router.navigate(['users/manage'])
+    this.router.navigate(['admin/users-manage'])
   }
 
 

@@ -1,0 +1,14 @@
+<div *ngIf="showAlway ||  files && files.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+  <mat-list fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+    <div  mat-subheader  >
+    <span [matBadge]="files ? files.length : 0 " matBadgeOverlap="false" >Files</span>
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+      <mat-list-item fxFlex="100" fxFlex.gt-md="20" class="" *ngFor="let file of files">
+        <mat-icon mat-list-icon>note</mat-icon>
+        <div mat-line class="cursor-pointer" [title]="file.filename">{{file.filename}}</div>
+        <div mat-line> {{file.date | date}} </div>
+      </mat-list-item>
+    </div>
+  </mat-list>
+</div>

@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
-import { NotfoundComponent } from './notfound/notfound.component';
-import { LoginComponent } from './shared/login/login.component';
 import { AdminModule } from './admin/admin.module';
-import { Rgas2Component } from './rgas/rgas2/rgas2.component';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { DepartmentHeadModule } from './pages/department-head/department-head.module';
+import { EngineerModule } from './pages/engineer/engineer.module';
+import { InterpreterModule } from './pages/interpreter/interpreter.module';
+import { OperatorModule } from './pages/operator/operator.module';
+import { SectionHeadModule } from './pages/section-head/section-head.module';
+import { LoginComponent } from './shared/login/login.component';
 
 const routes: Routes = [
   {
@@ -22,38 +26,32 @@ const routes: Routes = [
     canActivate: [],
   },
   {
-    path: 'rgas2',
-    component: Rgas2Component
+    path: 'operator',
+    loadChildren: () => OperatorModule,
+    canActivate: [],
   },
-  // {
-  //   path: 'models',
-  //   component: ModelsComponent,
-  //   children: [
-  //     {
-  //       path: 'manage',
-  //       component: ModelsManageComponent
-  //     },
+  {
+    path: 'engineer',
+    loadChildren: () => EngineerModule,
+    canActivate: [],
+  },
+  {
+    path: 'sectionHead',
+    loadChildren: () => SectionHeadModule,
+    canActivate: [],
+  },
+  {
+    path: 'interpreter',
+    loadChildren: () => InterpreterModule,
+    canActivate: [],
+  },
+  {
+    path: 'departmentHead',
+    loadChildren: () => DepartmentHeadModule,
+    canActivate: [],
+  },
 
-  //   ]
-  // },
-  // {
-  //   path: 'rgas',
-  //   component: RgasComponent,
-  //   children: [
-  //     {
-  //       path: 'manage',
-  //       component: RgasManageComponent
-  //     },
-  //     {
-  //       path: '1',
-  //       component: Rgas1Component
-  //     },
-  //     {
-  //       path: '2',
-  //       component: Rgas2Component
-  //     }
-  //   ]
-  // },
+
   { path: '**', component: NotfoundComponent }
 ];
 
