@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OperatorRgas1Component implements OnInit {
 
-  constructor() { }
+  claim: any = null
+  constructor(
+
+  ) {
+
+
+  }
 
   ngOnInit(): void {
   }

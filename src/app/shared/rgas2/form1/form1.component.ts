@@ -206,6 +206,8 @@ export class Form1Component implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log(this.form);
+
     this.modelOption = await lastValueFrom(this.$model.get(new HttpParams()))
     // this.modelOptionString = new Observable<string[]>((observer) => {
     //   const data: string[] = this.modelOption.map((item: any) => item['Model'].toString())
@@ -230,6 +232,15 @@ export class Form1Component implements OnInit {
 
     let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
     this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
+
+    if (this.form && this.form.registerNo) {
+      this.setDefaultValue()
+    }
+  }
+
+  // todo set default value
+  setDefaultValue() {
+    this.modelCodeForm.patchValue(this.form.modelCode)
   }
 
 
@@ -300,6 +311,7 @@ export class Form1Component implements OnInit {
         if (this.form.files && this.form.files.some((item: any) => item.filename == newFile.filename)) {
           const index = this.form.files.findIndex((item: any) => item.filename == newFile.filename)
           this.form.files[index] = newFile
+
         } else {
           this.form.files = !this.form.files ? [newFile] : [...this.form.files, {
             ...resFile[0],

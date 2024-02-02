@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { TokenStorageService } from 'src/app/auth/token-storage.service';
 import { lastValueFrom } from 'rxjs';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -53,6 +54,7 @@ export class LoginComponent implements OnInit {
         username: username,
         password: password
       }))
+      console.log("🚀 ~ userLogin:", userLogin)
       if (userLogin && userLogin.length > 0) {
         localStorage.setItem('RGAS_user', JSON.stringify(userLogin[0]))
         this.userLogin = userLogin[0]
@@ -65,7 +67,7 @@ export class LoginComponent implements OnInit {
       console.log("🚀 ~ userLogin:", userLogin)
     } catch (error) {
       console.log("🚀 ~ error:", error)
-
+      alert('')
     }
   }
 

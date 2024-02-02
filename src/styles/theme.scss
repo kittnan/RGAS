@@ -97,6 +97,10 @@ $accent: mat-palette($vt-success, A200, A100, A400);
 
     .text-link {
       color: #299bff;
+      cursor: pointer;
+    }
+    .text-link:hover {
+      text-decoration: underline;
     }
 
     .btn-success {
@@ -147,6 +151,10 @@ $accent: mat-palette($vt-success, A200, A100, A400);
 
     .text-link {
       color: #42ceff;
+      cursor: pointer;
+    }
+    .text-link:hover {
+      text-decoration: underline;
     }
 
     .btn-success {

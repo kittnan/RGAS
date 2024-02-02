@@ -22,7 +22,7 @@
     </button>
   </div> -->
   <div *ngIf="allItems && allItems.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-    <app-form1 fxFlex="100" [(form)]="allItems[itemNowNumber-1]" (maxChange)="onMaxChange($event)" (formChange)="formChange()" ></app-form1>
+    <app-form1 *ngIf="show" fxFlex="100" [(form)]="allItems[itemNowNumber-1]" (maxChange)="onMaxChange($event)" (formChange)="formChange()" ></app-form1>
   </div>
   <!-- <div *ngIf="allItems && allItems.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
     <app-form2 fxFlex="100"></app-form2>

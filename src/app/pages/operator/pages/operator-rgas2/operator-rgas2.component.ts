@@ -1,4 +1,6 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 
@@ -51,12 +53,30 @@ export class OperatorRgas2Component implements OnInit {
   itemNowNumber: number = 1
   itemMax: number = 1
 
+  show: boolean = true
+
   constructor(
-    private $claim: HttpClaimService
-  ) { }
+    private $claim: HttpClaimService,
+    private route: ActivatedRoute
+  ) {
+    this.route.queryParams.subscribe(async (linkParam: any) => {
+      console.log("🚀 ~ linkParam:", linkParam)
+      if (linkParam && linkParam['registerNo']) {
+        let params: HttpParams = new HttpParams()
+        params = params.set('registerNo', JSON.stringify([linkParam['registerNo']]))
+        const resData: any = await lastValueFrom($claim.get(params))
+        this.allItems = resData
+        console.log("🚀 ~ this.allItems:", this.allItems)
+        // this.show = true
+      }else{
+        this.allItems = [this.dataStructure]
+        // this.show = true
+      }
+    })
+  }
 
   ngOnInit(): void {
-    this.allItems = [this.dataStructure]
+
   }
   onMaxChange(emitMax: number) {
     this.allItems = []
