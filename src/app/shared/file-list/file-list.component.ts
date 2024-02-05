@@ -14,4 +14,9 @@ export class FileListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onClickFile(file: any) {
+    const newTabUrl = file.path
+    window.open(newTabUrl, '_blank');
+  }
+
 }

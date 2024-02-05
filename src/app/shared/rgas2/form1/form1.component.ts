@@ -311,13 +311,14 @@ export class Form1Component implements OnInit {
         if (this.form.files && this.form.files.some((item: any) => item.filename == newFile.filename)) {
           const index = this.form.files.findIndex((item: any) => item.filename == newFile.filename)
           this.form.files[index] = newFile
-
+          this.onsubmit()
         } else {
           this.form.files = !this.form.files ? [newFile] : [...this.form.files, {
             ...resFile[0],
             index: this.form.files.length + 1,
             date: new Date(),
           }]
+          this.onsubmit()
         }
         this.informationFile.nativeElement.value = ''
       }
