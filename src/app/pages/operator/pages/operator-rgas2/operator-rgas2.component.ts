@@ -1,3 +1,4 @@
+import { HttpResultService } from 'src/app/https/http-result.service';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -47,17 +48,17 @@ export class OperatorRgas2Component implements OnInit {
     files: null,
     status: null
   }
-  allItems: any[] = [
-
-  ]
+  allItems: any[] = []
   itemNowNumber: number = 1
   itemMax: number = 1
 
   show: boolean = true
 
+  result: any
   constructor(
     private $claim: HttpClaimService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private $result: HttpResultService
   ) {
     this.route.queryParams.subscribe(async (linkParam: any) => {
       console.log("🚀 ~ linkParam:", linkParam)
@@ -67,8 +68,9 @@ export class OperatorRgas2Component implements OnInit {
         const resData: any = await lastValueFrom($claim.get(params))
         this.allItems = resData
         console.log("🚀 ~ this.allItems:", this.allItems)
+
         // this.show = true
-      }else{
+      } else {
         this.allItems = [this.dataStructure]
         // this.show = true
       }
@@ -79,6 +81,7 @@ export class OperatorRgas2Component implements OnInit {
 
   }
   onMaxChange(emitMax: number) {
+    console.log("🚀 ~ emitMax:", emitMax)
     this.allItems = []
     this.itemMax = emitMax
     for (let i = 0; i < emitMax; i++) {
@@ -95,6 +98,13 @@ export class OperatorRgas2Component implements OnInit {
     const resData = await lastValueFrom(this.$claim.createOrUpdate(item))
     if (resData && resData.length > 0) {
       this.allItems[this.itemNowNumber - 1] = resData[0]
+      console.log("🚀 ~ this.allItems:", this.allItems)
     }
+  }
+
+  // todo finish form1
+  finishChange(){
+    // let resUser = await lastValueFrom
+    console.log(this.allItems[this.itemNowNumber - 1]);
   }
 }

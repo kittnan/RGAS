@@ -1,10 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import * as QRCode from 'qrcode'
 import { lastValueFrom } from 'rxjs';
 import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { environment } from 'src/environments/environment';
+import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
+import { HttpResultService } from 'src/app/https/http-result.service';
 
 interface FORM2 {
   [key: string]: any,
@@ -59,7 +62,8 @@ interface FORM2 {
     issueDate: any,
   },
   ktcJudgment: any,
-  qrcode: any
+  qrcode: any,
+  _id?: any,
 }
 @Component({
   selector: 'app-form2',
@@ -93,6 +97,14 @@ export class Form2Component implements OnInit {
     'NG',
     'Not Accept'
   ]
+
+  PICOption: string[] = [
+    'Mr.Songkarn',
+    'Mr.Yuttana',
+    'Mr.Pongdanai',
+  ]
+
+
   @Input() form: FORM2 = {
     partReceivingDate: null,
     PIC: null,
@@ -147,6 +159,8 @@ export class Form2Component implements OnInit {
     ktcJudgment: null,
     qrcode: null
   }
+  // @Input() form:any
+  @Input() claim: any
 
   @ViewChild('appearanceFile', { static: true }) appearanceFile!: ElementRef;
   @ViewChild('functionFile', { static: true }) functionFile!: ElementRef;
@@ -161,25 +175,48 @@ export class Form2Component implements OnInit {
 
   constructor(
     private $fileUpload: HttpFileUploadService,
-    private $user: HttpUsersService
+    private $user: HttpUsersService,
+    private _bottomSheet: MatBottomSheet,
+    private $result: HttpResultService
   ) { }
 
   async ngOnInit(): Promise<void> {
-    const qr: any = await this.generateQrcode('xxx')
-    console.log("🚀 ~ qr:", qr)
-    this.form.qrcode = qr
     let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
     this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
+    let params2: HttpParams = new HttpParams()
+    params2 = params2.set('registerNo', JSON.stringify([this.claim['registerNo']]))
+    let resResult = await lastValueFrom(this.$result.get(params2))
+    if (resResult && resResult.length > 0) {
+      this.form = resResult[0]
+      console.log("🚀 ~ this.form:", this.form)
+    } else {
+      const qr: any = await this.generateQrcode('xxx')
+      this.form.qrcode = qr
+    }
+
   }
 
   // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
-    return option.id === value.id;
+    if (option._id && value._id) {
+      return option._id === value._id;
+    }
+    return false
   }
 
   // todo submit fn
-  onSubmit() {
-    console.log(this.form);
+  async onSubmit() {
+    try {
+      console.log(this.form);
+      console.log(this.claim);
+      const newResult = {
+        ...this.form,
+        registerNo: this.claim.registerNo
+      }
+      const res = await lastValueFrom(this.$result.createOrUpdate([newResult]))
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
   }
   // todo generate qr code
   generateQrcode(text: string): Promise<any> {
@@ -210,11 +247,12 @@ export class Form2Component implements OnInit {
             date: new Date(),
           }]
         }
+        console.log(this.form);
+        this.onSubmit()
         this.clearInputFile()
       }
     } catch (error) {
       console.log("🚀 ~ error:", error)
-
     }
   }
 
@@ -229,4 +267,30 @@ export class Form2Component implements OnInit {
     this.supplierFile.nativeElement.value = ''
   }
 
+  // todo control checkbox
+  controlCheckbox($event: any) {
+    $event.target.checked = false
+  }
+
+  // todo label show PIC
+  labelShowPIC() {
+    if (this.form.PIC) {
+      let PIC = this.form.PIC
+      return `${PIC.firstName}-${PIC.lastName[0]}`
+    }
+    return ''
+  }
+
+  // todo open file bottom
+  openBottom(files: any) {
+    this._bottomSheet.open(FilesBottomComponent, {
+      data: files
+    })
+  }
+
+  // todo control badge number
+  controlBadgeNumber(files: any) {
+    if (files && files.length < 1) return null
+    return files.length
+  }
 }

@@ -18,7 +18,21 @@ import { Form2Component } from './rgas2/form2/form2.component';
 import { Form3Component } from './rgas2/form3/form3.component';
 import { Form3MenuComponent } from './rgas2/form3/form3-menu/form3-menu.component';
 import { FileListComponent } from './file-list/file-list.component';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { FilesBottomComponent } from './files-bottom/files-bottom.component';
 
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD-MMM-YY',
+  },
+  display: {
+    dateInput: 'DD-MMM-YY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 let items = [
   Form1Component,
@@ -40,6 +54,7 @@ let items = [
     Form3Component,
     Form3MenuComponent,
     FileListComponent,
+    FilesBottomComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +74,11 @@ let items = [
     Form2Component,
     Form3Component,
     FileListComponent,
-  ]
+    FilesBottomComponent,
+  ],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ],
 })
 export class SharedModule { }

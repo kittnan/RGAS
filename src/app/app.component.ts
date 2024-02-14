@@ -90,21 +90,16 @@ export class AppComponent {
         {
           title: 'RGAS-1',
           icon: 'post_add',
-          path: 'rgas/1',
+          path: 'operator/rgas1',
           items: []
         },
         {
           title: 'RGAS-2',
           icon: 'assignment',
-          path: 'rgas/2',
+          path: 'operator/rgas2',
           items: []
         },
-        {
-          title: 'manage',
-          icon: 'view_list',
-          path: 'rgas/manage',
-          items: []
-        },
+
 
       ]
     },

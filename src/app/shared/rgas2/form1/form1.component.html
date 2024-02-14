@@ -1,33 +1,36 @@
 <div class="flex flex-wrap justify-center items-start w-full mt-1">
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <app-sub-title fxFlex="100" [title]="'Claim Status'" class="mt-2 mb-2"></app-sub-title>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 b1">
-        Submit customer
-      </mat-card>
-      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
-        Closed/Pending
-      </mat-card>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 b1">
-        Up load OBL III
-      </mat-card>
-      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
-        Closed/Pending
-      </mat-card>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1 p-2">
-        Auto show analysis lead time "More than 2 months with red background color or Less than 2 months with green
-        background color"
 
-      </mat-card>
-      <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1 p-2">
-        Auto show analysis lead time "More than 1.5 months with red background color or Less than 1.5 months with
-        green
-        background color
-      </mat-card>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="30" class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 b1">
+          Submit customer
+        </mat-card>
+        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
+          Closed/Pending
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 b1">
+          Up load OBL III
+        </mat-card>
+        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
+          Closed/Pending
+        </mat-card>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1 p-2">
+          Auto show analysis lead time "More than 2 months with red background color or Less than 2 months with green
+          background color"
+
+        </mat-card>
+        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1 p-2">
+          Auto show analysis lead time "More than 1.5 months with red background color or Less than 1.5 months with
+          green
+          background color
+        </mat-card>
+      </div>
     </div>
   </div>
 
@@ -46,321 +49,307 @@
           <input type="file" hidden #fileUploadOBL accept=".xlsx" (change)="onUploadFile($event)">
         </button>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Claim Notification No.</mat-label>
-          <input matInput [(ngModel)]="form.claimNo">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>KTC Model No.</mat-label>
-          <input matInput [(ngModel)]="form.modelNo">
 
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Product No.</mat-label>
-          <input matInput [(ngModel)]="form.productNo">
-        </mat-form-field>
-      </div>
-    </div>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="30">
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Claim Notification No.</mat-label>
+            <input matInput [(ngModel)]="form.claimNo">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>KTC Model No.</mat-label>
+            <input matInput [(ngModel)]="form.modelNo">
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Customer Control No.</mat-label>
-          <input matInput [(ngModel)]="form.customerNo">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <app-autocomplete *ngIf="modelOptionString.length>0" fxFlex="100" [title]="'KTC Model Code'"
-          [options]="modelOptionString" [myControl]="modelCodeForm"
-          (valueChange)="onChangeModelCode($event)"></app-autocomplete>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis PIC</mat-label>
-          <mat-select [(ngModel)]="form.analysisPIC" [compareWith]="objectComparisonFunction">
-            <mat-option *ngFor="let user of analysisPICOption" [value]="user">
-              {{user.firstName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Product No.</mat-label>
+            <input matInput [(ngModel)]="form.productNo">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Customer Control No.</mat-label>
+            <input matInput [(ngModel)]="form.customerNo">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <app-autocomplete *ngIf="modelOptionString.length>0" fxFlex="100" [title]="'KTC Model Code'"
+            [options]="modelOptionString" [myControl]="modelCodeForm"
+            (valueChange)="onChangeModelCode($event)"></app-autocomplete>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Analysis PIC</mat-label>
+            <mat-select [(ngModel)]="form.analysisPIC" [compareWith]="objectComparisonFunction">
+              <mat-option *ngFor="let user of analysisPICOption" [value]="user">
+                {{user.firstName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Customer Name Customer B Name</mat-label>
+            <input matInput [(ngModel)]="form.customerName">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <app-autocomplete *ngIf="customerOptionString.length>0" fxFlex="100" [title]="'Type'"
+            [options]="customerOptionString" [(value)]="form.type"></app-autocomplete>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Description (Japanese)</mat-label>
+            <input matInput [(ngModel)]="form.descriptionJP">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Sales Company Customer A Name</mat-label>
+            <input matInput [(ngModel)]="form.saleCompany">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Side No.</mat-label>
+            <input matInput [(ngModel)]="form.sideNo">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Description (English)</mat-label>
+            <input matInput [(ngModel)]="form.descriptionENG">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Sales PIC</mat-label>
+            <input matInput [(ngModel)]="form.salePIC">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Q'ty</mat-label>
+            <input matInput type="number" [min]="1" [(ngModel)]="form.qty">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Function/ Appearance</mat-label>
+            <mat-select [(ngModel)]="form.functionAppearance">
+              <mat-option *ngFor="let item of functionAppearanceOptionString" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Returning Style</mat-label>
+            <mat-select [(ngModel)]="form.returnStyle">
+              <mat-option *ngFor="let item of returningStyleOption" [value]="item.itemValue">
+                {{item.itemName}} : {{item.itemValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Product Lot No.</mat-label>
+            <input matInput [(ngModel)]="form.productLotNo">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>AWB No.</mat-label>
+            <input matInput [(ngModel)]="form.AWBNo">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Model Classification</mat-label>
+            <mat-select [(ngModel)]="form.modelClassification">
+              <mat-option *ngFor="let item of modelClassificationOption" [value]="item.itemValue">
+                {{item.itemName}} : {{item.itemValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Production Month</mat-label>
+            <input readonly matInput [(ngModel)]="form.productionMonth" (click)="onMonthChange('productionMonth')">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Inv. No.</mat-label>
+            <input matInput [(ngModel)]="form.InvNo">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Calendar Year</mat-label>
+            <input readonly matInput [(ngModel)]="form.calendarYear" (click)="onMonthChange('calendarYear')">
+          </mat-form-field>
 
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Commercial Distribution</mat-label>
+            <mat-select [(ngModel)]="form.commercialDistribution">
+              <mat-option *ngFor="let item of commercialDistributionOption" [value]="item.itemValue">
+                {{item.itemName}} : {{item.itemValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Date Received Inv.</mat-label>
+            <input matInput [(ngModel)]="form.dateReceiveInv" [matDatepicker]="dateReceive_dp">
+            <mat-datepicker-toggle matSuffix [for]="dateReceive_dp"></mat-datepicker-toggle>
+            <mat-datepicker #dateReceive_dp></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Claim Registering Date</mat-label>
+            <input matInput [(ngModel)]="form.claimRegisterDate" [matDatepicker]="claimRegister_dp">
+            <mat-datepicker-toggle matSuffix [for]="claimRegister_dp"></mat-datepicker-toggle>
+            <mat-datepicker #claimRegister_dp></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Use Appearancelication</mat-label>
+            <mat-select [(ngModel)]="form.useAppearance">
+              <mat-option *ngFor="let item of useAppearancelicationOption" [value]="item.itemValue">
+                {{item.itemName}} : {{item.itemValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
+            <mat-label>Transportation Cost</mat-label>
+            <input matInput type="number" [min]="0" [(ngModel)]="form.transportationCost">
+          </mat-form-field>
+          <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+            <mat-label>Unit</mat-label>
+            <mat-select [(ngModel)]="form.unit">
+              <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
+                {{item.itemName}} : {{item.itemValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Received Information Date ( E-Form OBL III )</mat-label>
+            <input matInput [(ngModel)]="form.receiveInfoDate" [matDatepicker]="receiveInfo_dp">
+            <mat-datepicker-toggle matSuffix [for]="receiveInfo_dp"></mat-datepicker-toggle>
+            <mat-datepicker #receiveInfo_dp></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Occurred Location</mat-label>
+            <mat-select [(ngModel)]="form.occurredLocation">
+              <mat-option *ngFor="let item of occurredLocationOption" [value]="item.itemValue">
+                {{item.itemName}} : {{item.itemValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Cost Month</mat-label>
+            <input readonly matInput [(ngModel)]="form.costMonth" (click)="onMonthChange('costMonth')">
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Due Date (OBL III)</mat-label>
+            <input matInput [(ngModel)]="form.dueDate" [matDatepicker]="dueDate_dp">
+            <mat-datepicker-toggle matSuffix [for]="dueDate_dp"></mat-datepicker-toggle>
+            <mat-datepicker #dueDate_dp></mat-datepicker>
+          </mat-form-field>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Customer Name Customer B Name</mat-label>
-          <input matInput [(ngModel)]="form.customerName">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <app-autocomplete *ngIf="customerOptionString.length>0" fxFlex="100" [title]="'Type'"
-          [options]="customerOptionString" [(value)]="form.type"></app-autocomplete>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Description (Japanese)</mat-label>
-          <input matInput [(ngModel)]="form.descriptionJP">
-        </mat-form-field>
-      </div>
-    </div>
-
-
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Sales Company Customer A Name</mat-label>
-          <input matInput [(ngModel)]="form.saleCompany">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Side No.</mat-label>
-          <input matInput [(ngModel)]="form.sideNo">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Description (English)</mat-label>
-          <input matInput [(ngModel)]="form.descriptionENG">
-        </mat-form-field>
-      </div>
-    </div>
-
-
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Sales PIC</mat-label>
-          <input matInput [(ngModel)]="form.salePIC">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Q'ty</mat-label>
-          <input matInput type="number" [min]="1" [(ngModel)]="form.qty">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Function/ Appearance</mat-label>
-          <mat-select [(ngModel)]="form.functionAppearance">
-            <mat-option *ngFor="let item of functionAppearanceOptionString" [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Returning Style</mat-label>
-          <mat-select [(ngModel)]="form.returnStyle">
-            <mat-option *ngFor="let item of returningStyleOption" [value]="item.itemValue">
-              {{item.itemName}} : {{item.itemValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Product Lot No.</mat-label>
-          <input matInput [(ngModel)]="form.productLotNo">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>AWB No.</mat-label>
-          <input matInput [(ngModel)]="form.AWBNo">
-        </mat-form-field>
-      </div>
-    </div>
-
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Model Classification</mat-label>
-          <mat-select [(ngModel)]="form.modelClassification">
-            <mat-option *ngFor="let item of modelClassificationOption" [value]="item.itemValue">
-              {{item.itemName}} : {{item.itemValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Production Month</mat-label>
-          <input readonly matInput [(ngModel)]="form.productionMonth" (click)="onMonthChange('productionMonth')">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Inv. No.</mat-label>
-          <input matInput [(ngModel)]="form.InvNo">
-        </mat-form-field>
-      </div>
-    </div>
-
-
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Calendar Year</mat-label>
-          <input readonly matInput [(ngModel)]="form.calendarYear" (click)="onMonthChange('calendarYear')">
-        </mat-form-field>
-
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Commercial Distribution</mat-label>
-          <mat-select [(ngModel)]="form.commercialDistribution">
-            <mat-option *ngFor="let item of commercialDistributionOption" [value]="item.itemValue">
-              {{item.itemName}} : {{item.itemValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Date Received Inv.</mat-label>
-          <input matInput [(ngModel)]="form.dateReceiveInv" [matDatepicker]="dateReceive_dp">
-          <mat-datepicker-toggle matSuffix [for]="dateReceive_dp"></mat-datepicker-toggle>
-          <mat-datepicker #dateReceive_dp></mat-datepicker>
-        </mat-form-field>
-      </div>
-    </div>
-
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Claim Registering Date</mat-label>
-          <input matInput [(ngModel)]="form.claimRegisterDate" [matDatepicker]="claimRegister_dp">
-          <mat-datepicker-toggle matSuffix [for]="claimRegister_dp"></mat-datepicker-toggle>
-          <mat-datepicker #claimRegister_dp></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Use Appearancelication</mat-label>
-          <mat-select [(ngModel)]="form.useAppearance">
-            <mat-option *ngFor="let item of useAppearancelicationOption" [value]="item.itemValue">
-              {{item.itemName}} : {{item.itemValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
-          <mat-label>Transportation Cost</mat-label>
-          <input matInput type="number" [min]="0" [(ngModel)]="form.transportationCost">
-        </mat-form-field>
-        <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
-          <mat-label>Unit</mat-label>
-          <mat-select [(ngModel)]="form.unit">
-            <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
-              {{item.itemName}} : {{item.itemValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-
-
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Received Information Date ( E-Form OBL III )</mat-label>
-          <input matInput [(ngModel)]="form.receiveInfoDate" [matDatepicker]="receiveInfo_dp">
-          <mat-datepicker-toggle matSuffix [for]="receiveInfo_dp"></mat-datepicker-toggle>
-          <mat-datepicker #receiveInfo_dp></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Occurred Location</mat-label>
-          <mat-select [(ngModel)]="form.occurredLocation">
-            <mat-option *ngFor="let item of occurredLocationOption" [value]="item.itemValue">
-              {{item.itemName}} : {{item.itemValue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Cost Month</mat-label>
-          <input readonly matInput [(ngModel)]="form.costMonth" (click)="onMonthChange('costMonth')">
-        </mat-form-field>
-      </div>
-    </div>
-
-
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Due Date (OBL III)</mat-label>
-          <input matInput [(ngModel)]="form.dueDate" [matDatepicker]="dueDate_dp">
-          <mat-datepicker-toggle matSuffix [for]="dueDate_dp"></mat-datepicker-toggle>
-          <mat-datepicker #dueDate_dp></mat-datepicker>
-        </mat-form-field>
-
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Importance (Claim Rank)</mat-label>
-          <mat-select [(ngModel)]="form.importance">
-            <mat-option *ngFor="let item of claimRankOptionString" [value]="item">
-              {{item}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      </div>
-    </div>
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>File Upload</mat-label>
-          <button mat-icon-button matSuffix (click)="informationFile.click()">
-            <mat-icon>attach_file</mat-icon>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Importance (Claim Rank)</mat-label>
+            <mat-select [(ngModel)]="form.importance">
+              <mat-option *ngFor="let item of claimRankOptionString" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <button [disabled]="!form.registerNo" fxFlex="100" fxFlex.gt-md="30" mat-raised-button color="accent"
+            (click)="informationFile.click()" class="btn-file">
+            <div fxLayout="row wrap" fxLayoutAlign="center center">
+              <span>
+                Files
+              </span>
+              <mat-icon>file_upload</mat-icon>
+            </div>
+            <input type="file" hidden #informationFile (change)="onUploadFileClaimInformation($event)">
           </button>
-          <input [disabled]="!form.registerNo" [readonly]="true" matInput type="text" (click)="informationFile.click()">
-          <input type="file" hidden #informationFile (change)="onUploadFileClaimInformation($event)">
-          <mat-hint *ngIf="!form.registerNo">Please save!!</mat-hint>
-        </mat-form-field>
+          <button [disabled]="!form.files || form.files?.length==0 " fxFlex="100" fxFlex.gt-md="30" mat-raised-button
+            (click)="openBottom()" class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+            <div fxLayout="row wrap" fxLayoutAlign="center center">
+              <span>
+                View
+              </span>
+              <mat-icon [matBadge]="form.files?.length" matBadgeColor="warn">attach_file</mat-icon>
+            </div>
+          </button>
+        </div>
+
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end stretch" class="mt-1">
+          <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start center">
+            <button mat-raised-button color="primary" (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+                <span>
+                  Copy {{form.index}}
+                </span>
+                <mat-icon class="mat-18">content_copy</mat-icon>
+              </div>
+            </button>
+          </div>
+          <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="end center">
+            <button mat-raised-button color="primary" (click)="onSave()" class="btn-file" style="margin-right: 10px;">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+                <span>
+                  Save {{form.index}}
+                </span>
+                <mat-icon class="mat-18">save</mat-icon>
+              </div>
+            </button>
+            <button [disabled]="!form.registerNo" mat-raised-button class="btn-file btn-success"
+              style="margin-right: 30px;" (click)="onFinish()">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+                <span>
+                  Submit {{form.index}}
+                </span>
+                <mat-icon class="mat-18">done_all</mat-icon>
+              </div>
+            </button>
+          </div>
+
+        </div>
+
       </div>
-      <div fxFlex="auto"></div>
-    </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <app-file-list fxFlex="100" [files]="form.files" ></app-file-list>
 
     </div>
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
-      <button mat-raised-button color="primary" (click)="onsubmit()">
-        Save {{form.index}}
-      </button>
-    </div>
-
 
   </div>
 

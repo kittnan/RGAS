@@ -29,9 +29,40 @@ $vt-primary: (
     A700 : #000000,
   )
 );
+$vt-accent: (
+  50 : #e3eff9,
+  100 : #b8d6f0,
+  200 : #89bbe7,
+  300 : #599fdd,
+  400 : #368bd5,
+  500 : #1276ce,
+  600 : #106ec9,
+  700 : #0d63c2,
+  800 : #0a59bc,
+  900 : #0546b0,
+  A100 : #dbe6ff,
+  A200 : #a8c4ff,
+  A400 : #75a1ff,
+  A700 : #5b90ff,
+  contrast: (50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
 $vt-success: (
   A100 : #dbffdb,
-  A200 : #5adf5a,
+  A200 : #93ff93,
   A400 : #00cd00,
   contrast: (50 : #000000,
     100 : #000000,
@@ -87,7 +118,7 @@ $vt-primary2: (
 
 $primary: mat-palette($vt-primary);
 // $accent: mat-palette($mat-pink, A200, A100, A400);
-$accent: mat-palette($vt-success, A200, A100, A400);
+$accent: mat-palette($vt-accent, A200, A100, A400);
 
 .theme {
   &--light {
@@ -108,6 +139,7 @@ $accent: mat-palette($vt-success, A200, A100, A400);
       color: black;
     }
 
+
     .btn-danger {
       background-color: #fb7676;
       color: white;
@@ -123,7 +155,7 @@ $accent: mat-palette($vt-success, A200, A100, A400);
       text-transform: capitalize;
     }
 
-    thead {
+    .mat-header-row {
       background-color: aquamarine !important;
     }
 

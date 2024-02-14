@@ -12,6 +12,8 @@ import { FormControl } from '@angular/forms';
 import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { environment } from 'src/environments/environment';
 import { HttpUsersService } from 'src/app/https/http-users.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 
 interface FORM1 {
   [key: string]: any,
@@ -52,13 +54,23 @@ interface FORM1 {
   status: any,
   index?: any,
   no?: any,
-  registerNo?: any
+  registerNo?: any,
+  flowPIC?: any,
+  flowHistory?: any
+}
+
+export interface FlowHistory {
+  [key: string]: any,
+  user: any,
+  action: any,
+  date: any,
 }
 
 @Component({
   selector: 'app-form1',
   templateUrl: './form1.component.html',
   styleUrls: ['./form1.component.scss'],
+  providers: []
 })
 export class Form1Component implements OnInit {
   // todo path file server
@@ -98,12 +110,15 @@ export class Form1Component implements OnInit {
     dueDate: null,
     importance: null,
     files: [],
-    status: null
+    status: null,
+    flowPIC: null,
+    flowHistory: [],
 
   }
   // todo form output event
   @Output() formChange: EventEmitter<any> = new EventEmitter()
   @Output() maxChange: EventEmitter<any> = new EventEmitter()
+  @Output() finishChange: EventEmitter<any> = new EventEmitter()
 
   // todo temp option
   tempOption: any[] = [
@@ -155,6 +170,9 @@ export class Form1Component implements OnInit {
   // todo form model code
   modelCodeForm: FormControl = new FormControl()
 
+  // todo user login
+  userLogin: any
+
 
   // modelOptionString!: Observable<string[]>
 
@@ -166,42 +184,16 @@ export class Form1Component implements OnInit {
   @ViewChild('informationFile', { static: true }) informationFile!: ElementRef;
 
 
-  folders: any[] = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-      action: 'action'
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-      action: 'action'
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-      action: 'action'
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-      action: 'action'
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-      action: 'action'
-    },
-  ];
-
-
   constructor(
     public dialog: MatDialog,
     private $model: HttpModelsService,
     private $master: HttpMastersService,
     private $fileUpload: HttpFileUploadService,
-    private $user: HttpUsersService
+    private $user: HttpUsersService,
+    private _bottomSheet: MatBottomSheet,
   ) {
+    let user: any = localStorage.getItem('RGAS_user')
+    this.userLogin = user ? JSON.parse(user) : null
 
   }
 
@@ -244,10 +236,6 @@ export class Form1Component implements OnInit {
   }
 
 
-
-
-
-
   // todo upload OBL
   async onUploadFile($event: any) {
     let file: any = $event.target.files[0] as File;
@@ -255,7 +243,6 @@ export class Form1Component implements OnInit {
     try {
       await workbook.xlsx.load(file);
 
-      // Assuming there is only one sheet in the workbook
       const worksheet: ExcelJS.Worksheet | undefined = workbook.getWorksheet(1);
 
       if (worksheet) {
@@ -284,7 +271,6 @@ export class Form1Component implements OnInit {
 
         }
         this.modelCodeForm.patchValue(modelCode)
-        console.log("🚀 ~ this.form:", this.form)
         // this.maxChange.emit(this.form.qty)
         this.fileUploadOBL.nativeElement.value = ''
       }
@@ -311,23 +297,19 @@ export class Form1Component implements OnInit {
         if (this.form.files && this.form.files.some((item: any) => item.filename == newFile.filename)) {
           const index = this.form.files.findIndex((item: any) => item.filename == newFile.filename)
           this.form.files[index] = newFile
-          this.onsubmit()
+          this.onSave()
         } else {
           this.form.files = !this.form.files ? [newFile] : [...this.form.files, {
             ...resFile[0],
             index: this.form.files.length + 1,
             date: new Date(),
           }]
-          this.onsubmit()
+          this.onSave()
         }
         this.informationFile.nativeElement.value = ''
       }
 
-
-      console.log("🚀 ~ this.form:", this.form)
     } catch (error) {
-      console.log("🚀 ~ error:", error)
-
     }
   }
   // todo excel fn
@@ -339,7 +321,10 @@ export class Form1Component implements OnInit {
 
   // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
-    return option.id === value.id;
+    if (option._id && value._id) {
+      return option._id === value._id;
+    }
+    return false
   }
 
   async onMonthChange(key: string) {
@@ -373,9 +358,32 @@ export class Form1Component implements OnInit {
     this.form[key] = e
   }
 
-  // todo on submit
-  onsubmit() {
+  // todo on on save
+  onSave() {
+    let now: FlowHistory = {
+      action: 'draft',
+      date: new Date(),
+      user: this.userLogin
+    }
+    this.form.flowHistory = [now]
+    this.form.flowPIC = this.userLogin
     this.formChange.emit(this.form)
+  }
+  // todo on finish
+  onFinish() {
+    this.finishChange.emit(this.form)
+  }
+
+  // todo open bottom files
+  openBottom() {
+    this._bottomSheet.open(FilesBottomComponent, {
+      data: this.form.files
+    })
+  }
+
+  // todo copy
+  onCopy() {
+
   }
 
 }

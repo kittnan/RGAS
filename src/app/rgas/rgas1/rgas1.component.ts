@@ -55,7 +55,7 @@ export class Rgas1Component implements OnInit {
         return {
           'registerNo': claim.registerNo,
           'claimStatus': claim.status,
-          'PIC': claim.analysisPIC,
+          'PIC': `${claim.analysisPIC?.firstName}-${claim.analysisPIC?.lastName[0]}`,
           'claimMonth': moment(claim.dueDate).format('YYYY-MMM-DD'),
           'claimNo': claim.claimNo,
           'modelNo': claim.modelNo,

@@ -36,6 +36,7 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "red",
   bgsPosition: POSITION.bottomCenter,

@@ -1,0 +1,12 @@
+<mat-nav-list>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngFor="let item of data; let i=index" mat-list-item>
+    <span matListItemTitle (click)="onDownload(item)">
+      {{item.filename}}
+    </span>
+    <span matLine (click)="onDelete(item)">
+      <mat-icon class="mat-18">
+        delete
+      </mat-icon>
+    </span>
+  </div>
+</mat-nav-list>
