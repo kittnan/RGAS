@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 
 
 
@@ -16,11 +17,6 @@ import { HttpClaimService } from 'src/app/https/http-claim.service';
   styleUrls: ['./rgas1.component.scss']
 })
 export class Rgas1Component implements OnInit {
-
-
-
-
-
   filterOption: string[] = [
     'claimNo',
     'PIC',
@@ -43,7 +39,8 @@ export class Rgas1Component implements OnInit {
   claims: any[] = []
   constructor(
     private router: Router,
-    private $claim: HttpClaimService
+    private $claim: HttpClaimService,
+    private $local: LocalStoreService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -53,6 +50,7 @@ export class Rgas1Component implements OnInit {
       console.log("🚀 ~ this.claims:", this.claims)
       this.dataSource = new MatTableDataSource(this.claims.map((claim: any) => {
         return {
+          ...claim,
           'registerNo': claim.registerNo,
           'claimStatus': claim.status,
           'PIC': `${claim.analysisPIC?.firstName}-${claim.analysisPIC?.lastName[0]}`,
@@ -96,12 +94,33 @@ export class Rgas1Component implements OnInit {
     this.router.navigateByUrl("operator/rgas2")
   }
 
-  // todo click cliam
+  // todo click claim
   onClickClaim(row: any) {
-    this.router.navigate(['operator/rgas2'], {
-      queryParams: {
-        registerNo: row.registerNo
+    console.log("🚀 ~ row:", row)
+    let auth = this.$local.getAuth()
+    let subPath: any = this.setPathSub(row)
+    console.log("🚀 ~ subPath:", subPath)
+    this.router.navigate([`${auth}/${subPath.path}`], {
+      queryParams:{
+        registerNo: subPath.data.registerNo,
+        no:subPath.data.no
       }
     })
+
+  }
+  setPathSub(row: any) {
+    if (row.status == 'draft') {
+      return {
+        data: row,
+        path: 'rgas2'
+      }
+    }
+    if (row.status == 'wait approve') {
+      return {
+        data: row,
+        path: 'approve-claim'
+      }
+    }
+    return ''
   }
 }

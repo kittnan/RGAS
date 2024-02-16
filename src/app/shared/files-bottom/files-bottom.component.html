@@ -1,6 +1,6 @@
 <mat-nav-list>
   <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngFor="let item of data; let i=index" mat-list-item>
-    <span matListItemTitle (click)="onDownload(item)">
+    <span matListItemTitle class="cursor-pointer" (click)="onDownload(item)">
       {{item.filename}}
     </span>
     <span matLine (click)="onDelete(item)">

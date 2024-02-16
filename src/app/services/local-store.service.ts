@@ -23,4 +23,12 @@ export class LocalStoreService {
     }
   }
 
+  // todo auth
+  getAuth() {
+    return localStorage.getItem('RGAS_auth')
+  }
+  setAuth(data: any) {
+    localStorage.setItem('RGAS_auth', JSON.stringify(data))
+  }
+
 }

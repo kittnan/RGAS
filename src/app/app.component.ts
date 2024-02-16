@@ -99,6 +99,12 @@ export class AppComponent {
           path: 'operator/rgas2',
           items: []
         },
+        {
+          title: 'RGAS-1 - eng',
+          icon: 'assignment',
+          path: 'engineer/rgas1',
+          items: []
+        },
 
 
       ]
@@ -148,7 +154,7 @@ export class AppComponent {
     this.router.navigate(['/login']).then(() => location.reload())
   }
 
-  // todo show user login nane
+  // todo show user login name
   displayName() {
     let userLogin: any = localStorage.getItem('RGAS_user')
     userLogin = userLogin ? JSON.parse(userLogin) : null

@@ -37,13 +37,12 @@
 
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
-
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <app-sub-title fxFlex="100" [title]="'Claim Information'" class="mt-2 mb-2"></app-sub-title>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-2 mb-2">
-        <button mat-raised-button color="primary" (click)="fileUploadOBL.click()">
+        <button [disabled]="disableEditByPIC()" mat-raised-button color="primary" (click)="fileUploadOBL.click()">
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
-            Upload OBL !!!
+            <span>Upload OBL !!! {{form.no}}</span>
             <mat-icon class="mat-18">upload</mat-icon>
           </div>
           <input type="file" hidden #fileUploadOBL accept=".xlsx" (change)="onUploadFile($event)">
@@ -54,35 +53,38 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Claim Notification No.</mat-label>
-            <input matInput [(ngModel)]="form.claimNo">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.claimNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>KTC Model No.</mat-label>
-            <input matInput [(ngModel)]="form.modelNo">
-
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.modelNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Product No.</mat-label>
-            <input matInput [(ngModel)]="form.productNo">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.productNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Customer Control No.</mat-label>
-            <input matInput [(ngModel)]="form.customerNo">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.customerNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <app-autocomplete *ngIf="modelOptionString.length>0" fxFlex="100" [title]="'KTC Model Code'"
-            [options]="modelOptionString" [myControl]="modelCodeForm"
+          <app-autocomplete *ngIf="modelOptionString.length>0 && !disableEditByPIC()" fxFlex="100"
+            [title]="'KTC Model Code'" [options]="modelOptionString" [myControl]="modelCodeForm"
             (valueChange)="onChangeModelCode($event)"></app-autocomplete>
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>KTC Model Code</mat-label>
+            <input [disabled]="true" matInput [(ngModel)]="form.modelCode">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-form-field *ngIf="!disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Analysis PIC</mat-label>
             <mat-select [(ngModel)]="form.analysisPIC" [compareWith]="objectComparisonFunction">
               <mat-option *ngFor="let user of analysisPICOption" [value]="user">
@@ -90,57 +92,65 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Analysis PIC</mat-label>
+            <input [disabled]="true" matInput [(ngModel)]="form.analysisPIC.firstName">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Customer Name Customer B Name</mat-label>
-            <input matInput [(ngModel)]="form.customerName">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.customerName">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <app-autocomplete *ngIf="customerOptionString.length>0" fxFlex="100" [title]="'Type'"
+          <app-autocomplete *ngIf="customerOptionString.length>0 &&!disableEditByPIC()" fxFlex="100" [title]="'Type'"
             [options]="customerOptionString" [(value)]="form.type"></app-autocomplete>
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Type</mat-label>
+            <input [disabled]="true" matInput [(ngModel)]="form.type">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Description (Japanese)</mat-label>
-            <input matInput [(ngModel)]="form.descriptionJP">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.descriptionJP">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Sales Company Customer A Name</mat-label>
-            <input matInput [(ngModel)]="form.saleCompany">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.saleCompany">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Side No.</mat-label>
-            <input matInput [(ngModel)]="form.sideNo">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.sideNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Description (English)</mat-label>
-            <input matInput [(ngModel)]="form.descriptionENG">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.descriptionENG">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Sales PIC</mat-label>
-            <input matInput [(ngModel)]="form.salePIC">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.salePIC">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Q'ty</mat-label>
-            <input matInput type="number" [min]="1" [(ngModel)]="form.qty">
+            <input [disabled]="disableEditByPIC()" matInput type="number" [min]="1" [(ngModel)]="form.qty">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Function/ Appearance</mat-label>
-            <mat-select [(ngModel)]="form.functionAppearance">
+            <mat-select [disabled]="disableEditByPIC()" [(ngModel)]="form.functionAppearance">
               <mat-option *ngFor="let item of functionAppearanceOptionString" [value]="item">
                 {{item}}
               </mat-option>
@@ -150,7 +160,7 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Returning Style</mat-label>
-            <mat-select [(ngModel)]="form.returnStyle">
+            <mat-select [disabled]="disableEditByPIC()" [(ngModel)]="form.returnStyle">
               <mat-option *ngFor="let item of returningStyleOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -160,19 +170,19 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Product Lot No.</mat-label>
-            <input matInput [(ngModel)]="form.productLotNo">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.productLotNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>AWB No.</mat-label>
-            <input matInput [(ngModel)]="form.AWBNo">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.AWBNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Model Classification</mat-label>
-            <mat-select [(ngModel)]="form.modelClassification">
+            <mat-select [disabled]="disableEditByPIC()" [(ngModel)]="form.modelClassification">
               <mat-option *ngFor="let item of modelClassificationOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -180,28 +190,35 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-form-field *ngIf="!disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Production Month</mat-label>
             <input readonly matInput [(ngModel)]="form.productionMonth" (click)="onMonthChange('productionMonth')">
+          </mat-form-field>
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Production Month</mat-label>
+            <input [disabled]="true" matInput [(ngModel)]="form.productionMonth">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Inv. No.</mat-label>
-            <input matInput [(ngModel)]="form.InvNo">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.InvNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-form-field *ngIf="!disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Calendar Year</mat-label>
             <input readonly matInput [(ngModel)]="form.calendarYear" (click)="onMonthChange('calendarYear')">
           </mat-form-field>
-
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Calendar Year</mat-label>
+            <input [disabled]="true" matInput [(ngModel)]="form.calendarYear">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Commercial Distribution</mat-label>
-            <mat-select [(ngModel)]="form.commercialDistribution">
+            <mat-select [disabled]="disableEditByPIC()" [(ngModel)]="form.commercialDistribution">
               <mat-option *ngFor="let item of commercialDistributionOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -211,7 +228,8 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Date Received Inv.</mat-label>
-            <input matInput [(ngModel)]="form.dateReceiveInv" [matDatepicker]="dateReceive_dp">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.dateReceiveInv"
+              [matDatepicker]="dateReceive_dp">
             <mat-datepicker-toggle matSuffix [for]="dateReceive_dp"></mat-datepicker-toggle>
             <mat-datepicker #dateReceive_dp></mat-datepicker>
           </mat-form-field>
@@ -219,7 +237,8 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Claim Registering Date</mat-label>
-            <input matInput [(ngModel)]="form.claimRegisterDate" [matDatepicker]="claimRegister_dp">
+            <input [disabled]="disableEditByPIC()" matInput [(ngModel)]="form.claimRegisterDate"
+              [matDatepicker]="claimRegister_dp">
             <mat-datepicker-toggle matSuffix [for]="claimRegister_dp"></mat-datepicker-toggle>
             <mat-datepicker #claimRegister_dp></mat-datepicker>
           </mat-form-field>
@@ -227,7 +246,7 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Use Appearancelication</mat-label>
-            <mat-select [(ngModel)]="form.useAppearance">
+            <mat-select [disabled]="disableEditByPIC()" [(ngModel)]="form.useAppearance">
               <mat-option *ngFor="let item of useAppearancelicationOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -237,9 +256,11 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
             <mat-label>Transportation Cost</mat-label>
-            <input matInput type="number" [min]="0" [(ngModel)]="form.transportationCost">
+            <input [disabled]="disableEditByPIC()" matInput type="number" [min]="0"
+              [(ngModel)]="form.transportationCost">
           </mat-form-field>
-          <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+          <mat-form-field *ngIf="!disableEditByPIC()" fxFlex="100" fxFlex.gt-md="30" appearance="outline"
+            floatLabel="always">
             <mat-label>Unit</mat-label>
             <mat-select [(ngModel)]="form.unit">
               <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
@@ -247,17 +268,26 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" fxFlex.gt-md="30" appearance="outline"
+            floatLabel="always">
+            <mat-label>Unit</mat-label>
+            <input [disabled]="true" matInput [(ngModel)]="form.unit">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-form-field *ngIf="!disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Received Information Date ( E-Form OBL III )</mat-label>
             <input matInput [(ngModel)]="form.receiveInfoDate" [matDatepicker]="receiveInfo_dp">
             <mat-datepicker-toggle matSuffix [for]="receiveInfo_dp"></mat-datepicker-toggle>
             <mat-datepicker #receiveInfo_dp></mat-datepicker>
           </mat-form-field>
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Received Information Date ( E-Form OBL III )</mat-label>
+            <input [disabled]="true" matInput [value]="form.receiveInfoDate |date:'dd-MMM-YY' ">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-form-field *ngIf="!disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Occurred Location</mat-label>
             <mat-select [(ngModel)]="form.occurredLocation">
               <mat-option *ngFor="let item of occurredLocationOption" [value]="item.itemValue">
@@ -265,24 +295,35 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Occurred Location</mat-label>
+            <input [disabled]="true" matInput [value]="form.occurredLocation">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-form-field *ngIf="!disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Cost Month</mat-label>
             <input readonly matInput [(ngModel)]="form.costMonth" (click)="onMonthChange('costMonth')">
           </mat-form-field>
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Cost Month</mat-label>
+            <input [disabled]="true" matInput [value]="form.costMonth">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-form-field *ngIf="!disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Due Date (OBL III)</mat-label>
             <input matInput [(ngModel)]="form.dueDate" [matDatepicker]="dueDate_dp">
             <mat-datepicker-toggle matSuffix [for]="dueDate_dp"></mat-datepicker-toggle>
             <mat-datepicker #dueDate_dp></mat-datepicker>
           </mat-form-field>
-
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Due Date (OBL III)</mat-label>
+            <input [disabled]="true" matInput [value]="form.dueDate |date:'dd-MMM-YY' ">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-form-field *ngIf="!disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Importance (Claim Rank)</mat-label>
             <mat-select [(ngModel)]="form.importance">
               <mat-option *ngFor="let item of claimRankOptionString" [value]="item">
@@ -290,10 +331,14 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <mat-form-field *ngIf="disableEditByPIC()" fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Importance (Claim Rank)</mat-label>
+            <input [disabled]="true" matInput [value]="form.importance">
+          </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <button [disabled]="!form.registerNo" fxFlex="100" fxFlex.gt-md="30" mat-raised-button color="accent"
-            (click)="informationFile.click()" class="btn-file">
+          <button [disabled]="!form.registerNo || disableEditByPIC()" fxFlex="100" fxFlex.gt-md="30" mat-raised-button
+            color="accent" (click)="informationFile.click()" class="btn-file">
             <div fxLayout="row wrap" fxLayoutAlign="center center">
               <span>
                 Files
@@ -308,7 +353,7 @@
               <span>
                 View
               </span>
-              <mat-icon [matBadge]="form.files?.length" matBadgeColor="warn">attach_file</mat-icon>
+              <mat-icon [matBadge]="controlBadgeNumber(form.files)" matBadgeColor="warn">attach_file</mat-icon>
             </div>
           </button>
         </div>
@@ -318,26 +363,44 @@
             <button mat-raised-button color="primary" (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
-                  Copy {{form.index}}
+                  Copy {{form.no}}
                 </span>
                 <mat-icon class="mat-18">content_copy</mat-icon>
               </div>
             </button>
-          </div>
-          <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="end center">
-            <button mat-raised-button color="primary" (click)="onSave()" class="btn-file" style="margin-right: 10px;">
+            <button [disabled]="disableEditByPIC()" mat-raised-button color="warn" (click)="onDelete()" class="btn-file"
+              style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
-                  Save {{form.index}}
+                  Delete {{form.no}}
+                </span>
+                <mat-icon class="mat-18">delete</mat-icon>
+              </div>
+            </button>
+          </div>
+          <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="end center">
+            <button [disabled]="disableEditByPIC()" mat-raised-button color="primary" (click)="onSave()"
+              class="btn-file" style="margin-right: 10px;">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+                <span>
+                  Save {{form.no}}
                 </span>
                 <mat-icon class="mat-18">save</mat-icon>
               </div>
             </button>
-            <button [disabled]="!form.registerNo" mat-raised-button class="btn-file btn-success"
-              style="margin-right: 30px;" (click)="onFinish()">
+            <mat-form-field appearance="outline" floatLabel="always" class="me-4 ">
+              <mat-label [ngClass]="{'text-red-400': !sendTo}" class="text-green-400">Send to</mat-label>
+              <mat-select [disabled]="disableEditByPIC()" [(ngModel)]="sendTo">
+                <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">
+                  {{displayName(user)}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button [disabled]="!form.registerNo || !sendTo || disableEditByPIC()" mat-raised-button
+              class="btn-file btn-success" style="margin-right: 30px;" (click)="onSubmit()">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
-                  Submit {{form.index}}
+                  Submit {{form.no}}
                 </span>
                 <mat-icon class="mat-18">done_all</mat-icon>
               </div>
@@ -352,6 +415,4 @@
     </div>
 
   </div>
-
-
 </div>

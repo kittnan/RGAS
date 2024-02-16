@@ -1,0 +1,38 @@
+<div fxLayout="row wrap" fxLayoutAlign="center start" style="margin-bottom: 10rem;">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+    <app-title fxFlex="100" [title]="'Approve Claim'"></app-title>
+  </div>
+  <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <app-form1-view fxFlex="100" [form]="form"></app-form1-view>
+  </div>
+  <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end start" fxLayoutGap="10" class="mt-4 pe-8">
+    <mat-form-field appearance="outline" floatLabel="always">
+      <mat-label>Analysis PIC</mat-label>
+      <mat-select [(ngModel)]="sendTo" [compareWith]="objectComparisonFunction">
+        <mat-option *ngFor="let user of analysisPICOption" [value]="user">
+          {{user.firstName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button class="btn-success">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <span>
+          Approve
+        </span>
+        <mat-icon class="mat-18">
+          done_all
+        </mat-icon>
+      </div>
+    </button>
+    <button mat-raised-button class="btn-danger">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <span>
+          Reject
+        </span>
+        <mat-icon class="mat-18">
+          close
+        </mat-icon>
+      </div>
+    </button>
+  </div>
+</div>

@@ -21,6 +21,8 @@ import { FileListComponent } from './file-list/file-list.component';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { FilesBottomComponent } from './files-bottom/files-bottom.component';
+import { Skeleton1Component } from './skeleton1/skeleton1.component';
+import { Form1ViewComponent } from './rgas2/form1-view/form1-view.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -55,6 +57,8 @@ let items = [
     Form3MenuComponent,
     FileListComponent,
     FilesBottomComponent,
+    Skeleton1Component,
+    Form1ViewComponent,
   ],
   imports: [
     CommonModule,
@@ -75,6 +79,8 @@ let items = [
     Form3Component,
     FileListComponent,
     FilesBottomComponent,
+    Skeleton1Component,
+    Form1ViewComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

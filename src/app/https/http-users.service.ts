@@ -13,6 +13,9 @@ export class HttpUsersService {
   get(params: HttpParams): Observable<any> {
     return this.http.get(`${this.URL}/${this.SUB}`, { params: params });
   }
+  userNextApprove(params: HttpParams): Observable<any> {
+    return this.http.get(`${this.URL}/${this.SUB}/userNextApprove`, { params: params });
+  }
   login(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/login`, data);
   }

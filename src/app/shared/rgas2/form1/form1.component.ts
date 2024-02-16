@@ -14,6 +14,8 @@ import { environment } from 'src/environments/environment';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
+import { HttpClaimService } from 'src/app/https/http-claim.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 interface FORM1 {
   [key: string]: any,
@@ -57,6 +59,7 @@ interface FORM1 {
   registerNo?: any,
   flowPIC?: any,
   flowHistory?: any
+  _id?: any
 }
 
 export interface FlowHistory {
@@ -118,7 +121,9 @@ export class Form1Component implements OnInit {
   // todo form output event
   @Output() formChange: EventEmitter<any> = new EventEmitter()
   @Output() maxChange: EventEmitter<any> = new EventEmitter()
-  @Output() finishChange: EventEmitter<any> = new EventEmitter()
+  @Output() submitChange: EventEmitter<any> = new EventEmitter()
+  @Output() copyChange: EventEmitter<any> = new EventEmitter()
+  @Output() deleteChange: EventEmitter<any> = new EventEmitter()
 
   // todo temp option
   tempOption: any[] = [
@@ -166,12 +171,18 @@ export class Form1Component implements OnInit {
   // todo analysis PIC option
   analysisPICOption: any[] = []
 
+  // todo next PIC option
+  userApproveClaimOption: any[] = []
+
 
   // todo form model code
   modelCodeForm: FormControl = new FormControl()
 
   // todo user login
   userLogin: any
+
+  // todo send to
+  sendTo: any
 
 
   // modelOptionString!: Observable<string[]>
@@ -191,6 +202,7 @@ export class Form1Component implements OnInit {
     private $fileUpload: HttpFileUploadService,
     private $user: HttpUsersService,
     private _bottomSheet: MatBottomSheet,
+    private $claim: HttpClaimService,
   ) {
     let user: any = localStorage.getItem('RGAS_user')
     this.userLogin = user ? JSON.parse(user) : null
@@ -221,6 +233,8 @@ export class Form1Component implements OnInit {
     this.currencyOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['currency']))))
 
     this.occurredLocationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['occurredLocation']))))
+
+    this.userApproveClaimOption = await lastValueFrom(this.$user.userNextApprove(new HttpParams().set('formStatus', JSON.stringify(this.form.status))))
 
     let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
     this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
@@ -370,8 +384,16 @@ export class Form1Component implements OnInit {
     this.formChange.emit(this.form)
   }
   // todo on finish
-  onFinish() {
-    this.finishChange.emit(this.form)
+  onSubmit() {
+    this.form.flowPIC = this.sendTo
+    this.form.status = 'wait approve'
+    let obj: FlowHistory = {
+      action: 'request',
+      date: new Date(),
+      user: this.userLogin
+    }
+    this.form.flowHistory.push(obj)
+    this.submitChange.emit(this.form)
   }
 
   // todo open bottom files
@@ -383,7 +405,85 @@ export class Form1Component implements OnInit {
 
   // todo copy
   onCopy() {
+    try {
+      Swal.fire({
+        title: 'Do you want to copy?',
+        icon: 'question',
+        showConfirmButton: true,
+        showCancelButton: true
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          let newForm = {
+            ...this.form,
+            files: [],
+          }
+          const res = await lastValueFrom(this.$claim.createSub(newForm))
+          this.copyChange.emit(res)
+        }
+      })
 
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
   }
+
+  // todo delete
+  onDelete() {
+    Swal.fire({
+      title: 'Do you want to delete current?',
+      icon: 'question',
+      showConfirmButton: true,
+      showCancelButton: true
+    }).then((v: SweetAlertResult) => {
+      if (v.isConfirmed) {
+        this.delete()
+      }
+    })
+  }
+  async delete() {
+    try {
+      let params: HttpParams = new HttpParams()
+      params = params.set('_id', this.form._id)
+      let res = await lastValueFrom(this.$claim.delete(params))
+      console.log("🚀 ~ res:", res)
+      Swal.fire({
+        title: 'SUCCESS',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        this.deleteChange.emit(this.form._id)
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+
+  // todo control badge number
+  controlBadgeNumber(files: any) {
+    if (files && files.length < 1) return null
+    return files ? files.length : null
+  }
+
+  // todo show user login name
+  displayName(user: any) {
+    if (user) {
+      let firstName = user.firstName ? user.firstName : ''
+      let lastName = user.lastName ? user.lastName[0] : ''
+      return `${firstName}-${lastName}`
+    }
+    return ''
+  }
+
+  // todo check PIC
+  disableEditByPIC() {
+    if (this.form && this.form.flowPIC) {
+      let PIC = this.form.flowPIC
+      if (this.userLogin._id == PIC) return false
+    }
+    return true
+  }
+
 
 }
