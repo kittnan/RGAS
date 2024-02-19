@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import * as QRCode from 'qrcode'
 import { lastValueFrom } from 'rxjs';
@@ -8,6 +8,7 @@ import { HttpUsersService } from 'src/app/https/http-users.service';
 import { environment } from 'src/environments/environment';
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 import { HttpResultService } from 'src/app/https/http-result.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 interface FORM2 {
   [key: string]: any,
@@ -64,6 +65,7 @@ interface FORM2 {
   ktcJudgment: any,
   qrcode: any,
   _id?: any,
+  claimId?: any,
 }
 @Component({
   selector: 'app-form2',
@@ -105,7 +107,7 @@ export class Form2Component implements OnInit {
   ]
 
 
-  @Input() form: FORM2 = {
+  @Input() form2: FORM2 = {
     partReceivingDate: null,
     PIC: null,
     rgaNo: null,
@@ -173,6 +175,10 @@ export class Form2Component implements OnInit {
   // todo analysis PIC option
   analysisPICOption: any[] = []
 
+  // todo on save
+  @Output() onSaveChange: EventEmitter<any> = new EventEmitter()
+  @Output() onSubmitChange: EventEmitter<any> = new EventEmitter()
+
   constructor(
     private $fileUpload: HttpFileUploadService,
     private $user: HttpUsersService,
@@ -187,11 +193,11 @@ export class Form2Component implements OnInit {
     params2 = params2.set('registerNo', JSON.stringify([this.claim['registerNo']]))
     let resResult = await lastValueFrom(this.$result.get(params2))
     if (resResult && resResult.length > 0) {
-      this.form = resResult[0]
-      console.log("🚀 ~ this.form:", this.form)
+      this.form2 = resResult[0]
+      console.log("🚀 ~ this.form2:", this.form2)
     } else {
       const qr: any = await this.generateQrcode('xxx')
-      this.form.qrcode = qr
+      this.form2.qrcode = qr
     }
 
   }
@@ -204,53 +210,40 @@ export class Form2Component implements OnInit {
     return false
   }
 
-  // todo submit fn
-  async onSubmit() {
-    try {
-      console.log(this.form);
-      console.log(this.claim);
-      const newResult = {
-        ...this.form,
-        registerNo: this.claim.registerNo
-      }
-      const res = await lastValueFrom(this.$result.createOrUpdate([newResult]))
-    } catch (error) {
-      console.log("🚀 ~ error:", error)
-    }
-  }
+
   // todo generate qr code
   generateQrcode(text: string): Promise<any> {
     return QRCode.toDataURL(text)
   }
 
-  // todo upload appearance file
+  // todo upload file
   async onUploadFile($event: any, key: string) {
     try {
+      if (!this.form2._id) throw 'Please save!!'
       let file: any = $event.target.files[0] as File;
-      if (file) {
-        const formData: FormData = new FormData()
-        formData.append('path', `${this.pathFile}/${this.runNumber}/`)
-        formData.append('file', file)
-        const resFile = await lastValueFrom(this.$fileUpload.create(formData))
-        const newFile = {
-          ...resFile[0],
-          index: 1,
-          date: new Date(),
-        }
-        if (this.form[key].files && this.form[key].files.some((item: any) => item.filename == newFile.filename)) {
-          const index = this.form[key].files.findIndex((item: any) => item.filename == newFile.filename)
-          this.form[key].files[index] = newFile
-        } else {
-          this.form[key].files = !this.form[key].files ? [newFile] : [...this.form[key].files, {
-            ...resFile[0],
-            index: this.form[key].files.length + 1,
-            date: new Date(),
-          }]
-        }
-        console.log(this.form);
-        this.onSubmit()
-        this.clearInputFile()
+      if (!file) throw 'Please attach file!!'
+      const formData: FormData = new FormData()
+      formData.append('path', `${this.pathFile}/${this.runNumber}/`)
+      formData.append('file', file)
+      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+      const newFile = {
+        ...resFile[0],
+        index: 1,
+        date: new Date(),
       }
+      if (this.form2[key].files && this.form2[key].files.some((item: any) => item.filename == newFile.filename)) {
+        const index = this.form2[key].files.findIndex((item: any) => item.filename == newFile.filename)
+        this.form2[key].files[index] = newFile
+      } else {
+        this.form2[key].files = !this.form2[key].files ? [newFile] : [...this.form2[key].files, {
+          ...resFile[0],
+          index: this.form2[key].files.length + 1,
+          date: new Date(),
+        }]
+      }
+      console.log(this.form2);
+      this.onSubmit()
+      this.clearInputFile()
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -274,8 +267,8 @@ export class Form2Component implements OnInit {
 
   // todo label show PIC
   labelShowPIC() {
-    if (this.form.PIC) {
-      let PIC = this.form.PIC
+    if (this.form2.PIC) {
+      let PIC = this.form2.PIC
       return `${PIC.firstName}-${PIC.lastName[0]}`
     }
     return ''
@@ -292,5 +285,53 @@ export class Form2Component implements OnInit {
   controlBadgeNumber(files: any) {
     if (files && files.length < 1) return null
     return files.length
+  }
+
+  // todo on save
+  onSave() {
+    Swal.fire({
+      title: "Do you wish to save?",
+      icon: 'question',
+      showCancelButton: true
+    }).then((v: SweetAlertResult) => {
+      if (v.isConfirmed) {
+        this.save()
+      }
+    })
+  }
+  async save() {
+    try {
+      this.form2.claimId = this.claim._id
+      console.log(this.form2);
+      this.onSaveChange.emit(this.form2)
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  // todo submit fn
+  onSubmit() {
+    try {
+      Swal.fire({
+        title: "Do you wish to save?",
+        icon: 'question',
+        showCancelButton: true
+      }).then((v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          this.submit()
+        }
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  submit() {
+    // const newResult = {
+    //   ...this.form2,
+    //   registerNo: this.claim.registerNo
+    // }
+    // const res = await lastValueFrom(this.$result.createOrUpdate([newResult]))
+    this.onSubmitChange.emit(this.form2)
   }
 }

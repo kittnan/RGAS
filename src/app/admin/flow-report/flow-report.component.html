@@ -1,0 +1,74 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+    <app-title [title]="'S-CD'" class="w-full"></app-title>
+  </div>
+  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center">
+    <!-- <mat-form-field appearance="outline" floatLabel="always" class="flex-auto custom-form">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #search>
+    </mat-form-field> -->
+
+    <div class="flex-auto" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
+      <button mat-flat-button color="primary">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+          <span>
+            Download
+          </span>
+          <mat-icon class="mat-18">
+            file_download
+          </mat-icon>
+        </div>
+      </button>
+      <!-- <button mat-flat-button color="primary" (click)="fileUpload.click()">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+          <span>
+            Upload
+          </span>
+          <mat-icon class="mat-18">
+            file_upload
+          </mat-icon>
+
+        </div>
+      </button>
+      <input type="file" hidden #fileUpload (change)="onUpload($event)"> -->
+    </div>
+  </div>
+  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center" class="overflow-auto">
+
+    <div class="example-container">
+      <h2>Make Report</h2>
+      <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo" [cdkDropListConnectedTo]="[doneList]"
+        class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of todo" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+
+    <div class="example-container">
+      <h2>Make Report2</h2>
+
+      <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
+        class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+    <div class="example-container">
+      <h2>Make Report3</h2>
+
+      <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
+        class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+    <div class="example-container">
+      <h2>Make Report4</h2>
+
+      <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
+        class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of done" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

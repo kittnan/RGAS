@@ -1,0 +1,42 @@
+<div fxLayout="row wrap" fxLayoutAlign="center start" style="margin-bottom: 10rem;">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+    <app-title fxFlex="100" [title]="'RGAS-2'"></app-title>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+    <button mat-icon-button (click)="onFirstItem()">
+      <mat-icon>keyboard_double_arrow_left</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onPreviousItem()">
+      <mat-icon>arrow_back_ios_new</mat-icon>
+    </button>
+    <span class="cursor-pointer me-2" *ngFor="let item of allItems; let i=index" (click)="onChooseItem(i+1)">
+      <span [class]="cssCurrentItem(item.no)">
+        {{item.no}}
+      </span>
+    </span>
+    <button mat-icon-button (click)="onNextItem()">
+      <mat-icon>arrow_forward_ios</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onLastItem()">
+      <mat-icon>keyboard_double_arrow_right</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngIf="show">
+    <div *ngIf="allItems && allItems.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+      <app-form1 *ngIf="show" fxFlex="100" [(form)]="currentItem" (formChange)="formChange()"
+        (submitChange)="submitChange($event)" (copyChange)="copyChange($event)"
+        (deleteChange)="deleteChange($event)"></app-form1>
+    </div>
+    <div *ngIf="currentItem && currentItem['registerNo']" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+      <app-form2 fxFlex="100" [claim]="currentItem"></app-form2>
+    </div>
+    <div *ngIf="allItems && allItems.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+      <app-form3 fxFlex="100"></app-form3>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!show">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+      <mat-progress-bar fxFlex="100" mode="indeterminate"></mat-progress-bar>
+    </div>
+  </ng-container>
+</div>

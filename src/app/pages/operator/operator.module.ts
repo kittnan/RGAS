@@ -6,6 +6,9 @@ import { OperatorComponent } from './operator.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OperatorRgas1Component } from './pages/operator-rgas1/operator-rgas1.component';
 import { OperatorRgas2Component } from './pages/operator-rgas2/operator-rgas2.component';
+import { OperatorRgasNewComponent } from './pages/operator-rgas-new/operator-rgas-new.component';
+import { OperatorRgasInformationComponent } from './pages/operator-rgas-information/operator-rgas-information.component';
+import { OperatorRgasAnalysisComponent } from './pages/operator-rgas-analysis/operator-rgas-analysis.component';
 
 
 @NgModule({
@@ -13,6 +16,9 @@ import { OperatorRgas2Component } from './pages/operator-rgas2/operator-rgas2.co
     OperatorComponent,
     OperatorRgas1Component,
     OperatorRgas2Component,
+    OperatorRgasNewComponent,
+    OperatorRgasInformationComponent,
+    OperatorRgasAnalysisComponent,
   ],
   imports: [
     CommonModule,

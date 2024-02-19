@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -37,6 +37,8 @@ export class Rgas1Component implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   claims: any[] = []
+  @Output() onClickClaimChange: EventEmitter<any> = new EventEmitter()
+  @Output() onClickNewChange: EventEmitter<any> = new EventEmitter()
   constructor(
     private router: Router,
     private $claim: HttpClaimService,
@@ -53,7 +55,7 @@ export class Rgas1Component implements OnInit {
           ...claim,
           'registerNo': claim.registerNo,
           'claimStatus': claim.status,
-          'PIC': `${claim.analysisPIC?.firstName}-${claim.analysisPIC?.lastName[0]}`,
+          'PIC': claim.analysisPIC ? `${claim.analysisPIC?.firstName}-${claim.analysisPIC?.lastName[0]}`:'',
           'claimMonth': moment(claim.dueDate).format('YYYY-MMM-DD'),
           'claimNo': claim.claimNo,
           'modelNo': claim.modelNo,
@@ -91,36 +93,15 @@ export class Rgas1Component implements OnInit {
 
   // todo click new claim
   onClickNew() {
-    this.router.navigateByUrl("operator/rgas2")
+    this.onClickNewChange.emit()
+    // this.router.navigateByUrl("operator/rgas2")
   }
 
   // todo click claim
   onClickClaim(row: any) {
     console.log("🚀 ~ row:", row)
-    let auth = this.$local.getAuth()
-    let subPath: any = this.setPathSub(row)
-    console.log("🚀 ~ subPath:", subPath)
-    this.router.navigate([`${auth}/${subPath.path}`], {
-      queryParams:{
-        registerNo: subPath.data.registerNo,
-        no:subPath.data.no
-      }
-    })
+    this.onClickClaimChange.emit(row)
+  }
 
-  }
-  setPathSub(row: any) {
-    if (row.status == 'draft') {
-      return {
-        data: row,
-        path: 'rgas2'
-      }
-    }
-    if (row.status == 'wait approve') {
-      return {
-        data: row,
-        path: 'approve-claim'
-      }
-    }
-    return ''
-  }
+
 }

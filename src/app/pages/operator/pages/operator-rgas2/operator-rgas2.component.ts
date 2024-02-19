@@ -75,6 +75,7 @@ export class OperatorRgas2Component implements OnInit {
         // this.show = true
       } else {
         this.allItems = [this.dataStructure]
+        this.currentItem = this.allItems[0]
         // this.show = true
       }
     })

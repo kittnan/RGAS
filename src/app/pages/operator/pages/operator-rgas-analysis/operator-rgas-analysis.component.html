@@ -1,0 +1,20 @@
+<div fxLayout="row wrap" fxLayoutAlign="center start" style="margin-bottom: 10rem;">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+    <app-title fxFlex="100" [title]="'RGAS-2'"></app-title>
+  </div>
+  <ng-container *ngIf="show">
+    <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+      <app-form1-view [form]="form"></app-form1-view>
+    </div>
+    <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+      <app-form2 fxFlex="100" [claim]="form" [form2]="form2" (onSaveChange)="onSaveChange($event)"
+        (onSubmitChange)="onSubmitChange($event)"></app-form2>
+    </div>
+
+  </ng-container>
+  <ng-container *ngIf="!show">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
+      <mat-progress-bar fxFlex="100" mode="indeterminate"></mat-progress-bar>
+    </div>
+  </ng-container>
+</div>

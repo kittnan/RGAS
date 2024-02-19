@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SubTitleComponent implements OnInit {
   @Input() title: string = ''
-  @Input() icon: string = 'check_circle'
+  @Input() icon: string = 'description'
 
   constructor() { }
 

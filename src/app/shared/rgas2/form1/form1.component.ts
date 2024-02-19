@@ -118,6 +118,8 @@ export class Form1Component implements OnInit {
     flowHistory: [],
 
   }
+
+
   // todo form output event
   @Output() formChange: EventEmitter<any> = new EventEmitter()
   @Output() maxChange: EventEmitter<any> = new EventEmitter()
@@ -177,6 +179,9 @@ export class Form1Component implements OnInit {
 
   // todo form model code
   modelCodeForm: FormControl = new FormControl()
+
+  // todo form model code
+  sendToForm: FormControl = new FormControl()
 
   // todo user login
   userLogin: any
@@ -381,6 +386,7 @@ export class Form1Component implements OnInit {
     }
     this.form.flowHistory = [now]
     this.form.flowPIC = this.userLogin
+    this.form.status = 'draft'
     this.formChange.emit(this.form)
   }
   // todo on finish
@@ -392,6 +398,7 @@ export class Form1Component implements OnInit {
       date: new Date(),
       user: this.userLogin
     }
+
     this.form.flowHistory.push(obj)
     this.submitChange.emit(this.form)
   }
@@ -476,14 +483,15 @@ export class Form1Component implements OnInit {
     return ''
   }
 
-  // todo check PIC
-  disableEditByPIC() {
-    if (this.form && this.form.flowPIC) {
-      let PIC = this.form.flowPIC
-      if (this.userLogin._id == PIC) return false
-    }
-    return true
-  }
+  // // todo check PIC
+  // disableEditByPIC() {
+  //   // if (this.form && this.form.flowPIC) {
+  //   //   let PIC = this.form.flowPIC
+  //   //   if (this.userLogin._id == PIC) return false
+  //   // }
+  //   // return true
+  //   return false
+  // }
 
 
 }

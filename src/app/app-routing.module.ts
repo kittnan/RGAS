@@ -9,6 +9,12 @@ import { InterpreterModule } from './pages/interpreter/interpreter.module';
 import { OperatorModule } from './pages/operator/operator.module';
 import { SectionHeadModule } from './pages/section-head/section-head.module';
 import { LoginComponent } from './shared/login/login.component';
+import { AdminGuard } from './guards/admin.guard';
+import { OperatorGuard } from './guards/operator.guard';
+import { EngineerGuard } from './guards/engineer.guard';
+import { SectionGuard } from './guards/section.guard';
+import { InterpreterGuard } from './guards/interpreter.guard';
+import { DepartmentGuard } from './guards/department.guard';
 
 const routes: Routes = [
   {
@@ -23,32 +29,32 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => AdminModule,
-    canActivate: [],
+    canActivate: [AdminGuard],
   },
   {
     path: 'operator',
     loadChildren: () => OperatorModule,
-    canActivate: [],
+    canActivate: [OperatorGuard],
   },
   {
     path: 'engineer',
     loadChildren: () => EngineerModule,
-    canActivate: [],
+    canActivate: [EngineerGuard],
   },
   {
     path: 'sectionHead',
     loadChildren: () => SectionHeadModule,
-    canActivate: [],
+    canActivate: [SectionGuard],
   },
   {
     path: 'interpreter',
     loadChildren: () => InterpreterModule,
-    canActivate: [],
+    canActivate: [InterpreterGuard],
   },
   {
     path: 'departmentHead',
     loadChildren: () => DepartmentHeadModule,
-    canActivate: [],
+    canActivate: [DepartmentGuard],
   },
 
 

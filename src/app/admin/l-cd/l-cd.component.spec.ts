@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Form3MenuComponent } from './form3-menu.component';
+import { LCdComponent } from './l-cd.component';
 
-describe('Form3MenuComponent', () => {
-  let component: Form3MenuComponent;
-  let fixture: ComponentFixture<Form3MenuComponent>;
+describe('LCdComponent', () => {
+  let component: LCdComponent;
+  let fixture: ComponentFixture<LCdComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Form3MenuComponent ]
+      declarations: [ LCdComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Form3MenuComponent);
+    fixture = TestBed.createComponent(LCdComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

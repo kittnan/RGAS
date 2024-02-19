@@ -18,10 +18,11 @@ export class FilesBottomComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data);
   }
-  onDownload(item:any) {
+  onDownload(item: any) {
+  console.log("🚀 ~ item:", item)
 
   }
-  onDelete(item:any) {
+  onDelete(item: any) {
 
   }
 }

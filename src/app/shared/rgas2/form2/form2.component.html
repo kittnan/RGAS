@@ -1,5 +1,5 @@
 <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-2 mb-4">
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
+  <div *ngIf="form2" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
     <app-sub-title fxFlex="100" [title]="'Analysis Result'" class="mt-2 mb-2"></app-sub-title>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="10">
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start start">
@@ -7,7 +7,7 @@
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Part Receive Date</mat-label>
-            <input matInput [matDatepicker]="partReceiveDate_dp" [(ngModel)]="form.partReceivingDate">
+            <input matInput [matDatepicker]="partReceiveDate_dp" [(ngModel)]="form2.partReceivingDate">
             <mat-datepicker-toggle matSuffix [for]="partReceiveDate_dp"></mat-datepicker-toggle>
             <mat-datepicker #partReceiveDate_dp></mat-datepicker>
           </mat-form-field>
@@ -17,7 +17,7 @@
 
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>PIC</mat-label>
-            <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form.PIC">
+            <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form2.PIC">
               <mat-option *ngFor="let user of analysisPICOption" [value]="user">
                 {{user.firstName}}
               </mat-option>
@@ -28,13 +28,13 @@
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>RGA No.</mat-label>
-            <input matInput [(ngModel)]="form.rgaNo">
+            <input matInput [(ngModel)]="form2.rgaNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>KTC Analysis Result</mat-label>
-            <input matInput [(ngModel)]="form.ktcAnalysisResult">
+            <input matInput [(ngModel)]="form2.ktcAnalysisResult">
           </mat-form-field>
         </div>
 
@@ -42,13 +42,16 @@
       <div fxFlex="100" fxFlex.gt-md="65" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2">
           <button mat-raised-button color="primary">
-            Print Label
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5">
+              <span>Print Label</span>
+              <mat-icon class="mat-18">picture_as_pdf</mat-icon>
+            </div>
           </button>
         </div>
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2 p-1 ">
           <div fxLayoutAlign="start start" class="label-detail" style="width: 900px; height: 225px;">
             <div class="flex justify-center items-center bf" style="width: 225px; height: 225px;">
-              <img [src]="form.qrcode" alt="" style="width: 100%; height: 100%;">
+              <img [src]="form2.qrcode" alt="" style="width: 100%; height: 100%;">
             </div>
             <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="bt br bb"
               style="width:575px; height: 225px;">
@@ -176,7 +179,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Appearance Check Result </mat-label>
-          <mat-select [(ngModel)]="form.appearance.result">
+          <mat-select [(ngModel)]="form2.appearance.result">
             <mat-option *ngFor="let item of option1" [value]="item">
               {{item}}
             </mat-option>
@@ -186,7 +189,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form.appearance.analysisBy">
+          <mat-select [(ngModel)]="form2.appearance.analysisBy">
             <mat-option *ngFor="let item of PICOption" [value]="item">
               {{item}}
             </mat-option>
@@ -196,7 +199,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.appearance.analysisDate" [matDatepicker]="appearance_dp">
+          <input matInput [(ngModel)]="form2.appearance.analysisDate" [matDatepicker]="appearance_dp">
           <mat-datepicker-toggle matSuffix [for]="appearance_dp"></mat-datepicker-toggle>
           <mat-datepicker #appearance_dp></mat-datepicker>
         </mat-form-field>
@@ -212,20 +215,21 @@
           </div>
           <input type="file" hidden #appearanceFile (change)="onUploadFile($event,'appearance')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.appearance.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.appearance.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form.appearance.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2.appearance.files)"
+              matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Function Check Result </mat-label>
-          <mat-select [(ngModel)]="form.function.result">
+          <mat-select [(ngModel)]="form2.function.result">
             <mat-option *ngFor="let item of option2" [value]="item">
               {{item}}
             </mat-option>
@@ -235,7 +239,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form.function.analysisBy">
+          <mat-select [(ngModel)]="form2.function.analysisBy">
             <mat-option *ngFor="let item of PICOption" [value]="item">
               {{item}}
             </mat-option>
@@ -245,7 +249,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.function.analysisDate" [matDatepicker]="function_dp">
+          <input matInput [(ngModel)]="form2.function.analysisDate" [matDatepicker]="function_dp">
           <mat-datepicker-toggle matSuffix [for]="function_dp"></mat-datepicker-toggle>
           <mat-datepicker #function_dp></mat-datepicker>
         </mat-form-field>
@@ -261,20 +265,20 @@
           </div>
           <input type="file" hidden #functionFile (change)="onUploadFile($event,'function')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.function.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.function.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form.function.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2.function.files)" matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Electrical Value Check Result </mat-label>
-          <mat-select [(ngModel)]="form.electrical.result">
+          <mat-select [(ngModel)]="form2.electrical.result">
             <mat-option *ngFor="let item of option2" [value]="item">
               {{item}}
             </mat-option>
@@ -284,7 +288,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form.electrical.analysisBy">
+          <mat-select [(ngModel)]="form2.electrical.analysisBy">
             <mat-option *ngFor="let item of PICOption" [value]="item">
               {{item}}
             </mat-option>
@@ -294,7 +298,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.electrical.analysisDate" [matDatepicker]="electrical_dp">
+          <input matInput [(ngModel)]="form2.electrical.analysisDate" [matDatepicker]="electrical_dp">
           <mat-datepicker-toggle matSuffix [for]="electrical_dp"></mat-datepicker-toggle>
           <mat-datepicker #electrical_dp></mat-datepicker>
         </mat-form-field>
@@ -310,20 +314,21 @@
           </div>
           <input type="file" hidden #electricalFile (change)="onUploadFile($event,'electrical')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.electrical.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.electrical.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form.electrical.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2.electrical.files)"
+              matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Disassembly Check Result </mat-label>
-          <mat-select [(ngModel)]="form.disassembly.result">
+          <mat-select [(ngModel)]="form2.disassembly.result">
             <mat-option *ngFor="let item of option2" [value]="item">
               {{item}}
             </mat-option>
@@ -334,7 +339,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form.disassembly.analysisBy">
+          <mat-select [(ngModel)]="form2.disassembly.analysisBy">
             <mat-option *ngFor="let item of PICOption" [value]="item">
               {{item}}
             </mat-option>
@@ -344,7 +349,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.disassembly.analysisDate" [matDatepicker]="disassembly_dp">
+          <input matInput [(ngModel)]="form2.disassembly.analysisDate" [matDatepicker]="disassembly_dp">
           <mat-datepicker-toggle matSuffix [for]="disassembly_dp"></mat-datepicker-toggle>
           <mat-datepicker #disassembly_dp></mat-datepicker>
         </mat-form-field>
@@ -360,13 +365,13 @@
           </div>
           <input type="file" hidden #disassemblyFile (change)="onUploadFile($event,'disassembly')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.disassembly.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.disassembly.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form.disassembly.files)"
+            <mat-icon [matBadge]="controlBadgeNumber(form2.disassembly.files)"
               matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
@@ -374,7 +379,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Microscope Check Result </mat-label>
-          <mat-select [(ngModel)]="form.microscope.result">
+          <mat-select [(ngModel)]="form2.microscope.result">
             <mat-option *ngFor="let item of option2" [value]="item">
               {{item}}
             </mat-option>
@@ -384,7 +389,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form.microscope.analysisBy">
+          <mat-select [(ngModel)]="form2.microscope.analysisBy">
             <mat-option *ngFor="let item of PICOption" [value]="item">
               {{item}}
             </mat-option>
@@ -394,7 +399,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form.microscope.analysisDate" [matDatepicker]="microscope_dp">
+          <input matInput [(ngModel)]="form2.microscope.analysisDate" [matDatepicker]="microscope_dp">
           <mat-datepicker-toggle matSuffix [for]="microscope_dp"></mat-datepicker-toggle>
           <mat-datepicker #microscope_dp></mat-datepicker>
         </mat-form-field>
@@ -410,13 +415,14 @@
           </div>
           <input type="file" hidden #microscopeFile (change)="onUploadFile($event,'microscope')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.microscope.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.microscope.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form.microscope.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2.microscope.files)"
+              matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
@@ -424,13 +430,13 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Technical Analysis Result </mat-label>
-          <input matInput [(ngModel)]="form.technical.result">
+          <input matInput [(ngModel)]="form2.technical.result">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis Report No.</mat-label>
-          <input matInput [(ngModel)]="form.technical.analysisReportNo">
+          <input matInput [(ngModel)]="form2.technical.analysisReportNo">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -444,13 +450,13 @@
           </div>
           <input type="file" hidden #technicalFile (change)="onUploadFile($event,'technical')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.technical.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.technical.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form.technical.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2.technical.files)" matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
@@ -459,7 +465,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Supplier Analysis Result </mat-label>
-          <mat-select [(ngModel)]="form.supplier.result">
+          <mat-select [(ngModel)]="form2.supplier.result">
             <mat-option *ngFor="let item of option3" [value]="item">
               {{item}}
             </mat-option>
@@ -477,26 +483,26 @@
           </div>
           <input type="file" hidden #supplierFile (change)="onUploadFile($event,'supplier')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.supplier.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.supplier.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form.supplier.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2.supplier.files)" matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>FAR / PNN Number </mat-label>
-          <input matInput [(ngModel)]="form.supplier.farPnnNumber">
+          <input matInput [(ngModel)]="form2.supplier.farPnnNumber">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Issue Date</mat-label>
-          <input matInput [(ngModel)]="form.supplier.issueDate" [matDatepicker]="supplierIssueDate_dp">
+          <input matInput [(ngModel)]="form2.supplier.issueDate" [matDatepicker]="supplierIssueDate_dp">
           <mat-datepicker-toggle matSuffix [for]="supplierIssueDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #supplierIssueDate_dp></mat-datepicker>
         </mat-form-field>
@@ -504,7 +510,7 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>KTC Judgment </mat-label>
-          <mat-select [(ngModel)]="form.ktcJudgment">
+          <mat-select [(ngModel)]="form2.ktcJudgment">
             <mat-option *ngFor="let item of option3" [value]="item">
               {{item}}
             </mat-option>
@@ -513,18 +519,25 @@
 
       </div>
 
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      </div>
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
-      <button mat-raised-button color="primary" (click)="onSubmit()">
-        Submit
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mt-1 pe-8">
+      <button mat-raised-button color="primary" (click)="onSave()" class="btn-file" style="margin-right: 10px;">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+          <span>
+            Save
+          </span>
+          <mat-icon class="mat-18">save</mat-icon>
+        </div>
       </button>
+      <!-- <button mat-raised-button color="primary" (click)="onSubmit()">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+          <span>
+            Submit
+          </span>
+          <mat-icon class="mat-18">done_all</mat-icon>
+        </div>
+      </button> -->
     </div>
 
   </div>

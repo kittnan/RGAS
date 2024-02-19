@@ -16,7 +16,6 @@ import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { Form1MultipleComponent } from './rgas2/form1-multiple/form1-multiple.component';
 import { Form2Component } from './rgas2/form2/form2.component';
 import { Form3Component } from './rgas2/form3/form3.component';
-import { Form3MenuComponent } from './rgas2/form3/form3-menu/form3-menu.component';
 import { FileListComponent } from './file-list/file-list.component';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
@@ -54,7 +53,6 @@ let items = [
     Form1MultipleComponent,
     Form2Component,
     Form3Component,
-    Form3MenuComponent,
     FileListComponent,
     FilesBottomComponent,
     Skeleton1Component,

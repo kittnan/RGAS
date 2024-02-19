@@ -11,7 +11,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { MastersComponent } from './masters/masters.component';
 import { DefectManageComponent } from './defect-manage/defect-manage.component';
-
+import { DCdComponent } from './d-cd/d-cd.component';
+import { LCdComponent } from './l-cd/l-cd.component';
+import { SCdComponent } from './s-cd/s-cd.component';
+import { FlowReportComponent } from './flow-report/flow-report.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,10 @@ import { DefectManageComponent } from './defect-manage/defect-manage.component';
     UserNewComponent,
     MastersComponent,
     DefectManageComponent,
+    DCdComponent,
+    LCdComponent,
+    SCdComponent,
+    FlowReportComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +36,8 @@ import { DefectManageComponent } from './defect-manage/defect-manage.component';
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    DragDropModule
   ],
   exports: [
   ]

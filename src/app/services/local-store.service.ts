@@ -31,4 +31,12 @@ export class LocalStoreService {
     localStorage.setItem('RGAS_auth', JSON.stringify(data))
   }
 
+  // todo dark theme
+  getDarkTheme() {
+    return localStorage.getItem('RGAS_dark_theme')
+  }
+  setDarkTheme(data: any) {
+    localStorage.setItem('RGAS_dark_theme', JSON.stringify(data))
+  }
+
 }

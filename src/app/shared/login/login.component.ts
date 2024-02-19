@@ -8,6 +8,7 @@ import { TokenStorageService } from 'src/app/auth/token-storage.service';
 import { lastValueFrom } from 'rxjs';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
   selector: 'app-login',
@@ -30,13 +31,16 @@ export class LoginComponent implements OnInit {
     private tokenStorage: TokenStorageService,
     private router: Router,
     private $user: HttpUsersService,
-    private $local: LocalStoreService
+    private $local: LocalStoreService,
+    private $loader:NgxUiLoaderService
   ) { }
 
   ngOnInit(): void {
     let localUser: any = localStorage.getItem('RGAS_user')
     this.userLogin = JSON.parse(localUser)
-
+    if(this.$local.getAuth()){
+      this.goLink(this.$local.getAuth())
+    }
   }
   onSubmit() {
     try {
@@ -71,7 +75,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  goLink(access: string) {
+  goLink(access: any) {
+    this.$loader.start()
     console.log("🚀 ~ access:", access)
     localStorage.setItem("RGAS_auth", access)
     switch (access) {

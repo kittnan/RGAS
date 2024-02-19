@@ -7,7 +7,7 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
       class="me-8 bg-green-300 p-2 rounded-md">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
-        <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+        <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
           Pre Report
         </span>
@@ -31,22 +31,27 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-1">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always" >
-        <mat-label>Files</mat-label>
-        <button mat-icon-button matSuffix (click)="preReportFile.click()">
-          <mat-icon>attach_file</mat-icon>
-        </button>
-        <input matInput type="text">
-        <input type="file" hidden #preReportFile>
-      </mat-form-field>
 
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1" >
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" (click)="openBottomSheet()">
-          <mat-icon>lists</mat-icon>
-        </button>
-      </div>
+      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="preReportFile.click()"
+        class="btn-file">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <span>
+            Files
+          </span>
+          <mat-icon>file_upload</mat-icon>
+        </div>
+        <input type="file" hidden #preReportFile (change)="onUploadFile($event,'preReport')">
+      </button>
+      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.preReport.files)"
+        class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <span>
+            View
+          </span>
+          <mat-icon [matBadge]="controlBadgeNumber(form.preReport.files)" matBadgeColor="warn">attach_file</mat-icon>
+        </div>
+      </button>
+
     </div>
   </div>
 
@@ -55,7 +60,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
         class="me-8 bg-green-300 p-2 rounded-md">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
-          <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+          <mat-icon class="mat-18 me-2">topic</mat-icon>
           <span class="font-black text-label">
             Interim Report
           </span>
@@ -91,11 +96,11 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
-          <button *ngIf="i!==0" mat-raised-button color="warn" >
+          <button *ngIf="i!==0" mat-raised-button color="warn">
             <mat-icon class="mat-18">delete</mat-icon>
           </button>
           <button mat-raised-button color="primary" style="margin-left: 5px;">
-          <mat-icon>send</mat-icon>
+            <mat-icon>send</mat-icon>
           </button>
 
         </div>
@@ -114,7 +119,7 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
       class="me-8 bg-green-300 p-2 rounded-md">
       <div fxLayout="row wrap" fxLayoutAlign="start center">
-        <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+        <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
           Final report
           <span class="text-label-sub">
@@ -164,7 +169,7 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
       class="me-8 bg-green-300 p-2 rounded-md">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
-        <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+        <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
           Final report
           <span class="text-label-sub">
@@ -215,7 +220,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
         class="me-8 bg-green-300 p-2 rounded-md">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
-          <mat-icon class="mat-18 me-2">hdr_weak</mat-icon>
+          <mat-icon class="mat-18 me-2">topic</mat-icon>
           <span class="font-black text-label">
             Question & Answer
           </span>
@@ -281,8 +286,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Defect phenomenon (Major classification)</mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of defectPhenomenonOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>

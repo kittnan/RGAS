@@ -122,6 +122,7 @@ export class Rgas2Component implements OnInit {
       ...this.dataStructure,
       index: this.allItems.length + 1
     })
+    alert()
     console.log(this.allItems);
 
   }

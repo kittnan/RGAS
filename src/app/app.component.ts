@@ -2,6 +2,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStoreService } from './services/local-store.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 interface SideItem {
   title: string,
   icon: string,
@@ -26,60 +27,89 @@ export class AppComponent {
       path: '',
       items: [
         {
-          title: 'New',
-          icon: 'person_add_alt',
-          path: 'admin/users-new',
-          items: []
-        },
-        {
           title: 'Manage',
-          icon: 'manage_accounts',
+          icon: 'keyboard_arrow_right',
           path: 'admin/users-manage',
           items: []
         },
 
       ]
     },
-    {
-      title: 'Model',
-      icon: 'groups',
-      path: '',
-      items: [
-        {
-          title: 'Manage',
-          icon: 'manage_accounts',
-          path: 'admin/models-manage',
-          items: []
-        },
+    // {
+    //   title: 'Model',
+    //   icon: 'layers',
+    //   path: '',
+    //   items: [
+    //     {
+    //       title: 'Manage',
+    //       icon: 'keyboard_arrow_right',
+    //       path: 'admin/models-manage',
+    //       items: []
+    //     },
 
-      ]
-    },
-    {
-      title: 'Defect',
-      icon: 'groups',
-      path: '',
-      items: [
-        {
-          title: 'Defect',
-          icon: 'manage_accounts',
-          path: 'admin/defect-manage',
-          items: []
-        },
+    //   ]
+    // },
+    // {
+    //   title: 'Defect',
+    //   icon: 'center_focus_strong',
+    //   path: '',
+    //   items: [
+    //     {
+    //       title: 'Defect',
+    //       icon: 'keyboard_arrow_right',
+    //       path: 'admin/defect-manage',
+    //       items: []
+    //     },
 
-      ]
-    },
+    //   ]
+    // },
     {
       title: 'Masters',
-      icon: 'groups',
+      icon: 'category',
       path: '',
       items: [
         {
-          title: 'masters',
-          icon: 'manage_accounts',
+          title: 'options',
+          icon: 'keyboard_arrow_right',
           path: 'admin/masters',
           items: []
         },
-
+        {
+          title: 'models',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/models-manage',
+          items: []
+        },
+        {
+          title: 'defects',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/defect-manage',
+          items: []
+        },
+        {
+          title: 'd-cd',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/d-cd',
+          items: []
+        },
+        {
+          title: 'l-cd',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/l-cd',
+          items: []
+        },
+        {
+          title: 's-cd',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/s-cd',
+          items: []
+        },
+        {
+          title: 'flow',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/flow-report',
+          items: []
+        },
       ]
     },
     {
@@ -89,19 +119,13 @@ export class AppComponent {
       items: [
         {
           title: 'RGAS-1',
-          icon: 'post_add',
+          icon: 'keyboard_arrow_right',
           path: 'operator/rgas1',
           items: []
         },
         {
-          title: 'RGAS-2',
-          icon: 'assignment',
-          path: 'operator/rgas2',
-          items: []
-        },
-        {
           title: 'RGAS-1 - eng',
-          icon: 'assignment',
+          icon: 'keyboard_arrow_right',
           path: 'engineer/rgas1',
           items: []
         },
@@ -117,10 +141,15 @@ export class AppComponent {
 
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
     private router: Router,
-    private $local: LocalStoreService) {
+    private $local: LocalStoreService,
+    private $loader: NgxUiLoaderService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+
+    let dark: boolean = this.$local.getDarkTheme() == 'true' ? true : false
+    this.theme = dark
+    this.setTheme(dark)
   }
 
   ngOnInit(): void {
@@ -135,6 +164,7 @@ export class AppComponent {
 
   toggleTheme() {
     this.theme = !this.theme;
+    this.$local.setDarkTheme(this.theme)
     this.setTheme(this.theme);
   }
   private setTheme(darkTheme: boolean) {
@@ -150,6 +180,7 @@ export class AppComponent {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   onLogout() {
+    this.$loader.start()
     this.$local.removeAllLocalStore()
     this.router.navigate(['/login']).then(() => location.reload())
   }

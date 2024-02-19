@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { Form3MenuComponent } from './form3-menu/form3-menu.component';
+import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
+import { HttpDCdService } from 'src/app/https/http-d-cd.service';
+import { HttpLCdService } from 'src/app/https/http-l-cd.service';
+import { HttpParams } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-form3',
@@ -29,7 +33,7 @@ export class Form3Component implements OnInit {
 
   }
 
-  form: any = {
+  @Input() form: any = {
     preReport: { ...this.tempObj },
     interims: [
       { ...this.tempObj, index: 1 }
@@ -55,11 +59,30 @@ export class Form3Component implements OnInit {
       }
     ],
   }
+
+  // todo d-cd option
+  dcdOption: any = []
+  // todo d-cd column B option
+  defectPhenomenonOption: any = []
+
   constructor(
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    private $d_cd: HttpDCdService,
+    private $l_cd: HttpLCdService,
+    private $s_cd: HttpLCdService,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    try {
+      const resDcd = await lastValueFrom(this.$d_cd.get(new HttpParams()))
+      this.dcdOption = resDcd.map((item: any, i: number) => {
+        item.no = 'dcdOption' + i + 1
+        return item
+      })
+      this.defectPhenomenonOption = [...new Set(resDcd.map((item: any) => item['Defect Phenomenon']))]
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
   }
 
   onAddNewInterim() {
@@ -88,10 +111,31 @@ export class Form3Component implements OnInit {
     return option.id === value.id;
   }
 
-  // todo open bottom sheet
-  openBottomSheet(): void {
-    this._bottomSheet.open(Form3MenuComponent);
+  // todo open file bottom
+  openBottom(files: any) {
+    this._bottomSheet.open(FilesBottomComponent, {
+      data: files
+    })
   }
+
+  // todo control badge number
+  controlBadgeNumber(files: any) {
+    if (files && files.length < 1) return null
+    return files.length
+  }
+
+  // todo upload file
+  async onUploadFile($event: any, key: string) {
+    try {
+
+      let file: any = $event.target.files[0] as File;
+      console.log("🚀 ~ file:", file)
+
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
 
 
 }
