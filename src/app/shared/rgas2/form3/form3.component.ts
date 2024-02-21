@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 import { HttpDCdService } from 'src/app/https/http-d-cd.service';
@@ -8,6 +8,10 @@ import { lastValueFrom } from 'rxjs';
 import { HttpM1eService } from 'src/app/https/http-m1e.service';
 import { HttpPrincipleService } from 'src/app/https/http-principle.service';
 import { HttpSCdService } from 'src/app/https/http-s-cd.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ManSectionSelectComponent } from '../../dialogs/man-section-select/man-section-select.component';
+import { HttpReportService } from 'src/app/https/http-report.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form3',
@@ -32,7 +36,6 @@ export class Form3Component implements OnInit {
     dueDate: null,
     dateSubmitToCustomer: null,
     files: [],
-    status: ''
 
   }
 
@@ -91,13 +94,18 @@ export class Form3Component implements OnInit {
   scdOption: any = []
   scdCOption: any = []
 
+  @Output() reportChange: EventEmitter<any> = new EventEmitter()
+
   constructor(
     private _bottomSheet: MatBottomSheet,
     private $d_cd: HttpDCdService,
     private $l_cd: HttpLCdService,
     private $s_cd: HttpSCdService,
     private $m1e: HttpM1eService,
-    private $principle: HttpPrincipleService
+    private $principle: HttpPrincipleService,
+    private dialog: MatDialog,
+    private $report: HttpReportService,
+    private router: Router
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -173,7 +181,9 @@ export class Form3Component implements OnInit {
 
   // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
-    return option.id === value.id;
+    if (option._id && value._id)
+      return option._id === value._id;
+    return false
   }
 
   // todo open file bottom
@@ -185,6 +195,7 @@ export class Form3Component implements OnInit {
 
   // todo control badge number
   controlBadgeNumber(files: any) {
+    if (!files) return null
     if (files && files.length < 1) return null
     return files.length
   }
@@ -201,9 +212,35 @@ export class Form3Component implements OnInit {
     }
   }
 
-  onSubmitPreReport(){
-    console.log(this.form);
 
+  onSubmitPreReport() {
+    // console.log(this.form.preReport);
+    // const dialog = this.dialog.open(ManSectionSelectComponent, {
+    //   disableClose: true
+    // }).afterClosed().subscribe((data: any) => {
+    //   console.log(data);
+    //   if (data) {
+    //     this.reportChange.emit({
+    //       action: 'preReport',
+    //       data: {
+    //         ...this.form.preReport,
+    //         sendTo: data
+    //       }
+    //     })
+    //   }
+
+    // })
+    this.reportChange.emit(this.form.preReport)
+  }
+
+  // todo show user login name
+  displayName(user: any) {
+    if (user) {
+      let firstName = user.firstName ? user.firstName : ''
+      let lastName = user.lastName ? user.lastName[0] : ''
+      return `${firstName}-${lastName}`
+    }
+    return ''
   }
 
 }

@@ -23,6 +23,8 @@ import { FilesBottomComponent } from './files-bottom/files-bottom.component';
 import { Skeleton1Component } from './skeleton1/skeleton1.component';
 import { Form1ViewComponent } from './rgas2/form1-view/form1-view.component';
 import { ManSectionSelectComponent } from './dialogs/man-section-select/man-section-select.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReportApporveComponent } from './rgas2/report-apporve/report-apporve.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -59,6 +61,7 @@ let items = [
     Skeleton1Component,
     Form1ViewComponent,
     ManSectionSelectComponent,
+    ReportApporveComponent,
   ],
   imports: [
     CommonModule,
@@ -66,7 +69,8 @@ let items = [
     MaterialModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   exports: [
     ...items,
@@ -82,6 +86,7 @@ let items = [
     Skeleton1Component,
     Form1ViewComponent,
     ManSectionSelectComponent,
+    ReportApporveComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

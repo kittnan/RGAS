@@ -5,6 +5,7 @@ import { EngineerRgas1Component } from './engineer-rgas1/engineer-rgas1.componen
 import { NotfoundComponent } from 'src/app/notfound/notfound.component';
 import { EngineerRgas2Component } from './engineer-rgas2/engineer-rgas2.component';
 import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer-rgas-analysis.component';
+import { EngineerReportApproveComponent } from './engineer-report-approve/engineer-report-approve.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
     path: 'analysis',
     component: EngineerRgasAnalysisComponent
+  },
+  {
+    path: 'report-approve',
+    component: EngineerReportApproveComponent
   },
   {
     path: 'rgas1',

@@ -1,1 +1,29 @@
-<p>man-section-select works!</p>
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-form-field fxFlex="100" appearance="outline" floatLabel="always" class="me-4 ">
+    <mat-label class="text-green-400">Send to</mat-label>
+    <mat-select [(ngModel)]="sendTo" multiple>
+      <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">
+        {{displayName(user)}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <button mat-raised-button (click)="onClose()" class="btn-danger" style="margin-top: 10px;">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <span>
+          Close
+        </span>
+        <mat-icon class="mat-18">close</mat-icon>
+      </div>
+    </button>
+    <button mat-raised-button (click)="onSubmit()" class="btn-success" style="margin-top: 10px;">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <span>
+          Send
+        </span>
+        <mat-icon class="mat-18">done</mat-icon>
+      </div>
+    </button>
+
+  </div>
+</div>

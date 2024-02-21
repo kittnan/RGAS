@@ -55,10 +55,16 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" style="margin-left: 5px;" (click)="onSubmitPreReport()">
-          <mat-icon>send</mat-icon>
-        </button>
-
+        <ng-container *ngIf="form.preReport._id; else elseTemplate">
+          <button mat-raised-button color="primary" style="margin-left: 5px;" (click)="onSubmitPreReport()">
+            <mat-icon>send</mat-icon>
+          </button>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;" (click)="onSubmitPreReport()">
+            <mat-icon>save</mat-icon>
+          </button>
+        </ng-template>
       </div>
     </div>
   </div>
@@ -92,14 +98,25 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-1">
 
-        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Files</mat-label>
-          <button mat-icon-button matSuffix (click)="interimFile.click()">
-            <mat-icon>attach_file</mat-icon>
-          </button>
-          <input matInput type="text">
-          <input type="file" hidden #interimFile>
-        </mat-form-field>
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="interimFile.click()"
+          class="btn-file">
+          <div fxLayout="row wrap" fxLayoutAlign="center center">
+            <span>
+              Files
+            </span>
+            <mat-icon>file_upload</mat-icon>
+          </div>
+          <input type="file" hidden #interimFile (change)="onUploadFile($event,'interim')">
+        </button>
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.interim.files)"
+          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          <div fxLayout="row wrap" fxLayoutAlign="center center">
+            <span>
+              View
+            </span>
+            <mat-icon [matBadge]="controlBadgeNumber(form.interim?.files)" matBadgeColor="warn">attach_file</mat-icon>
+          </div>
+        </button>
 
       </div>
       <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -156,14 +173,25 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-1">
 
 
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Files</mat-label>
-        <button mat-icon-button matSuffix (click)="finalReportFile.click()">
-          <mat-icon>attach_file</mat-icon>
-        </button>
-        <input matInput type="text">
-        <input type="file" hidden #finalReportFile>
-      </mat-form-field>
+      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="finalReportFile.click()"
+        class="btn-file">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <span>
+            Files
+          </span>
+          <mat-icon>file_upload</mat-icon>
+        </div>
+        <input type="file" hidden #finalReportFile (change)="onUploadFile($event,'finalReport')">
+      </button>
+      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.finalReport.files)"
+        class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+        <div fxLayout="row wrap" fxLayoutAlign="center center">
+          <span>
+            View
+          </span>
+          <mat-icon [matBadge]="controlBadgeNumber(form.finalReport?.files)" matBadgeColor="warn">attach_file</mat-icon>
+        </div>
+      </button>
 
     </div>
     <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
