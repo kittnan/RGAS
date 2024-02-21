@@ -16,6 +16,8 @@ import { LCdComponent } from './l-cd/l-cd.component';
 import { SCdComponent } from './s-cd/s-cd.component';
 import { FlowReportComponent } from './flow-report/flow-report.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { M1eComponent } from './m1e/m1e.component';
+import { RPrincipleComponent } from './r-principle/r-principle.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     LCdComponent,
     SCdComponent,
     FlowReportComponent,
+    M1eComponent,
+    RPrincipleComponent,
   ],
   imports: [
     CommonModule,

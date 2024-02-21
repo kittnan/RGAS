@@ -105,6 +105,18 @@ export class AppComponent {
           items: []
         },
         {
+          title: 'm1e',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/m1e',
+          items: []
+        },
+        {
+          title: 'r-principle',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/r-principle',
+          items: []
+        },
+        {
           title: 'flow',
           icon: 'keyboard_arrow_right',
           path: 'admin/flow-report',

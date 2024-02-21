@@ -9,6 +9,8 @@ import { DCdComponent } from './d-cd/d-cd.component';
 import { LCdComponent } from './l-cd/l-cd.component';
 import { SCdComponent } from './s-cd/s-cd.component';
 import { FlowReportComponent } from './flow-report/flow-report.component';
+import { M1eComponent } from './m1e/m1e.component';
+import { RPrincipleComponent } from './r-principle/r-principle.component';
 
 const routes: Routes = [
   {
@@ -47,6 +49,14 @@ const routes: Routes = [
   {
     path: 's-cd',
     component: SCdComponent,
+  },
+  {
+    path: 'm1e',
+    component: M1eComponent,
+  },
+  {
+    path: 'r-principle',
+    component: RPrincipleComponent,
   },
   {
     path: 'flow-report',

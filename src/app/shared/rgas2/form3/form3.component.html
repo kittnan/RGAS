@@ -53,6 +53,14 @@
       </button>
 
     </div>
+    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+        <button mat-raised-button color="primary" style="margin-left: 5px;" (click)="onSubmitPreReport()">
+          <mat-icon>send</mat-icon>
+        </button>
+
+      </div>
+    </div>
   </div>
 
   <ng-container *ngFor="let interim of form.interims; let i=index">
@@ -296,8 +304,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Defect details classification (5M1E)</mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of m1eDefectDetailOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -316,8 +324,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Detailed phenomenon (Middle classification) </mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of detailedPhenomenonOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -326,8 +334,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Defect cause classification (5M1E)</mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of m1eCauseDetailOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -346,8 +354,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Cause (Minor classification) </mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of causeOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -356,8 +364,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Rule 3-principle ※ Occurrence</mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of occurrenceOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -376,8 +384,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Occurrence process category </mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of lcdBOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -386,8 +394,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Rule 3-principle ※ Outflow</mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of principleCOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -406,8 +414,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Occurrence process category details </mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of lcdCOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -433,8 +441,8 @@
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Maker name </mat-label>
         <mat-select [compareWith]="objectComparisonFunction">
-          <mat-option *ngFor="let item of tempOption" [value]="item.value">
-            {{item.valueView}}
+          <mat-option *ngFor="let item of scdCOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>

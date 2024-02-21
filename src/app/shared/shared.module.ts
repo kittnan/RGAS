@@ -22,6 +22,7 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { FilesBottomComponent } from './files-bottom/files-bottom.component';
 import { Skeleton1Component } from './skeleton1/skeleton1.component';
 import { Form1ViewComponent } from './rgas2/form1-view/form1-view.component';
+import { ManSectionSelectComponent } from './dialogs/man-section-select/man-section-select.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -57,6 +58,7 @@ let items = [
     FilesBottomComponent,
     Skeleton1Component,
     Form1ViewComponent,
+    ManSectionSelectComponent,
   ],
   imports: [
     CommonModule,
@@ -79,6 +81,7 @@ let items = [
     FilesBottomComponent,
     Skeleton1Component,
     Form1ViewComponent,
+    ManSectionSelectComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

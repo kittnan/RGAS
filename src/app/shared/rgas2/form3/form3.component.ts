@@ -5,6 +5,9 @@ import { HttpDCdService } from 'src/app/https/http-d-cd.service';
 import { HttpLCdService } from 'src/app/https/http-l-cd.service';
 import { HttpParams } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
+import { HttpM1eService } from 'src/app/https/http-m1e.service';
+import { HttpPrincipleService } from 'src/app/https/http-principle.service';
+import { HttpSCdService } from 'src/app/https/http-s-cd.service';
 
 @Component({
   selector: 'app-form3',
@@ -64,12 +67,37 @@ export class Form3Component implements OnInit {
   dcdOption: any = []
   // todo d-cd column B option
   defectPhenomenonOption: any = []
+  // todo d-cd column C option
+  detailedPhenomenonOption: any = []
+  // todo d-cd column D option
+  causeOption: any = []
+
+  // todo m1eOption column B option
+  m1eOption: any = []
+  // todo m1eOption defect detail column C option
+  m1eDefectDetailOption: any = []
+  // todo m1eOption defect cause column C option
+  m1eCauseDetailOption: any = []
+
+  // todo principle option
+  principleOption: any = []
+  occurrenceOption: any = []
+  principleCOption: any = []
+
+  lcdOption: any = []
+  lcdBOption: any = []
+  lcdCOption: any = []
+
+  scdOption: any = []
+  scdCOption: any = []
 
   constructor(
     private _bottomSheet: MatBottomSheet,
     private $d_cd: HttpDCdService,
     private $l_cd: HttpLCdService,
-    private $s_cd: HttpLCdService,
+    private $s_cd: HttpSCdService,
+    private $m1e: HttpM1eService,
+    private $principle: HttpPrincipleService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -80,6 +108,43 @@ export class Form3Component implements OnInit {
         return item
       })
       this.defectPhenomenonOption = [...new Set(resDcd.map((item: any) => item['Defect Phenomenon']))]
+      this.detailedPhenomenonOption = [...new Set(resDcd.map((item: any) => item['Detailed phenomenon']))]
+      this.causeOption = [...new Set(resDcd.map((item: any) => item['Cause']))]
+
+      const resM1e = await lastValueFrom(this.$m1e.get(new HttpParams()))
+      this.m1eOption = resM1e.map((item: any, i: number) => {
+        item.no = 'dcdOption' + i + 1
+        return item
+      })
+      this.m1eDefectDetailOption = [...new Set(resM1e.map((item: any) => item['Cause']))]
+      this.m1eCauseDetailOption = [...new Set(resM1e.map((item: any) => item['5M code']))]
+
+      const resPrinciple = await lastValueFrom(this.$principle.get(new HttpParams()))
+      this.principleOption = resPrinciple.map((item: any, i: number) => {
+        item.no = 'principle' + i + 1
+        return item
+      })
+      this.occurrenceOption = [...new Set(resPrinciple.map((item: any) => item['Outflow cause(Leak cause)']))]
+      this.principleCOption = [...new Set(resPrinciple.map((item: any) => item['Total code']))]
+
+      const resLcd = await lastValueFrom(this.$l_cd.get(new HttpParams()))
+      this.lcdOption = resLcd.map((item: any, i: number) => {
+        item.no = 'dcdOption' + i + 1
+        return item
+      })
+      this.lcdBOption = [...new Set(resLcd.map((item: any) => item['Occurrence process category details']))]
+      this.lcdCOption = [...new Set(resLcd.map((item: any) => item['Occurrence process CD']))]
+
+
+      const resScd = await lastValueFrom(this.$s_cd.get(new HttpParams()))
+      this.scdOption = resScd.map((item: any, i: number) => {
+        item.no = 'dcdOption' + i + 1
+        return item
+      })
+      this.scdCOption = [...new Set(resScd.map((item: any) => item['取引先名']))]
+
+
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -136,6 +201,9 @@ export class Form3Component implements OnInit {
     }
   }
 
+  onSubmitPreReport(){
+    console.log(this.form);
 
+  }
 
 }

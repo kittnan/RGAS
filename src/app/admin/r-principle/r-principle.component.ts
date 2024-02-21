@@ -1,54 +1,37 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import * as Exceljs from 'exceljs';
 import { lastValueFrom } from 'rxjs';
-import { HttpDefectService } from 'src/app/https/http-defect.service';
-import * as Exceljs from 'exceljs'
-import { HttpParams } from '@angular/common/http';
-
+import { HttpM1eService } from 'src/app/https/http-m1e.service';
+import { HttpPrincipleService } from 'src/app/https/http-principle.service';
 @Component({
-  selector: 'app-defect-manage',
-  templateUrl: './defect-manage.component.html',
-  styleUrls: ['./defect-manage.component.scss']
+  selector: 'app-r-principle',
+  templateUrl: './r-principle.component.html',
+  styleUrls: ['./r-principle.component.scss']
 })
-export class DefectManageComponent implements OnInit {
+export class RPrincipleComponent implements OnInit {
 
-  displayedColumns: string[] = ['No', 'Function/Appearance', 'Defect phenomenon(Major classification)', 'Detailed phenomenon(Middle classification)', 'Cause(Minor classfication)', 'Defect code'];
+
+
+  displayedColumns: string[] = ['No', 'Occurrence cause(Root cause)', 'Outflow cause(Leak cause)', 'Total code'];
   dataSource = new MatTableDataSource([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  rowsLength: number = 0
   constructor(
-    private $defect: HttpDefectService
+    private $principle: HttpPrincipleService
   ) { }
 
   async ngOnInit(): Promise<void> {
-    let tableParam: HttpParams = new HttpParams()
-    tableParam = tableParam.set('page', 1)
-    tableParam = tableParam.set('limit', 10)
-    const resData = await lastValueFrom(this.$defect.table(tableParam))
-    this.dataSource = new MatTableDataSource(resData.data.map((item: any, index: number) => {
-      return {
-        ...item,
-        No: index + 1
-      }
+    let params: HttpParams = new HttpParams()
+    const resData = await lastValueFrom(this.$principle.get(params))
+    this.dataSource = new MatTableDataSource(resData.map((item: any, i: number) => {
+      item.No = i + 1
+      return item
     }))
-    this.rowsLength = resData.count[0].rows
     setTimeout(() => {
-      this.paginator.pageSizeOptions.push(this.rowsLength)
+      this.dataSource.paginator = this.paginator;
     }, 300);
-  }
-
-  async onPageChange(e: any) {
-    let tableParam: HttpParams = new HttpParams()
-    tableParam = tableParam.set('page', e.pageIndex)
-    tableParam = tableParam.set('limit', e.pageSize)
-    const resData = await lastValueFrom(this.$defect.table(tableParam))
-    this.dataSource = new MatTableDataSource(resData.data.map((item: any, index: number) => {
-      return {
-        ...item,
-        No: (index + 1) + (e.pageIndex * e.pageSize)
-      }
-    }));
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -60,7 +43,8 @@ export class DefectManageComponent implements OnInit {
     await wb.xlsx.load(file);
     const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
     const data = await this.excelSheetToObject(ws)
-    const resData = await lastValueFrom(this.$defect.import(data))
+    console.log("🚀 ~ data:", data)
+    const resData = await lastValueFrom(this.$principle.import(data))
     console.log("🚀 ~ resData:", resData)
   }
   excelSheetToObject(ws: Exceljs.Worksheet | undefined) {
@@ -86,4 +70,5 @@ export class DefectManageComponent implements OnInit {
       }
     })
   }
+
 }
