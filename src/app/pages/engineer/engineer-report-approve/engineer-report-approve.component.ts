@@ -23,18 +23,28 @@ export interface flowStep {
 })
 export class EngineerReportApproveComponent implements OnInit {
 
-  flowSelected: any = [{
-    name: 'engineer'
-  },
-  {
-    name: 'section'
-  },
-  {
-    name: 'interpreter'
-  },
-  {
-    name: 'department'
-  },]
+  flowSelected: any = [
+    {
+      name: 'engineer',
+      PIC: null,
+      date: null
+    },
+    {
+      name: 'section',
+      PIC: null,
+      date: null
+    },
+    {
+      name: 'interpreter',
+      PIC: null,
+      date: null
+    },
+    {
+      name: 'department',
+      PIC: null,
+      date: null
+    }
+  ]
   sendTo: any
   userApproveClaimOption: any
   userLogin: any
@@ -57,22 +67,20 @@ export class EngineerReportApproveComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params: any) => {
-      if (params['claimId']) {
-        this.claimId = params['claimId']
-        this.$report.get(new HttpParams().set('claimId', JSON.stringify([params['claimId']]))).subscribe((resData: any) => {
-          this.report = resData
-          // this.flowSelected.map((item: any) => {
-          //   const PIC = this.flow.find((f: any) => f.status == item.name)
-          //   if (PIC) {
-          //     item['PIC'] = PIC
-          //   }
-          //   return item
-          // })
-          // this.flowSelected = this.flowSelected.map((flow:any)=>{})
+    this.route.queryParams.subscribe(async (params: any) => {
+      if (params['index'] && params['name'] && params['registerNo']) {
+        let httpParams: HttpParams = new HttpParams()
+        httpParams = httpParams.set('index', JSON.stringify([params['index']]))
+        httpParams = httpParams.set('name', JSON.stringify([params['name']]))
+        httpParams = httpParams.set('registerNo', JSON.stringify([params['registerNo']]))
+        const resReport = await lastValueFrom(this.$report.get(httpParams))
+        if (resReport && resReport.length > 0) {
+          this.report = resReport[0]
           this.flowSelected[0]['PIC'] = this.userLogin
-        })
+          this.flowSelected[0]['date'] = new Date()
+        }
       }
+
     })
 
   }
@@ -99,27 +107,23 @@ export class EngineerReportApproveComponent implements OnInit {
 
   async submit() {
     try {
-      const flowHistory: FlowHistory = {
+      this.report['PIC'] = this.sendTo
+      this.report['PICHistory'] = [{
         action: 'engineer',
-        date: new Date,
-        user: this.userLogin
-      }
-      const reportData = this.report[0]
-      let newData: flowStep = {
-        claimId: this.claimId,
-        data: reportData,
-        status: 'section',
-        PIC: this.sendTo,
-        PICHistory: [flowHistory]
-      }
-      await lastValueFrom(this.$report.create(newData))
+        user: this.userLogin,
+        date: new Date()
+      }]
+      this.report.flow = this.flowSelected
+      this.report.status = 'section'
+      await lastValueFrom(this.$report.createOrUpdate([this.report]))
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
   }
 
   cssFlow(item: any) {
-    if (this.report?.some((f: any) => f.PICHistory.some((his: any) => his.action == item))) return 'card-step-active'
+    if (this.report?.status == item) return 'card-step-active'
+    // if (this.report?.some((f: any) => f.PICHistory.some((his: any) => his.action == item))) return 'card-step-active'
     return ''
   }
 

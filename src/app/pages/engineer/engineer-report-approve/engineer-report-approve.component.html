@@ -16,6 +16,11 @@
             {{displayName(item.PIC)}}
           </span>
         </div>
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
+          <span class="capitalize">
+            {{item.date| date:'dd-MMM-YYYY, HH:mm'}}
+          </span>
+        </div>
       </mat-card>
       <mat-divider *ngIf="i+1 !=flowSelected.length " fxFlex="auto" class="line-step"></mat-divider>
     </ng-container>

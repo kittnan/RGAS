@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EngineerRgas2Component } from './engineer-rgas2/engineer-rgas2.component';
 import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer-rgas-analysis.component';
 import { EngineerReportApproveComponent } from './engineer-report-approve/engineer-report-approve.component';
+import { EngineerReportViewComponent } from './engineer-report-view/engineer-report-view.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { EngineerReportApproveComponent } from './engineer-report-approve/engine
     EngineerRgas2Component,
     EngineerRgasAnalysisComponent,
     EngineerReportApproveComponent,
+    EngineerReportViewComponent,
   ],
   imports: [
     CommonModule,

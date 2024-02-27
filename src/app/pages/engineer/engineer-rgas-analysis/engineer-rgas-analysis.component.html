@@ -11,7 +11,10 @@
         (onSubmitChange)="onSubmitChange($event)"></app-form2>
     </div>
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-      <app-form3 fxFlex="100" (reportChange)="reportChange($event)" (uploadChange)="uploadChange($event)"></app-form3>
+      <app-form3 fxFlex="100" [(form)]="form3" (submitReportChange)="submitReportChange($event)"
+        (submitReportArrChange)="submitReportArrChange($event)" (uploadChange)="uploadChange($event)"
+        (uploadArrChange)="uploadArrChange($event)" (approveChange)="approveChange($event)"
+        (approveArrChange)="approveArrChange($event)"></app-form3>
     </div>
 
   </ng-container>

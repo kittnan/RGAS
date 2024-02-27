@@ -1,17 +1,18 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
 import { HttpDCdService } from 'src/app/https/http-d-cd.service';
 import { HttpLCdService } from 'src/app/https/http-l-cd.service';
-import { HttpParams } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
 import { HttpM1eService } from 'src/app/https/http-m1e.service';
 import { HttpPrincipleService } from 'src/app/https/http-principle.service';
-import { HttpSCdService } from 'src/app/https/http-s-cd.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ManSectionSelectComponent } from '../../dialogs/man-section-select/man-section-select.component';
 import { HttpReportService } from 'src/app/https/http-report.service';
-import { Router } from '@angular/router';
+import { HttpSCdService } from 'src/app/https/http-s-cd.service';
+
+import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
+import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 
 @Component({
   selector: 'app-form3',
@@ -36,7 +37,7 @@ export class Form3Component implements OnInit {
     dueDate: null,
     dateSubmitToCustomer: null,
     files: [],
-
+    status: 'engineer'
   }
 
   @Input() form: any = {
@@ -94,9 +95,13 @@ export class Form3Component implements OnInit {
   scdOption: any = []
   scdCOption: any = []
 
-  @Output() reportChange: EventEmitter<any> = new EventEmitter()
+  @Output() submitReportChange: EventEmitter<any> = new EventEmitter()
+  @Output() submitReportArrChange: EventEmitter<any> = new EventEmitter()
   @Output() uploadChange: EventEmitter<any> = new EventEmitter()
-
+  @Output() uploadArrChange: EventEmitter<any> = new EventEmitter()
+  @Output() formChange: EventEmitter<any> = new EventEmitter()
+  @Output() approveChange: EventEmitter<any> = new EventEmitter()
+  @Output() approveArrChange: EventEmitter<any> = new EventEmitter()
   constructor(
     private _bottomSheet: MatBottomSheet,
     private $d_cd: HttpDCdService,
@@ -106,7 +111,7 @@ export class Form3Component implements OnInit {
     private $principle: HttpPrincipleService,
     private dialog: MatDialog,
     private $report: HttpReportService,
-    private router: Router
+    private router: Router,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -151,10 +156,6 @@ export class Form3Component implements OnInit {
         return item
       })
       this.scdCOption = [...new Set(resScd.map((item: any) => item['取引先名']))]
-
-      console.log(this.form);
-
-
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -202,38 +203,47 @@ export class Form3Component implements OnInit {
     return files.length
   }
 
-  // todo upload file
+  // todo control report one
   async onUploadFile($event: any, key: string) {
     try {
-      console.log("🚀 ~ key:", key)
       let file: any = $event.target.files[0] as File;
       this.uploadChange.emit({
-        file: file
+        file: file,
+        data: this.form[key],
+        key: key
       })
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
   }
+  onSubmitReport(key: any) {
+    this.submitReportChange.emit({ data: this.form[key], key: key })
+  }
+  onApproveChange(key: any) {
+    this.approveChange.emit({ data: this.form[key], key: key })
+  }
 
+  // todo control report arr
+  async onUploadFileArr($event: any, key: string, i: number) {
+    try {
+      let file: any = $event.target.files[0] as File;
+      this.uploadArrChange.emit({
+        file: file,
+        data: this.form[key][i],
+        key: key,
+        index: i
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+  onSubmitReportArrChange(key: string, i: number) {
+    this.submitReportArrChange.emit({ data: this.form[key][i], key: key, index: i })
+  }
 
-  onSubmitPreReport() {
-    // console.log(this.form.preReport);
-    // const dialog = this.dialog.open(ManSectionSelectComponent, {
-    //   disableClose: true
-    // }).afterClosed().subscribe((data: any) => {
-    //   console.log(data);
-    //   if (data) {
-    //     this.reportChange.emit({
-    //       action: 'preReport',
-    //       data: {
-    //         ...this.form.preReport,
-    //         sendTo: data
-    //       }
-    //     })
-    //   }
-
-    // })
-    this.reportChange.emit(this.form.preReport)
+  onApproveChangeArr(key: any, i: number) {
+    let item = this.form[key][i]
+    this.approveArrChange.emit({ data: item, key: key, index: i })
   }
 
   // todo show user login name
