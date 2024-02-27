@@ -141,6 +141,12 @@ export class AppComponent {
           path: 'engineer/rgas1',
           items: []
         },
+        {
+          title: 'RGAS-1 - section',
+          icon: 'keyboard_arrow_right',
+          path: 'sectionHead/rgas1',
+          items: []
+        },
 
 
       ]

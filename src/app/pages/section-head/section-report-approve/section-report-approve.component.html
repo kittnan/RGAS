@@ -24,6 +24,14 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5" class="mt-8">
     <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="center start">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label> Flow Approve </mat-label>
+        <mat-select [(ngModel)]="modeSelected" (ngModelChange)="onChangeFlow()">
+          <mat-option *ngFor="let mode of modeOption" [value]="mode">
+            {{mode}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label>Send to </mat-label>
         <mat-select [(ngModel)]="sendTo" multiple>
           <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">

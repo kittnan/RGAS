@@ -61,7 +61,8 @@
           </button>
         </ng-container>
         <ng-template #elseTemplate>
-          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;" (click)="onSubmitPreReport()">
+          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+            (click)="onSubmitPreReport()">
             <mat-icon>save</mat-icon>
           </button>
         </ng-template>
@@ -124,9 +125,13 @@
           <button *ngIf="i!==0" mat-raised-button color="warn">
             <mat-icon class="mat-18">delete</mat-icon>
           </button>
-          <button mat-raised-button color="primary" style="margin-left: 5px;">
-            <mat-icon>send</mat-icon>
+          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+            (click)="onSubmitPreReport()">
+            <mat-icon>save</mat-icon>
           </button>
+          <!-- <button mat-raised-button color="primary" style="margin-left: 5px;">
+            <mat-icon>send</mat-icon>
+          </button> -->
 
         </div>
       </div>
@@ -564,9 +569,23 @@
     </div>
   </ng-container>
 
-
-
-
-
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mt-1 pe-8">
+    <button mat-raised-button color="primary" (click)="onSave()" class="btn-file" style="margin-right: 10px;">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+        <span>
+          Save
+        </span>
+        <mat-icon class="mat-18">save</mat-icon>
+      </div>
+    </button>
+    <!-- <button mat-raised-button color="primary" (click)="onSubmit()">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+        <span>
+          Submit
+        </span>
+        <mat-icon class="mat-18">done_all</mat-icon>
+      </div>
+    </button> -->
+  </div>
 
 </div>

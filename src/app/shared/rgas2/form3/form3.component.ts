@@ -95,6 +95,7 @@ export class Form3Component implements OnInit {
   scdCOption: any = []
 
   @Output() reportChange: EventEmitter<any> = new EventEmitter()
+  @Output() uploadChange: EventEmitter<any> = new EventEmitter()
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -151,6 +152,7 @@ export class Form3Component implements OnInit {
       })
       this.scdCOption = [...new Set(resScd.map((item: any) => item['取引先名']))]
 
+      console.log(this.form);
 
 
     } catch (error) {
@@ -203,10 +205,11 @@ export class Form3Component implements OnInit {
   // todo upload file
   async onUploadFile($event: any, key: string) {
     try {
-
+      console.log("🚀 ~ key:", key)
       let file: any = $event.target.files[0] as File;
-      console.log("🚀 ~ file:", file)
-
+      this.uploadChange.emit({
+        file: file
+      })
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -243,4 +246,7 @@ export class Form3Component implements OnInit {
     return ''
   }
 
+  onSave() {
+
+  }
 }

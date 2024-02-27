@@ -6,50 +6,45 @@ import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
-
-export interface flowStep {
-  status: string,
-  claimId: string,
-  _id?: string,
-  data: object,
-  PIC: [],
-  PICHistory: FlowHistory[]
-}
-
+import { flowStep } from '../../engineer/engineer-report-approve/engineer-report-approve.component';
 @Component({
-  selector: 'app-engineer-report-approve',
-  templateUrl: './engineer-report-approve.component.html',
-  styleUrls: ['./engineer-report-approve.component.scss']
+  selector: 'app-section-report-approve',
+  templateUrl: './section-report-approve.component.html',
+  styleUrls: ['./section-report-approve.component.scss']
 })
-export class EngineerReportApproveComponent implements OnInit {
-
-  flowSelected: any = [{
-    name: 'engineer'
-  },
-  {
-    name: 'section'
-  },
-  {
-    name: 'interpreter'
-  },
-  {
-    name: 'department'
-  },]
+export class SectionReportApproveComponent implements OnInit {
+  flowSelected: any = [
+    {
+      name: 'engineer'
+    },
+    {
+      name: 'section'
+    },
+    {
+      name: 'interpreter'
+    },
+    {
+      name: 'department'
+    }
+  ]
   sendTo: any
-  userApproveClaimOption: any
   userLogin: any
-
+  userApproveClaimOption: any
+  claimId: any
   report: any
 
-  claimId: any
+  modeOption: any = [
+    'interpreter',
+    'department'
+  ]
+  modeSelected: any = 'interpreter'
 
   constructor(
-    private router: Router,
     private $user: HttpUsersService,
     private $report: HttpReportService,
     private route: ActivatedRoute
   ) {
-    this.$user.get(new HttpParams().set('access', JSON.stringify(['sectionHead']))).subscribe((resData: any) => {
+    this.$user.get(new HttpParams().set('access', JSON.stringify(['interpreter']))).subscribe((resData: any) => {
       this.userApproveClaimOption = resData
     })
     let user: any = localStorage.getItem('RGAS_user')
@@ -62,19 +57,15 @@ export class EngineerReportApproveComponent implements OnInit {
         this.claimId = params['claimId']
         this.$report.get(new HttpParams().set('claimId', JSON.stringify([params['claimId']]))).subscribe((resData: any) => {
           this.report = resData
+          // console.log("🚀 ~ this.report:", this.report)
           // this.flowSelected.map((item: any) => {
-          //   const PIC = this.flow.find((f: any) => f.status == item.name)
-          //   if (PIC) {
-          //     item['PIC'] = PIC
-          //   }
-          //   return item
+          //   const flowHistory = item.repor
           // })
-          // this.flowSelected = this.flowSelected.map((flow:any)=>{})
-          this.flowSelected[0]['PIC'] = this.userLogin
+          this.flowSelected[1]['PIC'] = this.userLogin
+          console.log("🚀 ~ this.flowSelected:", this.flowSelected)
         })
       }
     })
-
   }
   // todo show user login name
   displayName(user: any) {
@@ -83,6 +74,10 @@ export class EngineerReportApproveComponent implements OnInit {
       let lastName = user.lastName ? user.lastName[0] : ''
       return `${firstName}-${lastName}`
     }
+    return ''
+  }
+  cssFlow(item: any) {
+    if (this.report?.some((f: any) => f.PICHistory.some((his: any) => his.action == item))) return 'card-step-active'
     return ''
   }
   onSubmit() {
@@ -118,10 +113,17 @@ export class EngineerReportApproveComponent implements OnInit {
     }
   }
 
-  cssFlow(item: any) {
-    if (this.report?.some((f: any) => f.PICHistory.some((his: any) => his.action == item))) return 'card-step-active'
-    return ''
+  async onChangeFlow() {
+    if (this.modeSelected == 'interpreter') {
+      const users = await lastValueFrom(this.$user.get(new HttpParams().set('access', JSON.stringify(['interpreter']))))
+      this.userApproveClaimOption = users
+      this.sendTo = []
+    }
+    if (this.modeSelected == 'department') {
+      const users = await lastValueFrom(this.$user.get(new HttpParams().set('access', JSON.stringify(['departmentHead']))))
+      this.userApproveClaimOption = users
+      this.sendTo = []
+    }
   }
-
 
 }

@@ -24,7 +24,7 @@ import { Skeleton1Component } from './skeleton1/skeleton1.component';
 import { Form1ViewComponent } from './rgas2/form1-view/form1-view.component';
 import { ManSectionSelectComponent } from './dialogs/man-section-select/man-section-select.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReportApporveComponent } from './rgas2/report-apporve/report-apporve.component';
+import { Form2ViewComponent } from './rgas2/form2-view/form2-view.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -61,7 +61,7 @@ let items = [
     Skeleton1Component,
     Form1ViewComponent,
     ManSectionSelectComponent,
-    ReportApporveComponent,
+    Form2ViewComponent,
   ],
   imports: [
     CommonModule,
@@ -86,7 +86,7 @@ let items = [
     Skeleton1Component,
     Form1ViewComponent,
     ManSectionSelectComponent,
-    ReportApporveComponent,
+    Form2ViewComponent
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

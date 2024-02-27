@@ -1,3 +1,29 @@
+::ng-deep .label-detail > * {
+  font-size: small !important;
+  background-color: white !important;
+  color: black !important;
+}
+.bf{
+  border: 1px solid black;
+}
+.bt{
+  border-top: 1px solid black;
+}
+.br{
+  border-right: 1px solid black;
+}
+.bb{
+  border-bottom: 1px solid black;
+}
+.bl{
+  border-left: 1px solid black;
+}
+.m-btn-l{
+  margin-left: 10px !important;
+}
+.btn-file{
+  margin: 0.25em 0 ;
+}
 // todo mat form filed
 ::ng-deep .theme--light .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
   color: black;

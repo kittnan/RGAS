@@ -5,15 +5,14 @@ import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
-import { ReportDataService } from 'src/app/services/report-data.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-engineer-rgas-analysis',
-  templateUrl: './engineer-rgas-analysis.component.html',
-  styleUrls: ['./engineer-rgas-analysis.component.scss']
+  selector: 'app-section-rgas-analysis',
+  templateUrl: './section-rgas-analysis.component.html',
+  styleUrls: ['./section-rgas-analysis.component.scss']
 })
-export class EngineerRgasAnalysisComponent implements OnInit {
+export class SectionRgasAnalysisComponent implements OnInit {
   show: boolean = true
   form: any = null
   userLogin: any
@@ -33,12 +32,14 @@ export class EngineerRgasAnalysisComponent implements OnInit {
           this.form = resData[0]
           const resResult = await lastValueFrom(this.$result.get(new HttpParams().set('claimId', JSON.stringify([this.form._id]))))
           this.form2 = resResult[0]
+          console.log("🚀 ~ this.form2:", this.form2)
         }
       }
     })
     let user: any = localStorage.getItem('RGAS_user')
     this.userLogin = user ? JSON.parse(user) : null
   }
+
 
   ngOnInit(): void {
   }
@@ -72,17 +73,12 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     //   ...$event,
     //   claimId: this.form._id
     // })
-    // this.router.navigate(['engineer/report-approve'], {
-    //   queryParams: {
-    //     claimId: this.form._id,
-    //     type: 'preReport'
-    //   }
-    // })
-  }
-
-  uploadChange($event: any) {
-    console.log($event);
-
+    this.router.navigate(['sectionHead/report-approve'], {
+      queryParams: {
+        claimId: this.form._id,
+        type: 'preReport'
+      }
+    })
   }
 
 }

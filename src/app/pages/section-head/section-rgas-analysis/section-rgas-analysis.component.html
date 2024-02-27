@@ -7,11 +7,10 @@
       <app-form1-view [form]="form"></app-form1-view>
     </div>
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-      <app-form2 fxFlex="100" [claim]="form" [form2]="form2" (onSaveChange)="onSaveChange($event)"
-        (onSubmitChange)="onSubmitChange($event)"></app-form2>
+      <app-form2-view fxFlex="100" [form2]="form2"></app-form2-view>
     </div>
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-      <app-form3 fxFlex="100" (reportChange)="reportChange($event)" (uploadChange)="uploadChange($event)"></app-form3>
+      <app-form3 fxFlex="100" (reportChange)="reportChange($event)"></app-form3>
     </div>
 
   </ng-container>
