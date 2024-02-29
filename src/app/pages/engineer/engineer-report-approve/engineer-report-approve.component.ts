@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -57,13 +58,13 @@ export class EngineerReportApproveComponent implements OnInit {
     private router: Router,
     private $user: HttpUsersService,
     private $report: HttpReportService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private $local: LocalStoreService
   ) {
     this.$user.get(new HttpParams().set('access', JSON.stringify(['sectionHead']))).subscribe((resData: any) => {
       this.userApproveClaimOption = resData
     })
-    let user: any = localStorage.getItem('RGAS_user')
-    this.userLogin = user ? JSON.parse(user) : null
+    this.userLogin = this.$local.getProfile()
   }
 
   ngOnInit(): void {
@@ -115,7 +116,9 @@ export class EngineerReportApproveComponent implements OnInit {
       }]
       this.report.flow = this.flowSelected
       this.report.status = 'section'
+      console.log("🚀 ~ this.report:", this.report)
       await lastValueFrom(this.$report.createOrUpdate([this.report]))
+      this.router.navigate(['engineer/rgas1'])
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

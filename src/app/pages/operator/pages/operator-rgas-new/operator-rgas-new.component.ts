@@ -49,7 +49,8 @@ export class OperatorRgasNewComponent implements OnInit {
     dueDate: null,
     importance: null,
     files: null,
-    status: null
+    status: 'draft',
+    no:1
   }
   allItems: any[] = []
   itemNowNumber: number = 1
@@ -65,13 +66,11 @@ export class OperatorRgasNewComponent implements OnInit {
     private $loader: NgxUiLoaderService
   ) {
     this.route.queryParams.subscribe(async (linkParam: any) => {
-      console.log("🚀 ~ linkParam:", linkParam)
       if (linkParam && linkParam['registerNo']) {
         let params: HttpParams = new HttpParams()
         params = params.set('registerNo', JSON.stringify([linkParam['registerNo']]))
         const resData: any = await lastValueFrom($claim.get(params))
         this.allItems = resData
-        console.log("🚀 ~ this.allItems:", this.allItems)
         this.currentItem = this.allItems[0]
         // this.show = true
       } else {
@@ -184,7 +183,7 @@ export class OperatorRgasNewComponent implements OnInit {
 
   // todo cssCurrentItem
   cssCurrentItem(no: number) {
-    if (this.currentItem?.no == no) return 'text-red'
+    if (this.currentItem?.no == no) return 'text-current-item'
     return ''
   }
 

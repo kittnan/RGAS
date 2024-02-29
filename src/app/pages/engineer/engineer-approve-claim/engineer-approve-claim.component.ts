@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -26,7 +27,8 @@ export class EngineerApproveClaimComponent implements OnInit {
     private router: Router,
     private $claim: HttpClaimService,
     private route: ActivatedRoute,
-    private $user: HttpUsersService
+    private $user: HttpUsersService,
+    private $local: LocalStoreService
   ) {
     route.queryParams.subscribe(async (params: any) => {
       console.log("🚀 ~ params:", params)
@@ -39,8 +41,7 @@ export class EngineerApproveClaimComponent implements OnInit {
       }
     })
     this.state = this.router.getCurrentNavigation()?.extras.state
-    let user: any = localStorage.getItem('RGAS_user')
-    this.userLogin = user ? JSON.parse(user) : null
+    this.userLogin = $local.getProfile()
   }
 
   async ngOnInit(): Promise<void> {
@@ -82,7 +83,6 @@ export class EngineerApproveClaimComponent implements OnInit {
   }
   async approve() {
     try {
-      console.log(this.form);
       let flowHistory: FlowHistory = {
         user: this.userLogin,
         action: 'approve-request',
@@ -96,8 +96,48 @@ export class EngineerApproveClaimComponent implements OnInit {
         title: 'SUCCESS',
         icon: 'success',
         showConfirmButton: false,
-        timer:1500
-      }).then(()=>{
+        timer: 1500
+      }).then(() => {
+        this.router.navigate(['engineer/rgas1'])
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  onClickReject() {
+    try {
+      Swal.fire({
+        title: 'Do you want to reject?',
+        icon: 'question',
+        showCancelButton: true
+      }).then((v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          this.reject()
+        }
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+  async reject() {
+    try {
+      let flowHistory: FlowHistory = {
+        user: this.userLogin,
+        action: 'reject-request',
+        date: new Date()
+      }
+      this.form.flowHistory.push(flowHistory)
+      this.form.status = 'draft'
+      const operator = this.form.flowHistory.find((item: any) => item.action == 'request')
+      this.form.flowPIC = [operator.user]
+      await lastValueFrom(this.$claim.createOrUpdate(this.form))
+      Swal.fire({
+        title: 'SUCCESS',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(() => {
         this.router.navigate(['engineer/rgas1'])
       })
     } catch (error) {

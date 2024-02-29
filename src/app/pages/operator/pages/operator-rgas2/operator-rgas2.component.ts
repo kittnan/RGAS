@@ -198,7 +198,7 @@ export class OperatorRgas2Component implements OnInit {
 
   // todo cssCurrentItem
   cssCurrentItem(no: number) {
-    if (this.currentItem?.no == no) return 'text-red'
+    if (this.currentItem?.no == no) return 'text-current-item'
     return ''
   }
 }

@@ -7,6 +7,7 @@ import { HttpUsersService } from 'src/app/https/http-users.service';
 import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { flowStep } from '../../engineer/engineer-report-approve/engineer-report-approve.component';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 @Component({
   selector: 'app-section-report-approve',
   templateUrl: './section-report-approve.component.html',
@@ -42,13 +43,13 @@ export class SectionReportApproveComponent implements OnInit {
   constructor(
     private $user: HttpUsersService,
     private $report: HttpReportService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private $local:LocalStoreService
   ) {
     this.$user.get(new HttpParams().set('access', JSON.stringify(['interpreter']))).subscribe((resData: any) => {
       this.userApproveClaimOption = resData
     })
-    let user: any = localStorage.getItem('RGAS_user')
-    this.userLogin = user ? JSON.parse(user) : null
+    this.userLogin = this.$local.getProfile()
   }
 
   ngOnInit(): void {

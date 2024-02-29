@@ -2,6 +2,7 @@
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <h1 class="example-app-name">RGAS</h1>
+    <!-- <img src="../assets/logo3.png" style="width: 200px; height: 200px;"> -->
     <div class="flex-auto"></div>
     <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20">
       <div class="flex justify-around items-center me-4 gap-1">
@@ -10,7 +11,7 @@
           <mat-icon *ngIf="!theme" class="mat-18">light_mode</mat-icon>
         </mat-slide-toggle>
       </div>
-      <button >
+      <button>
         <div class="flex justify-around items-center gap-1">
           <mat-icon class="mat-18">
             contact_mail
@@ -35,27 +36,33 @@
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56" [opened]="true">
       <mat-nav-list>
-        <div *ngFor="let nav of fillerNav; let i=index" class="block p-4" style="max-width: 17rem;">
-          <div class="flex justify-start items-center gap-2">
-            <mat-icon class="mat-18">
-              {{nav.icon}}
-            </mat-icon>
-            <span class="uppercase font-black">
-              {{nav.title}}
-            </span>
-          </div>
-          <a mat-list-item [routerLink]="item.path" *ngFor="let item of nav.items" class="capitalize">
-            <div class="flex justify-start items-center gap-1">
+        <ng-container *ngFor="let nav of fillerNav; let i=index">
+          <div *ngIf="displaySideMenu(nav.roles)" class="block p-4" style="max-width: 17rem;">
+            <div class="flex justify-start items-center gap-2">
               <mat-icon class="mat-18">
-                {{item.icon}}
+                {{nav.icon}}
               </mat-icon>
-              <span class="capitalize font-medium">
-                {{item.title}}
+              <span class="uppercase font-black">
+                {{nav.title}}
               </span>
             </div>
-          </a>
-          <mat-divider class="w-full"></mat-divider>
-        </div>
+            <ng-container *ngFor="let item of nav.items">
+              <a *ngIf="displaySideMenu(item.roles)" mat-list-item [routerLink]="item.path" class="capitalize">
+                <div class="flex justify-start items-center gap-1">
+                  <mat-icon class="mat-18">
+                    {{item.icon}}
+                  </mat-icon>
+                  <span class="capitalize font-medium">
+                    {{item.title}}
+                  </span>
+                </div>
+              </a>
+            </ng-container>
+
+            <mat-divider class="w-full"></mat-divider>
+          </div>
+        </ng-container>
+
       </mat-nav-list>
     </mat-sidenav>
 

@@ -1,14 +1,14 @@
-import { HttpUsersService } from 'src/app/https/http-users.service';
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { bounceInAnimation, fadeInOnEnterAnimation, flipAnimation, flipOutXAnimation } from 'angular-animations';
+import { fadeInOnEnterAnimation, flipOutXAnimation } from 'angular-animations';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { lastValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { TokenStorageService } from 'src/app/auth/token-storage.service';
-import { lastValueFrom } from 'rxjs';
+import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NgxUiLoaderService } from 'ngx-ui-loader';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -26,27 +26,29 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', { validators: [Validators.required] }),
   })
   userLogin: any
+  showText: boolean = false
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
     private router: Router,
     private $user: HttpUsersService,
     private $local: LocalStoreService,
-    private $loader:NgxUiLoaderService
+    private $loader: NgxUiLoaderService,
   ) { }
 
   ngOnInit(): void {
-    let localUser: any = localStorage.getItem('RGAS_user')
-    this.userLogin = JSON.parse(localUser)
-    if(this.$local.getAuth()){
+    this.userLogin = this.$local.getProfile()
+    if (this.$local.getAuth()) {
       this.goLink(this.$local.getAuth())
     }
+
+    setTimeout(() => {
+      let el: any = document.getElementById('username')?.focus()
+    }, 1000);
   }
   onSubmit() {
     try {
       const { username, password }: any = this.loginForm.value;
-      console.log(this.loginForm.value);
-      // this.router.navigate(['/admin']).then(() => location.reload())
       this.onLogin(username, password)
     } catch (error) {
       console.log("🚀 ~ error:", error)
@@ -58,17 +60,15 @@ export class LoginComponent implements OnInit {
         username: username,
         password: password
       }))
-      console.log("🚀 ~ userLogin:", userLogin)
       if (userLogin && userLogin.length > 0) {
-        localStorage.setItem('RGAS_user', JSON.stringify(userLogin[0]))
+        this.$local.setProfile(userLogin[0])
         this.userLogin = userLogin[0]
         if (userLogin && userLogin.access && userLogin.access.length === 1) {
           this.goLink(userLogin.access[0])
         }
+      } else {
+        this.showText = true
       }
-      // localStorage.setItem('RGAS_login', 'ok')
-
-      console.log("🚀 ~ userLogin:", userLogin)
     } catch (error) {
       console.log("🚀 ~ error:", error)
       alert('')
@@ -77,35 +77,36 @@ export class LoginComponent implements OnInit {
 
   goLink(access: any) {
     this.$loader.start()
-    console.log("🚀 ~ access:", access)
-    localStorage.setItem("RGAS_auth", access)
+    this.$local.setAuth(access)
     switch (access) {
       case 'admin':
-        this.$local.saveLocalStore('RGAS_auth', access)
+        this.$local.setAuth(access)
         this.router.navigate(['admin']).then(() => location.reload())
         break;
       case 'operator':
-        this.$local.saveLocalStore('RGAS_auth', access)
+        this.$local.setAuth(access)
         this.router.navigate(['operator']).then(() => location.reload())
         break;
       case 'engineer':
-        this.$local.saveLocalStore('RGAS_auth', access)
+        this.$local.setAuth(access)
         this.router.navigate(['engineer']).then(() => location.reload())
         break;
       case 'sectionHead':
-        this.$local.saveLocalStore('RGAS_auth', access)
+        this.$local.setAuth(access)
         this.router.navigate(['sectionHead']).then(() => location.reload())
         break;
       case 'interpreter':
-        this.$local.saveLocalStore('RGAS_auth', access)
+        this.$local.setAuth(access)
         this.router.navigate(['interpreter']).then(() => location.reload())
         break;
       case 'departmentHead':
-        this.$local.saveLocalStore('RGAS_auth', access)
+        this.$local.setAuth(access)
         this.router.navigate(['departmentHead']).then(() => location.reload())
         break;
       case 'logout':
-        localStorage.removeItem('RGAS_user')
+        this.$local.removeLocalStore('RGAS_profile')
+        this.$local.removeLocalStore('RGAS_auth')
+        this.router.navigate(['']).then(() => location.reload())
         break;
 
       default:
@@ -115,7 +116,7 @@ export class LoginComponent implements OnInit {
 
 
   loginStatus() {
-    if (localStorage.getItem('RGAS_user')) {
+    if (this.$local.getProfile() && !this.$local.getAuth()) {
       return true
     } else {
       return false

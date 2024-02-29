@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,6 +24,7 @@ export class SectionRgasAnalysisComponent implements OnInit {
     private $result: HttpResultService,
     private route: ActivatedRoute,
     private $user: HttpUsersService,
+    private $local:LocalStoreService
   ) {
     route.queryParams.subscribe(async (params: any) => {
       console.log("🚀 ~ params:", params)
@@ -36,8 +38,7 @@ export class SectionRgasAnalysisComponent implements OnInit {
         }
       }
     })
-    let user: any = localStorage.getItem('RGAS_user')
-    this.userLogin = user ? JSON.parse(user) : null
+    this.userLogin = this.$local.getProfile()
   }
 
 

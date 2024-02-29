@@ -79,6 +79,11 @@
             </td>
           </ng-container>
 
+          <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> no </th>
+            <td mat-cell *matCellDef="let row"> {{row.no}} </td>
+          </ng-container>
+
           <ng-container matColumnDef="claimStatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> claimStatus </th>
             <td mat-cell *matCellDef="let row"> {{row.claimStatus}} </td>

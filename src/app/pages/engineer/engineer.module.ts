@@ -8,9 +8,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { EngineerRgas1Component } from './engineer-rgas1/engineer-rgas1.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EngineerRgas2Component } from './engineer-rgas2/engineer-rgas2.component';
-import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer-rgas-analysis.component';
 import { EngineerReportApproveComponent } from './engineer-report-approve/engineer-report-approve.component';
 import { EngineerReportViewComponent } from './engineer-report-view/engineer-report-view.component';
+import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer-rgas-analysis.component';
 
 
 @NgModule({
@@ -19,9 +19,9 @@ import { EngineerReportViewComponent } from './engineer-report-view/engineer-rep
     EngineerApproveClaimComponent,
     EngineerRgas1Component,
     EngineerRgas2Component,
-    EngineerRgasAnalysisComponent,
     EngineerReportApproveComponent,
     EngineerReportViewComponent,
+    EngineerRgasAnalysisComponent
   ],
   imports: [
     CommonModule,

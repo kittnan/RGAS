@@ -17,7 +17,6 @@ export class AutocompleteComponent implements OnInit {
   @Input() options: string[] = ['One', 'Two', 'Three'];
   @Output() valueChange: EventEmitter<any> = new EventEmitter()
   ngOnInit() {
-    console.log(this.value);
     this.myControl.patchValue(this.value)
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),

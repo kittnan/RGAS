@@ -24,11 +24,19 @@ export class OperatorRgas1Component implements OnInit {
 
   // todo click row
   onClickClaimChange($event: any) {
-    console.log($event);
     if ($event.status == 'draft') {
       this.router.navigate(['operator/information'], {
         queryParams: {
           registerNo: $event.registerNo,
+          no: $event.no
+        }
+      })
+    }
+    if ($event.status == 'wait approve') {
+      this.router.navigate(['operator/information'], {
+        queryParams: {
+          registerNo: $event.registerNo,
+          no: $event.no
         }
       })
     }

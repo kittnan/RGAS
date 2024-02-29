@@ -28,7 +28,16 @@ export class LocalStoreService {
     return localStorage.getItem('RGAS_auth')
   }
   setAuth(data: any) {
-    localStorage.setItem('RGAS_auth', JSON.stringify(data))
+    localStorage.setItem('RGAS_auth', data)
+  }
+
+  // todo profile
+  getProfile() {
+    let item: any = localStorage.getItem('RGAS_profile')
+    return JSON.parse(item)
+  }
+  setProfile(data: any) {
+    localStorage.setItem('RGAS_profile', JSON.stringify(data))
   }
 
   // todo dark theme

@@ -63,17 +63,18 @@ export class OperatorRgasInformationComponent implements OnInit {
     private route: ActivatedRoute,
     private $result: HttpResultService,
     private $loader: NgxUiLoaderService,
-    private router:Router
+    private router: Router
   ) {
     this.route.queryParams.subscribe(async (linkParam: any) => {
-      console.log("🚀 ~ linkParam:", linkParam)
       if (linkParam && linkParam['registerNo']) {
         let params: HttpParams = new HttpParams()
         params = params.set('registerNo', JSON.stringify([linkParam['registerNo']]))
         const resData: any = await lastValueFrom($claim.get(params))
         this.allItems = resData
-        console.log("🚀 ~ this.allItems:", this.allItems)
         this.currentItem = this.allItems[0]
+        if (linkParam['no']) {
+          this.currentItem = this.allItems.find((item: any) => item.no == linkParam['no'])
+        }
         // this.show = true
       } else {
         this.allItems = [this.dataStructure]
@@ -96,18 +97,10 @@ export class OperatorRgasInformationComponent implements OnInit {
   }
 
   // todo finish form1
-  submitChange($event: any) {
-    Swal.fire({
-      title: 'Do you want to Submit?',
-      icon: 'question',
-      showCancelButton: true
-    }).then(async (v: SweetAlertResult) => {
-      if (v.isConfirmed) {
-        await lastValueFrom(this.$claim.createOrUpdate($event))
-        alert('send mail')
-        this.router.navigate(['operator/rgas1']).then(()=>location.reload())
-      }
-    })
+  async submitChange($event: any) {
+    await lastValueFrom(this.$claim.createOrUpdate($event))
+    alert('send mail')
+    this.router.navigate(['operator/rgas1']).then(() => location.reload())
   }
 
   // todo paginator
@@ -185,7 +178,7 @@ export class OperatorRgasInformationComponent implements OnInit {
 
   // todo cssCurrentItem
   cssCurrentItem(no: number) {
-    if (this.currentItem?.no == no) return 'text-red'
+    if (this.currentItem?.no == no) return 'text-current-item'
     return ''
   }
 

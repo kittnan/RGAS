@@ -7,9 +7,9 @@ import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
-import { ReportDataService } from 'src/app/services/report-data.service';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-engineer-rgas-analysis',
@@ -62,7 +62,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     private route: ActivatedRoute,
     private $user: HttpUsersService,
     private $report: HttpReportService,
-    private $fileUpload: HttpFileUploadService
+    private $fileUpload: HttpFileUploadService,
+    private $local: LocalStoreService
   ) {
     route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
@@ -90,8 +91,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         }
       }
     })
-    let user: any = localStorage.getItem('RGAS_user')
-    this.userLogin = user ? JSON.parse(user) : null
+    this.userLogin = this.$local.getProfile()
   }
 
   ngOnInit(): void {
@@ -137,39 +137,16 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     // })
   }
 
-  async uploadChange($event: any) {
-    if ($event.data._id) {
-      const formData: FormData = new FormData()
-      formData.append('path', `${this.pathFile}/${this.form.registerNo}/`)
-      formData.append('file', $event.file)
-      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
-      this.form3[$event.key]['files'] = resFile
-      await lastValueFrom(this.$report.createOrUpdate([this.form3[$event.key]]))
-    } else {
-      let dataUpdate = {
-        registerNo: this.form.registerNo,
-        name: $event.key,
-        ...$event.data,
-      }
-      const resData = await lastValueFrom(this.$report.create([dataUpdate]))
-      const formData: FormData = new FormData()
-      formData.append('path', `${this.pathFile}/${this.form.registerNo}/`)
-      formData.append('file', $event.file)
-      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
-      this.form3[$event.key] = resData[0]
-      this.form3[$event.key]['files'] = resFile
-      await lastValueFrom(this.$report.createOrUpdate([this.form3[$event.key]]))
-    }
-  }
-
-  async uploadArrChange(event: any) {
+  async uploadChange(event: any) {
+    let path = `${this.pathFile}/${this.form.registerNo}/${event.key}${event.data.index}/`
     if (event.data._id) {
       const formData: FormData = new FormData()
-      formData.append('path', `${this.pathFile}/${this.form.registerNo}/`)
+      formData.append('path', path)
       formData.append('file', event.file)
       const resFile = await lastValueFrom(this.$fileUpload.create(formData))
-      this.form3[event.key][event.index]['files'] = resFile
-      await lastValueFrom(this.$report.createOrUpdate([this.form3[event.key][event.index]]))
+      let data = this.form3[event.key]
+      data['files'] = [...data['files'], ...resFile]
+      await lastValueFrom(this.$report.createOrUpdate([data]))
     } else {
       let dataUpdate = {
         registerNo: this.form.registerNo,
@@ -178,12 +155,41 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       }
       const resData = await lastValueFrom(this.$report.create([dataUpdate]))
       const formData: FormData = new FormData()
-      formData.append('path', `${this.pathFile}/${this.form.registerNo}/`)
+      formData.append('path', path)
+      formData.append('file', event.file)
+      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+      this.form3[event.key] = resData[0]
+      let data = this.form3[event.key]
+      data['files'] = [...data['files'], ...resFile]
+      await lastValueFrom(this.$report.createOrUpdate([data]))
+    }
+  }
+
+  async uploadArrChange(event: any) {
+    let path = `${this.pathFile}/${this.form.registerNo}/${event.key}${event.data.index}/`
+    if (event.data._id) {
+      const formData: FormData = new FormData()
+      formData.append('path', path)
+      formData.append('file', event.file)
+      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+      let data = this.form3[event.key][event.index]
+      data['files'] = [...data['files'], ...resFile]
+      await lastValueFrom(this.$report.createOrUpdate([data]))
+    } else {
+      let dataUpdate = {
+        registerNo: this.form.registerNo,
+        name: event.key,
+        ...event.data,
+      }
+      const resData = await lastValueFrom(this.$report.create([dataUpdate]))
+      const formData: FormData = new FormData()
+      formData.append('path', path)
       formData.append('file', event.file)
       const resFile = await lastValueFrom(this.$fileUpload.create(formData))
       this.form3[event.key][event.index] = resData[0]
-      this.form3[event.key][event.index]['files'] = resFile
-      await lastValueFrom(this.$report.createOrUpdate([this.form3[event.key][event.index]]))
+      let data = this.form3[event.key][event.index]
+      data['files'] = [...data['files'], ...resFile]
+      await lastValueFrom(this.$report.createOrUpdate([data]))
     }
   }
   async submitReportArrChange(event: any) {
@@ -254,6 +260,43 @@ export class EngineerRgasAnalysisComponent implements OnInit {
           index: dataUpdate.index
         }
       })
+    }
+  }
+
+  // todo deleteArrChange
+  deleteArrChange(event: any) {
+    try {
+      Swal.fire({
+        title: 'Do you want to delete?',
+        icon: 'question',
+        showCancelButton: true
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          let data = this.form3[event.key][event.index];
+          if (data && data._id) {
+            if (data.files && data.files.length > 0) {
+              for (let index = 0; index < data.files.length; index++) {
+                const file = data.files[index];
+                if (index + 1 == data.files.length) {
+                  await lastValueFrom(this.$fileUpload.delete({
+                    path_file: file.delete_path
+                  }))
+                  await lastValueFrom(this.$report.delete({ _id: data._id }))
+                  this.form3[event.key] = this.form3[event.key].filter((item: any) => item.index != data.index)
+                }
+              }
+            } else {
+              await lastValueFrom(this.$report.delete({ _id: data._id }))
+              this.form3[event.key] = this.form3[event.key].filter((item: any) => item.index != data.index)
+            }
+
+
+          }
+        }
+      });
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
+
     }
   }
 

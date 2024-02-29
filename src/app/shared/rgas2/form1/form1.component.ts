@@ -16,6 +16,7 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 
 interface FORM1 {
   [key: string]: any,
@@ -208,15 +209,13 @@ export class Form1Component implements OnInit {
     private $user: HttpUsersService,
     private _bottomSheet: MatBottomSheet,
     private $claim: HttpClaimService,
+    private $local: LocalStoreService
   ) {
-    let user: any = localStorage.getItem('RGAS_user')
-    this.userLogin = user ? JSON.parse(user) : null
+    this.userLogin = this.$local.getProfile()
 
   }
 
   async ngOnInit(): Promise<void> {
-    console.log(this.form);
-
     this.modelOption = await lastValueFrom(this.$model.get(new HttpParams()))
     // this.modelOptionString = new Observable<string[]>((observer) => {
     //   const data: string[] = this.modelOption.map((item: any) => item['Model'].toString())
@@ -239,7 +238,9 @@ export class Form1Component implements OnInit {
 
     this.occurredLocationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['occurredLocation']))))
 
-    this.userApproveClaimOption = await lastValueFrom(this.$user.userNextApprove(new HttpParams().set('formStatus', JSON.stringify(this.form.status))))
+    if (this.form.status) {
+      this.userApproveClaimOption = await lastValueFrom(this.$user.userNextApprove(new HttpParams().set('formStatus', JSON.stringify(this.form.status))))
+    }
 
     let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
     this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
@@ -391,16 +392,25 @@ export class Form1Component implements OnInit {
   }
   // todo on finish
   onSubmit() {
-    this.form.flowPIC = this.sendTo
-    this.form.status = 'wait approve'
-    let obj: FlowHistory = {
-      action: 'request',
-      date: new Date(),
-      user: this.userLogin
-    }
+    Swal.fire({
+      title: 'Do you want to Submit?',
+      icon: 'question',
+      showCancelButton: true
+    }).then(async (v: SweetAlertResult) => {
+      if (v.isConfirmed) {
+        this.form.flowPIC = this.sendTo
+        this.form.status = 'wait approve'
+        let obj: FlowHistory = {
+          action: 'request',
+          date: new Date(),
+          user: this.userLogin
+        }
 
-    this.form.flowHistory.push(obj)
-    this.submitChange.emit(this.form)
+        this.form.flowHistory.push(obj)
+        this.submitChange.emit(this.form)
+      }
+    })
+
   }
 
   // todo open bottom files

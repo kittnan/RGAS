@@ -1,14 +1,18 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStoreService } from './services/local-store.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+import { LocalStoreService } from './services/local-store.service';
+
 interface SideItem {
   title: string,
   icon: string,
   path: string,
-  items: SideItem[]
+  roles?: string[]
+  items?: SideItem[]
 }
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,102 +29,76 @@ export class AppComponent {
       title: 'Users',
       icon: 'groups',
       path: '',
+      roles: ['admin'],
       items: [
         {
           title: 'Manage',
           icon: 'keyboard_arrow_right',
           path: 'admin/users-manage',
-          items: []
+          roles: ['admin']
         },
 
       ]
     },
-    // {
-    //   title: 'Model',
-    //   icon: 'layers',
-    //   path: '',
-    //   items: [
-    //     {
-    //       title: 'Manage',
-    //       icon: 'keyboard_arrow_right',
-    //       path: 'admin/models-manage',
-    //       items: []
-    //     },
-
-    //   ]
-    // },
-    // {
-    //   title: 'Defect',
-    //   icon: 'center_focus_strong',
-    //   path: '',
-    //   items: [
-    //     {
-    //       title: 'Defect',
-    //       icon: 'keyboard_arrow_right',
-    //       path: 'admin/defect-manage',
-    //       items: []
-    //     },
-
-    //   ]
-    // },
     {
       title: 'Masters',
       icon: 'category',
       path: '',
+      roles: ['admin'],
       items: [
         {
           title: 'options',
           icon: 'keyboard_arrow_right',
           path: 'admin/masters',
-          items: []
+          roles: ['admin']
         },
         {
           title: 'models',
           icon: 'keyboard_arrow_right',
           path: 'admin/models-manage',
-          items: []
+          roles: ['admin']
         },
         {
           title: 'defects',
           icon: 'keyboard_arrow_right',
           path: 'admin/defect-manage',
-          items: []
+          roles: ['admin']
         },
         {
           title: 'd-cd',
           icon: 'keyboard_arrow_right',
           path: 'admin/d-cd',
-          items: []
+          roles: ['admin']
         },
         {
           title: 'l-cd',
           icon: 'keyboard_arrow_right',
           path: 'admin/l-cd',
-          items: []
+          roles: ['admin']
         },
         {
           title: 's-cd',
           icon: 'keyboard_arrow_right',
           path: 'admin/s-cd',
-          items: []
+          roles: ['admin']
         },
         {
           title: 'm1e',
           icon: 'keyboard_arrow_right',
           path: 'admin/m1e',
-          items: []
+          roles: ['admin']
         },
         {
           title: 'r-principle',
           icon: 'keyboard_arrow_right',
           path: 'admin/r-principle',
-          items: []
+          roles: ['admin']
         },
         {
           title: 'flow',
           icon: 'keyboard_arrow_right',
           path: 'admin/flow-report',
-          items: []
+          roles: ['admin']
         },
       ]
     },
@@ -128,24 +106,25 @@ export class AppComponent {
       title: 'RGAS',
       icon: 'library_books',
       path: '',
+      roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead'],
       items: [
         {
           title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'operator/rgas1',
-          items: []
+          roles: ['admin', 'operator'],
         },
         {
           title: 'RGAS-1 - eng',
           icon: 'keyboard_arrow_right',
           path: 'engineer/rgas1',
-          items: []
+          roles: ['admin', 'engineer']
         },
         {
           title: 'RGAS-1 - section',
           icon: 'keyboard_arrow_right',
           path: 'sectionHead/rgas1',
-          items: []
+          roles: ['admin', 'sectionHead']
         },
 
 
@@ -160,7 +139,8 @@ export class AppComponent {
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
     private router: Router,
     private $local: LocalStoreService,
-    private $loader: NgxUiLoaderService) {
+    private $loader: NgxUiLoaderService,
+  ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -171,7 +151,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    if (localStorage.getItem('RGAS_user')) {
+    if (this.$local.getProfile() && this.$local.getAuth()) {
       this.login = true
     } else {
       this.login = false
@@ -199,19 +179,29 @@ export class AppComponent {
   }
   onLogout() {
     this.$loader.start()
-    this.$local.removeAllLocalStore()
-    this.router.navigate(['/login']).then(() => location.reload())
+    this.$local.removeLocalStore('RGAS_profile')
+    this.$local.removeLocalStore('RGAS_auth')
+    setTimeout(() => {
+      this.router.navigate(['/login']).then(() => location.reload())
+    }, 300);
   }
 
   // todo show user login name
   displayName() {
-    let userLogin: any = localStorage.getItem('RGAS_user')
-    userLogin = userLogin ? JSON.parse(userLogin) : null
+    let userLogin: any = this.$local.getProfile()
     if (userLogin) {
       let firstName = userLogin.firstName ? userLogin.firstName : ''
       let lastName = userLogin.lastName ? userLogin.lastName[0] : ''
       return `${firstName}-${lastName}`
     }
     return ''
+  }
+
+  // todo condition show side menu
+  displaySideMenu(roles: any) {
+    if (roles) {
+      if (roles.includes(this.$local.getAuth())) return true
+    }
+    return false
   }
 }

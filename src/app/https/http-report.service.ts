@@ -28,4 +28,7 @@ export class HttpReportService {
   createOrUpdate(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/createOrUpdate`, data);
   }
+  delete(data: any): Observable<any> {
+    return this.http.post(`${this.URL}/${this.SUB}/delete`, data);
+  }
 }

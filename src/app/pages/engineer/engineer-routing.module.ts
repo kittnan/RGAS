@@ -4,9 +4,9 @@ import { EngineerApproveClaimComponent } from './engineer-approve-claim/engineer
 import { EngineerRgas1Component } from './engineer-rgas1/engineer-rgas1.component';
 import { NotfoundComponent } from 'src/app/notfound/notfound.component';
 import { EngineerRgas2Component } from './engineer-rgas2/engineer-rgas2.component';
-import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer-rgas-analysis.component';
 import { EngineerReportApproveComponent } from './engineer-report-approve/engineer-report-approve.component';
 import { EngineerReportViewComponent } from './engineer-report-view/engineer-report-view.component';
+import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer-rgas-analysis.component';
 
 const routes: Routes = [
   {

@@ -19,8 +19,10 @@ export class FilesBottomComponent implements OnInit {
     console.log(this.data);
   }
   onDownload(item: any) {
-  console.log("🚀 ~ item:", item)
-
+    this.openLink(item.path)
+  }
+  openLink(url: string) {
+    window.open(url, '_blank');
   }
   onDelete(item: any) {
 

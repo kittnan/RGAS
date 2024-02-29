@@ -63,7 +63,7 @@ interface FORM2 {
     issueDate: any,
   },
   ktcJudgment: any,
-  qrcode: any,
+  qrcode?: any,
   _id?: any,
   claimId?: any,
 }
@@ -194,7 +194,6 @@ export class Form2Component implements OnInit {
     let resResult = await lastValueFrom(this.$result.get(params2))
     if (resResult && resResult.length > 0) {
       this.form2 = resResult[0]
-      console.log("🚀 ~ this.form2:", this.form2)
     } else {
       const qr: any = await this.generateQrcode('xxx')
       this.form2.qrcode = qr

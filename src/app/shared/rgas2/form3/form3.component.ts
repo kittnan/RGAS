@@ -102,6 +102,7 @@ export class Form3Component implements OnInit {
   @Output() formChange: EventEmitter<any> = new EventEmitter()
   @Output() approveChange: EventEmitter<any> = new EventEmitter()
   @Output() approveArrChange: EventEmitter<any> = new EventEmitter()
+  @Output() deleteArrChange: EventEmitter<any> = new EventEmitter()
   constructor(
     private _bottomSheet: MatBottomSheet,
     private $d_cd: HttpDCdService,
@@ -162,10 +163,22 @@ export class Form3Component implements OnInit {
   }
 
   onAddNewInterim() {
-    this.form.interims.push({ ...this.tempObj, index: this.form.interims.length + 1 })
+    let items = this.form.interims.sort((a: any, b: any) => a.index - b.index)
+    if (items && items.length > 0) {
+      const lastItem = items.slice(-1)[0]
+      this.form.interims.push({ ...this.tempObj, index: Number(lastItem.index) + 1 })
+    } else {
+      this.form.interims.push({ ...this.tempObj, index: 1 })
+    }
   }
   onAddNewQuestionAnswer() {
-    this.form.questionAnswers.push({ ...this.tempObj, index: this.form.questionAnswers.length + 1 })
+    let items = this.form.questionAnswers.sort((a: any, b: any) => a.index - b.index)
+    if (items && items.length > 0) {
+      const lastItem = items.slice(-1)[0]
+      this.form.questionAnswers.push({ ...this.tempObj, index: Number(lastItem.index) + 1 })
+    } else {
+      this.form.questionAnswers.push({ ...this.tempObj, index: 1 })
+    }
   }
   onAddNewRootCauseAction() {
     this.form.rootCauseActions.push({
@@ -254,6 +267,13 @@ export class Form3Component implements OnInit {
       return `${firstName}-${lastName}`
     }
     return ''
+  }
+
+  // todo onClickDeleteArr
+  onClickDeleteArr(key: string, i: number) {
+    console.log("🚀 ~ key:", key)
+    console.log("🚀 ~ i:", i)
+    this.deleteArrChange.emit({ key: key, index: i })
   }
 
   onSave() {

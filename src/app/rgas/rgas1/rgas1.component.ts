@@ -30,7 +30,7 @@ export class Rgas1Component implements OnInit {
   filterSelected: string = ''
   fillSearch: string = ''
 
-  displayedColumns: string[] = ['registerNo', 'claimStatus', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'defect', 'qty', 'lotNo', 'judgment'];
+  displayedColumns: string[] = ['registerNo','no', 'claimStatus', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'defect', 'qty', 'lotNo', 'judgment'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -49,11 +49,11 @@ export class Rgas1Component implements OnInit {
     try {
       let params: HttpParams = new HttpParams()
       this.claims = await lastValueFrom(this.$claim.get(params))
-      console.log("🚀 ~ this.claims:", this.claims)
       this.dataSource = new MatTableDataSource(this.claims.map((claim: any) => {
         return {
           ...claim,
           'registerNo': claim.registerNo,
+          'no': claim.no,
           'claimStatus': claim.status,
           'PIC': claim.analysisPIC ? `${claim.analysisPIC?.firstName}-${claim.analysisPIC?.lastName[0]}`:'',
           'claimMonth': moment(claim.dueDate).format('YYYY-MMM-DD'),
@@ -99,7 +99,6 @@ export class Rgas1Component implements OnInit {
 
   // todo click claim
   onClickClaim(row: any) {
-    console.log("🚀 ~ row:", row)
     this.onClickClaimChange.emit(row)
   }
 
