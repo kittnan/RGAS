@@ -1,9 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpReportService } from 'src/app/https/http-report.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-report-view',
   templateUrl: './report-view.component.html',
@@ -13,7 +13,9 @@ export class ReportViewComponent implements OnInit {
   report: any = null
   constructor(
     private route: ActivatedRoute,
-    private $report: HttpReportService
+    private $report: HttpReportService,
+    private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -42,8 +44,8 @@ export class ReportViewComponent implements OnInit {
     }
     return ''
   }
-  displayNames(users:any){
-    return users.map((user:any)=>{
+  displayNames(users: any) {
+    return users.map((user: any) => {
       let firstName = user.firstName ? user.firstName : ''
       let lastName = user.lastName ? user.lastName[0] : ''
       return `${firstName}-${lastName}`
@@ -53,6 +55,17 @@ export class ReportViewComponent implements OnInit {
   cssFlow(item: any) {
     if (this.report?.status == item) return 'card-step-active'
     return ''
+  }
+  onBack() {
+    this.location.back()
+    console.log(this.router.url);
+    let url: string = this.router.url
+    if (url) {
+      // url =url.replace('report-view', 'analysis')
+      // console.log("🚀 ~ url:", url)
+      // this.router.navigate(['interpreter/analysis'])
+    }
+    // this.router.navigate(['./']);
   }
 
 }

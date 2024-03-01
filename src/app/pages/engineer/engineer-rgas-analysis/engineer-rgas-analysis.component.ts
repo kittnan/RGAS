@@ -67,14 +67,15 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   ) {
     route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
-        let resData = await lastValueFrom(this.$claim.get(new HttpParams().set('registerNo', JSON.stringify([params['registerNo']])).set('no', JSON.stringify([params['no']]))))
+        let param: HttpParams = new HttpParams()
+        param = param.set('registerNo', JSON.stringify([params['registerNo']]))
+        param = param.set('no', JSON.stringify([params['no']]))
+        let resData = await lastValueFrom(this.$claim.get(param))
         if (resData && resData.length > 0) {
           this.form = resData[0]
-          const resResult = await lastValueFrom(this.$result.get(new HttpParams().set('claimId', JSON.stringify([this.form._id]))))
+          const resResult = await lastValueFrom(this.$result.get(param))
           this.form2 = resResult[0]
-
-          const resForm3 = await lastValueFrom(this.$report.get(new HttpParams().set('registerNo', JSON.stringify([params['registerNo']]))))
-          console.log("🚀 ~ resForm3:", resForm3)
+          const resForm3 = await lastValueFrom(this.$report.get(param))
           const preReport = resForm3.find((item: any) => item.name == 'preReport')
           const interims = resForm3.filter((item: any) => item.name == 'interims')
           const finalReport = resForm3.find((item: any) => item.name == 'finalReport')
@@ -96,10 +97,63 @@ export class EngineerRgasAnalysisComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  // todo save event
-  async onSaveChange($event: any) {
+  // todo save event form2
+  async onCreateChangeForm2(event: any) {
     try {
-      await lastValueFrom(this.$result.createOrUpdate([$event]))
+      let data = {
+        registerNo: this.form.registerNo,
+        no: this.form.no,
+        ...event.data
+      }
+      const resData = await lastValueFrom(this.$result.create(data))
+      this.form2 = resData[0]
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+  async onUploadChangeForm2(event: any) {
+    try {
+      let path = `${this.pathFile}/${this.form.registerNo}/${this.form.no}/${event.key}/`
+
+      if (event.data._id) {
+        const formData: FormData = new FormData()
+        formData.append('path', path)
+        formData.append('file', event.file)
+        const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+        let data = this.form2[event.key]
+        data['files'] = [...data['files'], ...resFile]
+        await lastValueFrom(this.$result.createOrUpdate([this.form2]))
+      } else {
+        let data = {
+          registerNo: this.form.registerNo,
+          no: this.form.no,
+          ...event.data
+        }
+        const resData = await lastValueFrom(this.$result.create(data))
+        this.form2 = resData[0]
+
+        const formData: FormData = new FormData()
+        formData.append('path', path)
+        formData.append('file', event.file)
+        const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+        data = this.form2[event.key]
+        data['files'] = [...data['files'], ...resFile]
+        await lastValueFrom(this.$result.createOrUpdate([this.form2]))
+      }
+
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  async onSaveChangeForm2(event: any) {
+    try {
+      let data = {
+        ...event.data,
+        registerNo: this.form.registerNo,
+        no: this.form.no
+      }
+      await lastValueFrom(this.$result.createOrUpdate([data]))
       Swal.fire({
         title: 'SUCCESS',
         icon: 'success',
@@ -125,6 +179,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       registerNo: this.form.registerNo,
       name: $event.key,
       ...$event.data,
+      no: this.form.no
     }
     const resData = await lastValueFrom(this.$report.create([dataUpdate]))
     this.form3[$event.key] = resData[0]
@@ -138,7 +193,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   }
 
   async uploadChange(event: any) {
-    let path = `${this.pathFile}/${this.form.registerNo}/${event.key}${event.data.index}/`
+    let path = `${this.pathFile}/${this.form.registerNo}/${this.form.no}/${event.key}${event.data.index}/`
     if (event.data._id) {
       const formData: FormData = new FormData()
       formData.append('path', path)
@@ -152,6 +207,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         registerNo: this.form.registerNo,
         name: event.key,
         ...event.data,
+        no: this.form.no
       }
       const resData = await lastValueFrom(this.$report.create([dataUpdate]))
       const formData: FormData = new FormData()
@@ -166,7 +222,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   }
 
   async uploadArrChange(event: any) {
-    let path = `${this.pathFile}/${this.form.registerNo}/${event.key}${event.data.index}/`
+    let path = `${this.pathFile}/${this.form.registerNo}/${this.form.no}/${event.key}${event.data.index}/`
     if (event.data._id) {
       const formData: FormData = new FormData()
       formData.append('path', path)
@@ -180,6 +236,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         registerNo: this.form.registerNo,
         name: event.key,
         ...event.data,
+        no: this.form.no
       }
       const resData = await lastValueFrom(this.$report.create([dataUpdate]))
       const formData: FormData = new FormData()
@@ -200,6 +257,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         registerNo: this.form.registerNo,
         name: event.key,
         ...event.data,
+        no: this.form.no
       }
       const resData = await lastValueFrom(this.$report.create([dataUpdate]))
       this.form3[event.key][event.index] = resData[0]
@@ -210,7 +268,6 @@ export class EngineerRgasAnalysisComponent implements OnInit {
 
   // todo event approve report
   async approveChange(event: any) {
-    console.log("🚀 ~ $event:", event)
     if (event?.data.status != 'engineer') {
       this.router.navigate(['engineer/report-view'], {
         queryParams: {
@@ -237,7 +294,6 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   }
 
   async approveArrChange(event: any) {
-    console.log("🚀 ~ $event:", event)
     if (event?.data.status != 'engineer') {
       this.router.navigate(['engineer/report-view'], {
         queryParams: {

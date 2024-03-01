@@ -19,7 +19,7 @@
             <mat-label>PIC</mat-label>
             <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form2.PIC">
               <mat-option *ngFor="let user of analysisPICOption" [value]="user">
-                {{user.firstName}}
+                {{displayName(user)}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -189,9 +189,10 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form2.appearance.analysisBy">
+          <mat-select [(ngModel)]="form2.appearance.analysisBy" [compareWith]="objectComparisonFunction">
             <mat-option *ngFor="let item of PICOption" [value]="item">
-              {{item}}
+              {{displayName(item)}}
+
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -239,9 +240,9 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form2.function.analysisBy">
+          <mat-select [(ngModel)]="form2.function.analysisBy" [compareWith]="objectComparisonFunction">
             <mat-option *ngFor="let item of PICOption" [value]="item">
-              {{item}}
+              {{displayName(item)}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -288,9 +289,9 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form2.electrical.analysisBy">
+          <mat-select [(ngModel)]="form2.electrical.analysisBy" [compareWith]="objectComparisonFunction">
             <mat-option *ngFor="let item of PICOption" [value]="item">
-              {{item}}
+              {{displayName(item)}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -339,9 +340,9 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form2.disassembly.analysisBy">
+          <mat-select [(ngModel)]="form2.disassembly.analysisBy" [compareWith]="objectComparisonFunction">
             <mat-option *ngFor="let item of PICOption" [value]="item">
-              {{item}}
+              {{displayName(item)}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -389,9 +390,9 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Analysis By</mat-label>
-          <mat-select [(ngModel)]="form2.microscope.analysisBy">
+          <mat-select [(ngModel)]="form2.microscope.analysisBy" [compareWith]="objectComparisonFunction">
             <mat-option *ngFor="let item of PICOption" [value]="item">
-              {{item}}
+              {{displayName(item)}}
             </mat-option>
           </mat-select>
         </mat-form-field>

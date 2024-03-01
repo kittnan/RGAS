@@ -100,67 +100,14 @@ export class Form2Component implements OnInit {
     'Not Accept'
   ]
 
-  PICOption: string[] = [
+  PICOption: any[] = [
     'Mr.Songkarn',
     'Mr.Yuttana',
     'Mr.Pongdanai',
   ]
 
 
-  @Input() form2: FORM2 = {
-    partReceivingDate: null,
-    PIC: null,
-    rgaNo: null,
-    ktcAnalysisResult: null,
-    appearance: {
-      result: null,
-      analysisBy: null,
-      selectName: null,
-      analysisDate: null,
-      files: []
-    },
-    function: {
-      result: null,
-      analysisBy: null,
-      selectName: null,
-      analysisDate: null,
-      files: []
-    },
-    electrical: {
-      result: null,
-      analysisBy: null,
-      selectName: null,
-      analysisDate: null,
-      files: []
-    },
-    disassembly: {
-      result: null,
-      analysisBy: null,
-      selectName: null,
-      analysisDate: null,
-      files: []
-    },
-    microscope: {
-      result: null,
-      analysisBy: null,
-      selectName: null,
-      analysisDate: null,
-      files: []
-    },
-    technical: {
-      result: null,
-      analysisReportNo: null,
-      files: [],
-    },
-    supplier: {
-      result: null,
-      files: [],
-      farPnnNumber: null,
-      issueDate: null,
-    },
-    ktcJudgment: null,
-    qrcode: null
-  }
+  @Input() form2!: FORM2
   // @Input() form:any
   @Input() claim: any
 
@@ -177,7 +124,10 @@ export class Form2Component implements OnInit {
 
   // todo on save
   @Output() onSaveChange: EventEmitter<any> = new EventEmitter()
-  @Output() onSubmitChange: EventEmitter<any> = new EventEmitter()
+  // todo create event
+  @Output() onCreateChange: EventEmitter<any> = new EventEmitter()
+  // todo upload event
+  @Output() onUploadChange: EventEmitter<any> = new EventEmitter()
 
   constructor(
     private $fileUpload: HttpFileUploadService,
@@ -187,15 +137,70 @@ export class Form2Component implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
+
+
     let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
     this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
-    let params2: HttpParams = new HttpParams()
-    params2 = params2.set('registerNo', JSON.stringify([this.claim['registerNo']]))
-    let resResult = await lastValueFrom(this.$result.get(params2))
-    if (resResult && resResult.length > 0) {
-      this.form2 = resResult[0]
-    } else {
-      const qr: any = await this.generateQrcode('xxx')
+    let userParam2 = new HttpParams().set('access', JSON.stringify(['operator']))
+    this.PICOption = await lastValueFrom(this.$user.get(userParam2))
+    if (!this.form2) {
+      this.form2 = {
+        partReceivingDate: null,
+        PIC: null,
+        rgaNo: null,
+        ktcAnalysisResult: null,
+        appearance: {
+          result: null,
+          analysisBy: null,
+          selectName: null,
+          analysisDate: null,
+          files: []
+        },
+        function: {
+          result: null,
+          analysisBy: null,
+          selectName: null,
+          analysisDate: null,
+          files: []
+        },
+        electrical: {
+          result: null,
+          analysisBy: null,
+          selectName: null,
+          analysisDate: null,
+          files: []
+        },
+        disassembly: {
+          result: null,
+          analysisBy: null,
+          selectName: null,
+          analysisDate: null,
+          files: []
+        },
+        microscope: {
+          result: null,
+          analysisBy: null,
+          selectName: null,
+          analysisDate: null,
+          files: []
+        },
+        technical: {
+          result: null,
+          analysisReportNo: null,
+          files: [],
+        },
+        supplier: {
+          result: null,
+          files: [],
+          farPnnNumber: null,
+          issueDate: null,
+        },
+        ktcJudgment: null,
+        qrcode: ''
+      }
+    }
+    const qr: any = await this.generateQrcode('xxx')
+    if (this.form2 && qr) {
       this.form2.qrcode = qr
     }
 
@@ -218,35 +223,49 @@ export class Form2Component implements OnInit {
   // todo upload file
   async onUploadFile($event: any, key: string) {
     try {
-      if (!this.form2._id) throw 'Please save!!'
       let file: any = $event.target.files[0] as File;
-      if (!file) throw 'Please attach file!!'
-      const formData: FormData = new FormData()
-      formData.append('path', `${this.pathFile}/${this.runNumber}/`)
-      formData.append('file', file)
-      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
-      const newFile = {
-        ...resFile[0],
-        index: 1,
-        date: new Date(),
+      if (file) {
+        this.onUploadChange.emit({
+          file: file,
+          data: this.form2,
+          key
+        })
       }
-      if (this.form2[key].files && this.form2[key].files.some((item: any) => item.filename == newFile.filename)) {
-        const index = this.form2[key].files.findIndex((item: any) => item.filename == newFile.filename)
-        this.form2[key].files[index] = newFile
-      } else {
-        this.form2[key].files = !this.form2[key].files ? [newFile] : [...this.form2[key].files, {
-          ...resFile[0],
-          index: this.form2[key].files.length + 1,
-          date: new Date(),
-        }]
-      }
-      console.log(this.form2);
-      this.onSubmit()
-      this.clearInputFile()
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
   }
+  // async onUploadFile($event: any, key: string) {
+  //   try {
+  //     if (!this.form2._id) throw 'Please save!!'
+  //     let file: any = $event.target.files[0] as File;
+  //     if (!file) throw 'Please attach file!!'
+  //     const formData: FormData = new FormData()
+  //     formData.append('path', `${this.pathFile}/${this.runNumber}/`)
+  //     formData.append('file', file)
+  //     const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+  //     const newFile = {
+  //       ...resFile[0],
+  //       index: 1,
+  //       date: new Date(),
+  //     }
+  //     if (this.form2[key].files && this.form2[key].files.some((item: any) => item.filename == newFile.filename)) {
+  //       const index = this.form2[key].files.findIndex((item: any) => item.filename == newFile.filename)
+  //       this.form2[key].files[index] = newFile
+  //     } else {
+  //       this.form2[key].files = !this.form2[key].files ? [newFile] : [...this.form2[key].files, {
+  //         ...resFile[0],
+  //         index: this.form2[key].files.length + 1,
+  //         date: new Date(),
+  //       }]
+  //     }
+  //     console.log(this.form2);
+  //     this.onSubmit()
+  //     this.clearInputFile()
+  //   } catch (error) {
+  //     console.log("🚀 ~ error:", error)
+  //   }
+  // }
 
   // todo clear input file
   clearInputFile() {
@@ -300,37 +319,27 @@ export class Form2Component implements OnInit {
   }
   async save() {
     try {
-      this.form2.claimId = this.claim._id
-      console.log(this.form2);
-      this.onSaveChange.emit(this.form2)
+      if (this.form2._id) {
+        this.form2.claimId = this.claim._id
+        this.onSaveChange.emit({ data: this.form2 })
+      } else {
+        this.onCreateChange.emit({ data: this.form2 })
+      }
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
   }
 
-  // todo submit fn
-  onSubmit() {
-    try {
-      Swal.fire({
-        title: "Do you wish to save?",
-        icon: 'question',
-        showCancelButton: true
-      }).then((v: SweetAlertResult) => {
-        if (v.isConfirmed) {
-          this.submit()
-        }
-      })
-    } catch (error) {
-      console.log("🚀 ~ error:", error)
-    }
-  }
 
-  submit() {
-    // const newResult = {
-    //   ...this.form2,
-    //   registerNo: this.claim.registerNo
-    // }
-    // const res = await lastValueFrom(this.$result.createOrUpdate([newResult]))
-    this.onSubmitChange.emit(this.form2)
+
+  // todo show user login name
+  displayName(user: any) {
+    if (user) {
+      let firstName = user.firstName ? user.firstName : ''
+      let lastName = user.lastName ? user.lastName[0] : ''
+      return `${firstName}-${lastName}`
+    }
+    return ''
   }
 }

@@ -115,16 +115,28 @@ export class AppComponent {
           roles: ['admin', 'operator'],
         },
         {
-          title: 'RGAS-1 - eng',
+          title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'engineer/rgas1',
           roles: ['admin', 'engineer']
         },
         {
-          title: 'RGAS-1 - section',
+          title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'sectionHead/rgas1',
           roles: ['admin', 'sectionHead']
+        },
+        {
+          title: 'RGAS-1',
+          icon: 'keyboard_arrow_right',
+          path: 'interpreter/rgas1',
+          roles: ['admin', 'interpreter']
+        },
+        {
+          title: 'RGAS-1',
+          icon: 'keyboard_arrow_right',
+          path: 'departmentHead/rgas1',
+          roles: ['admin', 'departmentHead']
         },
 
 

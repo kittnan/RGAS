@@ -1,18 +1,6 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
   <app-title fxFlex="100" [title]="'Report Approve'"></app-title>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
-    <button mat-raised-button color="primary" (click)="onBack()">
-      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
-        <mat-icon class="mat-18">
-          arrow_back_ios
-        </mat-icon>
-        <span>
-          Back
-        </span>
-      </div>
-    </button>
-  </div>
-  <div *ngIf="report" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5" class="mt-8">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5" class="mt-8">
 
     <app-sub-title fxFlex="100" [title]="'Flow'"></app-sub-title>
     <ng-container *ngFor="let item of report.flow; let i=index">
@@ -23,14 +11,9 @@
             {{item?.name}}
           </span>
         </div>
-        <div *ngIf="item.name!=report.status" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
           <span class="capitalize">
             {{displayName(item.PIC)}}
-          </span>
-        </div>
-        <div *ngIf="item.name==report.status" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
-          <span class="capitalize">
-            {{displayNames(report.PIC)}}
           </span>
         </div>
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
@@ -43,5 +26,18 @@
     </ng-container>
 
   </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5" class="mt-8">
+    <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="center start">
 
+
+      <button fxFlex="100" mat-raised-button (click)="onSubmit()" class="btn-success" style="margin-top: 10px;">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+          <span>
+            Finish
+          </span>
+          <mat-icon class="mat-18">done_all</mat-icon>
+        </div>
+      </button>
+    </div>
+  </div>
 </div>

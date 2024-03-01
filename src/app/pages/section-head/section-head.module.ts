@@ -7,13 +7,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SectionRgasAnalysisComponent } from './section-rgas-analysis/section-rgas-analysis.component';
 import { SectionReportApproveComponent } from './section-report-approve/section-report-approve.component';
+import { SectionReportViewComponent } from './section-report-view/section-report-view.component';
 
 
 @NgModule({
   declarations: [
     SectionRgas1Component,
     SectionRgasAnalysisComponent,
-    SectionReportApproveComponent
+    SectionReportApproveComponent,
+    SectionReportViewComponent
   ],
   imports: [
     CommonModule,

@@ -3,7 +3,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5" class="mt-8">
 
     <app-sub-title fxFlex="100" [title]="'Flow'"></app-sub-title>
-    <ng-container *ngFor="let item of flowSelected; let i=index">
+    <ng-container *ngFor="let item of report.flow; let i=index">
       <mat-card fxFlex="20" fxLayout="row wrap" fxLayoutAlign="center stretch" class="card-step mb-4"
         style=" height: 200px;" [class]="cssFlow(item?.name)">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
@@ -16,18 +16,23 @@
             {{displayName(item.PIC)}}
           </span>
         </div>
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
+          <span class="capitalize">
+            {{item.date| date:'dd-MMM-YYYY, HH:mm'}}
+          </span>
+        </div>
       </mat-card>
-      <mat-divider *ngIf="i+1 !=flowSelected.length " fxFlex="auto" class="line-step"></mat-divider>
+      <mat-divider *ngIf="i+1 !=report.flow.length " fxFlex="auto" class="line-step"></mat-divider>
     </ng-container>
 
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5" class="mt-8">
     <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="center start">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label> Flow Approve </mat-label>
-        <mat-select [(ngModel)]="modeSelected" (ngModelChange)="onChangeFlow()">
-          <mat-option *ngFor="let mode of modeOption" [value]="mode">
-            {{mode}}
+        <mat-label></mat-label>
+        <mat-select [(ngModel)]="modeSelected" (ngModelChange)="getSendToUser()" >
+          <mat-option *ngFor="let item of modeOption" [value]="item">
+            {{item}}
           </mat-option>
         </mat-select>
       </mat-form-field>

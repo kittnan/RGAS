@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SectionRgas1Component } from './section-rgas1/section-rgas1.component';
 import { SectionRgasAnalysisComponent } from './section-rgas-analysis/section-rgas-analysis.component';
 import { SectionReportApproveComponent } from './section-report-approve/section-report-approve.component';
+import { SectionReportViewComponent } from './section-report-view/section-report-view.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'report-approve',
     component: SectionReportApproveComponent
+  },
+  {
+    path: 'report-view',
+    component: SectionReportViewComponent
   },
 ];
 

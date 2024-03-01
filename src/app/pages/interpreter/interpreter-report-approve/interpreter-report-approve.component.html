@@ -1,0 +1,50 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+    <app-title fxFlex="100" [title]="'Report Approve'"></app-title>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5" class="mt-8">
+
+      <app-sub-title fxFlex="100" [title]="'Flow'"></app-sub-title>
+      <ng-container *ngFor="let item of report.flow; let i=index">
+        <mat-card fxFlex="20" fxLayout="row wrap" fxLayoutAlign="center stretch" class="card-step mb-4"
+          style=" height: 200px;" [class]="cssFlow(item?.name)">
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+            <span class="font-bold capitalize">
+              {{item?.name}}
+            </span>
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
+            <span class="capitalize">
+              {{displayName(item.PIC)}}
+            </span>
+          </div>
+          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center stretch">
+            <span class="capitalize">
+              {{item.date| date:'dd-MMM-YYYY, HH:mm'}}
+            </span>
+          </div>
+        </mat-card>
+        <mat-divider *ngIf="i+1 !=report.flow.length " fxFlex="auto" class="line-step"></mat-divider>
+      </ng-container>
+
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5" class="mt-8">
+      <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="center start">
+
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Send to </mat-label>
+          <mat-select [(ngModel)]="sendTo" multiple>
+            <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">
+              {{displayName(user)}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button fxFlex="100" mat-raised-button (click)="onSubmit()" class="btn-success" style="margin-top: 10px;">
+          <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+            <span>
+              Send
+            </span>
+            <mat-icon class="mat-18">done_all</mat-icon>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>

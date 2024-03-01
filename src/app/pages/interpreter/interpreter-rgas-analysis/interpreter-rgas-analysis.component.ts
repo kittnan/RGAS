@@ -10,11 +10,11 @@ import { LocalStoreService } from 'src/app/services/local-store.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-section-rgas-analysis',
-  templateUrl: './section-rgas-analysis.component.html',
-  styleUrls: ['./section-rgas-analysis.component.scss']
+  selector: 'app-interpreter-rgas-analysis',
+  templateUrl: './interpreter-rgas-analysis.component.html',
+  styleUrls: ['./interpreter-rgas-analysis.component.scss']
 })
-export class SectionRgasAnalysisComponent implements OnInit {
+export class InterpreterRgasAnalysisComponent implements OnInit {
   show: boolean = true
   form: any = null
   userLogin: any
@@ -70,9 +70,7 @@ export class SectionRgasAnalysisComponent implements OnInit {
           this.form = resData[0]
           const resResult = await lastValueFrom(this.$result.get(param))
           this.form2 = resResult[0]
-          console.log("🚀 ~ this.form2:", this.form2)
           const resForm3 = await lastValueFrom(this.$report.get(param))
-          console.log("🚀 ~ resForm3:", resForm3)
           const preReport = resForm3.find((item: any) => item.name == 'preReport')
           const interims = resForm3.filter((item: any) => item.name == 'interims')
           const finalReport = resForm3.find((item: any) => item.name == 'finalReport')
@@ -97,35 +95,13 @@ export class SectionRgasAnalysisComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  // todo save event
-  async onSaveChange($event: any) {
-    try {
-      await lastValueFrom(this.$result.createOrUpdate([$event]))
-      Swal.fire({
-        title: 'SUCCESS',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    } catch (error) {
-      console.log("🚀 ~ error:", error)
-    }
-  }
-
-  // todo event submit
-  onSubmitChange($event: any) {
-    try {
-    } catch (error) {
-      console.log("🚀 ~ error:", error)
-    }
-  }
 
 
   async approveChange(event: any) {
     try {
       console.log("🚀 ~ event:", event)
-      if (event?.data.status != 'section') {
-        this.router.navigate(['sectionHead/report-view'], {
+      if (event?.data.status != 'interpreter') {
+        this.router.navigate(['interpreter/report-view'], {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
@@ -139,7 +115,7 @@ export class SectionRgasAnalysisComponent implements OnInit {
         //   PIC: null
         // }
         // await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
-        this.router.navigate(['sectionHead/report-approve'], {
+        this.router.navigate(['interpreter/report-approve'], {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
@@ -159,5 +135,4 @@ export class SectionRgasAnalysisComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
-
 }
