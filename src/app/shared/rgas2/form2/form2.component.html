@@ -41,7 +41,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="65" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2">
-          <button mat-raised-button color="primary">
+          <button [disabled]="disablePrintBtn()" (click)="printLabel()" mat-raised-button color="primary">
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5">
               <span>Print Label</span>
               <mat-icon class="mat-18">picture_as_pdf</mat-icon>
@@ -63,13 +63,13 @@
                   Claim no.
                 </div>
                 <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
-                  Claim no.
+                  {{claim.claimNo}}
                 </div>
                 <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
                   RGA no.
                 </div>
                 <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
-                  RGA no.
+                  {{form2.rgaNo}}
                 </div>
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
@@ -77,7 +77,7 @@
                   Customer
                 </div>
                 <div fxFlex="85" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1">
-                  Customer
+                  {{claim.customerName}}
                 </div>
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
@@ -85,13 +85,13 @@
                   Model no.
                 </div>
                 <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
-                  Model no.
+                  {{claim.modelNo}}
                 </div>
                 <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
                   Model Name
                 </div>
                 <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
-                  Model Name
+                  {{claim.modelCode}}
                 </div>
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
@@ -99,13 +99,13 @@
                   Product no.
                 </div>
                 <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
-                  Product no.
+                  {{claim.productNo}}
                 </div>
                 <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
                   Site no.
                 </div>
                 <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
-                  Site no.
+                  {{claim.sideNo}}
                 </div>
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
@@ -113,7 +113,7 @@
                   Lot no.
                 </div>
                 <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
-                  Lot no.
+                  {{claim.productLotNo}}
                 </div>
                 <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
                   Defective mode

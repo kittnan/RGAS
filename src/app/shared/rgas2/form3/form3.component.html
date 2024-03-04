@@ -16,8 +16,7 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label>Due Date</mat-label>
-        <input matInput [(ngModel)]="form.preReport.dueDate"
-          [matDatepicker]="preReportDueDate_dp">
+        <input matInput [(ngModel)]="form.preReport.dueDate" [matDatepicker]="preReportDueDate_dp">
         <mat-datepicker-toggle matSuffix [for]="preReportDueDate_dp"></mat-datepicker-toggle>
         <mat-datepicker #preReportDueDate_dp></mat-datepicker>
       </mat-form-field>
@@ -60,8 +59,8 @@
           (click)="onApproveChange('preReport')">
           <mat-icon>send</mat-icon>
         </button>
-        <button *ngIf="!form.preReport._id" mat-raised-button color="primary" class="btn-success"
-          style="margin-left: 5px;" (click)="onSubmitReport('preReport')">
+        <button *ngIf="!form.preReport._id" [disabled]="form.preReport?.files?.length==0" mat-raised-button
+          color="primary" class="btn-success" style="margin-left: 5px;" (click)="onSubmitReport('preReport')">
           <mat-icon>save</mat-icon>
         </button>
       </div>
@@ -128,8 +127,8 @@
             (click)="onApproveChangeArr('interims',i)">
             <mat-icon>send</mat-icon>
           </button>
-          <button *ngIf="!interim?._id" mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
-            (click)="onSubmitReportArrChange('interims',i)">
+          <button *ngIf="!interim?._id" [disabled]="interim.files?.length==0" mat-raised-button color="primary"
+            class="btn-success" style="margin-left: 5px;" (click)="onSubmitReportArrChange('interims',i)">
             <mat-icon>save</mat-icon>
           </button>
         </div>
@@ -206,7 +205,7 @@
           </button>
         </ng-container>
         <ng-template #elseTemplate>
-          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+          <button [disabled]="form.finalReport?.files?.length==0" mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
             (click)="onSubmitReport('finalReport')">
             <mat-icon>save</mat-icon>
           </button>
@@ -278,7 +277,7 @@
           </button>
         </ng-container>
         <ng-template #elseTemplate>
-          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+          <button [disabled]="form.finalReportOBL?.files?.length==0" mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
             (click)="onSubmitReport('finalReportOBL')">
             <mat-icon>save</mat-icon>
           </button>
@@ -351,7 +350,7 @@
             (click)="onApproveChangeArr('questionAnswers',i)">
             <mat-icon>send</mat-icon>
           </button>
-          <button *ngIf="!questionAnswer?._id" mat-raised-button color="primary" class="btn-success"
+          <button *ngIf="!questionAnswer?._id" [disabled]="questionAnswer?.files?.length==0" mat-raised-button color="primary" class="btn-success"
             style="margin-left: 5px;" (click)="onSubmitReportArrChange('questionAnswers',i)">
             <mat-icon>save</mat-icon>
           </button>

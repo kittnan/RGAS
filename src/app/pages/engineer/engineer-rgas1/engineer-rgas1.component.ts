@@ -16,11 +16,19 @@ export class EngineerRgas1Component implements OnInit {
   }
 
   onClickNewChange() {
-    this.router.navigate(['operator/new'])
+    this.router.navigate(['engineer/new'])
   }
   // todo click row
   onClickClaimChange($event: any) {
     console.log($event);
+    if ($event.status == 'draft') {
+      this.router.navigate(['operator/information'], {
+        queryParams: {
+          registerNo: $event.registerNo,
+          no: $event.no
+        }
+      })
+    }
     if ($event.status == 'wait approve') {
       this.router.navigate(['engineer/approve-claim'], {
         queryParams: {

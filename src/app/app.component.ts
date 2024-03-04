@@ -193,6 +193,8 @@ export class AppComponent {
     this.$loader.start()
     this.$local.removeLocalStore('RGAS_profile')
     this.$local.removeLocalStore('RGAS_auth')
+    this.$local.removeLocalStore('RGAS_access_token')
+    this.$local.removeLocalStore('RGAS_refresh_token')
     setTimeout(() => {
       this.router.navigate(['/login']).then(() => location.reload())
     }, 300);
@@ -202,11 +204,20 @@ export class AppComponent {
   displayName() {
     let userLogin: any = this.$local.getProfile()
     if (userLogin) {
-      let firstName = userLogin.firstName ? userLogin.firstName : ''
-      let lastName = userLogin.lastName ? userLogin.lastName[0] : ''
-      return `${firstName}-${lastName}`
+      return userLogin.name
     }
     return ''
+  }
+  // todo show user login name
+  displayAuth() {
+    let auth = this.$local.getAuth()
+    if (auth) return `(${auth})`
+    return ''
+  }
+
+  onClickName() {
+    this.$local.removeLocalStore('RGAS_auth')
+    this.router.navigate(['/']).then(()=>location.reload())
   }
 
   // todo condition show side menu

@@ -48,4 +48,18 @@ export class LocalStoreService {
     localStorage.setItem('RGAS_dark_theme', JSON.stringify(data))
   }
 
+  // todo token
+  getToken(): string | null {
+    return localStorage.getItem('RGAS_access_token')
+  }
+  getRefreshToken(): string | null {
+    return localStorage.getItem('RGAS_refresh_token')
+  }
+  setToken(value: string) {
+    localStorage.setItem('RGAS_access_token', value)
+  }
+  setRefreshToken(value: string) {
+    localStorage.setItem('RGAS_refresh_token', value)
+  }
+
 }

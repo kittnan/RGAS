@@ -54,7 +54,7 @@
   <ul [@fadeInOnEnter]>
     <li *ngFor="let access of userLogin.access; let i=index" fxLayoutAlign="center start" class="text-lg mb-2">
       <div fxLayout="row wrap" fxLayoutAlign="center start"
-        class=" capitalize cursor-pointer p-4 rounded-lg font-bold option-link"
+        class=" capitalize cursor-pointer p-4 rounded-lg font-bold option-link text-rose-500"
         style="width: 200px; background-color: #FFD048;" (click)="goLink(access)">
         {{access}}
       </div>

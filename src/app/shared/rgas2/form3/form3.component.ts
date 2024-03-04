@@ -262,9 +262,8 @@ export class Form3Component implements OnInit {
   // todo show user login name
   displayName(user: any) {
     if (user) {
-      let firstName = user.firstName ? user.firstName : ''
-      let lastName = user.lastName ? user.lastName[0] : ''
-      return `${firstName}-${lastName}`
+      return user.name
+
     }
     return ''
   }
@@ -275,6 +274,7 @@ export class Form3Component implements OnInit {
     console.log("🚀 ~ i:", i)
     this.deleteArrChange.emit({ key: key, index: i })
   }
+
 
   onSave() {
 

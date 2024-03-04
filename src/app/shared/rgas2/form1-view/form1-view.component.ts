@@ -19,7 +19,12 @@ export class Form1ViewComponent implements OnInit {
   // todo open bottom files
   openBottom() {
     this._bottomSheet.open(FilesBottomComponent, {
-      data: this.form.files
+      data: {
+        files: this.form.files,
+        registerNo: this.form.registerNo,
+        no: this.form.no,
+        form:this.form
+      },
     })
   }
   // todo control badge number

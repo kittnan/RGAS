@@ -65,9 +65,7 @@ export class InterpreterReportApproveComponent implements OnInit {
   // todo show user login name
   displayName(user: any) {
     if (user) {
-      let firstName = user.firstName ? user.firstName : ''
-      let lastName = user.lastName ? user.lastName[0] : ''
-      return `${firstName}-${lastName}`
+      return user.name
     }
     return ''
   }

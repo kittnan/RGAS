@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,6 +9,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { TokenStorageService } from 'src/app/auth/token-storage.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -34,6 +36,7 @@ export class LoginComponent implements OnInit {
     private $user: HttpUsersService,
     private $local: LocalStoreService,
     private $loader: NgxUiLoaderService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -56,15 +59,23 @@ export class LoginComponent implements OnInit {
   }
   async onLogin(username: any, password: any) {
     try {
-      const userLogin = await lastValueFrom(this.$user.login({
+      const auth: any = await lastValueFrom(this.http.post(`${environment.API}/auth/login`, {
         username: username,
         password: password
       }))
-      if (userLogin && userLogin.length > 0) {
-        this.$local.setProfile(userLogin[0])
-        this.userLogin = userLogin[0]
-        if (userLogin && userLogin.access && userLogin.access.length === 1) {
-          this.goLink(userLogin.access[0])
+      console.log("🚀 ~ auth:", auth)
+      if (auth) {
+        this.$local.setToken(auth.access_token)
+        this.$local.setRefreshToken(auth.refresh_token)
+        this.userLogin = auth.profile
+        let profiles = {
+          ...auth.profile,
+          ...auth.adAcc
+        }
+        console.log("🚀 ~ profiles:", profiles)
+        this.$local.setProfile(profiles)
+        if (profiles && profiles.access && profiles.access.length === 1) {
+          this.goLink(profiles.access[0])
         }
       } else {
         this.showText = true
@@ -74,6 +85,26 @@ export class LoginComponent implements OnInit {
       alert('')
     }
   }
+  // async onLogin(username: any, password: any) {
+  //   try {
+  //     const userLogin = await lastValueFrom(this.$user.login({
+  //       username: username,
+  //       password: password
+  //     }))
+  //     if (userLogin && userLogin.length > 0) {
+  //       this.$local.setProfile(userLogin[0])
+  //       this.userLogin = userLogin[0]
+  //       if (userLogin && userLogin.access && userLogin.access.length === 1) {
+  //         this.goLink(userLogin.access[0])
+  //       }
+  //     } else {
+  //       this.showText = true
+  //     }
+  //   } catch (error) {
+  //     console.log("🚀 ~ error:", error)
+  //     alert('')
+  //   }
+  // }
 
   goLink(access: any) {
     this.$loader.start()
@@ -106,6 +137,8 @@ export class LoginComponent implements OnInit {
       case 'logout':
         this.$local.removeLocalStore('RGAS_profile')
         this.$local.removeLocalStore('RGAS_auth')
+        this.$local.removeLocalStore('RGAS_access_token')
+        this.$local.removeLocalStore('RGAS_refresh_token')
         this.router.navigate(['']).then(() => location.reload())
         break;
 

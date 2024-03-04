@@ -31,10 +31,8 @@ export class EngineerApproveClaimComponent implements OnInit {
     private $local: LocalStoreService
   ) {
     route.queryParams.subscribe(async (params: any) => {
-      console.log("🚀 ~ params:", params)
       if (params['registerNo']) {
         let resData = await lastValueFrom(this.$claim.get(new HttpParams().set('registerNo', JSON.stringify([params['registerNo']])).set('no', JSON.stringify([params['no']]))))
-        console.log("🚀 ~ resData:", resData)
         if (resData && resData.length > 0) {
           this.form = resData[0]
         }
@@ -49,8 +47,6 @@ export class EngineerApproveClaimComponent implements OnInit {
 
       let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
       this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
-
-      console.log(this.state);
       if (this.state) {
         let resData = await lastValueFrom(this.$claim.get(new HttpParams().set('registerNo', JSON.stringify([this.state.registerNo]))))
         console.log("🚀 ~ resData:", resData)

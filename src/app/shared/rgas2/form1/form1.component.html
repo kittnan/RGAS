@@ -85,7 +85,7 @@
             <mat-label>Analysis PIC</mat-label>
             <mat-select [(ngModel)]="form.analysisPIC" [compareWith]="objectComparisonFunction">
               <mat-option *ngFor="let user of analysisPICOption" [value]="user">
-                {{user.firstName}}
+                {{user.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -313,7 +313,7 @@
 
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end stretch" class="mt-1">
           <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start center">
-            <button mat-raised-button color="primary" (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
+            <button [disabled]="!form._id" mat-raised-button color="primary" (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
                   Copy {{form.no}}
@@ -321,7 +321,7 @@
                 <mat-icon class="mat-18">content_copy</mat-icon>
               </div>
             </button>
-            <button mat-raised-button color="warn" (click)="onDelete()" class="btn-file" style="margin-right: 10px;">
+            <button [disabled]="!form._id" mat-raised-button color="warn" (click)="onDelete()" class="btn-file" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
                   Delete {{form.no}}

@@ -56,14 +56,13 @@ export class UserNewComponent implements OnInit {
   ]
   userForm = new FormGroup({
     employeeCode: new FormControl('', Validators.required),
-    firstName: new FormControl('', Validators.required),
-    lastName: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
     email: new FormControl('', Validators.required),
     access: new FormControl([], Validators.required),
-    corporate: new FormControl('', Validators.required),
-    department: new FormControl('', Validators.required),
-    sectionName: new FormControl('', Validators.required),
-    sectionCode: new FormControl('', Validators.required),
+    corporate: new FormControl(''),
+    department: new FormControl(''),
+    sectionName: new FormControl(''),
+    sectionCode: new FormControl(''),
 
   })
   constructor(
@@ -97,7 +96,7 @@ export class UserNewComponent implements OnInit {
         icon: 'success',
         showConfirmButton: false,
         timer: 1500
-      }).then(()=>location.reload())
+      }).then(() => location.reload())
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

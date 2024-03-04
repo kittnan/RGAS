@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { FORM1 } from '../form1/form1.component';
 
 interface FORM2 {
   [key: string]: any,
@@ -109,7 +110,7 @@ export class Form2Component implements OnInit {
 
   @Input() form2!: FORM2
   // @Input() form:any
-  @Input() claim: any
+  @Input() claim!: FORM1
 
   @ViewChild('appearanceFile', { static: true }) appearanceFile!: ElementRef;
   @ViewChild('functionFile', { static: true }) functionFile!: ElementRef;
@@ -199,7 +200,8 @@ export class Form2Component implements OnInit {
         qrcode: ''
       }
     }
-    const qr: any = await this.generateQrcode('xxx')
+    let qrcodeValue = `${this.claim.claimNo},${this.claim.modelCode},${this.claim.modelNo},${this.claim.productLotNo}`
+    const qr: any = await this.generateQrcode(qrcodeValue)
     if (this.form2 && qr) {
       this.form2.qrcode = qr
     }
@@ -235,37 +237,7 @@ export class Form2Component implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
-  // async onUploadFile($event: any, key: string) {
-  //   try {
-  //     if (!this.form2._id) throw 'Please save!!'
-  //     let file: any = $event.target.files[0] as File;
-  //     if (!file) throw 'Please attach file!!'
-  //     const formData: FormData = new FormData()
-  //     formData.append('path', `${this.pathFile}/${this.runNumber}/`)
-  //     formData.append('file', file)
-  //     const resFile = await lastValueFrom(this.$fileUpload.create(formData))
-  //     const newFile = {
-  //       ...resFile[0],
-  //       index: 1,
-  //       date: new Date(),
-  //     }
-  //     if (this.form2[key].files && this.form2[key].files.some((item: any) => item.filename == newFile.filename)) {
-  //       const index = this.form2[key].files.findIndex((item: any) => item.filename == newFile.filename)
-  //       this.form2[key].files[index] = newFile
-  //     } else {
-  //       this.form2[key].files = !this.form2[key].files ? [newFile] : [...this.form2[key].files, {
-  //         ...resFile[0],
-  //         index: this.form2[key].files.length + 1,
-  //         date: new Date(),
-  //       }]
-  //     }
-  //     console.log(this.form2);
-  //     this.onSubmit()
-  //     this.clearInputFile()
-  //   } catch (error) {
-  //     console.log("🚀 ~ error:", error)
-  //   }
-  // }
+
 
   // todo clear input file
   clearInputFile() {
@@ -287,7 +259,7 @@ export class Form2Component implements OnInit {
   labelShowPIC() {
     if (this.form2.PIC) {
       let PIC = this.form2.PIC
-      return `${PIC.firstName}-${PIC.lastName[0]}`
+      return PIC.name
     }
     return ''
   }
@@ -331,15 +303,22 @@ export class Form2Component implements OnInit {
     }
   }
 
+  // todo printLabel
+  printLabel() {
 
+  }
 
   // todo show user login name
   displayName(user: any) {
     if (user) {
-      let firstName = user.firstName ? user.firstName : ''
-      let lastName = user.lastName ? user.lastName[0] : ''
-      return `${firstName}-${lastName}`
+      return user.name
     }
     return ''
+  }
+
+  // todo disablePrintBtn
+  disablePrintBtn() {
+    if (this.claim.claimNo && this.form2.rgaNo && this.claim.customerName && this.claim.productNo && this.claim.modelNo && this.claim.productLotNo && this.claim.descriptionENG && this.form2.PIC) return false
+    return true
   }
 }

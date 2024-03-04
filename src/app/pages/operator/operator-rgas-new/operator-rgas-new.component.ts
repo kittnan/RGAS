@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
@@ -50,7 +50,7 @@ export class OperatorRgasNewComponent implements OnInit {
     importance: null,
     files: null,
     status: 'draft',
-    no:1
+    no: 1
   }
   allItems: any[] = []
   itemNowNumber: number = 1
@@ -63,7 +63,8 @@ export class OperatorRgasNewComponent implements OnInit {
     private $claim: HttpClaimService,
     private route: ActivatedRoute,
     private $result: HttpResultService,
-    private $loader: NgxUiLoaderService
+    private $loader: NgxUiLoaderService,
+    private router: Router
   ) {
     this.route.queryParams.subscribe(async (linkParam: any) => {
       if (linkParam && linkParam['registerNo']) {
@@ -89,7 +90,12 @@ export class OperatorRgasNewComponent implements OnInit {
     const resData = await lastValueFrom(this.$claim.createOrUpdate(this.currentItem))
     if (resData && resData.length > 0) {
       this.currentItem = resData[0]
-      console.log("🚀 ~ this.currentItem:", this.currentItem)
+      this.router.navigate(['operator/information'],{
+        queryParams:{
+          registerNo:this.currentItem.registerNo,
+          no: this.currentItem.no
+        }
+      })
     }
   }
 

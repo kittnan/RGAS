@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +24,7 @@ import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './shared/login/login.component';
 import { SectionHeadComponent } from './pages/section-head/section-head.component';
 import { DepartmentHeadComponent } from './pages/department-head/department-head.component';
+import { JwtInterceptor } from './auth/jwt.interceptor';
 
 export const MY_FORMATS = {
   parse: {
@@ -78,7 +79,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:JwtInterceptor,
+      multi:true
+    }
   ],
   bootstrap: [AppComponent],
   exports: [

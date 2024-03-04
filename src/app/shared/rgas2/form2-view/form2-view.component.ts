@@ -23,7 +23,7 @@ export class Form2ViewComponent implements OnInit {
   labelShowPIC() {
     if (this.form2.PIC) {
       let PIC = this.form2.PIC
-      return `${PIC.firstName}-${PIC.lastName[0]}`
+      return PIC.name
     }
     return ''
   }
@@ -42,9 +42,7 @@ export class Form2ViewComponent implements OnInit {
   // todo show user login name
   displayName(user: any) {
     if (user) {
-      let firstName = user.firstName ? user.firstName : ''
-      let lastName = user.lastName ? user.lastName[0] : ''
-      return `${firstName}-${lastName}`
+      return user.name
     }
     return ''
   }

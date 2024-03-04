@@ -18,7 +18,7 @@ import { HttpClaimService } from 'src/app/https/http-claim.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 
-interface FORM1 {
+export interface FORM1 {
   [key: string]: any,
   claimNo: any,
   modelNo: any,
@@ -416,7 +416,13 @@ export class Form1Component implements OnInit {
   // todo open bottom files
   openBottom() {
     this._bottomSheet.open(FilesBottomComponent, {
-      data: this.form.files
+      data: {
+        files: this.form.files,
+        registerNo: this.form.registerNo,
+        no: this.form.no,
+        showDeleteBtn: true,
+        form: this.form
+      },
     })
   }
 
@@ -486,9 +492,7 @@ export class Form1Component implements OnInit {
   // todo show user login name
   displayName(user: any) {
     if (user) {
-      let firstName = user.firstName ? user.firstName : ''
-      let lastName = user.lastName ? user.lastName[0] : ''
-      return `${firstName}-${lastName}`
+      return user.name
     }
     return ''
   }

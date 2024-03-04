@@ -107,6 +107,12 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       }
       const resData = await lastValueFrom(this.$result.create(data))
       this.form2 = resData[0]
+      Swal.fire({
+        title: 'SUCCESS',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      })
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

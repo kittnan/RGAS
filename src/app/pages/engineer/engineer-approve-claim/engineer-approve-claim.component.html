@@ -6,14 +6,7 @@
     <app-form1-view fxFlex="100" [form]="form"></app-form1-view>
   </div>
   <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end start" fxLayoutGap="10" class="mt-4 pe-8">
-    <!-- <mat-form-field appearance="outline" floatLabel="always">
-      <mat-label>Analysis PIC</mat-label>
-      <mat-select [(ngModel)]="sendTo" [compareWith]="objectComparisonFunction">
-        <mat-option *ngFor="let user of analysisPICOption" [value]="user">
-          {{user.firstName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field> -->
+
     <button mat-raised-button class="btn-success" (click)="onClickApprove()">
       <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
         <span>
