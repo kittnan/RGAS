@@ -3,10 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
+import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -50,6 +52,9 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
       }
     ],
   }
+
+  pathFile = environment.pathSaveFile
+
   constructor(
     private router: Router,
     private $claim: HttpClaimService,
@@ -57,7 +62,8 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
     private route: ActivatedRoute,
     private $user: HttpUsersService,
     private $local: LocalStoreService,
-    private $report: HttpReportService
+    private $report: HttpReportService,
+    private $fileUpload: HttpFileUploadService
   ) {
     route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
@@ -94,6 +100,65 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
 
 
   ngOnInit(): void {
+  }
+
+  async uploadChange(event: any) {
+    let path = `${this.pathFile}/${this.form.registerNo}/${this.form.no}/${event.key}${event.data.index}/`
+    if (event.data._id) {
+      const formData: FormData = new FormData()
+      formData.append('path', path)
+      formData.append('file', event.file)
+      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+      let data = this.form3[event.key]
+      data['files'] = [...data['files'], ...resFile]
+      await lastValueFrom(this.$report.createOrUpdate([data]))
+    } else {
+      let dataUpdate = {
+        registerNo: this.form.registerNo,
+        name: event.key,
+        ...event.data,
+        no: this.form.no
+      }
+      const resData = await lastValueFrom(this.$report.create([dataUpdate]))
+      const formData: FormData = new FormData()
+      formData.append('path', path)
+      formData.append('file', event.file)
+      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+      this.form3[event.key] = resData[0]
+      let data = this.form3[event.key]
+      console.log("🚀 ~ data:", data)
+      data['files'] = [...data['files'], ...resFile]
+      await lastValueFrom(this.$report.createOrUpdate([data]))
+    }
+  }
+
+  async uploadArrChange(event: any) {
+    let path = `${this.pathFile}/${this.form.registerNo}/${this.form.no}/${event.key}${event.data.index}/`
+    if (event.data._id) {
+      const formData: FormData = new FormData()
+      formData.append('path', path)
+      formData.append('file', event.file)
+      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+      let data = this.form3[event.key][event.index]
+      data['files'] = [...data['files'], ...resFile]
+      await lastValueFrom(this.$report.createOrUpdate([data]))
+    } else {
+      let dataUpdate = {
+        registerNo: this.form.registerNo,
+        name: event.key,
+        ...event.data,
+        no: this.form.no
+      }
+      const resData = await lastValueFrom(this.$report.create([dataUpdate]))
+      const formData: FormData = new FormData()
+      formData.append('path', path)
+      formData.append('file', event.file)
+      const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+      this.form3[event.key][event.index] = resData[0]
+      let data = this.form3[event.key][event.index]
+      data['files'] = [...data['files'], ...resFile]
+      await lastValueFrom(this.$report.createOrUpdate([data]))
+    }
   }
 
 
@@ -135,4 +200,6 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
+
+
 }

@@ -203,9 +203,16 @@ export class Form3Component implements OnInit {
   }
 
   // todo open file bottom
-  openBottom(files: any) {
+  openBottom(files: any, key: any) {
     this._bottomSheet.open(FilesBottomComponent, {
-      data: files
+      data: {
+        files: files,
+        registerNo: this.form.registerNo,
+        no: this.form.no,
+        showDeleteBtn: true,
+        form: this.form[key],
+        type: 'report'
+      },
     })
   }
 

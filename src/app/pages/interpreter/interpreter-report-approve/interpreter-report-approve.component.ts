@@ -71,7 +71,7 @@ export class InterpreterReportApproveComponent implements OnInit {
   }
   onSubmit() {
     Swal.fire({
-      title: 'Do you want to send?',
+      title: 'Send?',
       icon: 'question',
       showCancelButton: true
     }).then((v: SweetAlertResult) => {

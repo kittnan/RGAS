@@ -216,7 +216,7 @@
           </div>
           <input type="file" hidden #appearanceFile (change)="onUploadFile($event,'appearance')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.appearance.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.appearance.files,'appearance')"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
@@ -266,7 +266,7 @@
           </div>
           <input type="file" hidden #functionFile (change)="onUploadFile($event,'function')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.function.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.function.files,'function')"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
@@ -315,7 +315,7 @@
           </div>
           <input type="file" hidden #electricalFile (change)="onUploadFile($event,'electrical')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.electrical.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.electrical.files,'electrical')"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
@@ -366,7 +366,7 @@
           </div>
           <input type="file" hidden #disassemblyFile (change)="onUploadFile($event,'disassembly')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.disassembly.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.disassembly.files,'disassembly')"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
@@ -416,7 +416,7 @@
           </div>
           <input type="file" hidden #microscopeFile (change)="onUploadFile($event,'microscope')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.microscope.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.microscope.files,'microscope')"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
@@ -451,7 +451,7 @@
           </div>
           <input type="file" hidden #technicalFile (change)="onUploadFile($event,'technical')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.technical.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.technical.files,'technical')"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
@@ -484,7 +484,7 @@
           </div>
           <input type="file" hidden #supplierFile (change)="onUploadFile($event,'supplier')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.supplier.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.supplier.files,'supplier')"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>

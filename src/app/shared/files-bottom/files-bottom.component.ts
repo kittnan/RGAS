@@ -3,6 +3,8 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
+import { HttpReportService } from 'src/app/https/http-report.service';
+import { HttpResultService } from 'src/app/https/http-result.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -17,7 +19,9 @@ export class FilesBottomComponent implements OnInit {
   constructor(
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     private $file: HttpFileUploadService,
-    private $claim: HttpClaimService
+    private $claim: HttpClaimService,
+    private $result: HttpResultService,
+    private $report: HttpReportService
   ) { }
 
   ngOnInit(): void {
@@ -34,17 +38,48 @@ export class FilesBottomComponent implements OnInit {
     window.open(url, '_blank');
   }
   async onDelete(item: any) {
-    await lastValueFrom(this.$file.delete({ path_file: item.delete_path }))
-    this.data.files = this.data.files.filter((file: any) => file.delete_path != item.delete_path)
-    let dataUpdate = this.data.form
-    dataUpdate.files = this.data.files
-    await lastValueFrom(this.$claim.createOrUpdate(dataUpdate))
-    Swal.fire({
-      title: 'Success',
-      icon: 'success',
-      showConfirmButton: false,
-      timer: 1500
-    })
+    console.log(this.data);
+
+    if (this.data.type == 'claim') {
+      this.data.files = this.data.files.filter((file: any) => file.delete_path != item.delete_path)
+      let dataUpdate = this.data.form
+      dataUpdate.files = this.data.files
+      await lastValueFrom(this.$claim.createOrUpdate(dataUpdate))
+      await lastValueFrom(this.$file.delete({ path_file: item.delete_path }))
+      Swal.fire({
+        title: 'Success',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+    if (this.data.type == 'result') {
+      this.data.files = this.data.files.filter((file: any) => file.delete_path != item.delete_path)
+      let dataUpdate = this.data.form
+      dataUpdate[this.data.key].files = this.data.files
+      await lastValueFrom(this.$result.createOrUpdate([dataUpdate]))
+      await lastValueFrom(this.$file.delete({ path_file: item.delete_path }))
+      Swal.fire({
+        title: 'Success',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+    if (this.data.type == 'report') {
+      this.data.files = this.data.files.filter((file: any) => file.delete_path != item.delete_path)
+      let dataUpdate = this.data.form
+      dataUpdate.files = this.data.files
+      await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
+      await lastValueFrom(this.$file.delete({ path_file: item.delete_path }))
+      Swal.fire({
+        title: 'Success',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+
   }
   onView(item: any) {
 

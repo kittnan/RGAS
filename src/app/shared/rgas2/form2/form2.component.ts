@@ -265,9 +265,16 @@ export class Form2Component implements OnInit {
   }
 
   // todo open file bottom
-  openBottom(files: any) {
+  openBottom(files: any, key?: any) {
+    console.log("🚀 ~ key:", key)
     this._bottomSheet.open(FilesBottomComponent, {
-      data: files
+      data: {
+        files: files,
+        form: this.form2,
+        showDeleteBtn: true,
+        type: 'result',
+        key: key
+      },
     })
   }
 
@@ -280,7 +287,7 @@ export class Form2Component implements OnInit {
   // todo on save
   onSave() {
     Swal.fire({
-      title: "Do you wish to save?",
+      title: "Save?",
       icon: 'question',
       showCancelButton: true
     }).then((v: SweetAlertResult) => {

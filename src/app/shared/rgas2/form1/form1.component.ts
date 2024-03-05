@@ -393,7 +393,7 @@ export class Form1Component implements OnInit {
   // todo on finish
   onSubmit() {
     Swal.fire({
-      title: 'Do you want to Submit?',
+      title: 'Submit?',
       icon: 'question',
       showCancelButton: true
     }).then(async (v: SweetAlertResult) => {
@@ -421,7 +421,8 @@ export class Form1Component implements OnInit {
         registerNo: this.form.registerNo,
         no: this.form.no,
         showDeleteBtn: true,
-        form: this.form
+        form: this.form,
+        type:'claim'
       },
     })
   }
@@ -430,7 +431,7 @@ export class Form1Component implements OnInit {
   onCopy() {
     try {
       Swal.fire({
-        title: 'Do you want to copy?',
+        title: 'Copy?',
         icon: 'question',
         showConfirmButton: true,
         showCancelButton: true
@@ -453,7 +454,7 @@ export class Form1Component implements OnInit {
   // todo delete
   onDelete() {
     Swal.fire({
-      title: 'Do you want to delete current?',
+      title: 'Delete?',
       icon: 'question',
       showConfirmButton: true,
       showCancelButton: true

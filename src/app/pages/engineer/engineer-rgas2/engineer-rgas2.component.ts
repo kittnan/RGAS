@@ -111,7 +111,7 @@ export class EngineerRgas2Component implements OnInit {
   // todo finish form1
   submitChange($event: any) {
     Swal.fire({
-      title: 'Do you want to Submit?',
+      title: 'Submit?',
       icon: 'question',
       showCancelButton: true
     }).then(async (v: SweetAlertResult) => {

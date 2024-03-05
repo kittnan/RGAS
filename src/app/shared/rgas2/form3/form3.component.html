@@ -42,7 +42,7 @@
         </div>
         <input type="file" hidden #preReportFile (change)="onUploadFile($event,'preReport')">
       </button>
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.preReport.files)"
+      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.preReport.files,'preReport')"
         class="btn-file" [ngClass.gt-md]="'m-btn-l'">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
@@ -106,7 +106,7 @@
           </div>
           <input type="file" hidden #interimFile (change)="onUploadFileArr($event,'interims',i)">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(interim.files)" class="btn-file"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(interim.files,'preReport')" class="btn-file"
           [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
@@ -186,7 +186,7 @@
         </div>
         <input type="file" hidden #finalReportFile (change)="onUploadFile($event,'finalReport')">
       </button>
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.finalReport.files)"
+      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.finalReport.files,'preReport')"
         class="btn-file" [ngClass.gt-md]="'m-btn-l'">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
@@ -256,7 +256,7 @@
         </div>
         <input type="file" hidden #finalReportOBLFile (change)="onUploadFile($event,'finalReportOBL')">
       </button>
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.finalReportOBL.files)"
+      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.finalReportOBL.files,'preReport')"
         class="btn-file" [ngClass.gt-md]="'m-btn-l'">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
@@ -328,7 +328,7 @@
           </div>
           <input type="file" hidden #questionAnswerFile (change)="onUploadFileArr($event,'questionAnswers',i)">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(questionAnswer.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(questionAnswer.files,'preReport')"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>

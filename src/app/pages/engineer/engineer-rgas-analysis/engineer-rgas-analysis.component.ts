@@ -222,6 +222,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       const resFile = await lastValueFrom(this.$fileUpload.create(formData))
       this.form3[event.key] = resData[0]
       let data = this.form3[event.key]
+      console.log("🚀 ~ data:", data)
       data['files'] = [...data['files'], ...resFile]
       await lastValueFrom(this.$report.createOrUpdate([data]))
     }
@@ -329,7 +330,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   deleteArrChange(event: any) {
     try {
       Swal.fire({
-        title: 'Do you want to delete?',
+        title: 'Delete?',
         icon: 'question',
         showCancelButton: true
       }).then(async (v: SweetAlertResult) => {

@@ -65,7 +65,7 @@ export class EngineerApproveClaimComponent implements OnInit {
   onClickApprove() {
     try {
       Swal.fire({
-        title: "Do you wish to approve?",
+        title: "Approve?",
         icon: 'question',
         showCancelButton: true
       }).then((v: SweetAlertResult) => {
@@ -104,7 +104,7 @@ export class EngineerApproveClaimComponent implements OnInit {
   onClickReject() {
     try {
       Swal.fire({
-        title: 'Do you want to reject?',
+        title: 'Reject?',
         icon: 'question',
         showCancelButton: true
       }).then((v: SweetAlertResult) => {

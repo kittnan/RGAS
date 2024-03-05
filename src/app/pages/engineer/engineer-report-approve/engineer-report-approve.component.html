@@ -1,9 +1,21 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
   <app-title fxFlex="100" [title]="'Report Approve'"></app-title>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5" class="mt-8">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+    <button mat-raised-button color="primary" (click)="onBack()">
+      <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+        <mat-icon class="mat-18">
+          arrow_back_ios
+        </mat-icon>
+        <span>
+          Back
+        </span>
+      </div>
+    </button>
+  </div>
+  <div *ngIf="report" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5" class="mt-8">
 
     <app-sub-title fxFlex="100" [title]="'Flow'"></app-sub-title>
-    <ng-container *ngFor="let item of flowSelected; let i=index">
+    <ng-container *ngFor="let item of report.flow; let i=index">
       <mat-card fxFlex="20" fxLayout="row wrap" fxLayoutAlign="center stretch" class="card-step mb-4"
         style=" height: 200px;" [class]="cssFlow(item?.name)">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
@@ -22,7 +34,7 @@
           </span>
         </div>
       </mat-card>
-      <mat-divider *ngIf="i+1 !=flowSelected.length " fxFlex="auto" class="line-step"></mat-divider>
+      <mat-divider *ngIf="i+1 !=report.flow.length " fxFlex="auto" class="line-step"></mat-divider>
     </ng-container>
 
   </div>

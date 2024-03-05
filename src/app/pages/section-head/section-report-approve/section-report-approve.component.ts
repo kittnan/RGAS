@@ -8,46 +8,41 @@ import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { flowStep } from '../../engineer/engineer-report-approve/engineer-report-approve.component';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-section-report-approve',
   templateUrl: './section-report-approve.component.html',
   styleUrls: ['./section-report-approve.component.scss']
 })
 export class SectionReportApproveComponent implements OnInit {
-  flowSelected: any = [
-    {
-      name: 'engineer'
-    },
-    {
-      name: 'section'
-    },
-    {
-      name: 'interpreter'
-    },
-    {
-      name: 'department'
-    }
-  ]
-  sendTo: any
+
   userLogin: any
-  userApproveClaimOption: any
   claimId: any
   report: any = {
     flow: []
   }
-
-  modeOption: any = [
-    'interpreter',
-    'department'
-  ]
   modeSelected: any = 'interpreter'
+  modeFlow: any = 'approve'
+  modeOption: any = ['interpreter', 'department']
+  sendTo: any
+  userApproveClaimOption: any
+  name: any = null
+
+  // modeOption: any = [
+  //   'interpreter',
+  //   'department'
+  // ]
+  // modeSelected: any = 'interpreter'
 
   constructor(
     private $user: HttpUsersService,
     private $report: HttpReportService,
     private route: ActivatedRoute,
     private $local: LocalStoreService,
-    private router: Router
+    private router: Router,
+    private location: Location
+
   ) {
 
     this.userLogin = this.$local.getProfile()
@@ -56,6 +51,7 @@ export class SectionReportApproveComponent implements OnInit {
   ngOnInit(): void {
     this.getSendToUser()
     this.route.queryParams.subscribe(async (params: any) => {
+      this.name = params['name']
       if (params['index'] && params['name'] && params['registerNo']) {
         let httpParams: HttpParams = new HttpParams()
         httpParams = httpParams.set('index', JSON.stringify([params['index']]))
@@ -66,7 +62,7 @@ export class SectionReportApproveComponent implements OnInit {
           this.report = resReport[0]
           console.log("🚀 ~ this.report:", this.report)
           this.report.flow[1]['PIC'] = this.userLogin
-          this.report.flow[1]['date'] = new Date()
+          // this.report.flow[1]['date'] = new Date()
         }
       }
     })
@@ -81,6 +77,9 @@ export class SectionReportApproveComponent implements OnInit {
         break;
       case 'department':
         value = 'departmentHead'
+        break;
+      case 'engineer':
+        value = 'engineer'
         break;
 
       default:
@@ -98,14 +97,35 @@ export class SectionReportApproveComponent implements OnInit {
     }
     return ''
   }
+
+  onChangeModeFlow() {
+    if (this.modeFlow == 'reject') {
+      this.modeOption = []
+      this.modeSelected = 'engineer'
+      this.getSendToUser()
+    }
+    if (this.modeFlow == 'approve') {
+      this.modeOption = ['interpreter', 'department']
+      this.modeSelected = 'interpreter'
+      this.getSendToUser()
+    }
+  }
+
   onSubmit() {
     Swal.fire({
-      title: 'Do you want to send?',
+      title: 'Send?',
       icon: 'question',
       showCancelButton: true
     }).then((v: SweetAlertResult) => {
       if (v.isConfirmed) {
-        this.submit()
+        if (v.isConfirmed) {
+          if (this.modeFlow == 'approve') {
+            this.submit()
+          }
+          if (this.modeFlow == 'reject') {
+            this.reject()
+          }
+        }
       }
     })
   }
@@ -120,9 +140,27 @@ export class SectionReportApproveComponent implements OnInit {
       })
       this.report.status = this.modeSelected
       // this.report.flow = this.flowSelected
+      this.report.flow[1]['date'] = new Date()
       console.log("🚀 ~ this.report:", this.report)
       await lastValueFrom(this.$report.createOrUpdate([this.report]))
-      // this.router.navigate(['engineer/rgas1'])
+      this.router.navigate(['sectionHead/rgas1'])
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  async reject() {
+    try {
+      this.report['PIC'] = this.sendTo
+      this.report['PICHistory'].push({
+        action: 'section reject',
+        user: this.userLogin,
+        date: new Date()
+      })
+      this.report.status = 'engineer'
+
+      this.report.flow[3]['date'] = new Date()
+      await lastValueFrom(this.$report.createOrUpdate([this.report]))
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -133,6 +171,15 @@ export class SectionReportApproveComponent implements OnInit {
     // if (this.report?.some((f: any) => f.PICHistory.some((his: any) => his.action == item))) return 'card-step-active'
     return ''
   }
+
+  onBack() {
+    this.location.back()
+  }
+
+  titleComponent() {
+    return this.name ? `${this.name} Approve` : 'Approve'
+  }
+
 
 
 }

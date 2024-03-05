@@ -20,8 +20,13 @@ export class DepartmentReportApproveComponent implements OnInit {
     flow: []
   }
 
+  modeSelected: any = 'interpreter'
+  modeFlow: any = 'approve'
+  modeOption: any = []
+  sendTo = []
+  userApproveClaimOption: any = []
 
-
+  name: any = null
   constructor(
     private $user: HttpUsersService,
     private $report: HttpReportService,
@@ -35,6 +40,7 @@ export class DepartmentReportApproveComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(async (params: any) => {
+      this.name = params['name']
       if (params['index'] && params['name'] && params['registerNo']) {
         let httpParams: HttpParams = new HttpParams()
         httpParams = httpParams.set('index', JSON.stringify([params['index']]))
@@ -45,10 +51,14 @@ export class DepartmentReportApproveComponent implements OnInit {
           this.report = resReport[0]
           console.log("🚀 ~ this.report:", this.report)
           this.report.flow[3]['PIC'] = this.userLogin
-          this.report.flow[3]['date'] = new Date()
+          // this.report.flow[3]['date'] = new Date()
         }
       }
     })
+  }
+
+  titleComponent() {
+    return this.name ? `${this.name} Approve` : 'Approve'
   }
 
 
@@ -59,14 +69,50 @@ export class DepartmentReportApproveComponent implements OnInit {
     }
     return ''
   }
+
+  onChangeModeFlow() {
+    if (this.modeFlow == 'reject') {
+      this.modeOption = ['interpreter', 'section', 'engineer']
+      this.modeSelected = 'interpreter'
+      this.getSendToUser()
+    }
+  }
+
+  getSendToUser() {
+    this.sendTo = []
+    let value = ''
+    switch (this.modeSelected) {
+      case 'interpreter':
+        value = 'interpreter'
+        break;
+      case 'section':
+        value = 'sectionHead'
+        break;
+      case 'engineer':
+        value = 'engineer'
+        break;
+
+      default:
+        break;
+    }
+    this.$user.get(new HttpParams().set('access', JSON.stringify([value]))).subscribe((resData: any) => {
+      this.userApproveClaimOption = resData
+    })
+  }
+
   onSubmit() {
     Swal.fire({
-      title: 'Do you want to send?',
+      title: 'Send?',
       icon: 'question',
       showCancelButton: true
     }).then((v: SweetAlertResult) => {
       if (v.isConfirmed) {
-        this.submit()
+        if (this.modeFlow == 'approve') {
+          this.submit()
+        }
+        if (this.modeFlow == 'reject') {
+          this.reject()
+        }
       }
     })
   }
@@ -75,12 +121,30 @@ export class DepartmentReportApproveComponent implements OnInit {
     try {
       this.report['PIC'] = null
       this.report['PICHistory'].push({
-        action: 'section',
+        action: 'department',
         user: this.userLogin,
         date: new Date()
       })
+      this.report.flow[3]['date'] = new Date()
       this.report.status = 'finish'
       console.log("🚀 ~ this.report:", this.report)
+      await lastValueFrom(this.$report.createOrUpdate([this.report]))
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  async reject() {
+    try {
+      this.report['PIC'] = this.sendTo
+      this.report['PICHistory'].push({
+        action: 'department reject',
+        user: this.userLogin,
+        date: new Date()
+      })
+
+      this.report.status = this.modeSelected
+      this.report.flow[3]['date'] = new Date()
       await lastValueFrom(this.$report.createOrUpdate([this.report]))
     } catch (error) {
       console.log("🚀 ~ error:", error)

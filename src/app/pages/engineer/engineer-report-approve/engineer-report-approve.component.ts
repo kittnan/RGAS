@@ -7,6 +7,7 @@ import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { Location } from '@angular/common';
 
 export interface flowStep {
   status: string,
@@ -59,7 +60,8 @@ export class EngineerReportApproveComponent implements OnInit {
     private $user: HttpUsersService,
     private $report: HttpReportService,
     private route: ActivatedRoute,
-    private $local: LocalStoreService
+    private $local: LocalStoreService,
+    private location: Location
   ) {
     this.$user.get(new HttpParams().set('access', JSON.stringify(['sectionHead']))).subscribe((resData: any) => {
       this.userApproveClaimOption = resData
@@ -77,8 +79,12 @@ export class EngineerReportApproveComponent implements OnInit {
         const resReport = await lastValueFrom(this.$report.get(httpParams))
         if (resReport && resReport.length > 0) {
           this.report = resReport[0]
-          this.flowSelected[0]['PIC'] = this.userLogin
-          this.flowSelected[0]['date'] = new Date()
+          console.log("🚀 ~ this.report:", this.report)
+          if (this.report && this.report.flow.length == 0) {
+            this.report.flow = this.flowSelected
+          }
+          this.report.flow[0]['PIC'] = this.userLogin
+          // this.flowSelected[0]['date'] = new Date()
         }
       }
 
@@ -94,7 +100,7 @@ export class EngineerReportApproveComponent implements OnInit {
   }
   onSubmit() {
     Swal.fire({
-      title: 'Do you want to send?',
+      title: 'Send?',
       icon: 'question',
       showCancelButton: true
     }).then((v: SweetAlertResult) => {
@@ -113,8 +119,8 @@ export class EngineerReportApproveComponent implements OnInit {
         date: new Date()
       }]
       this.report.flow = this.flowSelected
+      this.report.flow[0]['date'] = new Date()
       this.report.status = 'section'
-      console.log("🚀 ~ this.report:", this.report)
       await lastValueFrom(this.$report.createOrUpdate([this.report]))
       this.router.navigate(['engineer/rgas1'])
     } catch (error) {
@@ -126,6 +132,10 @@ export class EngineerReportApproveComponent implements OnInit {
     if (this.report?.status == item) return 'card-step-active'
     // if (this.report?.some((f: any) => f.PICHistory.some((his: any) => his.action == item))) return 'card-step-active'
     return ''
+  }
+
+  onBack() {
+    this.location.back()
   }
 
 
