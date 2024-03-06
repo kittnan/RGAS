@@ -30,7 +30,7 @@ export class Rgas1Component implements OnInit {
   filterSelected: string = ''
   fillSearch: string = ''
 
-  displayedColumns: string[] = ['registerNo','no', 'claimStatus', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'defect', 'qty', 'lotNo', 'judgment'];
+  displayedColumns: string[] = ['registerNo', 'no', 'claimStatus', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'occurredLocation', 'defect', 'qty', 'lotNo', 'judgment'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -40,7 +40,6 @@ export class Rgas1Component implements OnInit {
   @Output() onClickClaimChange: EventEmitter<any> = new EventEmitter()
   @Output() onClickNewChange: EventEmitter<any> = new EventEmitter()
   constructor(
-    private router: Router,
     private $claim: HttpClaimService,
     private $local: LocalStoreService
   ) { }
@@ -48,22 +47,23 @@ export class Rgas1Component implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       let params: HttpParams = new HttpParams()
-      this.claims = await lastValueFrom(this.$claim.get(params))
+      this.claims = await lastValueFrom(this.$claim.getRgas1(params))
       this.dataSource = new MatTableDataSource(this.claims.map((claim: any) => {
         return {
           ...claim,
           'registerNo': claim.registerNo,
           'no': claim.no,
           'claimStatus': claim.status,
-          'PIC': claim.analysisPIC ? `${claim.analysisPIC?.name}`:'',
-          'claimMonth': moment(claim.dueDate).format('YYYY-MMM-DD'),
+          'PIC': claim.analysisPIC ? `${claim.analysisPIC?.name}` : '',
+          'claimMonth': moment(claim.dueDate).format('DD-MMM-YYYY'),
           'claimNo': claim.claimNo,
           'modelNo': claim.modelNo,
           'customerName': claim.customerName,
-          'defect': null,
+          'occurredLocation': claim.occurredLocation,
+          'defect': claim.descriptionENG,
           'qty': claim.qty,
           'lotNo': claim.productLotNo,
-          'judgment': null
+          'judgment': claim.result?.ktcJudgment ? claim.result?.ktcJudgment : ''
         }
       }))
       setTimeout(() => {

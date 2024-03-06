@@ -49,7 +49,7 @@ export class OperatorRgasNewComponent implements OnInit {
     dueDate: null,
     importance: null,
     files: null,
-    status: 'draft',
+    status: 'receive information',
     no: 1
   }
   allItems: any[] = []

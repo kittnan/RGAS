@@ -7,6 +7,7 @@ import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -57,7 +58,8 @@ export class SectionRgasAnalysisComponent implements OnInit {
     private route: ActivatedRoute,
     private $user: HttpUsersService,
     private $local: LocalStoreService,
-    private $report: HttpReportService
+    private $report: HttpReportService,
+    private $alert: SweetAlertGeneralService
   ) {
     route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
@@ -101,12 +103,7 @@ export class SectionRgasAnalysisComponent implements OnInit {
   async onSaveChange($event: any) {
     try {
       await lastValueFrom(this.$result.createOrUpdate([$event]))
-      Swal.fire({
-        title: 'SUCCESS',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
+      this.$alert.success()
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -154,7 +151,29 @@ export class SectionRgasAnalysisComponent implements OnInit {
   approveArrChange(event: any) {
     try {
       console.log("🚀 ~ event:", event)
-
+      if (event?.data.status != 'section') {
+        this.router.navigate(['sectionHead/report-view'], {
+          queryParams: {
+            registerNo: event.data.registerNo,
+            name: event.key,
+            index: event.data.index
+          }
+        })
+      } else {
+        // let dataUpdate: any = {
+        //   ...event.data,
+        //   PICHistory: null,
+        //   PIC: null
+        // }
+        // await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
+        this.router.navigate(['sectionHead/report-approve'], {
+          queryParams: {
+            registerNo: event.data.registerNo,
+            name: event.key,
+            index: event.data.index
+          }
+        })
+      }
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

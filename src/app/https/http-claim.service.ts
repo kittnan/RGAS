@@ -15,6 +15,11 @@ export class HttpClaimService {
       params: params
     });
   }
+  getRgas1(params: HttpParams): Observable<any> {
+    return this.http.get(`${this.URL}/${this.SUB}/getRgas1`, {
+      params: params
+    });
+  }
   createOrUpdate(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/createOrUpdate`, data);
   }

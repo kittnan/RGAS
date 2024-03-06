@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpUsersService } from 'src/app/https/http-users.service';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
@@ -67,7 +68,8 @@ export class UserNewComponent implements OnInit {
   })
   constructor(
     private router: Router,
-    private $user: HttpUsersService
+    private $user: HttpUsersService,
+    private $alert: SweetAlertGeneralService
   ) { }
 
   ngOnInit(): void {
@@ -91,12 +93,7 @@ export class UserNewComponent implements OnInit {
   async create() {
     try {
       await lastValueFrom(this.$user.create(this.userForm.value))
-      Swal.fire({
-        title: 'User created',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      }).then(() => location.reload())
+      this.$alert.success(true)
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

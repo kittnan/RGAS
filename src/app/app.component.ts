@@ -1,5 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
@@ -20,7 +20,18 @@ interface SideItem {
 })
 export class AppComponent {
   title = 'RGAS';
+  titleLong = 'Return goods authorization system ';
   theme = false;
+
+  @HostListener('document:mouseenter', ['$event'])
+  onHover(event: MouseEvent) {
+    document.title = this.title;
+  }
+
+  @HostListener('document:mouseleave', ['$event'])
+  onLeave(event: MouseEvent) {
+    document.title = this.titleLong;
+  }
 
   mobileQuery!: MediaQueryList;
 
@@ -217,7 +228,7 @@ export class AppComponent {
 
   onClickName() {
     this.$local.removeLocalStore('RGAS_auth')
-    this.router.navigate(['/']).then(()=>location.reload())
+    this.router.navigate(['/']).then(() => location.reload())
   }
 
   // todo condition show side menu

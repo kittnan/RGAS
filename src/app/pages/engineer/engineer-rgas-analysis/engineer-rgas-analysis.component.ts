@@ -8,6 +8,7 @@ import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import { environment } from 'src/environments/environment';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -63,7 +64,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     private $user: HttpUsersService,
     private $report: HttpReportService,
     private $fileUpload: HttpFileUploadService,
-    private $local: LocalStoreService
+    private $local: LocalStoreService,
+    private $alert: SweetAlertGeneralService
   ) {
     route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
@@ -73,6 +75,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         let resData = await lastValueFrom(this.$claim.get(param))
         if (resData && resData.length > 0) {
           this.form = resData[0]
+          console.log("🚀 ~ this.form:", this.form)
           const resResult = await lastValueFrom(this.$result.get(param))
           this.form2 = resResult[0]
           const resForm3 = await lastValueFrom(this.$report.get(param))
@@ -97,6 +100,14 @@ export class EngineerRgasAnalysisComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  async formChange() {
+    this.form.status = 'analysis'
+    const resData = await lastValueFrom(this.$claim.createOrUpdate(this.form))
+    console.log("🚀 ~ resData:", resData)
+    this.$alert.success()
+  }
+
   // todo save event form2
   async onCreateChangeForm2(event: any) {
     try {
@@ -107,12 +118,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       }
       const resData = await lastValueFrom(this.$result.create(data))
       this.form2 = resData[0]
-      Swal.fire({
-        title: 'SUCCESS',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
+
+      this.$alert.success()
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -160,12 +167,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         no: this.form.no
       }
       await lastValueFrom(this.$result.createOrUpdate([data]))
-      Swal.fire({
-        title: 'SUCCESS',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
+      this.$alert.success()
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

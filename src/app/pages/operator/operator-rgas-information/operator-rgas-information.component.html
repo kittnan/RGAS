@@ -23,10 +23,10 @@
   </div>
   <ng-container *ngIf="show">
     <div *ngIf="allItems && allItems.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-      <ng-container *ngIf="currentItem.status!='draft' ">
+      <ng-container *ngIf="currentItem.status!='receive information' ">
         <app-form1-view fxFlex="100" [form]="currentItem"></app-form1-view>
       </ng-container>
-      <ng-container *ngIf="currentItem.status=='draft' ">
+      <ng-container *ngIf="currentItem.status=='receive information' ">
         <app-form1 *ngIf="show" fxFlex="100" [(form)]="currentItem" (formChange)="formChange()"
           (submitChange)="submitChange($event)" (copyChange)="copyChange($event)"
           (deleteChange)="deleteChange($event)"></app-form1>

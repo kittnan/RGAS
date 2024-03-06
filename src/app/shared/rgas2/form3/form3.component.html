@@ -4,8 +4,8 @@
   </div>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
-      class="me-8 bg-green-300 text-black p-2 rounded-md">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="me-8  p-2 rounded-md"
+      [class]="cssTagReportStatus(form.preReport.status)">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
         <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
@@ -70,7 +70,7 @@
   <ng-container *ngFor="let interim of form.interims; let i=index">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
-        class="me-8 bg-green-300 text-black p-2 rounded-md">
+        class="me-8 p-2 rounded-md"  [class]="cssTagReportStatus(interim.status)">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <mat-icon class="mat-18 me-2">topic</mat-icon>
           <span class="font-black text-label">
@@ -106,8 +106,8 @@
           </div>
           <input type="file" hidden #interimFile (change)="onUploadFileArr($event,'interims',i)">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(interim.files,'preReport')" class="btn-file"
-          [ngClass.gt-md]="'m-btn-l'">
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(interim.files,'preReport')"
+          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -145,7 +145,7 @@
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
-      class="me-8 bg-green-300 text-black p-2 rounded-md">
+      class="me-8 p-2 rounded-md" [class]="cssTagReportStatus(form.finalReport.status)">
       <div fxLayout="row wrap" fxLayoutAlign="start center">
         <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
@@ -205,8 +205,8 @@
           </button>
         </ng-container>
         <ng-template #elseTemplate>
-          <button [disabled]="form.finalReport?.files?.length==0" mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
-            (click)="onSubmitReport('finalReport')">
+          <button [disabled]="form.finalReport?.files?.length==0" mat-raised-button color="primary" class="btn-success"
+            style="margin-left: 5px;" (click)="onSubmitReport('finalReport')">
             <mat-icon>save</mat-icon>
           </button>
         </ng-template>
@@ -216,7 +216,7 @@
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
-      class="me-8 bg-green-300 text-black p-2 rounded-md">
+      class="me-8 p-2 rounded-md" [class]="cssTagReportStatus(form.finalReportOBL.status)">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
         <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
@@ -237,7 +237,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label>Date Submit To Customer</mat-label>
+        <mat-label>Date To Upload</mat-label>
         <input matInput [(ngModel)]="form.finalReportOBL.dateSubmitToCustomer"
           [matDatepicker]="finalReportOBLDateSubmitToCustomer_dp">
         <mat-datepicker-toggle matSuffix [for]="finalReportOBLDateSubmitToCustomer_dp"></mat-datepicker-toggle>
@@ -256,8 +256,8 @@
         </div>
         <input type="file" hidden #finalReportOBLFile (change)="onUploadFile($event,'finalReportOBL')">
       </button>
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.finalReportOBL.files,'preReport')"
-        class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button
+        (click)="openBottom(form.finalReportOBL.files,'preReport')" class="btn-file" [ngClass.gt-md]="'m-btn-l'">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             View
@@ -277,8 +277,8 @@
           </button>
         </ng-container>
         <ng-template #elseTemplate>
-          <button [disabled]="form.finalReportOBL?.files?.length==0" mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
-            (click)="onSubmitReport('finalReportOBL')">
+          <button [disabled]="form.finalReportOBL?.files?.length==0" mat-raised-button color="primary"
+            class="btn-success" style="margin-left: 5px;" (click)="onSubmitReport('finalReportOBL')">
             <mat-icon>save</mat-icon>
           </button>
         </ng-template>
@@ -289,7 +289,7 @@
   <ng-container *ngFor="let questionAnswer of form.questionAnswers; let i=index">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
-        class="me-8 bg-green-300 text-black p-2 rounded-md">
+        class="me-8 p-2 rounded-md" [class]="cssTagReportStatus(questionAnswer.status)">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <mat-icon class="mat-18 me-2">topic</mat-icon>
           <span class="font-black text-label">
@@ -350,8 +350,9 @@
             (click)="onApproveChangeArr('questionAnswers',i)">
             <mat-icon>send</mat-icon>
           </button>
-          <button *ngIf="!questionAnswer?._id" [disabled]="questionAnswer?.files?.length==0" mat-raised-button color="primary" class="btn-success"
-            style="margin-left: 5px;" (click)="onSubmitReportArrChange('questionAnswers',i)">
+          <button *ngIf="!questionAnswer?._id" [disabled]="questionAnswer?.files?.length==0" mat-raised-button
+            color="primary" class="btn-success" style="margin-left: 5px;"
+            (click)="onSubmitReportArrChange('questionAnswers',i)">
             <mat-icon>save</mat-icon>
           </button>
         </div>

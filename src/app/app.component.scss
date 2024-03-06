@@ -14,9 +14,36 @@
   z-index: 2;
 }
 
-h1.example-app-name {
+h1.name-title {
   margin-left: 8px;
+  letter-spacing: 8px;
+  font-size: 35px;
+  font-weight: bolder;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, supported by Chrome, Opera, etc. */
 }
+
+.dis-text {
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, supported by Chrome, Opera, etc. */
+}
+
 
 .example-sidenav-container {
   /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This

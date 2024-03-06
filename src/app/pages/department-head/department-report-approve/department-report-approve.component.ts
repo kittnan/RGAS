@@ -129,6 +129,7 @@ export class DepartmentReportApproveComponent implements OnInit {
       this.report.status = 'finish'
       console.log("🚀 ~ this.report:", this.report)
       await lastValueFrom(this.$report.createOrUpdate([this.report]))
+      this.router.navigate(['departmentHead/rgas1'])
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -146,6 +147,7 @@ export class DepartmentReportApproveComponent implements OnInit {
       this.report.status = this.modeSelected
       this.report.flow[3]['date'] = new Date()
       await lastValueFrom(this.$report.createOrUpdate([this.report]))
+      this.router.navigate(['departmentHead/rgas1'])
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

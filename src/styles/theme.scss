@@ -162,9 +162,34 @@ $accent: mat-palette($vt-accent, A200, A100, A400);
       bottom: 0.25rem;
     }
 
-    .card-step-active{
-      background-color: #A4E4DC ;
+    .card-step-active {
+      background-color: #A4E4DC;
       color: black;
+    }
+
+    .tag-engineer {
+      background-color: #dadada;
+      color: #272643;
+    }
+
+    .tag-section {
+      background-color: #e3f6f5;
+      color: #272643;
+    }
+
+    .tag-interpreter {
+      background-color: #bae8e8;
+      color: #272643;
+    }
+
+    .tag-department {
+      background-color: #2c698d;
+      color: white;
+    }
+
+    .tag-finish {
+      background-color: #4c55a5;
+      color: white;
     }
 
 
@@ -230,9 +255,35 @@ $accent: mat-palette($vt-accent, A200, A100, A400);
     .mat-form-field-appearance-legacy .mat-form-field-underline {
       bottom: 0.25rem;
     }
-    .card-step-active{
+
+    .card-step-active {
       background-color: #178173;
       color: black;
+    }
+
+    .tag-engineer {
+      background-color: #dadada;
+      color: #272643;
+    }
+
+    .tag-section {
+      background-color: #e3f6f5;
+      color: #272643;
+    }
+
+    .tag-interpreter {
+      background-color: #bae8e8;
+      color: #272643;
+    }
+
+    .tag-department {
+      background-color: #2c698d;
+      color: white;
+    }
+
+    .tag-finish {
+      background-color: #4c55a5;
+      color: white;
     }
 
 

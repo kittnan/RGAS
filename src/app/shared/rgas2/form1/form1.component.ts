@@ -1,22 +1,22 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import * as ExcelJS from 'exceljs';
 import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
+import { HttpClaimService } from 'src/app/https/http-claim.service';
+import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { HttpMastersService } from 'src/app/https/http-masters.service';
 import { HttpModelsService } from 'src/app/https/http-models.service';
-
-import { MonthSelectComponent } from '../../dialogs/month-select/month-select.component';
-import { FormControl } from '@angular/forms';
-import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
-import { environment } from 'src/environments/environment';
 import { HttpUsersService } from 'src/app/https/http-users.service';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
-import { HttpClaimService } from 'src/app/https/http-claim.service';
-import Swal, { SweetAlertResult } from 'sweetalert2';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
+import { environment } from 'src/environments/environment';
+import Swal, { SweetAlertResult } from 'sweetalert2';
+
+import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 
 export interface FORM1 {
   [key: string]: any,
@@ -147,6 +147,9 @@ export class Form1Component implements OnInit {
   // todo customer option
   customerOptionString: string[] = []
 
+  // todo type option
+  typeOptionString: string[] = []
+
   // todo function option
   functionAppearanceOptionString: string[] = ['Function', 'Appearance']
 
@@ -209,7 +212,8 @@ export class Form1Component implements OnInit {
     private $user: HttpUsersService,
     private _bottomSheet: MatBottomSheet,
     private $claim: HttpClaimService,
-    private $local: LocalStoreService
+    private $local: LocalStoreService,
+    private $alert: SweetAlertGeneralService
   ) {
     this.userLogin = this.$local.getProfile()
 
@@ -225,6 +229,8 @@ export class Form1Component implements OnInit {
     this.modelOptionString = this.modelOption.map((item: any) => item['Model Name']).filter((item: any) => item)
     let customerOptionString: string[] = this.modelOption.map((item: any) => item['Customer'] ? item['Customer'] : '').filter((item: any) => item)
     this.customerOptionString = [...new Set(customerOptionString.map(item => item))];
+    let typeOptionString: string[] = this.modelOption.map((item: any) => item['Classification'] ? item['Classification'] : '').filter((item: any) => item)
+    this.typeOptionString = [...new Set(typeOptionString.map(item => item))];
 
     this.returningStyleOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['returningStyle']))))
 
@@ -242,7 +248,7 @@ export class Form1Component implements OnInit {
       this.userApproveClaimOption = await lastValueFrom(this.$user.userNextApprove(new HttpParams().set('formStatus', JSON.stringify(this.form.status))))
     }
 
-    let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
+    let userParam = new HttpParams().set('access', JSON.stringify(['engineer','sectionHead','departmentHead']))
     this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
 
     if (this.form && this.form.registerNo) {
@@ -252,6 +258,9 @@ export class Form1Component implements OnInit {
 
   // todo set default value
   setDefaultValue() {
+    // this.form.calendarYear = moment(this.form.calendarYear)
+    // console.log(this.form.calendarYear);
+
     this.modelCodeForm.patchValue(this.form.modelCode)
   }
 
@@ -347,22 +356,22 @@ export class Form1Component implements OnInit {
     return false
   }
 
-  async onMonthChange(key: string) {
-    const month = await this.monthSelect()
-    this.form[key] = month
-  }
+  // async onMonthChange(key: string) {
+  //   const month = await this.monthSelect()
+  //   this.form[key] = month
+  // }
 
-  monthSelect() {
-    return new Promise(resolve => {
-      this.dialog.open(MonthSelectComponent).afterClosed().subscribe((res: any) => {
-        if (res) {
-          resolve(moment(`2020-${res}-01`).format('MMMM'))
-        } else {
-          resolve(null)
-        }
-      })
-    })
-  }
+  // monthSelect() {
+  //   return new Promise(resolve => {
+  //     this.dialog.open(MonthSelectComponent).afterClosed().subscribe((res: any) => {
+  //       if (res) {
+  //         resolve(moment(`2020-${res}-01`).format('MMMM'))
+  //       } else {
+  //         resolve(null)
+  //       }
+  //     })
+  //   })
+  // }
   onChangeModelCode($event: any) {
     let value: any = $event
     const founded: any = this.modelOption.find((item: any) => item['Model Name'] == value)
@@ -381,13 +390,13 @@ export class Form1Component implements OnInit {
   // todo on on save
   onSave() {
     let now: FlowHistory = {
-      action: 'draft',
+      action: 'receive information',
       date: new Date(),
       user: this.userLogin
     }
     this.form.flowHistory = [now]
     this.form.flowPIC = this.userLogin
-    this.form.status = 'draft'
+    this.form.status = 'receive information'
     this.formChange.emit(this.form)
   }
   // todo on finish
@@ -469,15 +478,8 @@ export class Form1Component implements OnInit {
       let params: HttpParams = new HttpParams()
       params = params.set('_id', this.form._id)
       let res = await lastValueFrom(this.$claim.delete(params))
-      console.log("🚀 ~ res:", res)
-      Swal.fire({
-        title: 'SUCCESS',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500,
-      }).then(() => {
-        this.deleteChange.emit(this.form._id)
-      })
+      this.$alert.success()
+      this.deleteChange.emit(this.form._id)
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

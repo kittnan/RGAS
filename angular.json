@@ -33,7 +33,11 @@
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
-              "lodash"
+              "lodash",
+              "moment",
+              "exceljs",
+              "sweetalert2",
+              "qrcode"
             ]
           },
           "configurations": {

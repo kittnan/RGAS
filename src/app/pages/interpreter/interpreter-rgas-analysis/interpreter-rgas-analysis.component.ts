@@ -195,6 +195,29 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
   approveArrChange(event: any) {
     try {
       console.log("🚀 ~ event:", event)
+      if (event?.data.status != 'interpreter') {
+        this.router.navigate(['interpreter/report-view'], {
+          queryParams: {
+            registerNo: event.data.registerNo,
+            name: event.key,
+            index: event.data.index
+          }
+        })
+      } else {
+        // let dataUpdate: any = {
+        //   ...event.data,
+        //   PICHistory: null,
+        //   PIC: null
+        // }
+        // await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
+        this.router.navigate(['interpreter/report-approve'], {
+          queryParams: {
+            registerNo: event.data.registerNo,
+            name: event.key,
+            index: event.data.index
+          }
+        })
+      }
 
     } catch (error) {
       console.log("🚀 ~ error:", error)

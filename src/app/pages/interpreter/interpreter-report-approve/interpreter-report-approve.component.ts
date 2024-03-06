@@ -92,6 +92,7 @@ export class InterpreterReportApproveComponent implements OnInit {
       this.report.status = 'department'
       console.log("🚀 ~ this.report:", this.report)
       await lastValueFrom(this.$report.createOrUpdate([this.report]))
+      this.router.navigate(['interpreter/rgas1'])
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

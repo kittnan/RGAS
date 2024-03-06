@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
+import { HttpMailService } from 'src/app/https/http-mail.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -28,7 +30,9 @@ export class EngineerApproveClaimComponent implements OnInit {
     private $claim: HttpClaimService,
     private route: ActivatedRoute,
     private $user: HttpUsersService,
-    private $local: LocalStoreService
+    private $local: LocalStoreService,
+    private $alert: SweetAlertGeneralService,
+    private $mail: HttpMailService
   ) {
     route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
@@ -87,15 +91,61 @@ export class EngineerApproveClaimComponent implements OnInit {
       this.form.flowHistory.push(flowHistory)
       this.form.status = 'analysis'
       this.form.flowPIC = [this.userLogin]
+      let to: any = this.form.flowPIC.map((PIC: any) => PIC.email)
+
+      let html = `<p><strong>Dear...All</strong></p>
+
+    <p>&nbsp;</p>
+
+    <p><strong>We&#39;d like to share claim information from $type $occurredLocation $qty&nbsp;</strong></p>
+
+    <p><strong>Please see the detail below and attached file</strong><br />
+    &nbsp;</p>
+
+    <p><strong>Model&nbsp; : </strong>$modelCode</p>
+
+    <p><strong>Q&#39;ty </strong>: $qty</p>
+
+    <p><strong>Lot :</strong>&nbsp;$productLotNo</p>
+
+    <p><strong>Serial :</strong>&nbsp;$serial</p>
+
+    <p><strong>Failure phenomenon :</strong>&nbsp; $failure</p>
+
+    <p><strong>Occurrence place :</strong>&nbsp;$occur</p>
+
+    <p><strong>Driving kilometer :</strong>&nbsp;$text</p>
+
+    <p>&nbsp;</p>
+
+    <p><strong>Attached, you will find the necessary documentation for further investigation. Please review it promptly and take appropriate actions to address this matter.</strong></p>
+
+    <p>Click here ➡️ $link</p>
+
+    <p>&nbsp;</p>
+
+    <p><strong><span style="color:#c0392b">Please note that this email is automatically generated. Kindly refrain from replying directly to it.</span></strong></p>
+
+    <p><strong><span style="color:#c0392b">Thank you for your attention to this urgent matter.</span></strong></p>
+
+    <p><strong><span style="color:#c0392b">Best Regards,</span></strong></p>
+    `
+
+      let type = this.form.type
+      html = html.replace('$type', type)
+      let qty = Number(this.form.qty) > 1 ? `${Number(this.form.qty)} pcs.` : `${Number(this.form.qty)} pc.`
+      html = html.replace('$qty', qty)
+
+
+      await lastValueFrom(this.$mail.send({
+        to: to,
+        html: html
+      }))
+
+
       await lastValueFrom(this.$claim.createOrUpdate(this.form))
-      Swal.fire({
-        title: 'SUCCESS',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      }).then(() => {
-        this.router.navigate(['engineer/rgas1'])
-      })
+      this.$alert.success()
+      this.router.navigate(['engineer/rgas1'])
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -124,18 +174,13 @@ export class EngineerApproveClaimComponent implements OnInit {
         date: new Date()
       }
       this.form.flowHistory.push(flowHistory)
-      this.form.status = 'draft'
+      this.form.status = 'receive information'
       const operator = this.form.flowHistory.find((item: any) => item.action == 'request')
       this.form.flowPIC = [operator.user]
       await lastValueFrom(this.$claim.createOrUpdate(this.form))
-      Swal.fire({
-        title: 'SUCCESS',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      }).then(() => {
-        this.router.navigate(['engineer/rgas1'])
-      })
+      this.$alert.success()
+      this.router.navigate(['engineer/rgas1'])
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

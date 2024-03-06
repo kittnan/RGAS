@@ -161,6 +161,7 @@ export class SectionReportApproveComponent implements OnInit {
 
       this.report.flow[3]['date'] = new Date()
       await lastValueFrom(this.$report.createOrUpdate([this.report]))
+      this.router.navigate(['sectionHead/rgas1'])
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

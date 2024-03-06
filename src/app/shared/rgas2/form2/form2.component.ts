@@ -10,6 +10,7 @@ import { FilesBottomComponent } from '../../files-bottom/files-bottom.component'
 import { HttpResultService } from 'src/app/https/http-result.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 import { FORM1 } from '../form1/form1.component';
+import { GeneratePdfService } from 'src/app/services/generate-pdf.service';
 
 interface FORM2 {
   [key: string]: any,
@@ -120,8 +121,8 @@ export class Form2Component implements OnInit {
   @ViewChild('technicalFile', { static: true }) technicalFile!: ElementRef;
   @ViewChild('supplierFile', { static: true }) supplierFile!: ElementRef;
 
-  // todo analysis PIC option
-  analysisPICOption: any[] = []
+  // // todo analysis PIC option
+  // analysisPICOption: any[] = []
 
   // todo on save
   @Output() onSaveChange: EventEmitter<any> = new EventEmitter()
@@ -134,14 +135,15 @@ export class Form2Component implements OnInit {
     private $fileUpload: HttpFileUploadService,
     private $user: HttpUsersService,
     private _bottomSheet: MatBottomSheet,
-    private $result: HttpResultService
+    private $result: HttpResultService,
+    private $pdf: GeneratePdfService
   ) { }
 
   async ngOnInit(): Promise<void> {
 
 
-    let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
-    this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
+    // let userParam = new HttpParams().set('access', JSON.stringify(['engineer']))
+    // this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
     let userParam2 = new HttpParams().set('access', JSON.stringify(['operator']))
     this.PICOption = await lastValueFrom(this.$user.get(userParam2))
     if (!this.form2) {
@@ -205,6 +207,7 @@ export class Form2Component implements OnInit {
     if (this.form2 && qr) {
       this.form2.qrcode = qr
     }
+
 
   }
 
@@ -312,7 +315,11 @@ export class Form2Component implements OnInit {
 
   // todo printLabel
   printLabel() {
-
+    try {
+      this.$pdf.generatePDF('bb')
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
   }
 
   // todo show user login name

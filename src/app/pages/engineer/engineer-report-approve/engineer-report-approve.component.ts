@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -5,9 +6,9 @@ import { lastValueFrom } from 'rxjs';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
-import { Location } from '@angular/common';
 
 export interface flowStep {
   status: string,
@@ -61,7 +62,8 @@ export class EngineerReportApproveComponent implements OnInit {
     private $report: HttpReportService,
     private route: ActivatedRoute,
     private $local: LocalStoreService,
-    private location: Location
+    private location: Location,
+    private $alert: SweetAlertGeneralService,
   ) {
     this.$user.get(new HttpParams().set('access', JSON.stringify(['sectionHead']))).subscribe((resData: any) => {
       this.userApproveClaimOption = resData
@@ -122,6 +124,7 @@ export class EngineerReportApproveComponent implements OnInit {
       this.report.flow[0]['date'] = new Date()
       this.report.status = 'section'
       await lastValueFrom(this.$report.createOrUpdate([this.report]))
+      this.$alert.success()
       this.router.navigate(['engineer/rgas1'])
     } catch (error) {
       console.log("🚀 ~ error:", error)

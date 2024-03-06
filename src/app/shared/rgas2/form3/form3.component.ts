@@ -157,6 +157,9 @@ export class Form3Component implements OnInit {
         return item
       })
       this.scdCOption = [...new Set(resScd.map((item: any) => item['取引先名']))]
+
+      console.log(this.form);
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -284,6 +287,25 @@ export class Form3Component implements OnInit {
 
 
   onSave() {
+
+  }
+
+  // todo css tag report status
+  cssTagReportStatus(status: string) {
+    switch (status) {
+      case 'engineer':
+        return 'tag-engineer'
+      case 'section':
+        return 'tag-section'
+      case 'interpreter':
+        return 'tag-interpreter'
+      case 'department':
+        return 'tag-department'
+      case 'finish':
+        return 'tag-finish'
+      default:
+        return ''
+    }
 
   }
 }

@@ -97,8 +97,8 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <app-autocomplete *ngIf="customerOptionString.length>0" fxFlex="100" [title]="'Type'"
-            [options]="customerOptionString" [(value)]="form.type"></app-autocomplete>
+          <app-autocomplete *ngIf="typeOptionString.length>0" fxFlex="100" [title]="'Type'"
+            [options]="typeOptionString" [(value)]="form.type"></app-autocomplete>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -179,11 +179,7 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Production Month</mat-label>
-            <input readonly matInput [(ngModel)]="form.productionMonth" (click)="onMonthChange('productionMonth')">
-          </mat-form-field>
-
+          <app-year-month fxFlex="100" [title]="'Production Month'" [(dateInput)]="form.productionMonth" ></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -192,10 +188,7 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Calendar Year</mat-label>
-            <input readonly matInput [(ngModel)]="form.calendarYear" (click)="onMonthChange('calendarYear')">
-          </mat-form-field>
+          <app-year-month fxFlex="100" [title]="'Calendar Year'" [(dateInput)]="form.calendarYear" ></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -266,10 +259,7 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Cost Month</mat-label>
-            <input readonly matInput [(ngModel)]="form.costMonth" (click)="onMonthChange('costMonth')">
-          </mat-form-field>
+          <app-year-month fxFlex="100" [title]="'Cost Month'" [(dateInput)]="form.costMonth" ></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -313,7 +303,7 @@
 
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end stretch" class="mt-1">
           <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start center">
-            <button [disabled]="!form._id" mat-raised-button color="primary" (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
+            <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="primary" (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
                   Copy {{form.no}}
@@ -321,7 +311,7 @@
                 <mat-icon class="mat-18">content_copy</mat-icon>
               </div>
             </button>
-            <button [disabled]="!form._id" mat-raised-button color="warn" (click)="onDelete()" class="btn-file" style="margin-right: 10px;">
+            <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="warn" (click)="onDelete()" class="btn-file" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
                   Delete {{form.no}}
@@ -341,7 +331,7 @@
             </button>
             <mat-form-field appearance="outline" floatLabel="always" class="me-4 ">
               <mat-label [ngClass]="{'text-red-400': !sendTo}" class="text-green-400">Send to</mat-label>
-              <mat-select [(ngModel)]="sendTo" multiple>
+              <mat-select [disabled]="form.status!='receive information'" [(ngModel)]="sendTo" multiple>
                 <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">
                   {{displayName(user)}}
                 </mat-option>

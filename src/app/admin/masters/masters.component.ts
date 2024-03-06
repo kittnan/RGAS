@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { lastValueFrom } from 'rxjs';
 import { HttpMastersService } from 'src/app/https/http-masters.service';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -20,7 +21,8 @@ export class MastersComponent implements OnInit {
   groupNameOption: any[] = []
   newItem: any = []
   constructor(
-    private $masters: HttpMastersService
+    private $masters: HttpMastersService,
+    private $alert: SweetAlertGeneralService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -111,12 +113,7 @@ export class MastersComponent implements OnInit {
       }
     })))
     this.newItem = []
-    Swal.fire({
-      title: 'Created success',
-      icon: 'success',
-      showConfirmButton: false,
-      timer: 1500
-    }).then(() => location.reload())
+    this.$alert.success(true)
   }
 
 }

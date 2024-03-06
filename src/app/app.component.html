@@ -1,7 +1,10 @@
 <div *ngIf="login" class="example-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">RGAS</h1>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" class="cursor-pointer" (click)="snav.toggle()">
+      <img src="./assets/favicon.png"  style="height: 60px;">
+      <h1 class="name-title pointer-events-none">RGAS</h1>
+    </div>
     <!-- <img src="../assets/logo3.png" style="width: 200px; height: 200px;"> -->
     <div class="flex-auto"></div>
     <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20">
@@ -40,7 +43,7 @@
       fixedTopGap="56" [opened]="true">
       <mat-nav-list>
         <ng-container *ngFor="let nav of fillerNav; let i=index">
-          <div *ngIf="displaySideMenu(nav.roles)" class="block p-4" style="max-width: 17rem;">
+          <div *ngIf="displaySideMenu(nav.roles)" class="block p-4 dis-text" style="max-width: 17rem;">
             <div class="flex justify-start items-center gap-2">
               <mat-icon class="mat-18">
                 {{nav.icon}}

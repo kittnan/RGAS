@@ -26,6 +26,7 @@ import { ManSectionSelectComponent } from './dialogs/man-section-select/man-sect
 import { HttpClientModule } from '@angular/common/http';
 import { Form2ViewComponent } from './rgas2/form2-view/form2-view.component';
 import { ReportViewComponent } from './report-view/report-view.component';
+import { YearMonthComponent } from './year-month/year-month.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -64,6 +65,7 @@ let items = [
     ManSectionSelectComponent,
     Form2ViewComponent,
     ReportViewComponent,
+    YearMonthComponent,
   ],
   imports: [
     CommonModule,
@@ -89,7 +91,8 @@ let items = [
     Form1ViewComponent,
     ManSectionSelectComponent,
     Form2ViewComponent,
-    ReportViewComponent
+    ReportViewComponent,
+    YearMonthComponent
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

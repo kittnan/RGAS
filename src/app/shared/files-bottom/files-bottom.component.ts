@@ -5,6 +5,7 @@ import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,7 +22,8 @@ export class FilesBottomComponent implements OnInit {
     private $file: HttpFileUploadService,
     private $claim: HttpClaimService,
     private $result: HttpResultService,
-    private $report: HttpReportService
+    private $report: HttpReportService,
+    private $alert: SweetAlertGeneralService
   ) { }
 
   ngOnInit(): void {
@@ -46,12 +48,7 @@ export class FilesBottomComponent implements OnInit {
       dataUpdate.files = this.data.files
       await lastValueFrom(this.$claim.createOrUpdate(dataUpdate))
       await lastValueFrom(this.$file.delete({ path_file: item.delete_path }))
-      Swal.fire({
-        title: 'Success',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
+      this.$alert.success()
     }
     if (this.data.type == 'result') {
       this.data.files = this.data.files.filter((file: any) => file.delete_path != item.delete_path)
@@ -59,12 +56,7 @@ export class FilesBottomComponent implements OnInit {
       dataUpdate[this.data.key].files = this.data.files
       await lastValueFrom(this.$result.createOrUpdate([dataUpdate]))
       await lastValueFrom(this.$file.delete({ path_file: item.delete_path }))
-      Swal.fire({
-        title: 'Success',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
+      this.$alert.success()
     }
     if (this.data.type == 'report') {
       this.data.files = this.data.files.filter((file: any) => file.delete_path != item.delete_path)
@@ -72,12 +64,7 @@ export class FilesBottomComponent implements OnInit {
       dataUpdate.files = this.data.files
       await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
       await lastValueFrom(this.$file.delete({ path_file: item.delete_path }))
-      Swal.fire({
-        title: 'Success',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 1500
-      })
+      this.$alert.success()
     }
 
   }

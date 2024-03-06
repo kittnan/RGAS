@@ -98,7 +98,7 @@ export class EngineerRgas2Component implements OnInit {
     console.log(this.currentItem);
 
     // let item = this.currentItem
-    // item['status'] = 'draft'
+    // item['status'] = 'receive information'
     // item['no'] = this.itemNowNumber
     // console.log("🚀 ~ item:", item)
     const resData = await lastValueFrom(this.$claim.createOrUpdate(this.currentItem))
