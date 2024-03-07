@@ -13,6 +13,7 @@ import { HttpSCdService } from 'src/app/https/http-s-cd.service';
 
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
+import { HttpUsersService } from 'src/app/https/http-users.service';
 
 @Component({
   selector: 'app-form3',
@@ -46,11 +47,50 @@ export class Form3Component implements OnInit {
       { ...this.tempObj, index: 1 }
     ],
     finalReport: { ...this.tempObj },
-    finalReportOBL: { ...this.tempObj },
+    finalReportOBL: {
+      dueDate: null,
+      dateSubmitToCustomer: null,
+      PIC: null
+    },
     questionAnswers: [
       { ...this.tempObj, index: 1 }
     ],
     ng: null,
+  }
+
+  reportInformation: any = {
+    ng: {
+      qty: null,
+      phenomenon: null,
+      detail: null
+    },
+    notAccepted: {
+      qty: null,
+      phenomenon: null,
+      cause: null
+    },
+    noAbnormality: {
+      qty: null,
+      cause: null,
+      occur: null
+    },
+    withinSpec: {
+      qty: null,
+      occur: null,
+      outflow: null,
+    },
+    notRecurred: {
+      qty: null,
+      process: null,
+      IATFNo: null,
+    },
+    difference: {
+      qty: null,
+      PIC: null,
+    },
+    causeByCustomer: null,
+    outWarranty: null,
+    rootCause: null,
     rootCauseActions: [
       {
         value: null,
@@ -58,14 +98,18 @@ export class Form3Component implements OnInit {
         index: 1
       }
     ],
+    leakCause: null,
     leakCauseActions: [
       {
         value: null,
         date: null,
         index: 1
       }
-    ],
+    ]
   }
+
+  // todo PIC Option
+  PICOption: any = []
 
   // todo d-cd option
   dcdOption: any = []
@@ -110,6 +154,7 @@ export class Form3Component implements OnInit {
     private $s_cd: HttpSCdService,
     private $m1e: HttpM1eService,
     private $principle: HttpPrincipleService,
+    private $user: HttpUsersService,
     private dialog: MatDialog,
     private $report: HttpReportService,
     private router: Router,
@@ -158,7 +203,8 @@ export class Form3Component implements OnInit {
       })
       this.scdCOption = [...new Set(resScd.map((item: any) => item['取引先名']))]
 
-      console.log(this.form);
+      let userParam2 = new HttpParams().set('access', JSON.stringify(['operator']))
+      this.PICOption = await lastValueFrom(this.$user.get(userParam2))
 
     } catch (error) {
       console.log("🚀 ~ error:", error)
@@ -184,17 +230,17 @@ export class Form3Component implements OnInit {
     }
   }
   onAddNewRootCauseAction() {
-    this.form.rootCauseActions.push({
+    this.reportInformation.rootCauseActions.push({
       value: null,
       date: null,
-      index: this.form.rootCauseActions.length + 1
+      index: this.reportInformation.rootCauseActions.length + 1
     })
   }
   onAddNewLeakCauseAction() {
-    this.form.leakCauseActions.push({
+    this.reportInformation.leakCauseActions.push({
       value: null,
       date: null,
-      index: this.form.leakCauseActions.length + 1
+      index: this.reportInformation.leakCauseActions.length + 1
     })
   }
 
@@ -287,6 +333,7 @@ export class Form3Component implements OnInit {
 
 
   onSave() {
+    console.log(this.reportInformation);
 
   }
 

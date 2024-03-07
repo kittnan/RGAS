@@ -119,6 +119,7 @@ export class Form1Component implements OnInit {
     flowHistory: [],
 
   }
+  @Input() saveStatus: boolean = false
 
 
   // todo form output event
@@ -127,6 +128,7 @@ export class Form1Component implements OnInit {
   @Output() submitChange: EventEmitter<any> = new EventEmitter()
   @Output() copyChange: EventEmitter<any> = new EventEmitter()
   @Output() deleteChange: EventEmitter<any> = new EventEmitter()
+  @Output() saveStatusChange: EventEmitter<any> = new EventEmitter()
 
   // todo temp option
   tempOption: any[] = [
@@ -194,6 +196,7 @@ export class Form1Component implements OnInit {
   sendTo: any
 
 
+
   // modelOptionString!: Observable<string[]>
 
   // modelCodeCtrl: FormControl<string> = this.claimInfoCtrl.get('modelCode') as FormControl<string>;
@@ -216,7 +219,6 @@ export class Form1Component implements OnInit {
     private $alert: SweetAlertGeneralService
   ) {
     this.userLogin = this.$local.getProfile()
-
   }
 
   async ngOnInit(): Promise<void> {
@@ -248,7 +250,7 @@ export class Form1Component implements OnInit {
       this.userApproveClaimOption = await lastValueFrom(this.$user.userNextApprove(new HttpParams().set('formStatus', JSON.stringify(this.form.status))))
     }
 
-    let userParam = new HttpParams().set('access', JSON.stringify(['engineer','sectionHead','departmentHead']))
+    let userParam = new HttpParams().set('access', JSON.stringify(['engineer', 'sectionHead', 'departmentHead']))
     this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
 
     if (this.form && this.form.registerNo) {
@@ -431,7 +433,7 @@ export class Form1Component implements OnInit {
         no: this.form.no,
         showDeleteBtn: true,
         form: this.form,
-        type:'claim'
+        type: 'claim'
       },
     })
   }
@@ -446,6 +448,7 @@ export class Form1Component implements OnInit {
         showCancelButton: true
       }).then(async (v: SweetAlertResult) => {
         if (v.isConfirmed) {
+          this.onSave()
           let newForm = {
             ...this.form,
             files: [],
@@ -498,6 +501,11 @@ export class Form1Component implements OnInit {
       return user.name
     }
     return ''
+  }
+
+  // todo emitSaveStatus
+  emitSaveStatus(){
+    this.saveStatusChange.emit(true)
   }
 
   // // todo check PIC

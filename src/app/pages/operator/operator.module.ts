@@ -9,6 +9,7 @@ import { OperatorRgas2Component } from './operator-rgas2/operator-rgas2.componen
 import { OperatorRgasNewComponent } from './operator-rgas-new/operator-rgas-new.component';
 import { OperatorRgasInformationComponent } from './operator-rgas-information/operator-rgas-information.component';
 import { OperatorRgasAnalysisComponent } from './operator-rgas-analysis/operator-rgas-analysis.component';
+import { OperatorReportViewComponent } from './operator-report-view/operator-report-view.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { OperatorRgasAnalysisComponent } from './operator-rgas-analysis/operator
     OperatorRgasNewComponent,
     OperatorRgasInformationComponent,
     OperatorRgasAnalysisComponent,
+    OperatorReportViewComponent,
   ],
   imports: [
     CommonModule,

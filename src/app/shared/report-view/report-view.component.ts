@@ -14,7 +14,6 @@ export class ReportViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private $report: HttpReportService,
-    private router: Router,
     private location: Location
   ) { }
 
@@ -28,7 +27,6 @@ export class ReportViewComponent implements OnInit {
         const resReport = await lastValueFrom(this.$report.get(httpParams))
         if (resReport && resReport.length > 0) {
           this.report = resReport[0]
-          console.log("🚀 ~ this.report:", this.report)
         }
       }
 
@@ -54,14 +52,6 @@ export class ReportViewComponent implements OnInit {
   }
   onBack() {
     this.location.back()
-    console.log(this.router.url);
-    let url: string = this.router.url
-    if (url) {
-      // url =url.replace('report-view', 'analysis')
-      // console.log("🚀 ~ url:", url)
-      // this.router.navigate(['interpreter/analysis'])
-    }
-    // this.router.navigate(['./']);
   }
 
 }

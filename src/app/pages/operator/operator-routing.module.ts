@@ -5,6 +5,7 @@ import { OperatorRgas1Component } from './operator-rgas1/operator-rgas1.componen
 import { OperatorRgasNewComponent } from './operator-rgas-new/operator-rgas-new.component';
 import { OperatorRgasInformationComponent } from './operator-rgas-information/operator-rgas-information.component';
 import { OperatorRgasAnalysisComponent } from './operator-rgas-analysis/operator-rgas-analysis.component';
+import { OperatorReportViewComponent } from './operator-report-view/operator-report-view.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'new',
     component: OperatorRgasNewComponent
+  },
+  {
+    path: 'report-view',
+    component: OperatorReportViewComponent
   },
 ];
 

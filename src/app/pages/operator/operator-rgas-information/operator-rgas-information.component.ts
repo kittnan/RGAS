@@ -7,6 +7,7 @@ import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-operator-rgas-information',
@@ -59,6 +60,7 @@ export class OperatorRgasInformationComponent implements OnInit {
   result: any
 
   currentItem: any
+  saveStatus: boolean = false
   constructor(
     private $claim: HttpClaimService,
     private route: ActivatedRoute,
@@ -98,7 +100,6 @@ export class OperatorRgasInformationComponent implements OnInit {
 
   // todo finish form1
   async submitChange($event: any) {
-
     await lastValueFrom(this.$claim.createOrUpdate($event))
     let auth = this.$local.getAuth()
     this.$alert.success()
@@ -107,69 +108,88 @@ export class OperatorRgasInformationComponent implements OnInit {
 
   // todo paginator
   onNextItem() {
-    this.$loader.start()
+    // this.$loader.start()
     const index = this.allItems.findIndex((item: any) => item.no == this.currentItem.no)
     if (index != -1) {
       const nextIndex = index + 1
       const nextItem = this.allItems.find((item: any, i: number) => i == nextIndex)
       if (nextItem) {
-        this.currentItem = nextItem
+        this.changePage(nextItem)
       }
     }
-    setTimeout(() => {
-      this.$loader.stop()
-    }, 100,);
+    // setTimeout(() => {
+    //   this.$loader.stop()
+    // }, 100,);
 
   }
 
   // todo prev item
   onPreviousItem() {
-    this.$loader.start()
+    // this.$loader.start()
     const index = this.allItems.findIndex((item: any) => item.no == this.currentItem.no)
     if (index != -1) {
       const nextIndex = index - 1
       const nextItem = this.allItems.find((item: any, i: number) => i == nextIndex)
       if (nextItem) {
-        this.currentItem = nextItem
+        this.changePage(nextItem)
       }
+
+
     }
-    setTimeout(() => {
-      this.$loader.stop()
-    }, 100,);
+    // setTimeout(() => {
+    //   this.$loader.stop()
+    // }, 100,);
   }
   // todo first item
   onFirstItem() {
-    this.$loader.start()
-    this.currentItem = this.allItems[0]
-    setTimeout(() => {
-      this.$loader.stop()
-    }, 100,);
+    let nextItem = this.allItems[0]
+    this.changePage(nextItem)
   }
   // todo last item
   onLastItem() {
-    this.$loader.start()
-    this.currentItem = this.allItems[this.allItems.length - 1]
-    setTimeout(() => {
-      this.$loader.stop()
-    }, 100,);
+    let nextItem = this.allItems[this.allItems.length - 1]
+    this.changePage(nextItem)
   }
   // todo select item
   onChooseItem(index: number) {
-    this.$loader.start()
-    this.currentItem = this.allItems.find((item: any) => item.no == index)
-    setTimeout(() => {
-      this.$loader.stop()
-    }, 300,);
+    let nextItem = this.allItems.find((item: any) => item.no == index)
+    this.changePage(nextItem)
   }
 
   // todo event after copy -> event data is claim all follow registerNo
   copyChange($event: any) {
     try {
       this.allItems = $event
-      this.currentItem = $event[$event.length - 1]
+      let nextItem = $event[$event.length - 1]
+      this.changePage(nextItem)
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
+  }
+
+  // todo change page
+  changePage(page: any) {
+    if (this.saveStatus) {
+      Swal.fire({
+        title: 'Save?',
+        icon: 'question',
+        showCancelButton: true
+      }).then((v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          this.formChange()
+          setTimeout(() => {
+            this.currentItem = page
+          }, 300);
+        } else {
+          setTimeout(() => {
+            this.currentItem = page
+          }, 300);
+        }
+      })
+    }else{
+      this.currentItem = page
+    }
+    this.saveStatus = false
   }
 
   // todo event when delete item- >

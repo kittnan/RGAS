@@ -9,6 +9,7 @@
         </mat-card>
         <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
           Closed/Pending
+          {{saveStatus}}
         </mat-card>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
@@ -53,37 +54,38 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="text-red-500">Claim Notification No.</mat-label>
-            <input matInput [(ngModel)]="form.claimNo">
+            <input matInput [(ngModel)]="form.claimNo" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>KTC Model No.</mat-label>
-            <input matInput [(ngModel)]="form.modelNo">
+            <input matInput [(ngModel)]="form.modelNo" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Product No.</mat-label>
-            <input matInput [(ngModel)]="form.productNo">
+            <input matInput [(ngModel)]="form.productNo" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Customer Control No.</mat-label>
-            <input matInput [(ngModel)]="form.customerNo">
+            <input matInput [(ngModel)]="form.customerNo" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <app-autocomplete *ngIf="modelOptionString.length>0 " fxFlex="100" [title]="'KTC Model Code'"
             [options]="modelOptionString" [myControl]="modelCodeForm"
-            (valueChange)="onChangeModelCode($event)"></app-autocomplete>
+            (valueChange)="onChangeModelCode($event);emitSaveStatus()"></app-autocomplete>
 
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Analysis PIC</mat-label>
-            <mat-select [(ngModel)]="form.analysisPIC" [compareWith]="objectComparisonFunction">
+            <mat-select [(ngModel)]="form.analysisPIC" [compareWith]="objectComparisonFunction"
+              (ngModelChange)="emitSaveStatus()">
               <mat-option *ngFor="let user of analysisPICOption" [value]="user">
                 {{user.name}}
               </mat-option>
@@ -93,53 +95,53 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Customer Name Customer B Name</mat-label>
-            <input matInput [(ngModel)]="form.customerName">
+            <input matInput [(ngModel)]="form.customerName" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <app-autocomplete *ngIf="typeOptionString.length>0" fxFlex="100" [title]="'Type'"
-            [options]="typeOptionString" [(value)]="form.type"></app-autocomplete>
+          <app-autocomplete *ngIf="typeOptionString.length>0" fxFlex="100" [title]="'Type'" [options]="typeOptionString"
+            [(value)]="form.type" (valueChange)="emitSaveStatus()"></app-autocomplete>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Description (Japanese)</mat-label>
-            <input matInput [(ngModel)]="form.descriptionJP">
+            <input matInput [(ngModel)]="form.descriptionJP" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Sales Company Customer A Name</mat-label>
-            <input matInput [(ngModel)]="form.saleCompany">
+            <input matInput [(ngModel)]="form.saleCompany" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Side No.</mat-label>
-            <input matInput [(ngModel)]="form.sideNo">
+            <input matInput [(ngModel)]="form.sideNo" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Description (English)</mat-label>
-            <input matInput [(ngModel)]="form.descriptionENG">
+            <input matInput [(ngModel)]="form.descriptionENG" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Sales PIC</mat-label>
-            <input matInput [(ngModel)]="form.salePIC">
+            <input matInput [(ngModel)]="form.salePIC" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Q'ty</mat-label>
-            <input matInput type="number" [min]="1" [(ngModel)]="form.qty">
+            <input matInput type="number" [min]="1" [(ngModel)]="form.qty" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Function/ Appearance</mat-label>
-            <mat-select [(ngModel)]="form.functionAppearance">
+            <mat-select [(ngModel)]="form.functionAppearance" (ngModelChange)="emitSaveStatus()">
               <mat-option *ngFor="let item of functionAppearanceOptionString" [value]="item">
                 {{item}}
               </mat-option>
@@ -149,7 +151,7 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Returning Style</mat-label>
-            <mat-select [(ngModel)]="form.returnStyle">
+            <mat-select [(ngModel)]="form.returnStyle" (ngModelChange)="emitSaveStatus()">
               <mat-option *ngFor="let item of returningStyleOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -159,19 +161,19 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Product Lot No.</mat-label>
-            <input matInput [(ngModel)]="form.productLotNo">
+            <input matInput [(ngModel)]="form.productLotNo" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>AWB No.</mat-label>
-            <input matInput [(ngModel)]="form.AWBNo">
+            <input matInput [(ngModel)]="form.AWBNo" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Model Classification</mat-label>
-            <mat-select [(ngModel)]="form.modelClassification">
+            <mat-select [(ngModel)]="form.modelClassification" (ngModelChange)="emitSaveStatus()">
               <mat-option *ngFor="let item of modelClassificationOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -179,21 +181,23 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <app-year-month fxFlex="100" [title]="'Production Month'" [(dateInput)]="form.productionMonth" ></app-year-month>
+          <app-year-month fxFlex="100" [title]="'Production Month'" [(dateInput)]="form.productionMonth"
+            (dateInputChange)="emitSaveStatus()"></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Inv. No.</mat-label>
-            <input matInput [(ngModel)]="form.InvNo">
+            <input matInput [(ngModel)]="form.InvNo" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <app-year-month fxFlex="100" [title]="'Calendar Year'" [(dateInput)]="form.calendarYear" ></app-year-month>
+          <app-year-month fxFlex="100" [title]="'Calendar Year'" [(dateInput)]="form.calendarYear"
+            (dateInputChange)="emitSaveStatus()"></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Commercial Distribution</mat-label>
-            <mat-select [(ngModel)]="form.commercialDistribution">
+            <mat-select [(ngModel)]="form.commercialDistribution" (ngModelChange)="emitSaveStatus()">
               <mat-option *ngFor="let item of commercialDistributionOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -203,7 +207,8 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Date Received Inv.</mat-label>
-            <input matInput [(ngModel)]="form.dateReceiveInv" [matDatepicker]="dateReceive_dp">
+            <input matInput [(ngModel)]="form.dateReceiveInv" [matDatepicker]="dateReceive_dp"
+              (ngModelChange)="emitSaveStatus()">
             <mat-datepicker-toggle matSuffix [for]="dateReceive_dp"></mat-datepicker-toggle>
             <mat-datepicker #dateReceive_dp></mat-datepicker>
           </mat-form-field>
@@ -211,7 +216,8 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Claim Registering Date</mat-label>
-            <input matInput [(ngModel)]="form.claimRegisterDate" [matDatepicker]="claimRegister_dp">
+            <input matInput [(ngModel)]="form.claimRegisterDate" [matDatepicker]="claimRegister_dp"
+              (ngModelChange)="emitSaveStatus()">
             <mat-datepicker-toggle matSuffix [for]="claimRegister_dp"></mat-datepicker-toggle>
             <mat-datepicker #claimRegister_dp></mat-datepicker>
           </mat-form-field>
@@ -219,7 +225,7 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Use Appearancelication</mat-label>
-            <mat-select [(ngModel)]="form.useAppearance">
+            <mat-select [(ngModel)]="form.useAppearance" (ngModelChange)="emitSaveStatus()">
               <mat-option *ngFor="let item of useAppearancelicationOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -229,11 +235,11 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
             <mat-label>Transportation Cost</mat-label>
-            <input matInput type="number" [min]="0" [(ngModel)]="form.transportationCost">
+            <input matInput type="number" [min]="0" [(ngModel)]="form.transportationCost" (change)="emitSaveStatus()">
           </mat-form-field>
           <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
             <mat-label>Unit</mat-label>
-            <mat-select [(ngModel)]="form.unit">
+            <mat-select [(ngModel)]="form.unit" (ngModelChange)="emitSaveStatus()">
               <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -243,7 +249,8 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Received Information Date ( E-Form OBL III )</mat-label>
-            <input matInput [(ngModel)]="form.receiveInfoDate" [matDatepicker]="receiveInfo_dp">
+            <input matInput [(ngModel)]="form.receiveInfoDate" [matDatepicker]="receiveInfo_dp"
+              (ngModelChange)="emitSaveStatus()">
             <mat-datepicker-toggle matSuffix [for]="receiveInfo_dp"></mat-datepicker-toggle>
             <mat-datepicker #receiveInfo_dp></mat-datepicker>
           </mat-form-field>
@@ -251,7 +258,7 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Occurred Location</mat-label>
-            <mat-select [(ngModel)]="form.occurredLocation">
+            <mat-select [(ngModel)]="form.occurredLocation" (ngModelChange)="emitSaveStatus()">
               <mat-option *ngFor="let item of occurredLocationOption" [value]="item.itemValue">
                 {{item.itemName}} : {{item.itemValue}}
               </mat-option>
@@ -259,12 +266,13 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <app-year-month fxFlex="100" [title]="'Cost Month'" [(dateInput)]="form.costMonth" ></app-year-month>
+          <app-year-month fxFlex="100" [title]="'Cost Month'" [(dateInput)]="form.costMonth"
+            (dateInputChange)="emitSaveStatus()"></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Due Date (OBL III)</mat-label>
-            <input matInput [(ngModel)]="form.dueDate" [matDatepicker]="dueDate_dp">
+            <input matInput [(ngModel)]="form.dueDate" [matDatepicker]="dueDate_dp" (ngModelChange)="emitSaveStatus()">
             <mat-datepicker-toggle matSuffix [for]="dueDate_dp"></mat-datepicker-toggle>
             <mat-datepicker #dueDate_dp></mat-datepicker>
           </mat-form-field>
@@ -272,7 +280,7 @@
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label>Importance (Claim Rank)</mat-label>
-            <mat-select [(ngModel)]="form.importance">
+            <mat-select [(ngModel)]="form.importance" (ngModelChange)="emitSaveStatus()">
               <mat-option *ngFor="let item of claimRankOptionString" [value]="item">
                 {{item}}
               </mat-option>
@@ -288,7 +296,7 @@
               </span>
               <mat-icon>file_upload</mat-icon>
             </div>
-            <input type="file" hidden #informationFile (change)="onUploadFileClaimInformation($event)">
+            <input type="file" hidden #informationFile (change)="onUploadFileClaimInformation($event);">
           </button>
           <button [disabled]="!form.files || form.files?.length==0 " fxFlex="100" fxFlex.gt-md="30" mat-raised-button
             (click)="openBottom()" class="btn-file" [ngClass.gt-md]="'m-btn-l'">
@@ -303,7 +311,8 @@
 
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end stretch" class="mt-1">
           <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start center">
-            <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="primary" (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
+            <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="primary"
+              (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
                   Copy {{form.no}}
@@ -311,7 +320,8 @@
                 <mat-icon class="mat-18">content_copy</mat-icon>
               </div>
             </button>
-            <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="warn" (click)="onDelete()" class="btn-file" style="margin-right: 10px;">
+            <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="warn"
+              (click)="onDelete()" class="btn-file" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
                   Delete {{form.no}}
@@ -331,7 +341,7 @@
             </button>
             <mat-form-field appearance="outline" floatLabel="always" class="me-4 ">
               <mat-label [ngClass]="{'text-red-400': !sendTo}" class="text-green-400">Send to</mat-label>
-              <mat-select [disabled]="form.status!='receive information'" [(ngModel)]="sendTo" multiple>
+              <mat-select [disabled]="form.status!='receive information'" [(ngModel)]="sendTo" multiple (ngModelChange)="emitSaveStatus()">
                 <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">
                   {{displayName(user)}}
                 </mat-option>

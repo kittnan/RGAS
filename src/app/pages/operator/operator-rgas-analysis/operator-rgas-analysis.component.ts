@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
@@ -56,20 +56,11 @@ export class OperatorRgasAnalysisComponent implements OnInit {
     private $result: HttpResultService,
     private $local: LocalStoreService,
     private $alert: SweetAlertGeneralService,
-    private $report: HttpReportService
+    private $report: HttpReportService,
+    private router: Router
 
   ) {
     this.route.queryParams.subscribe(async (params: any) => {
-      console.log("🚀 ~ params:", params)
-      // if (params['registerNo']) {
-
-      //   let resData = await lastValueFrom(this.$claim.get(new HttpParams().set('registerNo', JSON.stringify([params['registerNo']])).set('no', JSON.stringify([params['no']]))))
-      //   if (resData && resData.length > 0) {
-      //     this.form = resData[0]
-      //     const resResult = await lastValueFrom(this.$result.get(new HttpParams().set('claimId', JSON.stringify([this.form._id]))))
-      //     this.form2 = resResult[0]
-      //   }
-      // }
       if (params['registerNo']) {
         let param: HttpParams = new HttpParams()
         param = param.set('registerNo', JSON.stringify([params['registerNo']]))
@@ -120,4 +111,60 @@ export class OperatorRgasAnalysisComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
+
+  // todo event send report
+  async submitReportChange(event: any) {
+    if (event && event.data._id) {
+      await lastValueFrom(this.$report.createOrUpdate([event.data]))
+      this.$alert.success()
+    } else {
+      let dataUpdate = {
+        registerNo: this.form.registerNo,
+        name: event.key,
+        ...event.data,
+        no: this.form.no
+      }
+      const resData = await lastValueFrom(this.$report.create([dataUpdate]))
+      this.form3[event.key] = resData[0]
+    }
+
+  }
+  async submitReportArrChange(event: any) {
+    if (event.data._id) {
+      await lastValueFrom(this.$report.createOrUpdate([event.data]))
+    } else {
+      let dataUpdate = {
+        registerNo: this.form.registerNo,
+        name: event.key,
+        ...event.data,
+        no: this.form.no
+      }
+      const resData = await lastValueFrom(this.$report.create([dataUpdate]))
+      this.form3[event.key][event.index] = resData[0]
+    }
+  }
+
+
+  // todo event approve report
+  async approveChange(event: any) {
+    this.router.navigate(['operator/report-view'], {
+      queryParams: {
+        registerNo: event.data.registerNo,
+        name: event.key,
+        index: event.data.index
+      }
+    })
+  }
+
+  async approveArrChange(event: any) {
+    this.router.navigate(['operator/report-view'], {
+      queryParams: {
+        registerNo: event.data.registerNo,
+        name: event.key,
+        index: event.data.index
+      }
+    })
+  }
+
+
 }

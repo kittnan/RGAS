@@ -55,6 +55,13 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+        <ng-container *ngIf="form.preReport.status =='finish'">
+          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+            (click)="onSubmitReport('preReport')">
+            <mat-icon>save</mat-icon>
+          </button>
+        </ng-container>
+
         <button *ngIf="form.preReport._id" mat-raised-button color="primary" style="margin-left: 5px;"
           (click)="onApproveChange('preReport')">
           <mat-icon>send</mat-icon>
@@ -69,8 +76,8 @@
 
   <ng-container *ngFor="let interim of form.interims; let i=index">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
-        class="me-8 p-2 rounded-md"  [class]="cssTagReportStatus(interim.status)">
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="me-8 p-2 rounded-md"
+        [class]="cssTagReportStatus(interim.status)">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <mat-icon class="mat-18 me-2">topic</mat-icon>
           <span class="font-black text-label">
@@ -123,6 +130,12 @@
             <mat-icon class="mat-18">delete</mat-icon>
           </button>
 
+          <ng-container *ngIf="interim.status =='finish'">
+            <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+              (click)="onSubmitReportArrChange('interims',i)">
+              <mat-icon>save</mat-icon>
+            </button>
+          </ng-container>
           <button *ngIf="interim?._id" mat-raised-button color="primary" style="margin-left: 5px;"
             (click)="onApproveChangeArr('interims',i)">
             <mat-icon>send</mat-icon>
@@ -144,8 +157,8 @@
   </ng-container>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
-      class="me-8 p-2 rounded-md" [class]="cssTagReportStatus(form.finalReport.status)">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="me-8 p-2 rounded-md"
+      [class]="cssTagReportStatus(form.finalReport.status)">
       <div fxLayout="row wrap" fxLayoutAlign="start center">
         <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
@@ -199,6 +212,12 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+        <ng-container *ngIf="form.finalReport.status =='finish'">
+          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+            (click)="onSubmitReport('finalReport')">
+            <mat-icon>save</mat-icon>
+          </button>
+        </ng-container>
         <ng-container *ngIf="form.finalReport._id; else elseTemplate">
           <button mat-raised-button color="primary" style="margin-left: 5px;" (click)="onApproveChange('finalReport')">
             <mat-icon>send</mat-icon>
@@ -215,8 +234,8 @@
   </div>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
-      class="me-8 p-2 rounded-md" [class]="cssTagReportStatus(form.finalReportOBL.status)">
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="me-8 p-2 rounded-md"
+      [class]="cssTagReportStatus(form.finalReportOBL.status)">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
         <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
@@ -245,51 +264,29 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-1">
-
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="finalReportOBLFile.click()"
-        class="btn-file">
-        <div fxLayout="row wrap" fxLayoutAlign="center center">
-          <span>
-            Files
-          </span>
-          <mat-icon>file_upload</mat-icon>
-        </div>
-        <input type="file" hidden #finalReportOBLFile (change)="onUploadFile($event,'finalReportOBL')">
-      </button>
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button
-        (click)="openBottom(form.finalReportOBL.files,'preReport')" class="btn-file" [ngClass.gt-md]="'m-btn-l'">
-        <div fxLayout="row wrap" fxLayoutAlign="center center">
-          <span>
-            View
-          </span>
-          <mat-icon [matBadge]="controlBadgeNumber(form.finalReportOBL?.files)"
-            matBadgeColor="warn">attach_file</mat-icon>
-        </div>
-      </button>
-
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label>PIC</mat-label>
+        <mat-select [(ngModel)]="form.finalReportOBL.PIC" [compareWith]="objectComparisonFunction">
+          <mat-option *ngFor="let item of PICOption" [value]="item">
+            {{displayName(item)}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
-        <ng-container *ngIf="form.finalReportOBL._id; else elseTemplate">
-          <button mat-raised-button color="primary" style="margin-left: 5px;"
-            (click)="onApproveChange('finalReportOBL')">
-            <mat-icon>send</mat-icon>
-          </button>
-        </ng-container>
-        <ng-template #elseTemplate>
-          <button [disabled]="form.finalReportOBL?.files?.length==0" mat-raised-button color="primary"
-            class="btn-success" style="margin-left: 5px;" (click)="onSubmitReport('finalReportOBL')">
-            <mat-icon>save</mat-icon>
-          </button>
-        </ng-template>
+        <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+          (click)="onSubmitReport('finalReportOBL')">
+          <mat-icon>save</mat-icon>
+        </button>
       </div>
     </div>
   </div>
 
   <ng-container *ngFor="let questionAnswer of form.questionAnswers; let i=index">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center"
-        class="me-8 p-2 rounded-md" [class]="cssTagReportStatus(questionAnswer.status)">
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="me-8 p-2 rounded-md"
+        [class]="cssTagReportStatus(questionAnswer.status)">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <mat-icon class="mat-18 me-2">topic</mat-icon>
           <span class="font-black text-label">
@@ -345,7 +342,12 @@
           <button *ngIf="i!==0" mat-raised-button color="warn" (click)="onClickDeleteArr('questionAnswers',i)">
             <mat-icon class="mat-18">delete</mat-icon>
           </button>
-
+          <ng-container *ngIf="questionAnswer.status =='finish'">
+            <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+              (click)="onSubmitReportArrChange('questionAnswers',i)">
+              <mat-icon>save</mat-icon>
+            </button>
+          </ng-container>
           <button *ngIf="questionAnswer?._id" mat-raised-button color="primary" style="margin-left: 5px;"
             (click)="onApproveChangeArr('questionAnswers',i)">
             <mat-icon>send</mat-icon>
@@ -373,14 +375,14 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>NG</mat-label>
-        <input matInput [(ngModel)]="form.ng">
+        <input matInput type="number" [(ngModel)]="reportInformation.ng.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Defect phenomenon (Major classification)</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.ng.phenomenon">
           <mat-option *ngFor="let item of defectPhenomenonOption" [value]="item">
             {{item}}
           </mat-option>
@@ -390,7 +392,7 @@
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Defect details classification (5M1E)</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.detail">
           <mat-option *ngFor="let item of m1eDefectDetailOption" [value]="item">
             {{item}}
           </mat-option>
@@ -403,14 +405,14 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Not accepted</mat-label>
-        <input matInput [(ngModel)]="form.ng">
+        <input matInput type="number" [(ngModel)]="reportInformation.notAccepted.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Detailed phenomenon (Middle classification) </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.notAccepted.phenomenon">
           <mat-option *ngFor="let item of detailedPhenomenonOption" [value]="item">
             {{item}}
           </mat-option>
@@ -420,7 +422,7 @@
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Defect cause classification (5M1E)</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.notAccepted.cause">
           <mat-option *ngFor="let item of m1eCauseDetailOption" [value]="item">
             {{item}}
           </mat-option>
@@ -433,14 +435,14 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>No abnormality</mat-label>
-        <input matInput [(ngModel)]="form.ng">
+        <input matInput type="number" [(ngModel)]="reportInformation.noAbnormality.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Cause (Minor classification) </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.noAbnormality.cause">
           <mat-option *ngFor="let item of causeOption" [value]="item">
             {{item}}
           </mat-option>
@@ -450,7 +452,7 @@
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Rule 3-principle ※ Occurrence</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.noAbnormality.occur">
           <mat-option *ngFor="let item of occurrenceOption" [value]="item">
             {{item}}
           </mat-option>
@@ -463,14 +465,14 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Within spec</mat-label>
-        <input matInput [(ngModel)]="form.ng">
+        <input matInput type="number" [(ngModel)]="reportInformation.withinSpec.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Occurrence process category </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.withinSpec.occur">
           <mat-option *ngFor="let item of lcdBOption" [value]="item">
             {{item}}
           </mat-option>
@@ -480,7 +482,7 @@
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Rule 3-principle ※ Outflow</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.withinSpec.outflow">
           <mat-option *ngFor="let item of principleCOption" [value]="item">
             {{item}}
           </mat-option>
@@ -493,14 +495,14 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Not recurred</mat-label>
-        <input matInput [(ngModel)]="form.ng">
+        <input matInput type="number" [(ngModel)]="reportInformation.notRecurred.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Occurrence process category details </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.notRecurred.process">
           <mat-option *ngFor="let item of lcdCOption" [value]="item">
             {{item}}
           </mat-option>
@@ -510,7 +512,7 @@
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>IATF no.</mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="reportInformation.notRecurred.IATFNo">
       </mat-form-field>
     </div>
   </div>
@@ -520,14 +522,14 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Difference between Report and Real cause</mat-label>
-        <input matInput>
+        <input matInput type="number" [(ngModel)]="reportInformation.difference.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Maker name </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction">
+        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.difference.PIC">
           <mat-option *ngFor="let item of scdCOption" [value]="item">
             {{item}}
           </mat-option>
@@ -541,7 +543,7 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Caused by Customer </mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="reportInformation.causeByCustomer">
         <span matSuffix>pcs</span>
       </mat-form-field>
     </div>
@@ -550,7 +552,7 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Out of Warranty by Customer </mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="reportInformation.outWarranty">
         <span matSuffix>pcs</span>
       </mat-form-field>
     </div>
@@ -559,30 +561,30 @@
     <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Root cause </mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="reportInformation.rootCause">
       </mat-form-field>
     </div>
   </div>
 
-  <ng-container *ngFor="let rootCauseAction of form.rootCauseActions; let i=index">
+  <ng-container *ngFor="let rootCauseAction of reportInformation.rootCauseActions; let i=index">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Root cause action </mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="rootCauseAction.value">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Effective date</mat-label>
-          <input matInput [matDatepicker]="rootCauseActionEffectiveDate_dp">
+          <input matInput [matDatepicker]="rootCauseActionEffectiveDate_dp" [(ngModel)]="rootCauseAction.date">
           <mat-datepicker-toggle matSuffix [for]="rootCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #rootCauseActionEffectiveDate_dp></mat-datepicker>
         </mat-form-field>
       </div>
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="form.rootCauseActions.length== i+1 " mat-raised-button class="btn-success"
+      <button *ngIf="reportInformation.rootCauseActions.length== i+1 " mat-raised-button class="btn-success"
         style="margin-top: 10px;" (click)="onAddNewRootCauseAction()"><mat-icon>add</mat-icon>
       </button>
 
@@ -593,30 +595,30 @@
     <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>Leak cause </mat-label>
-        <input matInput>
+        <input matInput [(ngModel)]="reportInformation.leakCause">
       </mat-form-field>
     </div>
   </div>
 
-  <ng-container *ngFor="let leakCauseAction of form.leakCauseActions; let i=index">
+  <ng-container *ngFor="let leakCauseAction of reportInformation.leakCauseActions; let i=index">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Root cause action </mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="leakCauseAction.value">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label>Effective date</mat-label>
-          <input matInput [matDatepicker]="leakCauseActionEffectiveDate_dp">
+          <input matInput [matDatepicker]="leakCauseActionEffectiveDate_dp" [(ngModel)]="leakCauseAction.date">
           <mat-datepicker-toggle matSuffix [for]="leakCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #leakCauseActionEffectiveDate_dp></mat-datepicker>
         </mat-form-field>
       </div>
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="form.leakCauseActions.length== i+1 " mat-raised-button class="btn-success"
+      <button *ngIf="reportInformation.leakCauseActions.length== i+1 " mat-raised-button class="btn-success"
         style="margin-top: 10px;" (click)="onAddNewLeakCauseAction()"><mat-icon>add</mat-icon>
       </button>
 
