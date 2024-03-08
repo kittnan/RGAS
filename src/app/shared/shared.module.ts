@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Form2ViewComponent } from './rgas2/form2-view/form2-view.component';
 import { ReportViewComponent } from './report-view/report-view.component';
 import { YearMonthComponent } from './year-month/year-month.component';
+import { DialogCommentComponent } from './dialog-comment/dialog-comment.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -48,7 +49,7 @@ let items = [
   TitleComponent,
   Rgas1Component,
   Rgas2Component,
-
+  DialogCommentComponent
 ]
 
 @NgModule({
@@ -92,7 +93,7 @@ let items = [
     ManSectionSelectComponent,
     Form2ViewComponent,
     ReportViewComponent,
-    YearMonthComponent
+    YearMonthComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

@@ -126,7 +126,9 @@ export class SectionRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       } else {
@@ -140,7 +142,9 @@ export class SectionRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       }
@@ -156,7 +160,9 @@ export class SectionRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       } else {
@@ -170,7 +176,9 @@ export class SectionRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       }

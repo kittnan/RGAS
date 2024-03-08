@@ -24,6 +24,7 @@ export class OperatorRgas1Component implements OnInit {
 
   // todo click row
   onClickClaimChange($event: any) {
+    console.log("🚀 ~ $event:", $event)
     if ($event.status == 'receive information') {
       this.router.navigate(['operator/information'], {
         queryParams: {

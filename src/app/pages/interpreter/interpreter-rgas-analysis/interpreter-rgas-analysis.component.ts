@@ -1,15 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
-import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { environment } from 'src/environments/environment';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-interpreter-rgas-analysis',
@@ -60,12 +58,11 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
     private $claim: HttpClaimService,
     private $result: HttpResultService,
     private route: ActivatedRoute,
-    private $user: HttpUsersService,
     private $local: LocalStoreService,
     private $report: HttpReportService,
     private $fileUpload: HttpFileUploadService
   ) {
-    route.queryParams.subscribe(async (params: any) => {
+    this.route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
         let param: HttpParams = new HttpParams()
         param = param.set('registerNo', JSON.stringify([params['registerNo']]))
@@ -170,7 +167,9 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       } else {
@@ -184,7 +183,9 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       }
@@ -200,7 +201,9 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       } else {
@@ -214,7 +217,9 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       }

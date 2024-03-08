@@ -24,6 +24,7 @@ export class ReportViewComponent implements OnInit {
         httpParams = httpParams.set('index', JSON.stringify([params['index']]))
         httpParams = httpParams.set('name', JSON.stringify([params['name']]))
         httpParams = httpParams.set('registerNo', JSON.stringify([params['registerNo']]))
+        httpParams = httpParams.set('no', JSON.stringify([params['no']]))
         const resReport = await lastValueFrom(this.$report.get(httpParams))
         if (resReport && resReport.length > 0) {
           this.report = resReport[0]

@@ -36,6 +36,7 @@ export class YearMonthComponent {
 
   @Input() title: string = ''
   @Input() dateInput: any = null
+  @Input() disabled: boolean = false
   @Output() dateInputChange: EventEmitter<any> = new EventEmitter()
   chosenYearHandler(normalizedYear: Moment) {
     this.dateInput = moment().set('year', normalizedYear.year())

@@ -1,5 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
@@ -7,6 +8,7 @@ import { HttpMailService } from 'src/app/https/http-mail.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
+import { DialogCommentComponent } from 'src/app/shared/dialog-comment/dialog-comment.component';
 import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -32,9 +34,10 @@ export class EngineerApproveClaimComponent implements OnInit {
     private $user: HttpUsersService,
     private $local: LocalStoreService,
     private $alert: SweetAlertGeneralService,
-    private $mail: HttpMailService
+    private $mail: HttpMailService,
+    private dialog: MatDialog
   ) {
-    route.queryParams.subscribe(async (params: any) => {
+    this.route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
         let resData = await lastValueFrom(this.$claim.get(new HttpParams().set('registerNo', JSON.stringify([params['registerNo']])).set('no', JSON.stringify([params['no']]))))
         if (resData && resData.length > 0) {
@@ -43,7 +46,7 @@ export class EngineerApproveClaimComponent implements OnInit {
       }
     })
     this.state = this.router.getCurrentNavigation()?.extras.state
-    this.userLogin = $local.getProfile()
+    this.userLogin = this.$local.getProfile()
   }
 
   async ngOnInit(): Promise<void> {
@@ -83,69 +86,80 @@ export class EngineerApproveClaimComponent implements OnInit {
   }
   async approve() {
     try {
-      let flowHistory: FlowHistory = {
-        user: this.userLogin,
-        action: 'approve-request',
-        date: new Date()
-      }
-      this.form.flowHistory.push(flowHistory)
-      this.form.status = 'analysis'
-      this.form.flowPIC = [this.userLogin]
-      let to: any = this.form.flowPIC.map((PIC: any) => PIC.email)
 
-      let html = `<p><strong>Dear...All</strong></p>
+      this.dialog.open(DialogCommentComponent, {
+        disableClose: true,
+        data: '',
+      }).afterClosed().subscribe(async (comment: any) => {
 
-    <p>&nbsp;</p>
+        let flowHistory: FlowHistory = {
+          user: this.userLogin,
+          action: 'approve-request',
+          date: new Date(),
+          comment:comment
+        }
+        this.form.flowHistory.push(flowHistory)
+        this.form.status = 'analysis'
+        this.form.flowPIC = [this.userLogin]
+        await lastValueFrom(this.$claim.createOrUpdate(this.form))
+        let to: any = this.form.flowPIC.map((PIC: any) => PIC.email)
+        let html = `<p><strong>Dear...All</strong></p>
 
-    <p><strong>We&#39;d like to share claim information from $type $occurredLocation $qty&nbsp;</strong></p>
+      <p>&nbsp;</p>
 
-    <p><strong>Please see the detail below and attached file</strong><br />
-    &nbsp;</p>
+      <p><strong>We&#39;d like to share claim information from $type $occurredLocation $qty&nbsp;</strong></p>
 
-    <p><strong>Model&nbsp; : </strong>$modelCode</p>
+      <p><strong>Please see the detail below and attached file</strong><br />
+      &nbsp;</p>
 
-    <p><strong>Q&#39;ty </strong>: $qty</p>
+      <p><strong><span style="color:#7FFFD4">${comment}</span></strong></p>
 
-    <p><strong>Lot :</strong>&nbsp;$productLotNo</p>
+      <p><strong>Model&nbsp; : </strong>$modelCode</p>
 
-    <p><strong>Serial :</strong>&nbsp;$serial</p>
+      <p><strong>Q&#39;ty </strong>: $qty</p>
 
-    <p><strong>Failure phenomenon :</strong>&nbsp; $failure</p>
+      <p><strong>Lot :</strong>&nbsp;$productLotNo</p>
 
-    <p><strong>Occurrence place :</strong>&nbsp;$occur</p>
+      <p><strong>Serial :</strong>&nbsp;$serial</p>
 
-    <p><strong>Driving kilometer :</strong>&nbsp;$text</p>
+      <p><strong>Failure phenomenon :</strong>&nbsp; $failure</p>
 
-    <p>&nbsp;</p>
+      <p><strong>Occurrence place :</strong>&nbsp;$occur</p>
 
-    <p><strong>Attached, you will find the necessary documentation for further investigation. Please review it promptly and take appropriate actions to address this matter.</strong></p>
+      <p><strong>Driving kilometer :</strong>&nbsp;$text</p>
 
-    <p>Click here ➡️ $link</p>
+      <p>&nbsp;</p>
 
-    <p>&nbsp;</p>
+      <p><strong>Attached, you will find the necessary documentation for further investigation. Please review it promptly and take appropriate actions to address this matter.</strong></p>
 
-    <p><strong><span style="color:#c0392b">Please note that this email is automatically generated. Kindly refrain from replying directly to it.</span></strong></p>
+      <p>Click here ➡️ $link</p>
 
-    <p><strong><span style="color:#c0392b">Thank you for your attention to this urgent matter.</span></strong></p>
+      <p>&nbsp;</p>
 
-    <p><strong><span style="color:#c0392b">Best Regards,</span></strong></p>
-    `
+      <p><strong><span style="color:#c0392b">Please note that this email is automatically generated. Kindly refrain from replying directly to it.</span></strong></p>
 
-      let type = this.form.type
-      html = html.replace('$type', type)
-      let qty = Number(this.form.qty) > 1 ? `${Number(this.form.qty)} pcs.` : `${Number(this.form.qty)} pc.`
-      html = html.replace('$qty', qty)
+      <p><strong><span style="color:#c0392b">Thank you for your attention to this urgent matter.</span></strong></p>
 
+      <p><strong><span style="color:#c0392b">Best Regards,</span></strong></p>
+      `
 
-      await lastValueFrom(this.$mail.send({
-        to: to,
-        html: html
-      }))
+        let type = this.form.type
+        html = html.replace('$type', type)
+        let qty = Number(this.form.qty) > 1 ? `${Number(this.form.qty)} pcs.` : `${Number(this.form.qty)} pc.`
+        html = html.replace('$qty', qty)
 
 
-      await lastValueFrom(this.$claim.createOrUpdate(this.form))
-      this.$alert.success()
-      this.router.navigate(['engineer/rgas1'])
+        await lastValueFrom(this.$mail.send({
+          to: to,
+          html: html
+        }))
+
+
+        this.$alert.success()
+        this.router.navigate(['engineer/rgas1'])
+      })
+
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

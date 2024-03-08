@@ -151,7 +151,8 @@ export class OperatorRgasAnalysisComponent implements OnInit {
       queryParams: {
         registerNo: event.data.registerNo,
         name: event.key,
-        index: event.data.index
+        index: event.data.index,
+        no: event.data.no
       }
     })
   }
@@ -161,7 +162,8 @@ export class OperatorRgasAnalysisComponent implements OnInit {
       queryParams: {
         registerNo: event.data.registerNo,
         name: event.key,
-        index: event.data.index
+        index: event.data.index,
+        no: event.data.no
       }
     })
   }

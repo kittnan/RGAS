@@ -61,13 +61,12 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     private $claim: HttpClaimService,
     private $result: HttpResultService,
     private route: ActivatedRoute,
-    private $user: HttpUsersService,
     private $report: HttpReportService,
     private $fileUpload: HttpFileUploadService,
     private $local: LocalStoreService,
     private $alert: SweetAlertGeneralService
   ) {
-    route.queryParams.subscribe(async (params: any) => {
+    this.route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
         let param: HttpParams = new HttpParams()
         param = param.set('registerNo', JSON.stringify([params['registerNo']]))
@@ -282,7 +281,9 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         queryParams: {
           registerNo: event.data.registerNo,
           name: event.key,
-          index: event.data.index
+          index: event.data.index,
+          no: event.data.no
+
         }
       })
     } else {
@@ -296,7 +297,9 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         queryParams: {
           registerNo: dataUpdate.registerNo,
           name: event.key,
-          index: dataUpdate.index
+          index: dataUpdate.index,
+          no: dataUpdate.no
+
         }
       })
     }
@@ -308,7 +311,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         queryParams: {
           registerNo: event.data.registerNo,
           name: event.key,
-          index: event.data.index
+          index: event.data.index,
+          no: event.data.no
         }
       })
     } else {
@@ -322,7 +326,9 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         queryParams: {
           registerNo: dataUpdate.registerNo,
           name: event.key,
-          index: dataUpdate.index
+          index: dataUpdate.index,
+          no: dataUpdate.no
+
         }
       })
     }

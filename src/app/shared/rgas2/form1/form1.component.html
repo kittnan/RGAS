@@ -341,14 +341,15 @@
             </button>
             <mat-form-field appearance="outline" floatLabel="always" class="me-4 ">
               <mat-label [ngClass]="{'text-red-400': !sendTo}" class="text-green-400">Send to</mat-label>
-              <mat-select [disabled]="form.status!='receive information'" [(ngModel)]="sendTo" multiple (ngModelChange)="emitSaveStatus()">
+              <mat-select [disabled]="form.status!='receive information'" [(ngModel)]="sendTo" multiple
+                (ngModelChange)="emitSaveStatus()">
                 <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">
                   {{displayName(user)}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <button [disabled]="!form.registerNo || !sendTo " mat-raised-button class="btn-file btn-success"
-              style="margin-right: 30px;" (click)="onSubmit()">
+            <button [disabled]="!form.registerNo || !sendTo || (sendTo && sendTo.length==0) " mat-raised-button
+              class="btn-file btn-success" style="margin-right: 30px;" (click)="onSubmit()">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
                 <span>
                   Submit {{form.no}}

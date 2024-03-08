@@ -68,7 +68,7 @@ export class OperatorRgasInformationComponent implements OnInit {
     private $loader: NgxUiLoaderService,
     private router: Router,
     private $local: LocalStoreService,
-    private $alert: SweetAlertGeneralService
+    private $alert: SweetAlertGeneralService,
   ) {
     this.route.queryParams.subscribe(async (linkParam: any) => {
       if (linkParam && linkParam['registerNo']) {
@@ -95,12 +95,13 @@ export class OperatorRgasInformationComponent implements OnInit {
 
   async formChange() {
     const resData = await lastValueFrom(this.$claim.createOrUpdate(this.currentItem))
+    this.saveStatus = false
     this.$alert.success()
   }
 
   // todo finish form1
-  async submitChange($event: any) {
-    await lastValueFrom(this.$claim.createOrUpdate($event))
+  async submitChange(event: any) {
+    await lastValueFrom(this.$claim.createOrUpdate(event))
     let auth = this.$local.getAuth()
     this.$alert.success()
     this.router.navigate([`${auth}/rgas1`]).then(() => location.reload())
@@ -186,7 +187,7 @@ export class OperatorRgasInformationComponent implements OnInit {
           }, 300);
         }
       })
-    }else{
+    } else {
       this.currentItem = page
     }
     this.saveStatus = false

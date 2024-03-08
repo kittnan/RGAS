@@ -119,10 +119,7 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Production Month</mat-label>
-            <input [disabled]="true" matInput [value]="form.productionMonth">
-          </mat-form-field>
+          <app-year-month fxFlex="100" [title]="'Production Month'" [disabled]="true" [dateInput]="form.productionMonth"></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -131,10 +128,7 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Calendar Year</mat-label>
-            <input [disabled]="true" matInput [value]="form.calendarYear">
-          </mat-form-field>
+          <app-year-month fxFlex="100" [title]="'Calendar Year'" [disabled]="true" [dateInput]="form.calendarYear"></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -184,10 +178,7 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Cost Month</mat-label>
-            <input [disabled]="true" matInput [value]="form.costMonth">
-          </mat-form-field>
+          <app-year-month fxFlex="100" [title]="'Cost Month'" [disabled]="true" [dateInput]="form.costMonth"></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">

@@ -55,11 +55,10 @@ export class DepartmentRgasAnalysisComponent implements OnInit {
     private $claim: HttpClaimService,
     private $result: HttpResultService,
     private route: ActivatedRoute,
-    private $user: HttpUsersService,
     private $local: LocalStoreService,
     private $report: HttpReportService
   ) {
-    route.queryParams.subscribe(async (params: any) => {
+    this.route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
         let param: HttpParams = new HttpParams()
         param = param.set('registerNo', JSON.stringify([params['registerNo']]))
@@ -105,7 +104,8 @@ export class DepartmentRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
           }
         })
       } else {
@@ -119,7 +119,8 @@ export class DepartmentRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
           }
         })
       }
@@ -135,7 +136,9 @@ export class DepartmentRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       } else {
@@ -149,7 +152,9 @@ export class DepartmentRgasAnalysisComponent implements OnInit {
           queryParams: {
             registerNo: event.data.registerNo,
             name: event.key,
-            index: event.data.index
+            index: event.data.index,
+            no: event.data.no
+
           }
         })
       }

@@ -76,6 +76,17 @@
         </div>
       </button>
     </div>
+    <div fxFlex="51" fxLayout="row wrap" fxLayoutAlign="space-between stretch" class="mt-4">
+      <div fxFlex="40"> </div>
+      <mat-form-field fxFlex="40" appearance="outline" floatLabel="always">
+        <mat-label>Send to approve</mat-label>
+        <mat-select [(ngModel)]="sendTo" multiple>
+          <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">
+            {{displayName(user)}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <div *ngIf="modeFlow=='approve'" fxFlex="51" fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-4">
       <button fxFlex="100" mat-raised-button (click)="onSubmit()" color="primary" style="margin-top: 10px;">
         <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">

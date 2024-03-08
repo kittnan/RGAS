@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
+import { DialogCommentComponent } from '../../dialog-comment/dialog-comment.component';
 
 export interface FORM1 {
   [key: string]: any,
@@ -216,7 +217,7 @@ export class Form1Component implements OnInit {
     private _bottomSheet: MatBottomSheet,
     private $claim: HttpClaimService,
     private $local: LocalStoreService,
-    private $alert: SweetAlertGeneralService
+    private $alert: SweetAlertGeneralService,
   ) {
     this.userLogin = this.$local.getProfile()
   }
@@ -394,12 +395,15 @@ export class Form1Component implements OnInit {
     let now: FlowHistory = {
       action: 'receive information',
       date: new Date(),
-      user: this.userLogin
+      user: this.userLogin,
     }
     this.form.flowHistory = [now]
     this.form.flowPIC = this.userLogin
     this.form.status = 'receive information'
     this.formChange.emit(this.form)
+
+
+
   }
   // todo on finish
   onSubmit() {
@@ -409,16 +413,23 @@ export class Form1Component implements OnInit {
       showCancelButton: true
     }).then(async (v: SweetAlertResult) => {
       if (v.isConfirmed) {
-        this.form.flowPIC = this.sendTo
-        this.form.status = 'wait approve'
-        let obj: FlowHistory = {
-          action: 'request',
-          date: new Date(),
-          user: this.userLogin
-        }
 
-        this.form.flowHistory.push(obj)
-        this.submitChange.emit(this.form)
+        let dialog = this.dialog.open(DialogCommentComponent, {
+          disableClose: true,
+          data: ''
+        })
+        dialog.afterClosed().subscribe(async (comment: any) => {
+          this.form.flowPIC = this.sendTo
+          this.form.status = 'wait approve'
+          let obj: FlowHistory = {
+            action: 'request',
+            date: new Date(),
+            user: this.userLogin,
+            comment:comment
+          }
+          this.form.flowHistory.push(obj)
+          this.submitChange.emit(this.form)
+        })
       }
     })
 
@@ -504,7 +515,7 @@ export class Form1Component implements OnInit {
   }
 
   // todo emitSaveStatus
-  emitSaveStatus(){
+  emitSaveStatus() {
     this.saveStatusChange.emit(true)
   }
 
