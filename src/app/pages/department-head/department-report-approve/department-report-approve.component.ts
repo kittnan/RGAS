@@ -8,6 +8,7 @@ import { HttpMailService } from 'src/app/https/http-mail.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import { SendMailService } from 'src/app/services/send-mail.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import { DialogCommentComponent } from 'src/app/shared/dialog-comment/dialog-comment.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
@@ -41,7 +42,8 @@ export class DepartmentReportApproveComponent implements OnInit {
     private $mail: HttpMailService,
     private dialog: MatDialog,
     private $alert: SweetAlertGeneralService,
-    private $loader:NgxUiLoaderService
+    private $loader: NgxUiLoaderService,
+    private $sendMail: SendMailService
   ) {
 
     this.userLogin = this.$local.getProfile()
@@ -60,7 +62,6 @@ export class DepartmentReportApproveComponent implements OnInit {
         const resReport = await lastValueFrom(this.$report.get(httpParams))
         if (resReport && resReport.length > 0) {
           this.report = resReport[0]
-          console.log("🚀 ~ this.report:", this.report)
           this.report.flow[3]['PIC'] = this.userLogin
           // this.report.flow[3]['date'] = new Date()
         }
@@ -82,6 +83,7 @@ export class DepartmentReportApproveComponent implements OnInit {
   }
 
   onChangeModeFlow() {
+    this.sendTo = []
     if (this.modeFlow == 'reject') {
       this.modeOption = ['interpreter', 'section', 'engineer']
       this.modeSelected = 'interpreter'
@@ -95,6 +97,12 @@ export class DepartmentReportApproveComponent implements OnInit {
     switch (this.modeSelected) {
       case 'engineer':
         value = 'engineer'
+        break;
+      case 'interpreter':
+        value = 'interpreter'
+        break;
+      case 'section':
+        value = 'sectionHead'
         break;
 
       default:
@@ -128,6 +136,7 @@ export class DepartmentReportApproveComponent implements OnInit {
         disableClose: true,
         data: '',
       }).afterClosed().subscribe(async (comment: any) => {
+        if (comment === false) throw ''
         this.report['PIC'] = null
         this.report['PICHistory'].push({
           action: 'department',
@@ -140,53 +149,8 @@ export class DepartmentReportApproveComponent implements OnInit {
         this.report.status = 'finish'
         console.log("🚀 ~ this.report:", this.report)
         await lastValueFrom(this.$report.createOrUpdate([this.report]))
-        this.$loader.start()
-        let to: any = this.sendTo.map((PIC: any) => PIC.email)
-        let html = `<p><strong>Dear...All</strong></p>
-
-       <p>&nbsp;</p>
-
-       <p><strong>We&#39;d like to share claim information from $type $occurredLocation $qty&nbsp;</strong></p>
-
-       <p><strong>Please see the detail below and attached file</strong><br />
-       &nbsp;</p>
-
-       <p><strong><span style="color:#7FFFD4">${comment}</span></strong></p>
-
-       <p><strong>Model&nbsp; : </strong>$modelCode</p>
-
-       <p><strong>Q&#39;ty </strong>: $qty</p>
-
-       <p><strong>Lot :</strong>&nbsp;$productLotNo</p>
-
-       <p><strong>Serial :</strong>&nbsp;$serial</p>
-
-       <p><strong>Failure phenomenon :</strong>&nbsp; $failure</p>
-
-       <p><strong>Occurrence place :</strong>&nbsp;$occur</p>
-
-       <p><strong>Driving kilometer :</strong>&nbsp;$text</p>
-
-       <p>&nbsp;</p>
-
-       <p><strong>Attached, you will find the necessary documentation for further investigation. Please review it promptly and take appropriate actions to address this matter.</strong></p>
-
-       <p>Click here ➡️ $link</p>
-
-       <p>&nbsp;</p>
-
-       <p><strong><span style="color:#c0392b">Please note that this email is automatically generated. Kindly refrain from replying directly to it.</span></strong></p>
-
-       <p><strong><span style="color:#c0392b">Thank you for your attention to this urgent matter.</span></strong></p>
-
-       <p><strong><span style="color:#c0392b">Best Regards,</span></strong></p>
-       `
-        await lastValueFrom(this.$mail.send({
-          to: to,
-          html: html
-        }))
+        const info = await this.$sendMail.approve(null, comment, this.sendTo.map((PIC: any) => PIC.email))
         this.$alert.success()
-        this.$loader.stop()
         this.router.navigate(['departmentHead/rgas1'])
       })
     } catch (error) {
@@ -196,17 +160,25 @@ export class DepartmentReportApproveComponent implements OnInit {
 
   async reject() {
     try {
-      this.report['PIC'] = this.sendTo
-      this.report['PICHistory'].push({
-        action: 'department reject',
-        user: this.userLogin,
-        date: new Date()
+      this.dialog.open(DialogCommentComponent, {
+        disableClose: true,
+        data: '',
+      }).afterClosed().subscribe(async (comment: any) => {
+        if (comment === false) throw ''
+        this.report['PIC'] = this.sendTo
+        this.report['PICHistory'].push({
+          action: 'department reject',
+          user: this.userLogin,
+          date: new Date(),
+          comment: comment
+        })
+        this.report.status = this.modeSelected
+        this.report.flow[3]['date'] = new Date()
+        await lastValueFrom(this.$report.createOrUpdate([this.report]))
+        const info = await this.$sendMail.approve(null, comment, this.report.PIC.map((PIC: any) => PIC.email))
+        this.router.navigate(['departmentHead/rgas1'])
       })
 
-      this.report.status = this.modeSelected
-      this.report.flow[3]['date'] = new Date()
-      await lastValueFrom(this.$report.createOrUpdate([this.report]))
-      this.router.navigate(['departmentHead/rgas1'])
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

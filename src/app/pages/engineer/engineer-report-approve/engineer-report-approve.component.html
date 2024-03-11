@@ -48,7 +48,8 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button fxFlex="100" mat-raised-button (click)="onSubmit()" class="btn-success" style="margin-top: 10px;">
+      <button [disabled]="(sendTo && sendTo.length==0) ||  !sendTo" fxFlex="100" mat-raised-button (click)="onSubmit()"
+        class="btn-success" style="margin-top: 10px;">
         <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
           <span>
             Send

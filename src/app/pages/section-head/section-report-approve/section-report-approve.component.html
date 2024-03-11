@@ -71,11 +71,11 @@
       </mat-form-field>
     </div>
     <div *ngIf="modeFlow=='reject'" fxFlex="51" fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-4">
-      <button [disabled]="!sendTo || sendTo.length==0" fxFlex="100" mat-raised-button (click)="onSubmit()"
+      <button [disabled]="!sendTo || ( sendTo && sendTo.length==0)" fxFlex="100" mat-raised-button (click)="onSubmit()"
         color="primary" style="margin-top: 10px;">
         <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
           <span>
-            Submit 1
+            Submit
           </span>
           <mat-icon class="mat-18">send</mat-icon>
         </div>
@@ -101,7 +101,7 @@
       </mat-form-field>
     </div>
     <div *ngIf="modeFlow=='approve'" fxFlex="51" fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-4">
-      <button fxFlex="100" mat-raised-button (click)="onSubmit()" color="primary" style="margin-top: 10px;">
+      <button [disabled]="!sendTo || ( sendTo && sendTo.length==0)" fxFlex="100" mat-raised-button (click)="onSubmit()" color="primary" style="margin-top: 10px;">
         <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
           <span>
             Submit

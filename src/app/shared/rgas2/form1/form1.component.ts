@@ -184,11 +184,11 @@ export class Form1Component implements OnInit {
   userApproveClaimOption: any[] = []
 
 
-  // todo form model code
-  modelCodeForm: FormControl = new FormControl()
+  // // todo form model code
+  // modelCodeForm: FormControl = new FormControl()
 
-  // todo form model code
-  sendToForm: FormControl = new FormControl()
+  // // todo form model code
+  // sendToForm: FormControl = new FormControl()
 
   // todo user login
   userLogin: any
@@ -264,7 +264,7 @@ export class Form1Component implements OnInit {
     // this.form.calendarYear = moment(this.form.calendarYear)
     // console.log(this.form.calendarYear);
 
-    this.modelCodeForm.patchValue(this.form.modelCode)
+    // this.modelCodeForm.patchValue(this.form.modelCode)
   }
 
 
@@ -302,7 +302,7 @@ export class Form1Component implements OnInit {
 
 
         }
-        this.modelCodeForm.patchValue(modelCode)
+        // this.modelCodeForm.patchValue(modelCode)
         // this.maxChange.emit(this.form.qty)
         this.fileUploadOBL.nativeElement.value = ''
       }

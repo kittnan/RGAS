@@ -77,7 +77,7 @@
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <app-autocomplete *ngIf="modelOptionString.length>0 " fxFlex="100" [title]="'KTC Model Code'"
-            [options]="modelOptionString" [myControl]="modelCodeForm"
+            [options]="modelOptionString" [(value)]="form.modelCode"
             (valueChange)="onChangeModelCode($event);emitSaveStatus()"></app-autocomplete>
 
         </div>

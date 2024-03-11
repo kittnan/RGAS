@@ -9,7 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogCommentComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any='',
     private dialog: MatDialogRef<DialogCommentComponent>) { }
   ngOnInit(): void {
     setTimeout(() => {
@@ -17,7 +17,7 @@ export class DialogCommentComponent implements OnInit {
     }, 500);
   }
   onCancel() {
-    this.dialog.close(null)
+    this.dialog.close(false)
   }
   onSubmit() {
     this.dialog.close(this.data)

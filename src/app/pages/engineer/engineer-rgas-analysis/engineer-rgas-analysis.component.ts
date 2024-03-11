@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
+import { HttpReportInformationService } from 'src/app/https/http-report-information.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
@@ -54,6 +55,56 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       }
     ],
   }
+  information: any = {
+    ng: {
+      qty: null,
+      phenomenon: null,
+      detail: null
+    },
+    notAccepted: {
+      qty: null,
+      phenomenon: null,
+      cause: null
+    },
+    noAbnormality: {
+      qty: null,
+      cause: null,
+      occur: null
+    },
+    withinSpec: {
+      qty: null,
+      occur: null,
+      outflow: null,
+    },
+    notRecurred: {
+      qty: null,
+      process: null,
+      IATFNo: null,
+    },
+    difference: {
+      qty: null,
+      PIC: null,
+    },
+    causeByCustomer: null,
+    outWarranty: null,
+    rootCause: null,
+    rootCauseActions: [
+      {
+        value: null,
+        date: null,
+        index: 1
+      }
+    ],
+    leakCause: null,
+    leakCauseActions: [
+      {
+        value: null,
+        date: null,
+        index: 1
+      }
+    ],
+    _id: null
+  }
   pathFile = environment.pathSaveFile
 
   constructor(
@@ -64,7 +115,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     private $report: HttpReportService,
     private $fileUpload: HttpFileUploadService,
     private $local: LocalStoreService,
-    private $alert: SweetAlertGeneralService
+    private $alert: SweetAlertGeneralService,
+    private $information: HttpReportInformationService
   ) {
     this.route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
@@ -73,6 +125,11 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         param = param.set('no', JSON.stringify([params['no']]))
         let resData = await lastValueFrom(this.$claim.get(param))
         if (resData && resData.length > 0) {
+          const resInformation = await lastValueFrom(this.$information.get(param))
+          if (resInformation && resInformation.length > 0){
+            this.information = resInformation[0]
+            console.log("🚀 ~ this.information:", this.information)
+          }
           this.form = resData[0]
           console.log("🚀 ~ this.form:", this.form)
           const resResult = await lastValueFrom(this.$result.get(param))
@@ -91,6 +148,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
             finalReportOBL: finalReportOBL ? finalReportOBL : this.form3.finalReportOBL,
             questionAnswers: questionAnswers && questionAnswers.length > 0 ? questionAnswers : this.form3.questionAnswers,
           }
+
+
         }
       }
     })
@@ -288,8 +347,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       })
     } else {
       let dataUpdate: any = {
-        ...event.data,
         PICHistory: null,
+        ...event.data,
         PIC: null
       }
       await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
@@ -317,8 +376,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       })
     } else {
       let dataUpdate: any = {
-        ...event.data,
         PICHistory: null,
+        ...event.data,
         PIC: null
       }
       await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
@@ -368,6 +427,29 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     } catch (error) {
       console.log("🚀 ~ error:", error);
 
+    }
+  }
+
+  // todo informationChange
+  reportInformationChange(event: any) {
+    try {
+      Swal.fire({
+        title: 'Save?',
+        icon: 'question',
+        showCancelButton: true
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          if (!event._id) {
+            this.information = await lastValueFrom(this.$information.create({ ...event, registerNo: this.form.registerNo, no: this.form.no }))
+            this.$alert.success()
+          } else {
+            await lastValueFrom(this.$information.createOrUpdate([event]))
+            this.$alert.success()
+          }
+        }
+      })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
     }
   }
 

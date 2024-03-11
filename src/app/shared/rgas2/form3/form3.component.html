@@ -372,6 +372,10 @@
   </ng-container>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <app-sub-title fxFlex="100" [title]="'Report Information'" class="mt-2 mb-2"></app-sub-title>
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>NG</mat-label>
@@ -380,24 +384,16 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Defect phenomenon (Major classification)</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.ng.phenomenon">
-          <mat-option *ngFor="let item of defectPhenomenonOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <app-autocomplete *ngIf="defectPhenomenonOption.length>0" fxFlex="100"
+        [title]="'Defect phenomenon (Major classification)'" [options]="defectPhenomenonOption"
+        [(value)]="reportInformation.ng.phenomenon"
+        (valueChange)="onChangeAutoComplete($event,'ng','phenomenon'); getDetailPhe();"></app-autocomplete>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Defect details classification (5M1E)</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.detail">
-          <mat-option *ngFor="let item of m1eDefectDetailOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <app-autocomplete *ngIf="m1eDefectDetailOption.length>0 " fxFlex="100"
+        [title]="'Defect details classification (5M1E)'" [options]="m1eDefectDetailOption"
+        [(value)]="reportInformation.ng.detail"
+        (valueChange)="onChangeAutoComplete($event,'ng','detail');"></app-autocomplete>
     </div>
   </div>
 
@@ -410,24 +406,19 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Detailed phenomenon (Middle classification) </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.notAccepted.phenomenon">
-          <mat-option *ngFor="let item of detailedPhenomenonOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
+      <app-autocomplete *ngIf="detailedPhenomenonOption.length>0 " fxFlex="100"
+        [title]="'Detailed phenomenon (Middle classification)'" [options]="detailedPhenomenonOption"
+        [(value)]="reportInformation.notAccepted.phenomenon"
+        (valueChange)="onChangeAutoComplete($event,'notAccepted','phenomenon');getCause();"></app-autocomplete>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Defect cause classification (5M1E)</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.notAccepted.cause">
-          <mat-option *ngFor="let item of m1eCauseDetailOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
+
+      <app-autocomplete *ngIf="m1eCauseDetailOption.length>0 " fxFlex="100"
+        [title]="'Defect cause classification (5M1E)'" [options]="m1eCauseDetailOption"
+        [(value)]="reportInformation.notAccepted.cause"
+        (valueChange)="onChangeAutoComplete($event,'notAccepted','cause');"></app-autocomplete>
     </div>
   </div>
 
@@ -440,24 +431,17 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Cause (Minor classification) </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.noAbnormality.cause">
-          <mat-option *ngFor="let item of causeOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
+      <app-autocomplete *ngIf="causeOption.length>0 " fxFlex="100" [title]="'Cause (Minor classification)'"
+        [options]="causeOption" [(value)]="reportInformation.noAbnormality.cause"
+        (valueChange)="onChangeAutoComplete($event,'noAbnormality','cause');"></app-autocomplete>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Rule 3-principle ※ Occurrence</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.noAbnormality.occur">
-          <mat-option *ngFor="let item of occurrenceOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
+
+      <app-autocomplete *ngIf="occurrenceOption.length>0 " fxFlex="100" [title]="'Rule 3-principle ※ Occurrence'"
+        [options]="occurrenceOption" [(value)]="reportInformation.noAbnormality.occur"
+        (valueChange)="onChangeAutoComplete($event,'noAbnormality','occur');"></app-autocomplete>
     </div>
   </div>
 
@@ -470,24 +454,17 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Occurrence process category </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.withinSpec.occur">
-          <mat-option *ngFor="let item of lcdBOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
+      <app-autocomplete *ngIf="lcdBOption.length>0 " fxFlex="100" [title]="'Occurrence process category'"
+        [options]="lcdBOption" [(value)]="reportInformation.withinSpec.occur"
+        (valueChange)="onChangeAutoComplete($event,'withinSpec','occur');getLcdC();"></app-autocomplete>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Rule 3-principle ※ Outflow</mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.withinSpec.outflow">
-          <mat-option *ngFor="let item of principleCOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
+
+      <app-autocomplete *ngIf="principleCOption.length>0 " fxFlex="100" [title]="'Rule 3-principle ※ Outflow'"
+        [options]="principleCOption" [(value)]="reportInformation.withinSpec.outflow"
+        (valueChange)="onChangeAutoComplete($event,'withinSpec','outflow');"></app-autocomplete>
     </div>
   </div>
 
@@ -500,14 +477,10 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Occurrence process category details </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.notRecurred.process">
-          <mat-option *ngFor="let item of lcdCOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
+      <app-autocomplete *ngIf="lcdCOption.length>0 " fxFlex="100" [title]="'Occurrence process category details'"
+        [options]="lcdCOption" [(value)]="reportInformation.notRecurred.process"
+        (valueChange)="onChangeAutoComplete($event,'notRecurred','process');"></app-autocomplete>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
@@ -527,14 +500,9 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Maker name </mat-label>
-        <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="reportInformation.difference.PIC">
-          <mat-option *ngFor="let item of scdCOption" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <app-autocomplete *ngIf="scdCOption.length>0 " fxFlex="100" [title]="'Maker name'" [options]="scdCOption"
+        [(value)]="reportInformation.difference.markerName"
+        (valueChange)="onChangeAutoComplete($event,'difference','markerName');"></app-autocomplete>
     </div>
 
   </div>
@@ -626,7 +594,8 @@
   </ng-container>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mt-1 pe-8">
-    <button mat-raised-button color="primary" (click)="onSave()" class="btn-file" style="margin-right: 10px;">
+    <button mat-raised-button color="primary" (click)="onSaveReportInformation()" class="btn-file"
+      style="margin-right: 10px;">
       <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
         <span>
           Save

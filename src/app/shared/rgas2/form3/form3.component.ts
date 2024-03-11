@@ -1,19 +1,15 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpDCdService } from 'src/app/https/http-d-cd.service';
 import { HttpLCdService } from 'src/app/https/http-l-cd.service';
 import { HttpM1eService } from 'src/app/https/http-m1e.service';
 import { HttpPrincipleService } from 'src/app/https/http-principle.service';
-import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpSCdService } from 'src/app/https/http-s-cd.service';
+import { HttpUsersService } from 'src/app/https/http-users.service';
 
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
-import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
-import { HttpUsersService } from 'src/app/https/http-users.service';
 
 @Component({
   selector: 'app-form3',
@@ -58,7 +54,7 @@ export class Form3Component implements OnInit {
     ng: null,
   }
 
-  reportInformation: any = {
+  @Input() reportInformation: any = {
     ng: {
       qty: null,
       phenomenon: null,
@@ -105,7 +101,8 @@ export class Form3Component implements OnInit {
         date: null,
         index: 1
       }
-    ]
+    ],
+    _id: null
   }
 
   // todo PIC Option
@@ -147,6 +144,13 @@ export class Form3Component implements OnInit {
   @Output() approveChange: EventEmitter<any> = new EventEmitter()
   @Output() approveArrChange: EventEmitter<any> = new EventEmitter()
   @Output() deleteArrChange: EventEmitter<any> = new EventEmitter()
+  @Output() reportInformationChange: EventEmitter<any> = new EventEmitter()
+
+  // ngPhenomenonForm: FormControl = new FormControl()
+  // detailForm: FormControl = new FormControl()
+  // notAcceptedP: FormControl = new FormControl()
+
+
   constructor(
     private _bottomSheet: MatBottomSheet,
     private $d_cd: HttpDCdService,
@@ -155,9 +159,6 @@ export class Form3Component implements OnInit {
     private $m1e: HttpM1eService,
     private $principle: HttpPrincipleService,
     private $user: HttpUsersService,
-    private dialog: MatDialog,
-    private $report: HttpReportService,
-    private router: Router,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -206,6 +207,11 @@ export class Form3Component implements OnInit {
       let userParam2 = new HttpParams().set('access', JSON.stringify(['operator']))
       this.PICOption = await lastValueFrom(this.$user.get(userParam2))
 
+      console.log(this.reportInformation.ng.phenomenon);
+
+      setTimeout(() => {
+        this.reportInformation.ng.phenomenon = "zxczxczxczxc"
+      }, 1000);
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -332,9 +338,8 @@ export class Form3Component implements OnInit {
   }
 
 
-  onSave() {
-    console.log(this.reportInformation);
-
+  onSaveReportInformation() {
+    this.reportInformationChange.emit(this.reportInformation)
   }
 
   // todo css tag report status
@@ -353,6 +358,43 @@ export class Form3Component implements OnInit {
       default:
         return ''
     }
-
   }
+
+  // todo onChangeAutoComplete
+  onChangeAutoComplete(event: any, key1: string, key2: string) {
+    console.log('drtyujkl;');
+
+    if (key1 && key2) {
+      this.reportInformation[key1][key2] = event
+    } else {
+      this.reportInformation[key1] = event
+    }
+  }
+
+  getDetailPhe() {
+    this.reportInformation.notAccepted.phenomenon = null
+    this.detailedPhenomenonOption = []
+    setTimeout(() => {
+      this.detailedPhenomenonOption = this.dcdOption.filter((item: any) => this.reportInformation.ng.phenomenon == item['Defect Phenomenon'])
+      this.detailedPhenomenonOption = [...new Set(this.detailedPhenomenonOption.map((item: any) => item['Detailed phenomenon']))]
+    }, 500);
+  }
+  getCause() {
+    this.reportInformation.noAbnormality.cause = null
+    this.causeOption = []
+    setTimeout(() => {
+      this.causeOption = this.dcdOption.filter((item: any) => this.reportInformation.ng.phenomenon == item['Defect Phenomenon'] && this.reportInformation.notAccepted.phenomenon == item['Detailed phenomenon'])
+      this.causeOption = [...new Set(this.causeOption.map((item: any) => item['Cause']))]
+    }, 500);
+  }
+
+  getLcdC() {
+    this.reportInformation.notRecurred.process = null
+    this.lcdCOption = []
+    setTimeout(() => {
+      this.lcdCOption = this.lcdOption.filter((item: any) => item['Occurrence process category details'] == this.reportInformation.withinSpec.occur)
+      this.lcdCOption = [...new Set(this.lcdCOption.map((item: any) => item['Occurrence process CD']))]
+    }, 500);
+  }
+
 }

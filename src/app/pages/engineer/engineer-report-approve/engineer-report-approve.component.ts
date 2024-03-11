@@ -128,8 +128,16 @@ export class EngineerReportApproveComponent implements OnInit {
         disableClose: true,
         data: '',
       }).afterClosed().subscribe(async (comment: any) => {
+        if (comment === false) throw ''
         this.report['PIC'] = this.sendTo
-        this.report['PICHistory'] = [{
+        console.log(this.report['PICHistory']);
+
+        this.report['PICHistory'] = this.report['PICHistory'] ? [...this.report['PICHistory'], {
+          action: 'engineer',
+          user: this.userLogin,
+          date: new Date(),
+          comment: comment
+        }] : [{
           action: 'engineer',
           user: this.userLogin,
           date: new Date(),
@@ -138,7 +146,6 @@ export class EngineerReportApproveComponent implements OnInit {
         this.report.flow = this.flowSelected
         this.report.flow[0]['date'] = new Date()
         this.report.status = 'section'
-        console.log("🚀 ~ this.report:", this.report)
         await lastValueFrom(this.$report.createOrUpdate([this.report]))
         const info = await this.$sendMail.approve(null, comment, this.report.PIC.map((PIC: any) => PIC.email))
         this.$alert.success()

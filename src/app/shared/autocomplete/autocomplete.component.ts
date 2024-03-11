@@ -20,13 +20,13 @@ export class AutocompleteComponent implements OnInit {
     this.myControl.patchValue(this.value)
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value.toString() || '')),
+      map(value => this._filter(value?.toString() || '')),
     );
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    return this.options.filter(option => option?.toLowerCase().includes(filterValue));
   }
   onChange() {
     // this.myControlChange.emit(this.myControl.value)
