@@ -72,9 +72,7 @@ export class SectionRgasAnalysisComponent implements OnInit {
           this.form = resData[0]
           const resResult = await lastValueFrom(this.$result.get(param))
           this.form2 = resResult[0]
-          console.log("🚀 ~ this.form2:", this.form2)
           const resForm3 = await lastValueFrom(this.$report.get(param))
-          console.log("🚀 ~ resForm3:", resForm3)
           const preReport = resForm3.find((item: any) => item.name == 'preReport')
           const interims = resForm3.filter((item: any) => item.name == 'interims')
           const finalReport = resForm3.find((item: any) => item.name == 'finalReport')
@@ -88,7 +86,6 @@ export class SectionRgasAnalysisComponent implements OnInit {
             finalReportOBL: finalReportOBL ? finalReportOBL : this.form3.finalReportOBL,
             questionAnswers: questionAnswers && questionAnswers.length > 0 ? questionAnswers : this.form3.questionAnswers,
           }
-          console.log(this.form3);
 
         }
       }

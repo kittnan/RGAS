@@ -54,22 +54,22 @@
 
     </div>
     <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
         <ng-container *ngIf="form.preReport.status =='finish'">
-          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
-            (click)="onSubmitReport('preReport')">
+          <button mat-icon-button color="primary" style="margin-left: 5px;" (click)="onSubmitReport('preReport')"
+            title="save">
             <mat-icon>save</mat-icon>
           </button>
         </ng-container>
-
-        <button *ngIf="form.preReport._id" mat-raised-button color="primary" style="margin-left: 5px;"
-          (click)="onApproveChange('preReport')">
-          <mat-icon>send</mat-icon>
-        </button>
-        <button *ngIf="!form.preReport._id" [disabled]="form.preReport?.files?.length==0" mat-raised-button
-          color="primary" class="btn-success" style="margin-left: 5px;" (click)="onSubmitReport('preReport')">
+        <button *ngIf="!form.preReport._id" [disabled]="form.preReport?.files?.length==0" mat-icon-button
+          color="primary" style="margin-left: 5px;" (click)="onSubmitReport('preReport')" title="save">
           <mat-icon>save</mat-icon>
         </button>
+        <button *ngIf="form.preReport._id" mat-icon-button color="primary" style="margin-left: 5px;"
+          (click)="onApproveChange('preReport')" title="send & approve">
+          <mat-icon>send</mat-icon>
+        </button>
+
       </div>
     </div>
   </div>
@@ -125,38 +125,39 @@
 
       </div>
       <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
-          <button *ngIf="i!==0" mat-raised-button color="warn" (click)="onClickDeleteArr('interims',i)">
-            <mat-icon class="mat-18">delete</mat-icon>
-          </button>
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
 
           <ng-container *ngIf="interim.status =='finish'">
-            <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+            <button mat-icon-button color="primary" title="save" style="margin-left: 5px;"
               (click)="onSubmitReportArrChange('interims',i)">
               <mat-icon>save</mat-icon>
             </button>
           </ng-container>
-          <button *ngIf="interim?._id" mat-raised-button color="primary" style="margin-left: 5px;"
-            (click)="onApproveChangeArr('interims',i)">
-            <mat-icon>send</mat-icon>
-          </button>
-          <button *ngIf="!interim?._id" [disabled]="interim.files?.length==0" mat-raised-button color="primary"
-            class="btn-success" style="margin-left: 5px;" (click)="onSubmitReportArrChange('interims',i)">
+          <button *ngIf="!interim?._id" [disabled]="interim.files?.length==0" mat-icon-button color="primary"
+            title="save" style="margin-left: 5px;" (click)="onSubmitReportArrChange('interims',i)">
             <mat-icon>save</mat-icon>
           </button>
+          <button *ngIf="interim?._id" mat-icon-button color="primary" style="margin-left: 5px;"
+            (click)="onApproveChangeArr('interims',i)" title="send & approve">
+            <mat-icon>send</mat-icon>
+          </button>
+          <button *ngIf="i!==0" mat-icon-button color="warn" (click)="onClickDeleteArr('interims',i)">
+            <mat-icon class="mat-18">delete</mat-icon>
+          </button>
+
+
         </div>
       </div>
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="form.interims.length== i+1 " mat-raised-button class="btn-success" style="margin-top: 10px;"
+      <button *ngIf="form.interims.length== i+1" color="primary" mat-icon-button style="margin-top: 10px;"
         (click)="onAddNewInterim()"><mat-icon>add</mat-icon>
       </button>
-
     </div>
 
   </ng-container>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-1">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-8">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="me-8 p-2 rounded-md"
       [class]="cssTagReportStatus(form.finalReport.status)">
       <div fxLayout="row wrap" fxLayoutAlign="start center">
@@ -211,22 +212,21 @@
 
     </div>
     <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
         <ng-container *ngIf="form.finalReport.status =='finish'">
-          <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
-            (click)="onSubmitReport('finalReport')">
+          <button mat-icon-button color="primary" style="margin-left: 5px;" (click)="onSubmitReport('finalReport')">
             <mat-icon>save</mat-icon>
           </button>
         </ng-container>
-        <ng-container *ngIf="form.finalReport._id; else elseTemplate">
-          <button mat-raised-button color="primary" style="margin-left: 5px;" (click)="onApproveChange('finalReport')">
-            <mat-icon>send</mat-icon>
+        <ng-container *ngIf="!form.finalReport._id; else elseTemplate">
+          <button [disabled]="form.finalReport?.files?.length==0" mat-icon-button color="primary"
+            style="margin-left: 5px;" (click)="onSubmitReport('finalReport')">
+            <mat-icon>save</mat-icon>
           </button>
         </ng-container>
         <ng-template #elseTemplate>
-          <button [disabled]="form.finalReport?.files?.length==0" mat-raised-button color="primary" class="btn-success"
-            style="margin-left: 5px;" (click)="onSubmitReport('finalReport')">
-            <mat-icon>save</mat-icon>
+          <button mat-icon-button color="primary" style="margin-left: 5px;" (click)="onApproveChange('finalReport')">
+            <mat-icon>send</mat-icon>
           </button>
         </ng-template>
       </div>
@@ -236,7 +236,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="me-8 p-2 rounded-md"
       [class]="cssTagReportStatus(form.finalReportOBL.status)">
-      <div fxLayout="row wrap" fxLayoutAlign="center center">
+      <div fxLayout="row wrap" fxLayoutAlign="start center">
         <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
           Final report
@@ -274,8 +274,8 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+        <button mat-icon-button color="primary"  style="margin-left: 5px;"
           (click)="onSubmitReport('finalReportOBL')">
           <mat-icon>save</mat-icon>
         </button>
@@ -338,22 +338,22 @@
       </div>
 
       <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center">
-          <button *ngIf="i!==0" mat-raised-button color="warn" (click)="onClickDeleteArr('questionAnswers',i)">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+          <button *ngIf="i!==0" mat-icon-button color="warn" (click)="onClickDeleteArr('questionAnswers',i)">
             <mat-icon class="mat-18">delete</mat-icon>
           </button>
           <ng-container *ngIf="questionAnswer.status =='finish'">
-            <button mat-raised-button color="primary" class="btn-success" style="margin-left: 5px;"
+            <button mat-icon-button color="primary"  style="margin-left: 5px;"
               (click)="onSubmitReportArrChange('questionAnswers',i)">
               <mat-icon>save</mat-icon>
             </button>
           </ng-container>
-          <button *ngIf="questionAnswer?._id" mat-raised-button color="primary" style="margin-left: 5px;"
+          <button *ngIf="questionAnswer?._id" mat-icon-button color="primary" style="margin-left: 5px;"
             (click)="onApproveChangeArr('questionAnswers',i)">
             <mat-icon>send</mat-icon>
           </button>
-          <button *ngIf="!questionAnswer?._id" [disabled]="questionAnswer?.files?.length==0" mat-raised-button
-            color="primary" class="btn-success" style="margin-left: 5px;"
+          <button *ngIf="!questionAnswer?._id" [disabled]="questionAnswer?.files?.length==0" mat-icon-button
+            color="primary"  style="margin-left: 5px;"
             (click)="onSubmitReportArrChange('questionAnswers',i)">
             <mat-icon>save</mat-icon>
           </button>
@@ -363,7 +363,7 @@
 
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="form.questionAnswers.length== i+1 " mat-raised-button class="btn-success" style="margin-top: 10px;"
+      <button *ngIf="form.questionAnswers.length== i+1 " mat-icon-button color="primary" style="margin-top: 10px;"
         (click)="onAddNewQuestionAnswer()"><mat-icon>add</mat-icon>
       </button>
 
@@ -392,8 +392,8 @@
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
 
       <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Defect details classification (5M1E)'"
-      [options]="m1eOption1" [(myControl)]="m1eForm1"
-      (myControlChange)="onChangeAutoComplete2($event,'ng','value2'); onChangeM1e1()"></app-autocomplete2>
+        [options]="m1eOption1" [(myControl)]="m1eForm1"
+        (myControlChange)="onChangeAutoComplete2($event,'ng','value2'); onChangeM1e1()"></app-autocomplete2>
 
     </div>
   </div>
@@ -416,8 +416,8 @@
 
 
       <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Defect cause classification (5M1E)'"
-      [options]="m1eOption2" [(myControl)]="m1eForm2"
-      (myControlChange)="onChangeAutoComplete2($event,'notAccepted','value2'); onChangeM1e2()"></app-autocomplete2>
+        [options]="m1eOption2" [(myControl)]="m1eForm2"
+        (myControlChange)="onChangeAutoComplete2($event,'notAccepted','value2'); onChangeM1e2()"></app-autocomplete2>
 
     </div>
   </div>
@@ -439,8 +439,8 @@
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
 
       <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Rule 3-principle ※ Occurrence'"
-      [options]="principleOption1" [(myControl)]="principleForm1"
-      (myControlChange)="onChangeAutoComplete2($event,'noAbnormality','value2'); onChangePrinciple1()"></app-autocomplete2>
+        [options]="principleOption1" [(myControl)]="principleForm1"
+        (myControlChange)="onChangeAutoComplete2($event,'noAbnormality','value2'); onChangePrinciple1()"></app-autocomplete2>
 
     </div>
   </div>
@@ -456,8 +456,8 @@
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
 
       <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Occurrence process category'"
-      [options]="lcdOption1" [(myControl)]="lcdForm1"
-      (myControlChange)="onChangeAutoComplete2($event,'withinSpec','value1'); onChangeLcd1()"></app-autocomplete2>
+        [options]="lcdOption1" [(myControl)]="lcdForm1"
+        (myControlChange)="onChangeAutoComplete2($event,'withinSpec','value1'); onChangeLcd1()"></app-autocomplete2>
 
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
@@ -465,8 +465,8 @@
 
 
       <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Rule 3-principle ※ Outflow'"
-      [options]="principleOption2" [(myControl)]="principleForm2"
-      (myControlChange)="onChangeAutoComplete2($event,'withinSpec','value2'); onChangePrinciple2()"></app-autocomplete2>
+        [options]="principleOption2" [(myControl)]="principleForm2"
+        (myControlChange)="onChangeAutoComplete2($event,'withinSpec','value2'); onChangePrinciple2()"></app-autocomplete2>
 
     </div>
   </div>
@@ -482,8 +482,8 @@
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
 
       <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Occurrence process category details'"
-      [options]="lcdOption2" [(myControl)]="lcdForm2"
-      (myControlChange)="onChangeAutoComplete2($event,'notRecurred','value1'); onChangeLcd2()"></app-autocomplete2>
+        [options]="lcdOption2" [(myControl)]="lcdForm2"
+        (myControlChange)="onChangeAutoComplete2($event,'notRecurred','value1'); onChangeLcd2()"></app-autocomplete2>
 
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
@@ -505,9 +505,9 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
 
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Maker name'"
-      [options]="scdOption1" [(myControl)]="scdForm1"
-      (myControlChange)="onChangeAutoComplete2($event,'difference','value1'); "></app-autocomplete2>
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Maker name'" [options]="scdOption1"
+        [(myControl)]="scdForm1"
+        (myControlChange)="onChangeAutoComplete2($event,'difference','value1'); "></app-autocomplete2>
 
       <!-- <app-autocomplete *ngIf="scdCOption.length>0 " fxFlex="100" [title]="'Maker name'" [options]="scdCOption"
         [(value)]="reportInformation.difference.markerName"
@@ -561,7 +561,7 @@
       </div>
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="reportInformation.rootCauseActions.length== i+1 " mat-raised-button class="btn-success"
+      <button *ngIf="reportInformation.rootCauseActions.length== i+1 " mat-icon-button color="primary"
         style="margin-top: 10px;" (click)="onAddNewRootCauseAction()"><mat-icon>add</mat-icon>
       </button>
 
@@ -595,7 +595,7 @@
       </div>
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="reportInformation.leakCauseActions.length== i+1 " mat-raised-button class="btn-success"
+      <button *ngIf="reportInformation.leakCauseActions.length== i+1 " mat-icon-button color="primary"
         style="margin-top: 10px;" (click)="onAddNewLeakCauseAction()"><mat-icon>add</mat-icon>
       </button>
 

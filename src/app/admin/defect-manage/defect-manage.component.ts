@@ -61,7 +61,6 @@ export class DefectManageComponent implements OnInit {
     const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
     const data = await this.excelSheetToObject(ws)
     const resData = await lastValueFrom(this.$defect.import(data))
-    console.log("🚀 ~ resData:", resData)
   }
   excelSheetToObject(ws: Exceljs.Worksheet | undefined) {
     return new Promise(resolve => {

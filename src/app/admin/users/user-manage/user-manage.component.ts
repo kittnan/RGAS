@@ -49,7 +49,6 @@ export class UserManageComponent implements OnInit {
   // }
 
   onClickAddNewUser() {
-    console.log('3456789');
     this.router.navigate(['admin/users-new'])
   }
 

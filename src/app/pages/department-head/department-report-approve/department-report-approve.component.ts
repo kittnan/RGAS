@@ -147,7 +147,6 @@ export class DepartmentReportApproveComponent implements OnInit {
         })
         this.report.flow[3]['date'] = new Date()
         this.report.status = 'finish'
-        console.log("🚀 ~ this.report:", this.report)
         await lastValueFrom(this.$report.createOrUpdate([this.report]))
         const info = await this.$sendMail.approve(null, comment, this.sendTo.map((PIC: any) => PIC.email))
         this.$alert.success()

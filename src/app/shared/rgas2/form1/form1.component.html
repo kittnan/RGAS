@@ -5,31 +5,67 @@
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="30" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 b1">
-          Submit customer
+          <span class="font-semibold">
+            Submit customer
+          </span>
         </mat-card>
-        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
-          Closed/Pending
-          {{saveStatus}}
+        <mat-card *ngIf="submitFinalReportToCustomer" fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center"
+          class="b1 bg-red">
+          <span class="font-semibold">
+            Closed
+          </span>
+        </mat-card>
+        <mat-card *ngIf="!submitFinalReportToCustomer" fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center"
+          class="b1 bg-green">
+          <span class="font-semibold">
+            Pending
+          </span>
         </mat-card>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 b1">
-          Up load OBL III
+          <span class="font-semibold">
+            Up load OBL III
+          </span>
         </mat-card>
-        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1">
-          Closed/Pending
+        <mat-card *ngIf="submitFinalReportToOBL" fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center"
+          class="b1 bg-red">
+          <span class="font-semibold">
+            Closed
+          </span>
+        </mat-card>
+        <mat-card *ngIf="!submitFinalReportToOBL" fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center"
+          class="b1 bg-green">
+          <span class="font-semibold">
+            Pending
+          </span>
         </mat-card>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1 p-2">
-          Auto show analysis lead time "More than 2 months with red background color or Less than 2 months with green
-          background color"
+        <mat-card *ngIf="moreThan2Month()" fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center"
+          class="b1 p-2 bg-green">
+          <span class="font-semibold p-4">
+            Less than 2 months
+          </span>
+        </mat-card>
+        <mat-card *ngIf="!moreThan2Month()" fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center"
+          class="b1 p-2 bg-red">
+          <span class="font-semibold p-4">
+            More than 2 months
+          </span>
+        </mat-card>
+        <mat-card *ngIf="moreThan15Month()" fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center"
+          class="b1 p-2 bg-green">
+          <span class="font-semibold p-4">
+            Less than 1.5 months
+          </span>
 
         </mat-card>
-        <mat-card fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center" class="b1 p-2">
-          Auto show analysis lead time "More than 1.5 months with red background color or Less than 1.5 months with
-          green
-          background color
+        <mat-card *ngIf="!moreThan15Month()" fxFlex="50" fxLayout="row wrap" fxLayoutAlign="center center"
+          class="b1 p-2 bg-red">
+          <span class="font-semibold p-4">
+            More than 1.5 months
+          </span>
         </mat-card>
       </div>
     </div>

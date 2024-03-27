@@ -56,7 +56,6 @@ export class EngineerApproveClaimComponent implements OnInit {
       this.analysisPICOption = await lastValueFrom(this.$user.get(userParam))
       if (this.state) {
         let resData = await lastValueFrom(this.$claim.get(new HttpParams().set('registerNo', JSON.stringify([this.state.registerNo]))))
-        console.log("🚀 ~ resData:", resData)
       }
     } catch (error) {
       console.log("🚀 ~ error:", error)

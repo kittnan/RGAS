@@ -91,7 +91,6 @@ export class Rgas2Component implements OnInit {
     this.itemNumberList = newArray2
   }
   onMaxChange(emitMax: number) {
-    console.log("🚀 ~ emitMax:", emitMax)
     this.allItems = []
     this.itemMax = emitMax
     for (let i = 0; i < emitMax; i++) {
@@ -122,8 +121,6 @@ export class Rgas2Component implements OnInit {
       ...this.dataStructure,
       index: this.allItems.length + 1
     })
-    alert()
-    console.log(this.allItems);
 
   }
 

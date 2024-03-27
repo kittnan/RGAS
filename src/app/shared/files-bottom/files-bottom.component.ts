@@ -28,7 +28,6 @@ export class FilesBottomComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      console.log(this.data);
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -40,7 +39,6 @@ export class FilesBottomComponent implements OnInit {
     window.open(url, '_blank');
   }
   async onDelete(item: any) {
-    console.log(this.data);
 
     if (this.data.type == 'claim') {
       this.data.files = this.data.files.filter((file: any) => file.delete_path != item.delete_path)

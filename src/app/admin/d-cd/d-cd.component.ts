@@ -41,9 +41,7 @@ export class DCdComponent implements OnInit {
     await wb.xlsx.load(file);
     const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
     const data = await this.excelSheetToObject(ws)
-    console.log("🚀 ~ data:", data)
     const resData = await lastValueFrom(this.$d_cd.import(data))
-    console.log("🚀 ~ resData:", resData)
   }
   excelSheetToObject(ws: Exceljs.Worksheet | undefined) {
     return new Promise(resolve => {

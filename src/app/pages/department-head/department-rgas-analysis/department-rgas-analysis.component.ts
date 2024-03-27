@@ -83,7 +83,6 @@ export class DepartmentRgasAnalysisComponent implements OnInit {
             finalReportOBL: finalReportOBL ? finalReportOBL : this.form3.finalReportOBL,
             questionAnswers: questionAnswers && questionAnswers.length > 0 ? questionAnswers : this.form3.questionAnswers,
           }
-          console.log(this.form3);
 
         }
       }

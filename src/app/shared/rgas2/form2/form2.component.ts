@@ -269,7 +269,6 @@ export class Form2Component implements OnInit {
 
   // todo open file bottom
   openBottom(files: any, key?: any) {
-    console.log("🚀 ~ key:", key)
     this._bottomSheet.open(FilesBottomComponent, {
       data: {
         files: files,

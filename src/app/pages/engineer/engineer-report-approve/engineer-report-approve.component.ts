@@ -90,7 +90,6 @@ export class EngineerReportApproveComponent implements OnInit {
         const resReport = await lastValueFrom(this.$report.get(httpParams))
         if (resReport && resReport.length > 0) {
           this.report = resReport[0]
-          console.log("🚀 ~ this.report:", this.report)
           if (this.report && this.report.flow.length == 0) {
             this.report.flow = this.flowSelected
           }
@@ -130,7 +129,6 @@ export class EngineerReportApproveComponent implements OnInit {
       }).afterClosed().subscribe(async (comment: any) => {
         if (comment === false) throw ''
         this.report['PIC'] = this.sendTo
-        console.log(this.report['PICHistory']);
 
         this.report['PICHistory'] = this.report['PICHistory'] ? [...this.report['PICHistory'], {
           action: 'engineer',

@@ -78,7 +78,6 @@ export class Rgas1Component implements OnInit {
 
   // todo search by option
   onSearchSubmit() {
-    console.log(this.fillSearch);
   }
 
   // todo search table

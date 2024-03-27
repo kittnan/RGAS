@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   })
   userLogin: any
   showText: boolean = false
+  SSOCheck: boolean = false
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
@@ -49,10 +50,19 @@ export class LoginComponent implements OnInit {
       let el: any = document.getElementById('username')?.focus()
     }, 1000);
   }
+
+  onCheckSSO(event: any) {
+    let value = event.checked
+    this.SSOCheck = value
+  }
   onSubmit() {
     try {
       const { username, password }: any = this.loginForm.value;
-      this.onLogin(username, password)
+      if (this.SSOCheck) {
+        this.onLoginSSO(username, password)
+      } else {
+        this.onLogin(username, password)
+      }
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
@@ -63,7 +73,6 @@ export class LoginComponent implements OnInit {
         username: username,
         password: password
       }))
-      console.log("🚀 ~ auth:", auth)
       if (auth) {
         this.$local.setToken(auth.access_token)
         this.$local.setRefreshToken(auth.refresh_token)
@@ -72,7 +81,6 @@ export class LoginComponent implements OnInit {
           ...auth.profile,
           ...auth.adAcc
         }
-        console.log("🚀 ~ profiles:", profiles)
         this.$local.setProfile(profiles)
         if (profiles && profiles.access && profiles.access.length === 1) {
           this.goLink(profiles.access[0])
@@ -86,7 +94,7 @@ export class LoginComponent implements OnInit {
         title: "Login fail",
         icon: 'error',
         showConfirmButton: false,
-        heightAuto:false,
+        heightAuto: false,
         timer: 1000
       }).then(() => {
         this.loginForm.patchValue({
@@ -96,26 +104,44 @@ export class LoginComponent implements OnInit {
       })
     }
   }
-  // async onLogin(username: any, password: any) {
-  //   try {
-  //     const userLogin = await lastValueFrom(this.$user.login({
-  //       username: username,
-  //       password: password
-  //     }))
-  //     if (userLogin && userLogin.length > 0) {
-  //       this.$local.setProfile(userLogin[0])
-  //       this.userLogin = userLogin[0]
-  //       if (userLogin && userLogin.access && userLogin.access.length === 1) {
-  //         this.goLink(userLogin.access[0])
-  //       }
-  //     } else {
-  //       this.showText = true
-  //     }
-  //   } catch (error) {
-  //     console.log("🚀 ~ error:", error)
-  //     alert('')
-  //   }
-  // }
+  async onLoginSSO(username: any, password: any) {
+    try {
+      const auth: any = await lastValueFrom(this.http.post(`${environment.API}/auth/loginSSO`, {
+        username: username,
+        password: password
+      }))
+      if (auth) {
+        this.$local.setToken(auth.access_token)
+        this.$local.setRefreshToken(auth.refresh_token)
+        this.userLogin = auth.profile
+        let profiles = {
+          ...auth.profile,
+          ...auth.adAcc
+        }
+        this.$local.setProfile(profiles)
+        if (profiles && profiles.access && profiles.access.length === 1) {
+          this.goLink(profiles.access[0])
+        }
+      } else {
+        this.showText = true
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+      Swal.fire({
+        title: "Login fail",
+        icon: 'error',
+        showConfirmButton: false,
+        heightAuto: false,
+        timer: 1000
+      }).then(() => {
+        this.loginForm.patchValue({
+          username: '',
+          password: ''
+        })
+      })
+    }
+  }
+
 
   goLink(access: any) {
     this.$loader.start()

@@ -183,8 +183,6 @@ export class Form3Component implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
 
-      console.clear()
-      console.log(this.reportInformation);
       if(this.reportInformation){
         this.dcdForm1.patchValue(this.reportInformation.ng.value1)
         this.m1eForm1.patchValue(this.reportInformation.ng.value2)
@@ -370,25 +368,11 @@ export class Form3Component implements OnInit {
 
   // todo onClickDeleteArr
   onClickDeleteArr(key: string, i: number) {
-    console.log("🚀 ~ key:", key)
-    console.log("🚀 ~ i:", i)
     this.deleteArrChange.emit({ key: key, index: i })
   }
 
 
   onSaveReportInformation() {
-    console.clear()
-    console.log(this.dcdForm1.value);
-    console.log(this.dcdForm2.value);
-    console.log(this.dcdForm3.value);
-    console.log(this.lcdForm1.value);
-    console.log(this.lcdForm2.value);
-    console.log(this.m1eForm1.value);
-    console.log(this.m1eForm2.value);
-    console.log(this.principleForm1.value);
-    console.log(this.principleForm2.value);
-
-
       this.reportInformation.ng.value1 = this.dcdForm1.value
       this.reportInformation.ng.value2 = this.m1eForm1.value
 

@@ -262,7 +262,6 @@ export class Form1MultipleComponent implements OnInit {
         })
         this.fileUpload.nativeElement.value = ''
       }
-      console.log('Excel file successfully read.');
     } catch (error) {
       console.error('Error reading Excel file:', error);
     }
@@ -274,7 +273,6 @@ export class Form1MultipleComponent implements OnInit {
     return value
   }
   clearValue(key: string) {
-    console.log(this.item.get(key));
     this.item.get(key)?.patchValue(null)
   }
   public objectComparisonFunction = function (option: any, value: any): boolean {

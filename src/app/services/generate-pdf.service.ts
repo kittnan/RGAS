@@ -18,7 +18,6 @@ export class GeneratePdfService {
       this.$loader.start();
       setTimeout(async () => {
         const div: any = document.querySelectorAll('#print');
-        console.log(div.length);
 
         const options = {
           background: 'white',
@@ -34,9 +33,7 @@ export class GeneratePdfService {
           const bufferY = 1;
           const imgProps = (<any>doc).getImageProperties(img);
           const pdfWidth = doc.internal.pageSize.getWidth() - 1 * bufferX;
-          console.log("🚀 ~ pdfWidth:", pdfWidth)
           const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-          console.log("🚀 ~ pdfHeight:", pdfHeight)
 
           if (div.length === 1) {
             doc = await doc.addImage(

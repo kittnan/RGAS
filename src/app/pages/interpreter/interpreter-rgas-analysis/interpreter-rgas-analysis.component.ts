@@ -87,7 +87,6 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
             finalReportOBL: finalReportOBL ? finalReportOBL : this.form3.finalReportOBL,
             questionAnswers: questionAnswers && questionAnswers.length > 0 ? questionAnswers : this.form3.questionAnswers,
           }
-          console.log(this.form3);
 
         }
       }
@@ -123,7 +122,6 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
       const resFile = await lastValueFrom(this.$fileUpload.create(formData))
       this.form3[event.key] = resData[0]
       let data = this.form3[event.key]
-      console.log("🚀 ~ data:", data)
       data['files'] = [...data['files'], ...resFile]
       await lastValueFrom(this.$report.createOrUpdate([data]))
     }
@@ -161,7 +159,6 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
 
   async approveChange(event: any) {
     try {
-      console.log("🚀 ~ event:", event)
       if (event?.data.status != 'interpreter') {
         this.router.navigate(['interpreter/report-view'], {
           queryParams: {
@@ -195,7 +192,6 @@ export class InterpreterRgasAnalysisComponent implements OnInit {
   }
   approveArrChange(event: any) {
     try {
-      console.log("🚀 ~ event:", event)
       if (event?.data.status != 'interpreter') {
         this.router.navigate(['interpreter/report-view'], {
           queryParams: {

@@ -4,7 +4,7 @@
   </div>
   <ng-container *ngIf="show">
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-      <app-form1 [form]="form" (formChange)="formChange()"></app-form1>
+      <app-form1 [form]="form" [form2]="form2" [form3]="form3" (formChange)="formChange()"></app-form1>
     </div>
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
       <app-form2 fxFlex="100" [claim]="form" [form2]="form2" (onSaveChange)="onSaveChangeForm2($event)"

@@ -126,12 +126,10 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         let resData = await lastValueFrom(this.$claim.get(param))
         if (resData && resData.length > 0) {
           const resInformation = await lastValueFrom(this.$information.get(param))
-          if (resInformation && resInformation.length > 0){
+          if (resInformation && resInformation.length > 0) {
             this.information = resInformation[0]
-            console.log("🚀 ~ this.information:", this.information)
           }
           this.form = resData[0]
-          console.log("🚀 ~ this.form:", this.form)
           const resResult = await lastValueFrom(this.$result.get(param))
           this.form2 = resResult[0]
           const resForm3 = await lastValueFrom(this.$report.get(param))
@@ -162,7 +160,6 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   async formChange() {
     this.form.status = 'analysis'
     const resData = await lastValueFrom(this.$claim.createOrUpdate(this.form))
-    console.log("🚀 ~ resData:", resData)
     this.$alert.success()
   }
 
@@ -240,15 +237,16 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   }
 
   // todo event send report
-  async submitReportChange($event: any) {
+  async submitReportChange(event: any) {
+    console.log("🚀 ~ event:", event)
     let dataUpdate = {
       registerNo: this.form.registerNo,
-      name: $event.key,
-      ...$event.data,
+      name: event.key,
+      ...event.data,
       no: this.form.no
     }
-    const resData = await lastValueFrom(this.$report.create([dataUpdate]))
-    this.form3[$event.key] = resData[0]
+    // const resData = await lastValueFrom(this.$report.create([dataUpdate]))
+    // this.form3[event.key] = resData[0]
 
     // this.router.navigate(['engineer/report-approve'], {
     //   queryParams: {
@@ -256,6 +254,16 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     //     type: 'preReport'
     //   }
     // })
+
+    if (!dataUpdate._id) {
+      const res = await lastValueFrom(this.$report.create(dataUpdate))
+      this.form3 = res
+      this.$alert.success()
+    } else {
+      await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
+      // this.form3 = event
+      this.$alert.success()
+    }
   }
 
   async uploadChange(event: any) {
@@ -282,7 +290,6 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       const resFile = await lastValueFrom(this.$fileUpload.create(formData))
       this.form3[event.key] = resData[0]
       let data = this.form3[event.key]
-      console.log("🚀 ~ data:", data)
       data['files'] = [...data['files'], ...resFile]
       await lastValueFrom(this.$report.createOrUpdate([data]))
     }

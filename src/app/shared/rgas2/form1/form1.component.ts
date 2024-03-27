@@ -120,6 +120,8 @@ export class Form1Component implements OnInit {
     flowHistory: [],
 
   }
+  @Input() form2: any = null
+  @Input() form3: any = null
   @Input() saveStatus: boolean = false
 
 
@@ -257,12 +259,15 @@ export class Form1Component implements OnInit {
     if (this.form && this.form.registerNo) {
       this.setDefaultValue()
     }
+
+
+
+
   }
 
   // todo set default value
   setDefaultValue() {
     // this.form.calendarYear = moment(this.form.calendarYear)
-    // console.log(this.form.calendarYear);
 
     // this.modelCodeForm.patchValue(this.form.modelCode)
   }
@@ -306,7 +311,6 @@ export class Form1Component implements OnInit {
         // this.maxChange.emit(this.form.qty)
         this.fileUploadOBL.nativeElement.value = ''
       }
-      console.log('Excel file successfully read.');
     } catch (error) {
       console.error('Error reading Excel file:', error);
     }
@@ -425,7 +429,7 @@ export class Form1Component implements OnInit {
             action: 'request',
             date: new Date(),
             user: this.userLogin,
-            comment:comment
+            comment: comment
           }
           this.form.flowHistory.push(obj)
           this.submitChange.emit(this.form)
@@ -517,6 +521,45 @@ export class Form1Component implements OnInit {
   // todo emitSaveStatus
   emitSaveStatus() {
     this.saveStatusChange.emit(true)
+  }
+
+  // todo condition show submit final report customer
+  submitFinalReportToCustomer() {
+    if (this.form3 && this.form3.finalReport.files && this.form3.finalReport.files.length > 0) {
+      return true
+    }
+    return false
+  }
+
+  // todo condition show submit  final report OBL
+  submitFinalReportToOBL() {
+    if (this.form3 && this.form3.finalReportOBL.files && this.form3.finalReportOBL.files.length > 0) {
+      return true
+    }
+    return false
+  }
+
+  // todo css bg1
+  moreThan2Month() {
+    if (this.form2 && this.form2.partReceivingDate && this.form3 && this.form3.finalReport.dateSubmitToCustomer) {
+      const nextMonth = moment(this.form2.partReceivingDate).add(2, 'month')
+      const today = moment(this.form3.finalReport.dateSubmitToCustomer)
+      if (today > nextMonth) {
+        return false
+      }
+    }
+    return true
+  }
+  // todo css analysis lead time text
+  moreThan15Month() {
+    if (this.form2 && this.form2.partReceivingDate && this.form3 && this.form3.finalReport.dateSubmitToCustomer) {
+      const nextMonth = moment(this.form2.partReceivingDate).add(1.5, 'month')
+      const today = moment(this.form3.finalReport.dateSubmitToCustomer)
+      if (today > nextMonth) {
+        return false
+      }
+    }
+    return true
   }
 
   // // todo check PIC

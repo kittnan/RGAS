@@ -64,13 +64,11 @@ export class OperatorRgas2Component implements OnInit {
     private $loader: NgxUiLoaderService
   ) {
     this.route.queryParams.subscribe(async (linkParam: any) => {
-      console.log("🚀 ~ linkParam:", linkParam)
       if (linkParam && linkParam['registerNo']) {
         let params: HttpParams = new HttpParams()
         params = params.set('registerNo', JSON.stringify([linkParam['registerNo']]))
         const resData: any = await lastValueFrom($claim.get(params))
         this.allItems = resData
-        console.log("🚀 ~ this.allItems:", this.allItems)
         this.currentItem = this.allItems[0]
         // this.show = true
       } else {
@@ -85,7 +83,6 @@ export class OperatorRgas2Component implements OnInit {
 
   }
   // onMaxChange(emitMax: number) {
-  //   console.log("🚀 ~ emitMax:", emitMax)
   //   this.allItems = []
   //   this.itemMax = emitMax
   //   for (let i = 0; i < emitMax; i++) {
@@ -100,11 +97,9 @@ export class OperatorRgas2Component implements OnInit {
     // let item = this.currentItem
     // item['status'] = 'receive information'
     // item['no'] = this.itemNowNumber
-    // console.log("🚀 ~ item:", item)
     const resData = await lastValueFrom(this.$claim.createOrUpdate(this.currentItem))
     // if (resData && resData.length > 0) {
     //   this.currentItem = resData[0]
-    //   console.log("🚀 ~ this.currentItem:", this.currentItem)
     // }
   }
 
