@@ -384,16 +384,17 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <app-autocomplete *ngIf="defectPhenomenonOption.length>0" fxFlex="100"
-        [title]="'Defect phenomenon (Major classification)'" [options]="defectPhenomenonOption"
-        [(value)]="reportInformation.ng.phenomenon"
-        (valueChange)="onChangeAutoComplete($event,'ng','phenomenon'); getDetailPhe();"></app-autocomplete>
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Defect phenomenon (Major classification)'"
+        [options]="dcdOption1" [(myControl)]="dcdForm1"
+        (myControlChange)="onChangeAutoComplete2($event,'ng','value1'); onChangeDcd1()"></app-autocomplete2>
+
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-      <app-autocomplete *ngIf="m1eDefectDetailOption.length>0 " fxFlex="100"
-        [title]="'Defect details classification (5M1E)'" [options]="m1eDefectDetailOption"
-        [(value)]="reportInformation.ng.detail"
-        (valueChange)="onChangeAutoComplete($event,'ng','detail');"></app-autocomplete>
+
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Defect details classification (5M1E)'"
+      [options]="m1eOption1" [(myControl)]="m1eForm1"
+      (myControlChange)="onChangeAutoComplete2($event,'ng','value2'); onChangeM1e1()"></app-autocomplete2>
+
     </div>
   </div>
 
@@ -407,18 +408,17 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
 
-      <app-autocomplete *ngIf="detailedPhenomenonOption.length>0 " fxFlex="100"
-        [title]="'Detailed phenomenon (Middle classification)'" [options]="detailedPhenomenonOption"
-        [(value)]="reportInformation.notAccepted.phenomenon"
-        (valueChange)="onChangeAutoComplete($event,'notAccepted','phenomenon');getCause();"></app-autocomplete>
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100"
+        [title]="'Detailed phenomenon (Middle classification)'" [options]="dcdOption2" [(myControl)]="dcdForm2"
+        (myControlChange)="onChangeAutoComplete2($event,'notAccepted','value1');onChangeDcd2();"></app-autocomplete2>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
 
 
-      <app-autocomplete *ngIf="m1eCauseDetailOption.length>0 " fxFlex="100"
-        [title]="'Defect cause classification (5M1E)'" [options]="m1eCauseDetailOption"
-        [(value)]="reportInformation.notAccepted.cause"
-        (valueChange)="onChangeAutoComplete($event,'notAccepted','cause');"></app-autocomplete>
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Defect cause classification (5M1E)'"
+      [options]="m1eOption2" [(myControl)]="m1eForm2"
+      (myControlChange)="onChangeAutoComplete2($event,'notAccepted','value2'); onChangeM1e2()"></app-autocomplete2>
+
     </div>
   </div>
 
@@ -432,16 +432,16 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
 
-      <app-autocomplete *ngIf="causeOption.length>0 " fxFlex="100" [title]="'Cause (Minor classification)'"
-        [options]="causeOption" [(value)]="reportInformation.noAbnormality.cause"
-        (valueChange)="onChangeAutoComplete($event,'noAbnormality','cause');"></app-autocomplete>
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Cause (Minor classification)'"
+        [options]="dcdOption3" [(myControl)]="dcdForm3"
+        (myControlChange)="onChangeAutoComplete2($event,'noAbnormality','value1'); onChangeDcd3()"></app-autocomplete2>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
 
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Rule 3-principle ※ Occurrence'"
+      [options]="principleOption1" [(myControl)]="principleForm1"
+      (myControlChange)="onChangeAutoComplete2($event,'noAbnormality','value2'); onChangePrinciple1()"></app-autocomplete2>
 
-      <app-autocomplete *ngIf="occurrenceOption.length>0 " fxFlex="100" [title]="'Rule 3-principle ※ Occurrence'"
-        [options]="occurrenceOption" [(value)]="reportInformation.noAbnormality.occur"
-        (valueChange)="onChangeAutoComplete($event,'noAbnormality','occur');"></app-autocomplete>
     </div>
   </div>
 
@@ -455,16 +455,19 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
 
-      <app-autocomplete *ngIf="lcdBOption.length>0 " fxFlex="100" [title]="'Occurrence process category'"
-        [options]="lcdBOption" [(value)]="reportInformation.withinSpec.occur"
-        (valueChange)="onChangeAutoComplete($event,'withinSpec','occur');getLcdC();"></app-autocomplete>
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Occurrence process category'"
+      [options]="lcdOption1" [(myControl)]="lcdForm1"
+      (myControlChange)="onChangeAutoComplete2($event,'withinSpec','value1'); onChangeLcd1()"></app-autocomplete2>
+
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
 
 
-      <app-autocomplete *ngIf="principleCOption.length>0 " fxFlex="100" [title]="'Rule 3-principle ※ Outflow'"
-        [options]="principleCOption" [(value)]="reportInformation.withinSpec.outflow"
-        (valueChange)="onChangeAutoComplete($event,'withinSpec','outflow');"></app-autocomplete>
+
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Rule 3-principle ※ Outflow'"
+      [options]="principleOption2" [(myControl)]="principleForm2"
+      (myControlChange)="onChangeAutoComplete2($event,'withinSpec','value2'); onChangePrinciple2()"></app-autocomplete2>
+
     </div>
   </div>
 
@@ -478,14 +481,15 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
 
-      <app-autocomplete *ngIf="lcdCOption.length>0 " fxFlex="100" [title]="'Occurrence process category details'"
-        [options]="lcdCOption" [(value)]="reportInformation.notRecurred.process"
-        (valueChange)="onChangeAutoComplete($event,'notRecurred','process');"></app-autocomplete>
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Occurrence process category details'"
+      [options]="lcdOption2" [(myControl)]="lcdForm2"
+      (myControlChange)="onChangeAutoComplete2($event,'notRecurred','value1'); onChangeLcd2()"></app-autocomplete2>
+
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label>IATF no.</mat-label>
-        <input matInput [(ngModel)]="reportInformation.notRecurred.IATFNo">
+        <input matInput [(ngModel)]="reportInformation.notRecurred.value2">
       </mat-form-field>
     </div>
   </div>
@@ -500,9 +504,14 @@
       </mat-form-field>
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
-      <app-autocomplete *ngIf="scdCOption.length>0 " fxFlex="100" [title]="'Maker name'" [options]="scdCOption"
+
+      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Maker name'"
+      [options]="scdOption1" [(myControl)]="scdForm1"
+      (myControlChange)="onChangeAutoComplete2($event,'difference','value1'); "></app-autocomplete2>
+
+      <!-- <app-autocomplete *ngIf="scdCOption.length>0 " fxFlex="100" [title]="'Maker name'" [options]="scdCOption"
         [(value)]="reportInformation.difference.markerName"
-        (valueChange)="onChangeAutoComplete($event,'difference','markerName');"></app-autocomplete>
+        (valueChange)="onChangeAutoComplete2($event,'difference','value1');"></app-autocomplete> -->
     </div>
 
   </div>

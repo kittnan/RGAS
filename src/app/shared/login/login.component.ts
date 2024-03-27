@@ -23,7 +23,7 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
 
-  readonly loginForm = new FormGroup({
+  loginForm = new FormGroup({
     username: new FormControl('', { validators: [Validators.required] }),
     password: new FormControl('', { validators: [Validators.required] }),
   })
@@ -82,7 +82,18 @@ export class LoginComponent implements OnInit {
       }
     } catch (error) {
       console.log("🚀 ~ error:", error)
-      alert('')
+      Swal.fire({
+        title: "Login fail",
+        icon: 'error',
+        showConfirmButton: false,
+        heightAuto:false,
+        timer: 1000
+      }).then(() => {
+        this.loginForm.patchValue({
+          username: '',
+          password: ''
+        })
+      })
     }
   }
   // async onLogin(username: any, password: any) {

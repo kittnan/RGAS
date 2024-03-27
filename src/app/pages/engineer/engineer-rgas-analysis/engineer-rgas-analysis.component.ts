@@ -58,32 +58,32 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   information: any = {
     ng: {
       qty: null,
-      phenomenon: null,
-      detail: null
+      value1: null,
+      value2: null
     },
     notAccepted: {
       qty: null,
-      phenomenon: null,
-      cause: null
+      value1: null,
+      value2: null
     },
     noAbnormality: {
       qty: null,
-      cause: null,
-      occur: null
+      value1: null,
+      value2: null
     },
     withinSpec: {
       qty: null,
-      occur: null,
-      outflow: null,
+      value1: null,
+      value2: null
     },
     notRecurred: {
       qty: null,
-      process: null,
-      IATFNo: null,
+      value1: null,
+      value2: null
     },
     difference: {
       qty: null,
-      PIC: null,
+      value1: null
     },
     causeByCustomer: null,
     outWarranty: null,

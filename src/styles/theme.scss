@@ -102,6 +102,8 @@ $primary: mat-palette($vt-primary);
 // $accent: mat-palette($mat-pink, A200, A100, A400);
 $accent: mat-palette($vt-accent, A200, A100, A400);
 
+
+
 .theme {
   &--light {
     $theme: mat-light-theme($primary, $accent);
@@ -191,6 +193,7 @@ $accent: mat-palette($vt-accent, A200, A100, A400);
       background-color: #4c55a5;
       color: white;
     }
+
 
 
   }

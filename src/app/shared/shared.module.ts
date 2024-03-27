@@ -28,6 +28,7 @@ import { Form2ViewComponent } from './rgas2/form2-view/form2-view.component';
 import { ReportViewComponent } from './report-view/report-view.component';
 import { YearMonthComponent } from './year-month/year-month.component';
 import { DialogCommentComponent } from './dialog-comment/dialog-comment.component';
+import { Autocomplete2Component } from './autocomplete2/autocomplete2.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -67,6 +68,7 @@ let items = [
     Form2ViewComponent,
     ReportViewComponent,
     YearMonthComponent,
+    Autocomplete2Component,
   ],
   imports: [
     CommonModule,
@@ -94,6 +96,7 @@ let items = [
     Form2ViewComponent,
     ReportViewComponent,
     YearMonthComponent,
+    Autocomplete2Component,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
