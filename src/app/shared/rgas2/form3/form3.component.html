@@ -15,7 +15,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label>Due Date</mat-label>
+        <mat-label class="mat-label-custom" >Due Date</mat-label>
         <input matInput [(ngModel)]="form.preReport.dueDate" [matDatepicker]="preReportDueDate_dp">
         <mat-datepicker-toggle matSuffix [for]="preReportDueDate_dp"></mat-datepicker-toggle>
         <mat-datepicker #preReportDueDate_dp></mat-datepicker>
@@ -23,7 +23,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label>Date Submit To Customer</mat-label>
+        <mat-label class="mat-label-custom" >Date Submit To Customer</mat-label>
         <input matInput [(ngModel)]="form.preReport.dateSubmitToCustomer"
           [matDatepicker]="preReportDateSubmitToCustomer_dp">
         <mat-datepicker-toggle matSuffix [for]="preReportDateSubmitToCustomer_dp"></mat-datepicker-toggle>
@@ -87,7 +87,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Due Date</mat-label>
+          <mat-label class="mat-label-custom" >Due Date</mat-label>
           <input matInput [(ngModel)]="interim.dueDate" [matDatepicker]="interimDueDate_dp">
           <mat-datepicker-toggle matSuffix [for]="interimDueDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #interimDueDate_dp></mat-datepicker>
@@ -95,7 +95,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Date Submit To Customer</mat-label>
+          <mat-label class="mat-label-custom" >Date Submit To Customer</mat-label>
           <input matInput [(ngModel)]="interim.dateSubmitToCustomer" [matDatepicker]="interimDateSubmitToCustomer_dp">
           <mat-datepicker-toggle matSuffix [for]="interimDateSubmitToCustomer_dp"></mat-datepicker-toggle>
           <mat-datepicker #interimDateSubmitToCustomer_dp></mat-datepicker>
@@ -172,7 +172,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label>Due Date</mat-label>
+        <mat-label class="mat-label-custom" >Due Date</mat-label>
         <input matInput [(ngModel)]="form.finalReport.dueDate" [matDatepicker]="finalReportDueDate_dp">
         <mat-datepicker-toggle matSuffix [for]="finalReportDueDate_dp"></mat-datepicker-toggle>
         <mat-datepicker #finalReportDueDate_dp></mat-datepicker>
@@ -180,7 +180,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label>Date Submit To Customer</mat-label>
+        <mat-label class="mat-label-custom" >Date Submit To Customer</mat-label>
         <input matInput [(ngModel)]="form.finalReport.dateSubmitToCustomer"
           [matDatepicker]="finalReportDateSubmitToCustomer_dp">
         <mat-datepicker-toggle matSuffix [for]="finalReportDateSubmitToCustomer_dp"></mat-datepicker-toggle>
@@ -248,7 +248,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label>Due Date</mat-label>
+        <mat-label class="mat-label-custom" >Due Date</mat-label>
         <input matInput [(ngModel)]="form.finalReportOBL.dueDate" [matDatepicker]="finalReportOBLDueDate_dp">
         <mat-datepicker-toggle matSuffix [for]="finalReportOBLDueDate_dp"></mat-datepicker-toggle>
         <mat-datepicker #finalReportOBLDueDate_dp></mat-datepicker>
@@ -256,7 +256,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label>Date To Upload</mat-label>
+        <mat-label class="mat-label-custom" >Date To Upload</mat-label>
         <input matInput [(ngModel)]="form.finalReportOBL.dateSubmitToCustomer"
           [matDatepicker]="finalReportOBLDateSubmitToCustomer_dp">
         <mat-datepicker-toggle matSuffix [for]="finalReportOBLDateSubmitToCustomer_dp"></mat-datepicker-toggle>
@@ -265,7 +265,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-1">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>PIC</mat-label>
+        <mat-label class="mat-label-custom" >PIC</mat-label>
         <mat-select [(ngModel)]="form.finalReportOBL.PIC" [compareWith]="objectComparisonFunction">
           <mat-option *ngFor="let item of PICOption" [value]="item">
             {{displayName(item)}}
@@ -296,7 +296,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Due Date</mat-label>
+          <mat-label class="mat-label-custom" >Due Date</mat-label>
           <input matInput [(ngModel)]="questionAnswer.dueDate" [matDatepicker]="questionAnswerDueDate_dp">
           <mat-datepicker-toggle matSuffix [for]="questionAnswerDueDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #questionAnswerDueDate_dp></mat-datepicker>
@@ -304,7 +304,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Date Submit To Customer</mat-label>
+          <mat-label class="mat-label-custom" >Date Submit To Customer</mat-label>
           <input matInput [(ngModel)]="questionAnswer.dateSubmitToCustomer"
             [matDatepicker]="questionAnswerDueSubmitToCustomer_dp">
           <mat-datepicker-toggle matSuffix [for]="questionAnswerDueSubmitToCustomer_dp"></mat-datepicker-toggle>
@@ -378,7 +378,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>NG</mat-label>
+        <mat-label class="mat-label-custom" >NG</mat-label>
         <input matInput type="number" [(ngModel)]="reportInformation.ng.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
@@ -401,7 +401,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Not accepted</mat-label>
+        <mat-label class="mat-label-custom" >Not accepted</mat-label>
         <input matInput type="number" [(ngModel)]="reportInformation.notAccepted.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
@@ -425,7 +425,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>No abnormality</mat-label>
+        <mat-label class="mat-label-custom" >No abnormality</mat-label>
         <input matInput type="number" [(ngModel)]="reportInformation.noAbnormality.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
@@ -448,7 +448,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Within spec</mat-label>
+        <mat-label class="mat-label-custom" >Within spec</mat-label>
         <input matInput type="number" [(ngModel)]="reportInformation.withinSpec.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
@@ -474,7 +474,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Not recurred</mat-label>
+        <mat-label class="mat-label-custom" >Not recurred</mat-label>
         <input matInput type="number" [(ngModel)]="reportInformation.notRecurred.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
@@ -488,7 +488,7 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>IATF no.</mat-label>
+        <mat-label class="mat-label-custom" >IATF no.</mat-label>
         <input matInput [(ngModel)]="reportInformation.notRecurred.value2">
       </mat-form-field>
     </div>
@@ -498,7 +498,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Difference between Report and Real cause</mat-label>
+        <mat-label class="mat-label-custom" >Difference between Report and Real cause</mat-label>
         <input matInput type="number" [(ngModel)]="reportInformation.difference.qty">
         <span matSuffix>pcs</span>
       </mat-form-field>
@@ -519,7 +519,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Caused by Customer </mat-label>
+        <mat-label class="mat-label-custom" >Caused by Customer </mat-label>
         <input matInput [(ngModel)]="reportInformation.causeByCustomer">
         <span matSuffix>pcs</span>
       </mat-form-field>
@@ -528,7 +528,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Out of Warranty by Customer </mat-label>
+        <mat-label class="mat-label-custom" >Out of Warranty by Customer </mat-label>
         <input matInput [(ngModel)]="reportInformation.outWarranty">
         <span matSuffix>pcs</span>
       </mat-form-field>
@@ -537,7 +537,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Root cause </mat-label>
+        <mat-label class="mat-label-custom" >Root cause </mat-label>
         <input matInput [(ngModel)]="reportInformation.rootCause">
       </mat-form-field>
     </div>
@@ -547,13 +547,13 @@
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Root cause action </mat-label>
+          <mat-label class="mat-label-custom" >Root cause action </mat-label>
           <input matInput [(ngModel)]="rootCauseAction.value">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Effective date</mat-label>
+          <mat-label class="mat-label-custom" >Effective date</mat-label>
           <input matInput [matDatepicker]="rootCauseActionEffectiveDate_dp" [(ngModel)]="rootCauseAction.date">
           <mat-datepicker-toggle matSuffix [for]="rootCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #rootCauseActionEffectiveDate_dp></mat-datepicker>
@@ -571,7 +571,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label>Leak cause </mat-label>
+        <mat-label class="mat-label-custom" >Leak cause </mat-label>
         <input matInput [(ngModel)]="reportInformation.leakCause">
       </mat-form-field>
     </div>
@@ -581,13 +581,13 @@
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Root cause action </mat-label>
+          <mat-label class="mat-label-custom" >Root cause action </mat-label>
           <input matInput [(ngModel)]="leakCauseAction.value">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Effective date</mat-label>
+          <mat-label class="mat-label-custom" >Effective date</mat-label>
           <input matInput [matDatepicker]="leakCauseActionEffectiveDate_dp" [(ngModel)]="leakCauseAction.date">
           <mat-datepicker-toggle matSuffix [for]="leakCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #leakCauseActionEffectiveDate_dp></mat-datepicker>

@@ -10,12 +10,12 @@
     <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20">
       <div class="flex justify-around items-center me-4 gap-1">
         <mat-slide-toggle color="warn" [checked]="theme" (change)="toggleTheme()">
-          <mat-icon *ngIf="theme" class="mat-18">dark_mode</mat-icon>
-          <mat-icon *ngIf="!theme" class="mat-18">light_mode</mat-icon>
+          <mat-icon *ngIf="theme" class="mat-18 theme-toggle">dark_mode</mat-icon>
+          <mat-icon *ngIf="!theme" class="mat-18 theme-toggle">light_mode</mat-icon>
         </mat-slide-toggle>
       </div>
       <button (click)="onClickName()" >
-        <div class="flex justify-around items-center gap-1">
+        <div class="flex justify-around items-center gap-1 font-bold" style="letter-spacing: 1px;">
           <mat-icon class="mat-18">
             contact_mail
           </mat-icon>

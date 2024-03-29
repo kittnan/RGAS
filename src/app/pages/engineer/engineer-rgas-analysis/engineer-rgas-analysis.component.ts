@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
+import { HttpDocumentVerifiesService } from 'src/app/https/http-document-verifies.service';
 import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { HttpReportInformationService } from 'src/app/https/http-report-information.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
@@ -54,6 +55,15 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         date: null,
       }
     ],
+  }
+  form4: any = {
+    revise: null,
+    reviseDueDate: null,
+    reviseDate: null,
+    verify: null,
+    verifyDate: null,
+    apply: null,
+    applyDate: null,
   }
   information: any = {
     ng: {
@@ -116,7 +126,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     private $fileUpload: HttpFileUploadService,
     private $local: LocalStoreService,
     private $alert: SweetAlertGeneralService,
-    private $information: HttpReportInformationService
+    private $information: HttpReportInformationService,
+    private $documentVerify: HttpDocumentVerifiesService
   ) {
     this.route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
@@ -129,9 +140,9 @@ export class EngineerRgasAnalysisComponent implements OnInit {
           if (resInformation && resInformation.length > 0) {
             this.information = resInformation[0]
           }
-          this.form = resData[0]
+          this.form = resData.length > 0 ? resData[0] : null
           const resResult = await lastValueFrom(this.$result.get(param))
-          this.form2 = resResult[0]
+          this.form2 = resResult.length > 0 ? resResult[0] : null
           const resForm3 = await lastValueFrom(this.$report.get(param))
           const preReport = resForm3.find((item: any) => item.name == 'preReport')
           const interims = resForm3.filter((item: any) => item.name == 'interims')
@@ -147,6 +158,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
             questionAnswers: questionAnswers && questionAnswers.length > 0 ? questionAnswers : this.form3.questionAnswers,
           }
 
+          const resDocVerify = await lastValueFrom(this.$documentVerify.get(param))
+          this.form4 =resDocVerify.length > 0 ? resDocVerify[0] : this.form4
 
         }
       }
@@ -455,6 +468,32 @@ export class EngineerRgasAnalysisComponent implements OnInit {
           }
         }
       })
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  // todo form4 change
+  async form4Change(event: any) {
+    try {
+      Swal.fire({
+        title: "Save ?",
+        icon: 'question',
+        showCancelButton: true,
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          if (event && event._id) {
+            await lastValueFrom(this.$documentVerify.createOrUpdate([event]))
+          } else {
+            let resData = await lastValueFrom(this.$documentVerify.create({
+              ...event, registerNo: this.form.registerNo,
+              no: this.form.no
+            }))
+            this.form4 = resData[0]
+          }
+        }
+      })
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

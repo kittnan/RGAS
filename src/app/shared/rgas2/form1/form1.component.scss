@@ -40,13 +40,34 @@
   transform: translateY(-0.59375em) scale(.75) !important;
 }
 
+::ng-deep .theme--light .bg-glass1 {
+  /* From https://css.glass */
+  background: rgba(236, 255, 233, 0.11);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  border: 1px solid rgba(236, 255, 233, 0.18);
+}
+
+::ng-deep .theme--dark .bg-glass1 {
+  /* From https://css.glass */
+  background: rgba(218, 218, 218, 0.11);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(0.5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  border: 1px solid rgba(218, 218, 218, 0.18);
+}
+
 
 ::ng-deep .theme--light .bg-1 {
-  background-color: rgb(196, 196, 196);
+  background-color: #8076a3;
+  color: white;
 }
 
 ::ng-deep .theme--dark .bg-1 {
-  background-color: rgb(138, 138, 138);
+  background-color: #8076a3;
 }
 
 .m-btn-l {
@@ -83,9 +104,21 @@
   color: white;
 }
 
-.bg-red{
+::ng-deep .theme--light .bg-red {
+  background-color: #f9c5bd;
+}
+
+::ng-deep .theme--dark .bg-red {
   background-color: #ff8282;
 }
-.bg-green{
-  background-color: #5fba5f;
+
+::ng-deep .theme--light .bg-green {
+  background-color: #8bf0ba;
+  color: black;
+}
+
+::ng-deep .theme--dark .bg-green {
+  background-color: #8bf0ba;
+  // background-color: #178173;
+  color: black;
 }

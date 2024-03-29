@@ -15,6 +15,9 @@
       (submitReportArrChange)="submitReportArrChange($event)" (approveChange)="approveChange($event)"
       (approveArrChange)="approveArrChange($event)"></app-form3>
     </div>
+    <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+      <app-form4 fxFlex="100" [(form4)]="form4" (form4Change)="form4Change($event)"></app-form4>
+    </div>
 
   </ng-container>
   <ng-container *ngIf="!show">

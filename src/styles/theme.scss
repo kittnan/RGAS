@@ -194,7 +194,9 @@ $accent: mat-palette($vt-accent, A200, A100, A400);
       color: white;
     }
 
-
+    .mat-label-custom {
+      color: #3275ff;
+    }
 
   }
 
@@ -289,6 +291,8 @@ $accent: mat-palette($vt-accent, A200, A100, A400);
       color: white;
     }
 
-
+    .mat-label-custom {
+      color: #0088ff;
+    }
   }
 }

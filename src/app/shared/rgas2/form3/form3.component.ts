@@ -693,7 +693,7 @@ export class Form3Component implements OnInit {
     this.refreshAutocomplete = false
     setTimeout(() => {
       this.refreshAutocomplete = true
-    }, 100);
+    }, 50);
   }
 
 }

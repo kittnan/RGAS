@@ -3,10 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
+import { HttpDocumentVerifiesService } from 'src/app/https/http-document-verifies.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-department-rgas-analysis',
@@ -50,13 +52,23 @@ export class DepartmentRgasAnalysisComponent implements OnInit {
       }
     ],
   }
+  form4: any = {
+    revise: null,
+    reviseDueDate: null,
+    reviseDate: null,
+    verify: null,
+    verifyDate: null,
+    apply: null,
+    applyDate: null,
+  }
   constructor(
     private router: Router,
     private $claim: HttpClaimService,
     private $result: HttpResultService,
     private route: ActivatedRoute,
     private $local: LocalStoreService,
-    private $report: HttpReportService
+    private $report: HttpReportService,
+    private $documentVerify: HttpDocumentVerifiesService
   ) {
     this.route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
@@ -83,6 +95,8 @@ export class DepartmentRgasAnalysisComponent implements OnInit {
             finalReportOBL: finalReportOBL ? finalReportOBL : this.form3.finalReportOBL,
             questionAnswers: questionAnswers && questionAnswers.length > 0 ? questionAnswers : this.form3.questionAnswers,
           }
+          const resDocVerify = await lastValueFrom(this.$documentVerify.get(param))
+          this.form4 =resDocVerify.length > 0 ? resDocVerify[0] : this.form4
 
         }
       }
@@ -157,6 +171,32 @@ export class DepartmentRgasAnalysisComponent implements OnInit {
           }
         })
       }
+
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  // todo form4 change
+  async form4Change(event: any) {
+    try {
+      Swal.fire({
+        title: "Save ?",
+        icon: 'question',
+        showCancelButton: true,
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          if (event && event._id) {
+            await lastValueFrom(this.$documentVerify.createOrUpdate([event]))
+          } else {
+            let resData = await lastValueFrom(this.$documentVerify.create({
+              ...event, registerNo: this.form.registerNo,
+              no: this.form.no
+            }))
+            this.form4 = resData[0]
+          }
+        }
+      })
 
     } catch (error) {
       console.log("🚀 ~ error:", error)

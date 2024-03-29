@@ -39,12 +39,12 @@ export const MY_FORMATS = {
 };
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
-  bgsColor: "#178173",
+  bgsColor: "#005742",
   fgsColor:"#178173",
   bgsPosition: POSITION.bottomRight,
-  bgsSize: 40,
-  bgsType: SPINNER.chasingDots, // background spinner type
-  fgsType: SPINNER.squareJellyBox, // foreground spinner type
+  bgsSize: 90,
+  bgsType: "double-bounce", // background spinner type
+  fgsType: "folding-cube", // foreground spinner type
   pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
   pbThickness: 5, // progress bar thickness
   minTime: 100

@@ -3,10 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
+import { HttpDocumentVerifiesService } from 'src/app/https/http-document-verifies.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-operator-rgas-analysis',
@@ -50,6 +52,15 @@ export class OperatorRgasAnalysisComponent implements OnInit {
       }
     ],
   }
+  form4: any = {
+    revise: null,
+    reviseDueDate: null,
+    reviseDate: null,
+    verify: null,
+    verifyDate: null,
+    apply: null,
+    applyDate: null,
+  }
   constructor(
     private $claim: HttpClaimService,
     private route: ActivatedRoute,
@@ -57,7 +68,8 @@ export class OperatorRgasAnalysisComponent implements OnInit {
     private $local: LocalStoreService,
     private $alert: SweetAlertGeneralService,
     private $report: HttpReportService,
-    private router: Router
+    private router: Router,
+    private $documentVerify: HttpDocumentVerifiesService
 
   ) {
     this.route.queryParams.subscribe(async (params: any) => {
@@ -84,6 +96,8 @@ export class OperatorRgasAnalysisComponent implements OnInit {
             finalReportOBL: finalReportOBL ? finalReportOBL : this.form3.finalReportOBL,
             questionAnswers: questionAnswers && questionAnswers.length > 0 ? questionAnswers : this.form3.questionAnswers,
           }
+          const resDocVerify = await lastValueFrom(this.$documentVerify.get(param))
+          this.form4 =resDocVerify.length > 0 ? resDocVerify[0] : this.form4
         }
       }
     })
@@ -167,6 +181,33 @@ export class OperatorRgasAnalysisComponent implements OnInit {
       }
     })
   }
+
+  // todo form4 change
+  async form4Change(event: any) {
+    try {
+      Swal.fire({
+        title: "Save ?",
+        icon: 'question',
+        showCancelButton: true,
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          if (event && event._id) {
+            await lastValueFrom(this.$documentVerify.createOrUpdate([event]))
+          } else {
+            let resData = await lastValueFrom(this.$documentVerify.create({
+              ...event, registerNo: this.form.registerNo,
+              no: this.form.no
+            }))
+            this.form4 = resData[0]
+          }
+        }
+      })
+
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
 
 
 }

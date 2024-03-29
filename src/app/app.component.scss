@@ -68,8 +68,34 @@ footer {
   text-align: right;
 }
 
-footer p {
+::ng-deep .theme--light footer p {
   font-size: 10px;
   margin-right: 10px;
   color: #3b3b3b;
 }
+
+::ng-deep .theme--dark footer p {
+  font-size: 10px;
+  margin-right: 10px;
+  color: #ffffff;
+}
+
+
+::ng-deep .theme--dark {
+  .mat-slide-toggle.mat-warn.mat-checked .mat-slide-toggle-bar {
+    background-color: rgb(88 88 88);
+  }
+
+  .mat-slide-toggle.mat-warn.mat-checked .mat-slide-toggle-thumb {
+    background-color: #999999;
+  }
+  .theme-toggle {
+    color: #353535;
+  }
+}
+::ng-deep .theme--light {
+  .theme-toggle {
+    color: #ffa02f;
+  }
+}
+

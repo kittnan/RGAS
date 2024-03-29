@@ -14,6 +14,10 @@ export class LocalStoreService {
     localStorage.removeItem(key)
   }
   removeAllLocalStore() {
+    localStorage.removeItem('RGAS_auth')
+    localStorage.removeItem('RGAS_profile')
+    localStorage.removeItem('RGAS_access_token')
+    localStorage.removeItem('RGAS_refresh_token')
     let len = localStorage.length
     for (let i = 0; i < len; i++) {
       let key = localStorage.key(i)

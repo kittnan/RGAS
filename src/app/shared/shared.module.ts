@@ -29,6 +29,7 @@ import { ReportViewComponent } from './report-view/report-view.component';
 import { YearMonthComponent } from './year-month/year-month.component';
 import { DialogCommentComponent } from './dialog-comment/dialog-comment.component';
 import { Autocomplete2Component } from './autocomplete2/autocomplete2.component';
+import { Form4Component } from './rgas2/form4/form4.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -69,6 +70,7 @@ let items = [
     ReportViewComponent,
     YearMonthComponent,
     Autocomplete2Component,
+    Form4Component,
   ],
   imports: [
     CommonModule,
@@ -97,6 +99,7 @@ let items = [
     ReportViewComponent,
     YearMonthComponent,
     Autocomplete2Component,
+    Form4Component,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
