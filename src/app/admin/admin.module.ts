@@ -18,6 +18,7 @@ import { FlowReportComponent } from './flow-report/flow-report.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { M1eComponent } from './m1e/m1e.component';
 import { RPrincipleComponent } from './r-principle/r-principle.component';
+import { ModelsManageCommonComponent } from './models-manage-common/models-manage-common.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RPrincipleComponent } from './r-principle/r-principle.component';
     FlowReportComponent,
     M1eComponent,
     RPrincipleComponent,
+    ModelsManageCommonComponent,
   ],
   imports: [
     CommonModule,

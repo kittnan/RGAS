@@ -56,7 +56,8 @@ export class SendMailService {
        `
     const info = await lastValueFrom(this.$mail.send({
       to: to,
-      html: html
+      html: html,
+      data:data
     }))
     this.$loader.stop()
     return info

@@ -70,6 +70,12 @@ export class AppComponent {
           roles: ['admin']
         },
         {
+          title: 'models-common',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/models-common',
+          roles: ['admin']
+        },
+        {
           title: 'defects',
           icon: 'keyboard_arrow_right',
           path: 'admin/defect-manage',

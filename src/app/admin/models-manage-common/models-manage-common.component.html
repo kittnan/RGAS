@@ -1,0 +1,126 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+    <app-title [title]="'Manage-Models'" class="w-full"></app-title>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+    <mat-form-field appearance="outline" floatLabel="always" class="flex-auto custom-form">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #search>
+    </mat-form-field>
+
+    <div class="flex-auto" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
+      <button mat-flat-button color="primary">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+          <span>
+            Download
+          </span>
+          <mat-icon class="mat-18">
+            file_download
+          </mat-icon>
+        </div>
+      </button>
+      <button mat-flat-button color="primary" (click)="fileUpload.click()">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+          <span>
+            Upload
+          </span>
+          <mat-icon class="mat-18">
+            file_upload
+          </mat-icon>
+
+        </div>
+      </button>
+      <input type="file" hidden #fileUpload (change)="onUpload($event)">
+    </div>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="overflow-auto">
+    <table mat-table fxFlex="100" [dataSource]="dataSource" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="Group-1">
+        <th mat-header-cell *matHeaderCellDef> Group-1 </th>
+        <td mat-cell *matCellDef="let element"> {{element['Group-1']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Size">
+        <th mat-header-cell *matHeaderCellDef> Size </th>
+        <td mat-cell *matCellDef="let element"> {{element['Size']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element['Status']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Group-2">
+        <th mat-header-cell *matHeaderCellDef> Group-2 </th>
+        <td mat-cell *matCellDef="let element"> {{element['Group-2']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Model(MDL)">
+        <th mat-header-cell *matHeaderCellDef> Model(MDL) </th>
+        <td mat-cell *matCellDef="let element"> {{element['Model(MDL)']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Model Code(MDL)">
+        <th mat-header-cell *matHeaderCellDef> Model Code(MDL) </th>
+        <td mat-cell *matCellDef="let element"> {{element['Model Code(MDL)']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Model Name(MDL)">
+        <th mat-header-cell *matHeaderCellDef> Model Name(MDL) </th>
+        <td mat-cell *matCellDef="let element"> {{element['Model Name(MDL)']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Model(PNL)">
+        <th mat-header-cell *matHeaderCellDef> Model(PNL) </th>
+        <td mat-cell *matCellDef="let element"> {{element['Model(PNL)']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Model Code(PNL)">
+        <th mat-header-cell *matHeaderCellDef> Model Code(PNL) </th>
+        <td mat-cell *matCellDef="let element"> {{element['Model Code(PNL)']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Model Name(PNL)">
+        <th mat-header-cell *matHeaderCellDef> Model Name(PNL) </th>
+        <td mat-cell *matCellDef="let element"> {{element['Model Name(PNL)']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Model(SMT)">
+        <th mat-header-cell *matHeaderCellDef> Model(SMT) </th>
+        <td mat-cell *matCellDef="let element"> {{element['Model(SMT)']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Model Code(SMT)">
+        <th mat-header-cell *matHeaderCellDef> Model Code(SMT) </th>
+        <td mat-cell *matCellDef="let element"> {{element['Model Code(SMT)']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Model Name(SMT)">
+        <th mat-header-cell *matHeaderCellDef> Model Name(SMT) </th>
+        <td mat-cell *matCellDef="let element"> {{element['Model Name(SMT)']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Project Name">
+        <th mat-header-cell *matHeaderCellDef> Project Name </th>
+        <td mat-cell *matCellDef="let element"> {{element['Project Name']}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Remark">
+        <th mat-header-cell *matHeaderCellDef> Remark </th>
+        <td mat-cell *matCellDef="let element"> {{element['Remark']}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{search.value}}"
+        </td>
+      </tr>
+    </table>
+    <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 20,dataSource.data.length]" showFirstLastButtons
+      aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+</div>

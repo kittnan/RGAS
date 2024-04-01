@@ -18,11 +18,14 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 import { DialogCommentComponent } from '../../dialog-comment/dialog-comment.component';
+import { HttpModelsCommonService } from 'src/app/https/http-models-common.service';
 
 export interface FORM1 {
   [key: string]: any,
   claimNo: any,
   modelNo: any,
+  modelNoPNL?: any,
+  modelNoSMT?: any,
   productNo: any,
   customerNo: any,
   modelCode: any,
@@ -61,7 +64,9 @@ export interface FORM1 {
   registerNo?: any,
   flowPIC?: any,
   flowHistory?: any
-  _id?: any
+  _id?: any,
+  productCost: any,
+  productCostUnit: any,
 }
 
 export interface FlowHistory {
@@ -118,6 +123,8 @@ export class Form1Component implements OnInit {
     status: null,
     flowPIC: null,
     flowHistory: [],
+    productCost: null,
+    productCostUnit: null,
 
   }
   @Input() form2: any = null
@@ -210,6 +217,7 @@ export class Form1Component implements OnInit {
   @ViewChild('informationFile', { static: true }) informationFile!: ElementRef;
 
 
+  showModelCode: boolean = true
   constructor(
     public dialog: MatDialog,
     private $model: HttpModelsService,
@@ -220,6 +228,7 @@ export class Form1Component implements OnInit {
     private $claim: HttpClaimService,
     private $local: LocalStoreService,
     private $alert: SweetAlertGeneralService,
+    private $modelCommon: HttpModelsCommonService
   ) {
     this.userLogin = this.$local.getProfile()
   }
@@ -275,6 +284,7 @@ export class Form1Component implements OnInit {
 
   // todo upload OBL
   async onUploadFile($event: any) {
+    this.showModelCode = false
     let file: any = $event.target.files[0] as File;
     const workbook = new ExcelJS.Workbook();
     try {
@@ -285,8 +295,13 @@ export class Form1Component implements OnInit {
       if (worksheet) {
         let modelCode = this.getValueOfCell('W8', worksheet)
         let model: any = this.modelOption.find((item: any) => item['Model Name'] == modelCode)
-        let dueDate = this.getValueOfCell('R17', worksheet)
+        let dueDate = this.getValueOfCell('AV21', worksheet)
         dueDate = dueDate ? moment(dueDate) : null
+        let occurDate = this.getValueOfCell('R17', worksheet)
+        occurDate = occurDate ? moment(occurDate) : null
+
+        let modelCommon = await lastValueFrom(this.$modelCommon.get(new HttpParams().set('modelNo', model['Model'])))
+        modelCommon = modelCommon && modelCommon.length > 0 ? modelCommon[0] : null
         this.form = {
           ...this.form,
           claimNo: this.getValueOfCell('J2', worksheet),
@@ -305,8 +320,15 @@ export class Form1Component implements OnInit {
           descriptionJP: this.getValueOfCell('J32', worksheet),
           descriptionENG: this.getValueOfCell('J37', worksheet),
 
+          occurDate: occurDate,
 
+          modelNoPNL: modelCommon ? modelCommon['Model(PNL)'] : '',
+          modelNoSMT: modelCommon ? modelCommon['Model(SMT)'] : '',
         }
+        console.log(this.form);
+        setTimeout(() => {
+          this.showModelCode = true
+        }, 300);
         // this.modelCodeForm.patchValue(modelCode)
         // this.maxChange.emit(this.form.qty)
         this.fileUploadOBL.nativeElement.value = ''

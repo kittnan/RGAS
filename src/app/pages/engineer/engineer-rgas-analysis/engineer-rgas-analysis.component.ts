@@ -20,7 +20,6 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
   styleUrls: ['./engineer-rgas-analysis.component.scss']
 })
 export class EngineerRgasAnalysisComponent implements OnInit {
-  show: boolean = true
   form: any = null
   userLogin: any
   form2: any = null
@@ -159,7 +158,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
           }
 
           const resDocVerify = await lastValueFrom(this.$documentVerify.get(param))
-          this.form4 =resDocVerify.length > 0 ? resDocVerify[0] : this.form4
+          this.form4 = resDocVerify.length > 0 ? resDocVerify[0] : this.form4
 
         }
       }
@@ -494,6 +493,29 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         }
       })
 
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  // todo finish claim report
+  onFinish() {
+    try {
+      Swal.fire({
+        title: "Finish ?",
+        icon: 'question',
+        showCancelButton: true
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          await lastValueFrom(this.$claim.createOrUpdate({ ...this.form, status: 'finish' }))
+          Swal.fire({
+            title:"Success",
+            icon:'success',
+            showConfirmButton:false,
+            timer:1500
+          })
+        }
+      })
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

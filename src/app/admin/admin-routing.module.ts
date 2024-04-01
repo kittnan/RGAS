@@ -11,6 +11,7 @@ import { SCdComponent } from './s-cd/s-cd.component';
 import { FlowReportComponent } from './flow-report/flow-report.component';
 import { M1eComponent } from './m1e/m1e.component';
 import { RPrincipleComponent } from './r-principle/r-principle.component';
+import { ModelsManageCommonComponent } from './models-manage-common/models-manage-common.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
   {
     path: 'flow-report',
     component: FlowReportComponent,
+  },
+  {
+    path: 'models-common',
+    component: ModelsManageCommonComponent,
   },
 ];
 

@@ -5,7 +5,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { lastValueFrom } from 'rxjs';
-import { HttpMailService } from 'src/app/https/http-mail.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
@@ -141,11 +140,13 @@ export class EngineerReportApproveComponent implements OnInit {
           date: new Date(),
           comment: comment
         }]
+        console.log(this.report);
+
         this.report.flow = this.flowSelected
         this.report.flow[0]['date'] = new Date()
         this.report.status = 'section'
         await lastValueFrom(this.$report.createOrUpdate([this.report]))
-        const info = await this.$sendMail.approve(null, comment, this.report.PIC.map((PIC: any) => PIC.email))
+        const info = await this.$sendMail.approve({ registerNo: this.report.registerNo, no: this.report.no }, comment, this.report.PIC.map((PIC: any) => PIC.email))
         this.$alert.success()
         this.router.navigate(['engineer/rgas1'])
       })

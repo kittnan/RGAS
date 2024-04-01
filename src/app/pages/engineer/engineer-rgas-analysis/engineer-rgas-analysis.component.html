@@ -2,7 +2,7 @@
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
     <app-title fxFlex="100" [title]="'RGAS-2'"></app-title>
   </div>
-  <ng-container *ngIf="show">
+  <ng-container>
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
       <app-form1 [form]="form" [form2]="form2" [form3]="form3" (formChange)="formChange()"></app-form1>
     </div>
@@ -21,11 +21,17 @@
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
       <app-form4 fxFlex="100" [(form4)]="form4" (form4Change)="form4Change($event)"></app-form4>
     </div>
+    <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-4">
+      <button mat-raised-button color="primary" (click)="onFinish()" class="btn-file" style="margin-right: 10px;">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
+          <span>
+            Finish
+          </span>
+          <mat-icon class="mat-18">save</mat-icon>
+        </div>
+      </button>
+    </div>
 
   </ng-container>
-  <ng-container *ngIf="!show">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start">
-      <mat-progress-bar fxFlex="100" mode="indeterminate"></mat-progress-bar>
-    </div>
-  </ng-container>
 </div>
+
