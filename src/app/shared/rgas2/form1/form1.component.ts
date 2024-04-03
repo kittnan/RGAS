@@ -19,6 +19,8 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 import { DialogCommentComponent } from '../../dialog-comment/dialog-comment.component';
 import { HttpModelsCommonService } from 'src/app/https/http-models-common.service';
+import { DialogEmailComponent } from '../../dialog-email/dialog-email.component';
+import { SendMailService } from 'src/app/services/send-mail.service';
 
 export interface FORM1 {
   [key: string]: any,
@@ -67,6 +69,7 @@ export interface FORM1 {
   _id?: any,
   productCost: any,
   productCostUnit: any,
+  size: any,
 }
 
 export interface FlowHistory {
@@ -125,7 +128,7 @@ export class Form1Component implements OnInit {
     flowHistory: [],
     productCost: null,
     productCostUnit: null,
-
+    size: ''
   }
   @Input() form2: any = null
   @Input() form3: any = null
@@ -228,7 +231,8 @@ export class Form1Component implements OnInit {
     private $claim: HttpClaimService,
     private $local: LocalStoreService,
     private $alert: SweetAlertGeneralService,
-    private $modelCommon: HttpModelsCommonService
+    private $modelCommon: HttpModelsCommonService,
+    private sendMail: SendMailService
   ) {
     this.userLogin = this.$local.getProfile()
   }
@@ -324,6 +328,7 @@ export class Form1Component implements OnInit {
 
           modelNoPNL: modelCommon ? modelCommon['Model(PNL)'] : '',
           modelNoSMT: modelCommon ? modelCommon['Model(SMT)'] : '',
+          size: modelCommon.Size
         }
         console.log(this.form);
         setTimeout(() => {
@@ -440,22 +445,60 @@ export class Form1Component implements OnInit {
     }).then(async (v: SweetAlertResult) => {
       if (v.isConfirmed) {
 
-        let dialog = this.dialog.open(DialogCommentComponent, {
-          disableClose: true,
-          data: ''
+
+        let foo = this.sendMail.toApproveClaim(this.form, this.sendTo)
+
+        let dialogEmail = this.dialog.open(DialogEmailComponent, {
+          data: foo
         })
-        dialog.afterClosed().subscribe(async (comment: any) => {
-          this.form.flowPIC = this.sendTo
-          this.form.status = 'wait approve'
-          let obj: FlowHistory = {
-            action: 'request',
-            date: new Date(),
-            user: this.userLogin,
-            comment: comment
+
+        dialogEmail.afterClosed().subscribe((data: any) => {
+          if (data !== false) {
+            this.form.flowPIC = this.sendTo
+            this.form.status = 'wait approve'
+            let obj: FlowHistory = {
+              action: 'request',
+              date: new Date(),
+              user: this.userLogin,
+              comment: ''
+            }
+            this.form.flowHistory.push(obj)
+            this.submitChange.emit(this.form)
           }
-          this.form.flowHistory.push(obj)
-          this.submitChange.emit(this.form)
         })
+
+        // let dialog = this.dialog.open(DialogCommentComponent, {
+        //   disableClose: true,
+        //   data: ''
+        // })
+        // dialog.afterClosed().subscribe(async (comment: any) => {
+        //   console.log("🚀 ~ comment:", comment)
+        //   if (comment !== false) {
+        //     this.form.flowPIC = this.sendTo
+        //     this.form.status = 'wait approve'
+        //     let obj: FlowHistory = {
+        //       action: 'request',
+        //       date: new Date(),
+        //       user: this.userLogin,
+        //       comment: ''
+        //     }
+        //     this.form.flowHistory.push(obj)
+
+        //     let foo = this.sendMail.generateRequestEngineerApproveEmail(this.form, comment, this.sendTo)
+
+        //     let dialogEmail = this.dialog.open(DialogEmailComponent, {
+        //       data: foo
+        //     })
+
+        //     dialogEmail.afterClosed().subscribe((infoEmail: any) => {
+        //       this.submitChange.emit(this.form)
+        //     })
+
+        //   }
+
+
+
+        // })
       }
     })
 

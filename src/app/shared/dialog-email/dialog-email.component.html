@@ -1,0 +1,35 @@
+<h2 mat-dialog-title>To: {{data.to}}</h2>
+<mat-dialog-content class="mat-typography" fxLayout="row wrap" fxLayoutAlign="start start">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+      <mat-label class="mat-label-custom">Subject</mat-label>
+      <input matInput [(ngModel)]="data.subject">
+    </mat-form-field>
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center" class="pb-6" style="height: 80%;">
+    <div fxFlex="100" class="NgxEditor__Wrapper h-full">
+      <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+      <ngx-editor [editor]="editor" [(ngModel)]="email" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onClose()">Cancel</button>
+  <button mat-button color="primary" cdkFocusInitial (click)="onSubmit()" >Submit</button>
+</mat-dialog-actions>
+
+
+<!-- <div fxLayout="row wrap" fxLayoutAlign="start start" style="width: 600px; height: 500px;">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
+    {{data.subject}}
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
+    To
+  </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center" style="height: 80%;">
+    <div fxFlex="100" class="NgxEditor__Wrapper h-full">
+      <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
+      <ngx-editor [editor]="editor" [ngModel]="html" [disabled]="false" [placeholder]="'Type here...'"></ngx-editor>
+    </div>
+  </div>
+</div> -->

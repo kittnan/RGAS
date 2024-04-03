@@ -56,7 +56,6 @@ export class OperatorRgasInformationComponent implements OnInit {
   allItems: any[] = []
   itemNowNumber: number = 1
   itemMax: number = 1
-  show: boolean = true
   result: any
 
   currentItem: any
@@ -80,11 +79,9 @@ export class OperatorRgasInformationComponent implements OnInit {
         if (linkParam['no']) {
           this.currentItem = this.allItems.find((item: any) => item.no == linkParam['no'])
         }
-        // this.show = true
       } else {
         this.allItems = [this.dataStructure]
         this.currentItem = this.allItems[0]
-        // this.show = true
       }
     })
   }
@@ -109,7 +106,6 @@ export class OperatorRgasInformationComponent implements OnInit {
 
   // todo paginator
   onNextItem() {
-    // this.$loader.start()
     const index = this.allItems.findIndex((item: any) => item.no == this.currentItem.no)
     if (index != -1) {
       const nextIndex = index + 1
@@ -118,10 +114,6 @@ export class OperatorRgasInformationComponent implements OnInit {
         this.changePage(nextItem)
       }
     }
-    // setTimeout(() => {
-    //   this.$loader.stop()
-    // }, 100,);
-
   }
 
   // todo prev item

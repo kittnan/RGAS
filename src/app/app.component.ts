@@ -180,6 +180,7 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
+
     if (this.$local.getProfile() && this.$local.getAuth()) {
       this.login = true
     } else {

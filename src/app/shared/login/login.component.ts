@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fadeInOnEnterAnimation, flipOutXAnimation } from 'angular-animations';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { lastValueFrom } from 'rxjs';
@@ -37,7 +37,8 @@ export class LoginComponent implements OnInit {
     private $user: HttpUsersService,
     private $local: LocalStoreService,
     private $loader: NgxUiLoaderService,
-    private http: HttpClient
+    private http: HttpClient,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {

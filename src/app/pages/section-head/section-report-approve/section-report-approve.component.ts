@@ -15,6 +15,8 @@ import { DialogCommentComponent } from 'src/app/shared/dialog-comment/dialog-com
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { SendMailService } from 'src/app/services/send-mail.service';
+import { HttpClaimService } from 'src/app/https/http-claim.service';
+import { DialogEmailComponent } from 'src/app/shared/dialog-email/dialog-email.component';
 
 @Component({
   selector: 'app-section-report-approve',
@@ -28,6 +30,7 @@ export class SectionReportApproveComponent implements OnInit {
   report: any = {
     flow: []
   }
+  claim: any
   modeSelected: any = 'interpreter'
   modeFlow: any = 'approve'
   modeOption: any = ['interpreter', 'department']
@@ -52,7 +55,8 @@ export class SectionReportApproveComponent implements OnInit {
     private dialog: MatDialog,
     private $alert: SweetAlertGeneralService,
     private $loader: NgxUiLoaderService,
-    private $sendMail: SendMailService
+    private $sendMail: SendMailService,
+    private $claim: HttpClaimService
 
   ) {
 
@@ -70,8 +74,12 @@ export class SectionReportApproveComponent implements OnInit {
         httpParams = httpParams.set('registerNo', JSON.stringify([params['registerNo']]))
         httpParams = httpParams.set('no', JSON.stringify([params['no']]))
         const resReport = await lastValueFrom(this.$report.get(httpParams))
-        if (resReport && resReport.length > 0) {
+        const resClaim = await lastValueFrom(this.$claim.get(httpParams))
+
+        if (resReport && resReport.length > 0 && resClaim && resClaim.length > 0) {
           this.report = resReport[0]
+          this.claim = resClaim[0]
+
           this.report.flow[1]['PIC'] = this.userLogin
           // this.report.flow[1]['date'] = new Date()
         }
@@ -143,26 +151,52 @@ export class SectionReportApproveComponent implements OnInit {
 
   async submit() {
     try {
-      this.dialog.open(DialogCommentComponent, {
-        disableClose: true,
-        data: '',
-      }).afterClosed().subscribe(async (comment: any) => {
-        if (comment === false) throw ''
-        this.report['PIC'] = this.sendTo
-        this.report['PICHistory'].push({
-          action: 'section',
-          user: this.userLogin,
-          date: new Date(),
-          comment: comment
-        })
-        this.report.status = this.modeSelected
-        // this.report.flow = this.flowSelected
-        this.report.flow[1]['date'] = new Date()
-        await lastValueFrom(this.$report.createOrUpdate([this.report]))
-        const info = await this.$sendMail.approve(null, comment, this.report.PIC.map((PIC: any) => PIC.email))
-        this.$alert.success()
-        this.router.navigate(['sectionHead/rgas1'])
+      let foo: any
+      if (this.modeSelected == 'interpreter') {
+        foo = this.$sendMail.toInterpreter(this.claim, this.report, this.sendTo)
+      }
+      if (this.modeSelected == 'department') {
+        foo = this.$sendMail.toDepartment(this.claim, this.report, this.sendTo)
+      }
+      let dialogEmail = this.dialog.open(DialogEmailComponent, {
+        data: foo
       })
+      dialogEmail.afterClosed().subscribe(async (data: any) => {
+        if (data !== false) {
+          this.report['PIC'] = this.sendTo
+          this.report['PICHistory'].push({
+            action: 'section',
+            user: this.userLogin,
+            date: new Date(),
+            comment: ''
+          })
+          this.report.status = this.modeSelected
+          this.report.flow[1]['date'] = new Date()
+          await lastValueFrom(this.$report.createOrUpdate([this.report]))
+          this.$alert.success()
+          this.router.navigate(['sectionHead/report-view'], { queryParamsHandling: 'preserve' })
+        }
+      })
+      // this.dialog.open(DialogCommentComponent, {
+      //   disableClose: true,
+      //   data: '',
+      // }).afterClosed().subscribe(async (comment: any) => {
+      //   if (comment === false) throw ''
+      //   this.report['PIC'] = this.sendTo
+      //   this.report['PICHistory'].push({
+      //     action: 'section',
+      //     user: this.userLogin,
+      //     date: new Date(),
+      //     comment: comment
+      //   })
+      //   this.report.status = this.modeSelected
+      //   // this.report.flow = this.flowSelected
+      //   this.report.flow[1]['date'] = new Date()
+      //   await lastValueFrom(this.$report.createOrUpdate([this.report]))
+      //   const info = await this.$sendMail.approve(null, comment, this.report.PIC.map((PIC: any) => PIC.email))
+      //   this.$alert.success()
+      //   this.router.navigate(['sectionHead/rgas1'])
+      // })
 
     } catch (error) {
       console.log("🚀 ~ error:", error)
@@ -171,24 +205,45 @@ export class SectionReportApproveComponent implements OnInit {
 
   async reject() {
     try {
-      this.dialog.open(DialogCommentComponent, {
-        disableClose: true,
-        data: '',
-      }).afterClosed().subscribe(async (comment: any) => {
-        if (comment === false) throw ''
-        this.report['PIC'] = this.sendTo
-        this.report['PICHistory'].push({
-          action: 'section reject',
-          user: this.userLogin,
-          date: new Date()
-        })
-        this.report.status = 'engineer'
+      let foo: any
+      foo = this.$sendMail.toEngineer(this.claim, this.report, this.sendTo)
 
-        this.report.flow[3]['date'] = new Date()
-        await lastValueFrom(this.$report.createOrUpdate([this.report]))
-        const info = await this.$sendMail.reject(null, comment, this.report.PIC.map((PIC: any) => PIC.email))
-        this.router.navigate(['sectionHead/rgas1'])
+      let dialogEmail = this.dialog.open(DialogEmailComponent, {
+        data: foo
       })
+      dialogEmail.afterClosed().subscribe(async (data: any) => {
+        if (data !== false) {
+          this.report['PIC'] = this.sendTo
+          this.report['PICHistory'].push({
+            action: 'section reject',
+            user: this.userLogin,
+            date: new Date()
+          })
+          this.report.status = 'engineer'
+          this.report.flow[3]['date'] = new Date()
+          await lastValueFrom(this.$report.createOrUpdate([this.report]))
+          this.router.navigate(['sectionHead/report-view'], { queryParamsHandling: 'preserve' })
+        }
+      })
+
+      // this.dialog.open(DialogCommentComponent, {
+      //   disableClose: true,
+      //   data: '',
+      // }).afterClosed().subscribe(async (comment: any) => {
+      //   if (comment === false) throw ''
+      //   this.report['PIC'] = this.sendTo
+      //   this.report['PICHistory'].push({
+      //     action: 'section reject',
+      //     user: this.userLogin,
+      //     date: new Date()
+      //   })
+      //   this.report.status = 'engineer'
+
+      //   this.report.flow[3]['date'] = new Date()
+      //   await lastValueFrom(this.$report.createOrUpdate([this.report]))
+      //   const info = await this.$sendMail.reject(null, comment, this.report.PIC.map((PIC: any) => PIC.email))
+      //   this.router.navigate(['sectionHead/rgas1'])
+      // })
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

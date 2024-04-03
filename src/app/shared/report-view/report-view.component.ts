@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { Location } from '@angular/common';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 @Component({
   selector: 'app-report-view',
   templateUrl: './report-view.component.html',
@@ -14,7 +15,9 @@ export class ReportViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private $report: HttpReportService,
-    private location: Location
+    private location: Location,
+    private $local: LocalStoreService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -52,7 +55,9 @@ export class ReportViewComponent implements OnInit {
     return ''
   }
   onBack() {
-    this.location.back()
+    let url = `${this.$local.getAuth()}/analysis`
+    this.router.navigate([url], { queryParamsHandling: 'preserve' })
+    // this.location.back()
   }
 
 }

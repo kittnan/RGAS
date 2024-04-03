@@ -5,12 +5,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { lastValueFrom } from 'rxjs';
+import { HttpClaimService } from 'src/app/https/http-claim.service';
+import { HttpMailService } from 'src/app/https/http-mail.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { SendMailService } from 'src/app/services/send-mail.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import { DialogCommentComponent } from 'src/app/shared/dialog-comment/dialog-comment.component';
+import { DialogEmailComponent } from 'src/app/shared/dialog-email/dialog-email.component';
 import { FlowHistory } from 'src/app/shared/rgas2/form1/form1.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
@@ -57,9 +60,12 @@ export class EngineerReportApproveComponent implements OnInit {
   userLogin: any
 
   report: any
-
+  claim: any
   claimId: any
 
+  modeSelected: any = 'section'
+  modeFlow: any = 'approve'
+  modeOption: any = ['section', 'department']
   constructor(
     private router: Router,
     private $user: HttpUsersService,
@@ -70,7 +76,8 @@ export class EngineerReportApproveComponent implements OnInit {
     private $alert: SweetAlertGeneralService,
     private dialog: MatDialog,
     private $loader: NgxUiLoaderService,
-    private $sendMail: SendMailService
+    private $sendMail: SendMailService,
+    private $claim: HttpClaimService
   ) {
     this.$user.get(new HttpParams().set('access', JSON.stringify(['sectionHead']))).subscribe((resData: any) => {
       this.userApproveClaimOption = resData
@@ -87,8 +94,10 @@ export class EngineerReportApproveComponent implements OnInit {
         httpParams = httpParams.set('registerNo', JSON.stringify([params['registerNo']]))
         httpParams = httpParams.set('no', JSON.stringify([params['no']]))
         const resReport = await lastValueFrom(this.$report.get(httpParams))
-        if (resReport && resReport.length > 0) {
+        const resClaim = await lastValueFrom(this.$claim.get(httpParams))
+        if (resReport && resReport.length > 0 && resClaim && resClaim.length > 0) {
           this.report = resReport[0]
+          this.claim = resClaim[0]
           if (this.report && this.report.flow.length == 0) {
             this.report.flow = this.flowSelected
           }
@@ -107,6 +116,40 @@ export class EngineerReportApproveComponent implements OnInit {
     }
     return ''
   }
+
+  getSendToUser() {
+    this.sendTo = []
+    let value: any = ''
+    switch (this.modeSelected) {
+      case 'interpreter':
+        value = ['interpreter']
+        break;
+      case 'section':
+        value = ['sectionHead']
+        break;
+      case 'department':
+        value = ['departmentHead']
+        break;
+      default:
+        break;
+    }
+    this.$user.get(new HttpParams().set('access', JSON.stringify(value))).subscribe((resData: any) => {
+      this.userApproveClaimOption = resData
+    })
+  }
+
+  onChangeModeFlow() {
+    if (this.modeFlow == 'reject') {
+      this.modeOption = []
+      this.modeSelected = 'engineer'
+      this.getSendToUser()
+    }
+    if (this.modeFlow == 'approve') {
+      this.modeOption = ['interpreter', 'department']
+      this.modeSelected = 'interpreter'
+      this.getSendToUser()
+    }
+  }
   onSubmit() {
     Swal.fire({
       title: 'Send?',
@@ -121,40 +164,77 @@ export class EngineerReportApproveComponent implements OnInit {
 
   async submit() {
     try {
+      let foo: any
+      if (this.modeFlow == 'reject') {
+        foo = this.$sendMail.toOperator(this.claim, this.report, this.sendTo)
+      }
+      if (this.modeFlow == 'approve') {
+        if (this.modeSelected == 'section') {
+          foo = this.$sendMail.toSection(this.claim, this.report, this.sendTo)
+        }
+        if (this.modeSelected == 'department') {
+          foo = this.$sendMail.toDepartment(this.claim, this.report, this.sendTo)
+        }
 
-      this.dialog.open(DialogCommentComponent, {
-        disableClose: true,
-        data: '',
-      }).afterClosed().subscribe(async (comment: any) => {
-        if (comment === false) throw ''
-        this.report['PIC'] = this.sendTo
-
-        this.report['PICHistory'] = this.report['PICHistory'] ? [...this.report['PICHistory'], {
-          action: 'engineer',
-          user: this.userLogin,
-          date: new Date(),
-          comment: comment
-        }] : [{
-          action: 'engineer',
-          user: this.userLogin,
-          date: new Date(),
-          comment: comment
-        }]
-        console.log(this.report);
-
-        this.report.flow = this.flowSelected
-        this.report.flow[0]['date'] = new Date()
-        this.report.status = 'section'
-        await lastValueFrom(this.$report.createOrUpdate([this.report]))
-        const info = await this.$sendMail.approve({ registerNo: this.report.registerNo, no: this.report.no }, comment, this.report.PIC.map((PIC: any) => PIC.email))
-        this.$alert.success()
-        this.router.navigate(['engineer/rgas1'])
+      }
+      let dialogEmail = this.dialog.open(DialogEmailComponent, {
+        data: foo
       })
+      dialogEmail.afterClosed().subscribe(async (data: any) => {
+        if (data !== false) {
+          this.report['PIC'] = this.sendTo
+          this.report['PICHistory'] = this.report['PICHistory'] ? [...this.report['PICHistory'], {
+            action: 'engineer',
+            user: this.userLogin,
+            date: new Date(),
+            comment: ''
+          }] : [{
+            action: 'engineer',
+            user: this.userLogin,
+            date: new Date(),
+            comment: ''
+          }]
+          this.report.flow = this.flowSelected
+          this.report.flow[0]['date'] = new Date()
+          this.report.status = this.modeSelected
+          console.log("🚀 ~ this.report:", this.report)
+          await lastValueFrom(this.$report.createOrUpdate([this.report]))
+          this.$alert.success()
+          this.router.navigate(['engineer/report-view'],{ queryParamsHandling: 'preserve' })
+        }
+      })
+      // this.dialog.open(DialogCommentComponent, {
+      //   disableClose: true,
+      //   data: '',
+      // }).afterClosed().subscribe(async (comment: any) => {
+      //   if (comment === false) throw ''
+      //   this.report['PIC'] = this.sendTo
+
+      //   this.report['PICHistory'] = this.report['PICHistory'] ? [...this.report['PICHistory'], {
+      //     action: 'engineer',
+      //     user: this.userLogin,
+      //     date: new Date(),
+      //     comment: comment
+      //   }] : [{
+      //     action: 'engineer',
+      //     user: this.userLogin,
+      //     date: new Date(),
+      //     comment: comment
+      //   }]
+      //   console.log(this.report);
+
+      //   this.report.flow = this.flowSelected
+      //   this.report.flow[0]['date'] = new Date()
+      //   this.report.status = 'section'
+      //   await lastValueFrom(this.$report.createOrUpdate([this.report]))
+      //   const info = await this.$sendMail.approve({ registerNo: this.report.registerNo, no: this.report.no }, comment, this.report.PIC.map((PIC: any) => PIC.email))
+      //   this.$alert.success()
+      //   this.router.navigate(['engineer/rgas1'])
+      // })
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
   }
-
   cssFlow(item: any) {
     if (this.report?.status == item) return 'card-step-active'
     // if (this.report?.some((f: any) => f.PICHistory.some((his: any) => his.action == item))) return 'card-step-active'

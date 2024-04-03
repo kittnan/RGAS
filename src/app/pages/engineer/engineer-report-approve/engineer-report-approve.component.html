@@ -39,7 +39,35 @@
 
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5" class="mt-8">
-    <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div *ngIf="modeFlow=='approve'" fxFlex="51" fxLayout="row wrap" fxLayoutAlign="space-between stretch" class="mt-4">
+      <mat-form-field fxFlex="40" appearance="outline" floatLabel="always">
+        <mat-label></mat-label>
+        <mat-select [(ngModel)]="modeSelected" (ngModelChange)="getSendToUser()">
+          <mat-option *ngFor="let item of modeOption" [value]="item">
+            {{item}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="40" appearance="outline" floatLabel="always">
+        <mat-label>Send to approve</mat-label>
+        <mat-select [(ngModel)]="sendTo" multiple>
+          <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">
+            {{displayName(user)}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="modeFlow=='approve'" fxFlex="51" fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-4">
+      <button [disabled]="!sendTo || ( sendTo && sendTo.length==0)" fxFlex="100" mat-raised-button (click)="onSubmit()" color="primary" style="margin-top: 10px;">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+          <span>
+            Submit
+          </span>
+          <mat-icon class="mat-18">send</mat-icon>
+        </div>
+      </button>
+    </div>y
+    <!-- <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="center start">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label>Send to </mat-label>
         <mat-select [(ngModel)]="sendTo" multiple>
@@ -57,6 +85,6 @@
           <mat-icon class="mat-18">send</mat-icon>
         </div>
       </button>
-    </div>
+    </div> -->
   </div>
 </div>

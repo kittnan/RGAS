@@ -30,6 +30,8 @@ import { YearMonthComponent } from './year-month/year-month.component';
 import { DialogCommentComponent } from './dialog-comment/dialog-comment.component';
 import { Autocomplete2Component } from './autocomplete2/autocomplete2.component';
 import { Form4Component } from './rgas2/form4/form4.component';
+import { NgxEditorModule } from 'ngx-editor';
+import { DialogEmailComponent } from './dialog-email/dialog-email.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -71,6 +73,7 @@ let items = [
     YearMonthComponent,
     Autocomplete2Component,
     Form4Component,
+    DialogEmailComponent,
   ],
   imports: [
     CommonModule,
@@ -79,7 +82,8 @@ let items = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxEditorModule
   ],
   exports: [
     ...items,
@@ -100,6 +104,7 @@ let items = [
     YearMonthComponent,
     Autocomplete2Component,
     Form4Component,
+    DialogEmailComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
