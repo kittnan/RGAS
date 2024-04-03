@@ -95,7 +95,7 @@ export class EngineerApproveClaimComponent implements OnInit {
       })
 
       dialogEmail.afterClosed().subscribe(async (data) => {
-        if (data !== false) {
+        if (data === true) {
           let flowHistory: FlowHistory = {
             user: this.userLogin,
             action: 'approve-request',

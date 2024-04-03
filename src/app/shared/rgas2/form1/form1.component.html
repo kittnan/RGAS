@@ -117,6 +117,7 @@
             <input matInput [(ngModel)]="form.modelNoSMT" (change)="emitSaveStatus()">
           </mat-form-field>
         </div>
+        <div fxFlex.gt-md="30"></div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Customer Control No.</mat-label>
@@ -220,11 +221,6 @@
         </div>
 
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <app-year-month fxFlex="100" [title]="'Production Month'" [(dateInput)]="form.productionMonth"
-            (dateInputChange)="emitSaveStatus()"></app-year-month>
-        </div>
-
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Model Classification</mat-label>
             <mat-select [(ngModel)]="form.modelClassification" (ngModelChange)="emitSaveStatus()">
@@ -234,6 +230,13 @@
             </mat-select>
           </mat-form-field>
         </div>
+
+
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+          <app-year-month fxFlex="100" [title]="'Production Month'" [(dateInput)]="form.productionMonth"
+            (dateInputChange)="emitSaveStatus()"></app-year-month>
+        </div>
+
 
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -297,20 +300,6 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
-            <mat-label class="mat-label-custom">Transportation Cost</mat-label>
-            <input matInput type="number" [min]="0" [(ngModel)]="form.transportationCost" (change)="emitSaveStatus()">
-          </mat-form-field>
-          <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
-            <mat-label class="mat-label-custom">Unit</mat-label>
-            <mat-select [(ngModel)]="form.unit" (ngModelChange)="emitSaveStatus()">
-              <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
-                {{item.itemName}} : {{item.itemValue}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Received Information Date ( E-Form OBL III )</mat-label>
@@ -330,6 +319,22 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
+            <mat-label class="mat-label-custom">Transportation Cost</mat-label>
+            <input matInput type="number" [min]="0" [(ngModel)]="form.transportationCost" (change)="emitSaveStatus()">
+          </mat-form-field>
+          <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+            <mat-label class="mat-label-custom">Unit</mat-label>
+            <mat-select [(ngModel)]="form.unit" (ngModelChange)="emitSaveStatus()">
+              <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
+                {{item.itemName}} : {{item.itemValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <app-year-month fxFlex="100" [title]="'Cost Month'" [(dateInput)]="form.costMonth"
             (dateInputChange)="emitSaveStatus()"></app-year-month>
@@ -352,6 +357,7 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <div fxFlex.gt-md="30"></div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <button [disabled]="!form.registerNo " fxFlex="100" fxFlex.gt-md="30" mat-raised-button color="accent"
             (click)="informationFile.click()" class="btn-file">

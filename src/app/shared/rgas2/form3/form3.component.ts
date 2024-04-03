@@ -232,8 +232,8 @@ export class Form3Component implements OnInit {
         item.no = 'dcdOption' + i + 1
         return item
       })
-      this.lcdOption1 = [...new Set(resLcd.map((item: any) => item['Occurrence process category details']))]
-      this.lcdOption2 = [...new Set(resLcd.map((item: any) => item['Occurrence process CD']))]
+      this.lcdOption1 = [...new Set(resLcd.map((item: any) => item['Occurrence process category']))]
+      this.lcdOption2 = [...new Set(resLcd.map((item: any) => item['Occurrence process category details']))]
 
 
       const resScd = await lastValueFrom(this.$s_cd.get(new HttpParams()))
@@ -536,8 +536,8 @@ export class Form3Component implements OnInit {
     try {
       if (this.lcdOption1.some((item: any) => item == this.lcdForm1.value)) {
 
-        this.lcdOption2 = this.lcdOption.filter((item: any) => this.lcdForm1.value == item['Occurrence process category details'])
-        this.lcdOption2 = [...new Set(this.lcdOption2.map((item: any) => item['Occurrence process CD']))].filter((item: any) => item)
+        this.lcdOption2 = this.lcdOption.filter((item: any) => this.lcdForm1.value == item['Occurrence process category'])
+        this.lcdOption2 = [...new Set(this.lcdOption2.map((item: any) => item['Occurrence process category details']))].filter((item: any) => item)
 
         let value1 = this.lcdOption2.find((item: any) => item == this.lcdForm2.value) ? this.lcdForm2.value : ''
         this.lcdForm2.patchValue(value1)
@@ -549,7 +549,7 @@ export class Form3Component implements OnInit {
       if (this.lcdForm1.value.trim() == '' && this.lcdForm2.value.trim() == '') {
 
         this.lcdOption1 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process category details']))]
-        this.lcdOption2 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process CD']))]
+        this.lcdOption2 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process category']))]
         this.onRefreshAutocomplete()
 
       }
@@ -562,8 +562,8 @@ export class Form3Component implements OnInit {
   onChangeLcd2() {
     try {
       if (this.lcdOption2.some((item: any) => item == this.lcdForm2.value)) {
-        this.lcdOption1 = this.lcdOption.filter((item: any) => this.lcdForm2.value == item['Occurrence process CD'])
-        this.lcdOption1 = [...new Set(this.lcdOption1.map((item: any) => item['Occurrence process category details']))].filter((item: any) => item)
+        this.lcdOption1 = this.lcdOption.filter((item: any) => this.lcdForm2.value == item['Occurrence process category details'])
+        this.lcdOption1 = [...new Set(this.lcdOption1.map((item: any) => item['Occurrence process category']))].filter((item: any) => item)
 
 
         let value1 = this.lcdOption1.find((item: any) => item == this.lcdForm1.value) ? this.lcdForm1.value : ''
@@ -576,7 +576,7 @@ export class Form3Component implements OnInit {
       if (this.lcdForm1.value.trim() == '' && this.lcdForm2.value.trim() == '') {
 
         this.lcdOption1 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process category details']))]
-        this.lcdOption2 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process CD']))]
+        this.lcdOption2 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process category']))]
         this.onRefreshAutocomplete()
 
       }

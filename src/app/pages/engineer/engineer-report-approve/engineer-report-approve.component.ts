@@ -178,10 +178,11 @@ export class EngineerReportApproveComponent implements OnInit {
 
       }
       let dialogEmail = this.dialog.open(DialogEmailComponent, {
-        data: foo
+        data: foo,
+        hasBackdrop: true
       })
       dialogEmail.afterClosed().subscribe(async (data: any) => {
-        if (data !== false) {
+        if (data === true) {
           this.report['PIC'] = this.sendTo
           this.report['PICHistory'] = this.report['PICHistory'] ? [...this.report['PICHistory'], {
             action: 'engineer',
@@ -200,7 +201,7 @@ export class EngineerReportApproveComponent implements OnInit {
           console.log("🚀 ~ this.report:", this.report)
           await lastValueFrom(this.$report.createOrUpdate([this.report]))
           this.$alert.success()
-          this.router.navigate(['engineer/report-view'],{ queryParamsHandling: 'preserve' })
+          this.router.navigate(['engineer/report-view'], { queryParamsHandling: 'preserve' })
         }
       })
       // this.dialog.open(DialogCommentComponent, {

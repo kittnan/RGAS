@@ -107,7 +107,7 @@ export class InterpreterReportApproveComponent implements OnInit {
         data: foo
       })
       dialogEmail.afterClosed().subscribe(async (data: any) => {
-        if (data !== false) {
+        if (data === true) {
           this.report['PIC'] = this.sendTo
           this.report['PICHistory'].push({
             action: 'section',

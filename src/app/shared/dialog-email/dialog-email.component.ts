@@ -37,7 +37,7 @@ export class DialogEmailComponent implements OnInit {
   async onSubmit() {
     this.data.html = this.email
     let info = await lastValueFrom(this.$mail.send(this.data))
-    this.dialog.close(info)
+    this.dialog.close(true)
   }
 
 }

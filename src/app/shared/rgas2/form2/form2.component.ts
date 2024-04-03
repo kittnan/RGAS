@@ -97,6 +97,7 @@ export class Form2Component implements OnInit {
     'NONE'
   ]
   option3: string[] = [
+    '',
     'OK',
     'NG',
     'Not Accept'
@@ -315,7 +316,7 @@ export class Form2Component implements OnInit {
   // todo printLabel
   printLabel() {
     try {
-      this.$pdf.generatePDF('bb')
+      this.$pdf.generatePDF(`${this.claim.claimNo}-${this.claim.registerNo}`)
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

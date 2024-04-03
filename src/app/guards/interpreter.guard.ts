@@ -18,7 +18,7 @@ export class InterpreterGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.$local.getAuth() == 'interpreter' || AdminGuard)
       return true;
-      this.router.navigate([''])
+      this.router.navigate(['login'])
     return false
   }
 

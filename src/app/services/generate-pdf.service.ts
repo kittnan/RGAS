@@ -23,7 +23,7 @@ export class GeneratePdfService {
           background: 'white',
           scale: 2,
         };
-        var doc: any = new jsPDF('l', 'mm',[250,70]);
+        var doc: any = new jsPDF('l', 'mm',[250,75]);
         for (let index = 0; index < div.length; index++) {
           const d = div[index];
           const img = await htmlToImage.toPng(d, {

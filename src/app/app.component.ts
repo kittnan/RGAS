@@ -185,7 +185,8 @@ export class AppComponent {
       this.login = true
     } else {
       this.login = false
-      this.router.navigate(['/login'])
+      // this.router.navigate(['login'],{ queryParamsHandling: 'merge' })
+      // this.router.navigate(['login'],{ queryParamsHandling: 'preserve' })
     }
   }
 

@@ -12,6 +12,9 @@ export class HttpMailService {
   constructor(private http: HttpClient) { }
 
   send(data: any): Observable<any> {
-    return this.http.post(`${this.URL}/${this.SUB}/send`,data);
+    return this.http.post(`${this.URL}/${this.SUB}/send`, data);
+  }
+  getDearAll(): Observable<any> {
+    return this.http.get(`${this.URL}/${this.SUB}/dear-all-email`);
   }
 }

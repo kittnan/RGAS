@@ -453,7 +453,7 @@ export class Form1Component implements OnInit {
         })
 
         dialogEmail.afterClosed().subscribe((data: any) => {
-          if (data !== false) {
+          if (data ===true) {
             this.form.flowPIC = this.sendTo
             this.form.status = 'wait approve'
             let obj: FlowHistory = {

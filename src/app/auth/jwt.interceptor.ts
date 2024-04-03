@@ -59,7 +59,7 @@ export class JwtInterceptor implements HttpInterceptor {
         } if (error.status === 401) {
           this.$local.removeAllLocalStore()
           setTimeout(() => {
-            this.router.navigate(['']).then(() => location.reload())
+            this.router.navigate(['login'],{queryParamsHandling:'preserve'}).then(() => location.reload())
           }, 1000);
         }
         return throwError(error);

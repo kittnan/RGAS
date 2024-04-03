@@ -1,5 +1,8 @@
+import { HttpMailService } from 'src/app/https/http-mail.service';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
+import { environment } from 'src/environments/environment';
+import { LocalStoreService } from './local-store.service';
 
 @Injectable({
   providedIn: 'root'
@@ -95,10 +98,20 @@ export class SendMailService {
       value: 'NG from arrival inspection'
     },
   ]
+
+  dearAllEmail: any
+  private linkMail = environment.linkMail;
   constructor(
-  ) { }
+    private $mail: HttpMailService,
+    private $local: LocalStoreService
+  ) {
+    this.$mail.getDearAll().subscribe((data: any) => {
+      this.dearAllEmail = data.map((d: any) => d.email)
+    })
+  }
 
   toApproveClaim(data: any, to: any[]) {
+    let url = `${this.linkMail}/${this.$local.getAuth()}/approve-claim?registerNo=${data.registerNo}&no=${data.no}`
 
     let dear = to.map((t: any) => {
       return `${t.name} san `
@@ -106,12 +119,12 @@ export class SendMailService {
     let symbol = this.symbol.find((sy: any) => sy.value.includes(data.occurredLocation))
 
     let qtyTxt = Number(data.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `🌍[REPORT] ${symbol?.sym}${data.customerName} ${data.occurredLocation} ${data.size} #${data.modelNo} ${data.descriptionENG} ${data.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol?.sym}${data.customerName} ${data.occurredLocation} ${data.size} #${data.modelNo} ${data.descriptionENG} ${data.qty} ${qtyTxt}.`
 
     let html: any = `<p><strong>Dear...${dear}</strong></p>
 
     <p>Could you please review claim information</p>
-    <p>Click here ➡️ <a href="http://10.200.90.152:8081/rgas/login">RGAS</a></p>`
+    <p>Click here ➡️ <a href="${url}">RGAS</a></p>`
     html = html + this.footerEmail
     return {
       html: html,
@@ -122,10 +135,8 @@ export class SendMailService {
   }
   toClaimInformation(data: any, to: any[]) {
 
+    console.log(this.dearAllEmail);
 
-    // let dear = to.map((t: any) => {
-    //   return `${t.name} san `
-    // })
     let symbol = this.getSymbol(data.occurredLocation)
 
     let qtyTxt = Number(data.qty) > 1 ? 'pcs' : 'pc'
@@ -137,38 +148,43 @@ export class SendMailService {
     <p>We would like to inform and share claim information from customer ${data.type} occurred ${data.occurredLocation}.
     Please see details below.</p>
     <p></p>
-    <p><strong>Claim No. :</strong>&nbsp;${data.claimNo}</p>
-    <p><strong>Defective mode. :</strong>&nbsp;${data.descriptionENG}</p>
-    <p><strong>Q'ty. :</strong>&nbsp;${data.qty} ${qtyTxt}</p>
-    <p><strong>Lot no. :</strong>&nbsp;${data.productLotNo}</p>
-    <p><strong>Occurrence place :</strong>&nbsp;${data.occurredLocation}</p>
-    <p><strong>Occurrence date :</strong>&nbsp;${moment(data.occurDate).format('D-MMM-YYYY')}</p>
-    <p></p>
-    <p><strong>Model Name :</strong>&nbsp;${data.modelCode}</p>
-    <p><strong>MDL model :</strong>&nbsp;${data.modelNo}</p>
-    <p><strong>PNL model :</strong>&nbsp;${data.modelNoPNL}</p>
-    <p><strong>SMT model :</strong>&nbsp;${data.modelNoSMT}</p>
+
+
+    <p><strong>Claim No. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${data.claimNo}</p>
+<p><strong>Defective mode. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${data.descriptionENG}</p>
+<p><strong>Q'ty. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${data.qty} ${qtyTxt}</p>
+<p><strong>Lot no. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp;:</strong>&nbsp;${data.productLotNo}</p>
+<p><strong>Occurrence place &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${data.occurredLocation}</p>
+<p><strong>Occurrence date &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${moment(data.occurDate).format('D-MMM-YYYY')}</p>
+<p></p>
+<p><strong>Model Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;:</strong>&nbsp;${data.modelCode}</p>
+<p><strong>MDL model &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;:</strong>&nbsp;${data.modelNo}</p>
+<p><strong>PNL model &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;:</strong>&nbsp;${data.modelNoPNL}</p>
+<p><strong>SMT model &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;:</strong>&nbsp;${data.modelNoSMT}</p>
     <p></p>
     <p>Dear Orawan san</p>
     <p>CC PD-MDL members</p>
     <p>Would you please verify 4M change of this claim with above information?
-    Please reply to us within 28-Mar-24 as possible (Before/After 5 lots) (คนส่งพิมพ์วันที่)</p>`
+    Please reply to us within 28-Mar-24 as possible (Before/After 5 lots)</p>`
     html = html + this.footerEmail
     return {
       html: html,
       subject: subject,
-      to: to.map((t: any) => t.email),
+      to: this.dearAllEmail,
+      // to: to.map((t: any) => t.email),
       cc: []
     }
   }
 
   toOperator(claim: any, data: any, to: any[]) {
+    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
+
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `🌍[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
 
     let reportText: any = this.getNameReport(data.name)
     let html: any = `<p><strong>Dear ${dear},</strong></p>
@@ -178,6 +194,7 @@ export class SendMailService {
         Please see details below.</p>
         <p></p>
         <p>Could you please review claim information ${reportText} as attached?</p>
+        <p>Click here ➡️ <a href="${url}">RGAS</a></p>
         `
     html = html + this.footerEmail
 
@@ -190,12 +207,13 @@ export class SendMailService {
   }
 
   toInterpreter(claim: any, data: any, to: any[]) {
+    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `🌍[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
 
     let reportText: any = this.getNameReport(data.name)
 
@@ -209,6 +227,7 @@ export class SendMailService {
         <p><strong>Remark :</strong></p>
         <p>Due date submit to Customer is 1-Apr-2024</p>
         <p>Due date submit to Customer is 2-Apr-2024</p>
+        <p>Click here ➡️ <a href="${url}">RGAS</a></p>
         `
     html = html + this.footerEmail
 
@@ -221,12 +240,14 @@ export class SendMailService {
   }
 
   toDepartment(claim: any, data: any, to: any[]) {
+    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
+
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `🌍[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
 
     let reportText: any = this.getNameReport(data.name)
 
@@ -238,7 +259,8 @@ export class SendMailService {
         <p></p>
         <p>Could you please review ${reportText} as attached?</p>
         <p><strong>Remark :</strong></p>
-        <p>Due date submit to Customer is 2-Apr-2024</p>`
+        <p>Due date submit to Customer is 2-Apr-2024</p>
+        <p>Click here ➡️ <a href="${url}">RGAS</a></p>`
     html = html + this.footerEmail
 
     return {
@@ -249,12 +271,14 @@ export class SendMailService {
     }
   }
   toSection(claim: any, data: any, to: any[]) {
+
+    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `🌍[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
 
     let reportText: any = this.getNameReport(data.name)
 
@@ -268,6 +292,7 @@ export class SendMailService {
         <p><strong>Remark :</strong></p>
         <p>1. Due date submit to Kubota san is 1-Apr-2024</p>
         <p>2. Due date submit to Customer is 2-Apr-2024</p>
+        <p>Click here ➡️ <a href="${url}">RGAS</a></p>
         `
     html = html + this.footerEmail
 
@@ -279,12 +304,14 @@ export class SendMailService {
     }
   }
   toEngineer(claim: any, data: any, to: any[]) {
+    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
+
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `🌍[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
 
     let reportText: any = this.getNameReport(data.name)
 
@@ -298,6 +325,7 @@ export class SendMailService {
         <p><strong>Remark :</strong></p>
         <p>1. Due date submit to Kubota san is 1-Apr-2024</p>
         <p>2. Due date submit to Customer is 2-Apr-2024</p>
+        <p>Click here ➡️ <a href="${url}">RGAS</a></p>
         `
     html = html + this.footerEmail
 
@@ -314,7 +342,7 @@ export class SendMailService {
   //   })
   //   let symbol = this.symbol.find((sy: any) => sy.value.includes(claim.occurredLocation))
   //   let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-  //   let subject: any = `🌍[REPORT] ${symbol?.sym}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+  //   let subject: any = `📦[REPORT] ${symbol?.sym}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
 
   //   let reportText: any = this.getNameReport(data.name)
 

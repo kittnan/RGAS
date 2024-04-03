@@ -18,7 +18,7 @@ export class SectionGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.$local.getAuth() == 'section' || AdminGuard)
       return true;
-      this.router.navigate([''])
+      this.router.navigate(['login'])
     return false
   }
 

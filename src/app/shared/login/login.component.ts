@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { fadeInOnEnterAnimation, flipOutXAnimation } from 'angular-animations';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { lastValueFrom } from 'rxjs';
@@ -11,7 +11,7 @@ import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-
+import { filter, pairwise } from 'rxjs/operators';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -30,6 +30,8 @@ export class LoginComponent implements OnInit {
   userLogin: any
   showText: boolean = false
   SSOCheck: boolean = false
+
+  dataParams: any = null
   constructor(
     private authService: AuthService,
     private tokenStorage: TokenStorageService,
@@ -39,9 +41,15 @@ export class LoginComponent implements OnInit {
     private $loader: NgxUiLoaderService,
     private http: HttpClient,
     private route: ActivatedRoute
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
+
+    this.route.queryParams.subscribe((dataParams: any) => {
+      this.dataParams = dataParams
+    })
     this.userLogin = this.$local.getProfile()
     if (this.$local.getAuth()) {
       this.goLink(this.$local.getAuth())
@@ -147,6 +155,8 @@ export class LoginComponent implements OnInit {
   goLink(access: any) {
     this.$loader.start()
     this.$local.setAuth(access)
+    console.log(this.dataParams);
+
     switch (access) {
       case 'admin':
         this.$local.setAuth(access)
@@ -154,23 +164,53 @@ export class LoginComponent implements OnInit {
         break;
       case 'operator':
         this.$local.setAuth(access)
-        this.router.navigate(['operator']).then(() => location.reload())
+        if (this.dataParams?.registerNo && this.dataParams?.no) {
+          this.router.navigate([`${access}/analysis`], { queryParamsHandling: 'preserve' }).then(() => location.reload
+            ())
+        } else {
+          this.router.navigate([`${access}`]).then(() => location.reload
+            ())
+        }
         break;
       case 'engineer':
         this.$local.setAuth(access)
-        this.router.navigate(['engineer']).then(() => location.reload())
+        if (this.dataParams?.registerNo && this.dataParams?.no) {
+          this.router.navigate([`${access}/analysis`], { queryParamsHandling: 'preserve' }).then(() => location.reload
+            ())
+        } else {
+          this.router.navigate([`${access}`]).then(() => location.reload
+            ())
+        }
         break;
       case 'sectionHead':
         this.$local.setAuth(access)
-        this.router.navigate(['sectionHead']).then(() => location.reload())
+        if (this.dataParams?.registerNo && this.dataParams?.no) {
+          this.router.navigate([`${access}/analysis`], { queryParamsHandling: 'preserve' }).then(() => location.reload
+            ())
+        } else {
+          this.router.navigate([`${access}`]).then(() => location.reload
+            ())
+        }
         break;
       case 'interpreter':
         this.$local.setAuth(access)
-        this.router.navigate(['interpreter']).then(() => location.reload())
+        if (this.dataParams?.registerNo && this.dataParams?.no) {
+          this.router.navigate([`${access}/analysis`], { queryParamsHandling: 'preserve' }).then(() => location.reload
+            ())
+        } else {
+          this.router.navigate([`${access}`]).then(() => location.reload
+            ())
+        }
         break;
       case 'departmentHead':
         this.$local.setAuth(access)
-        this.router.navigate(['departmentHead']).then(() => location.reload())
+        if (this.dataParams?.registerNo && this.dataParams?.no) {
+          this.router.navigate([`${access}/analysis`], { queryParamsHandling: 'preserve' }).then(() => location.reload
+            ())
+        } else {
+          this.router.navigate([`${access}`]).then(() => location.reload
+            ())
+        }
         break;
       case 'logout':
         this.$local.removeLocalStore('RGAS_profile')
