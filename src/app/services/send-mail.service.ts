@@ -119,7 +119,7 @@ export class SendMailService {
     let symbol = this.symbol.find((sy: any) => sy.value.includes(data.occurredLocation))
 
     let qtyTxt = Number(data.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol?.sym}${data.customerName} ${data.occurredLocation} ${data.size} #${data.modelNo} ${data.descriptionENG} ${data.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol?.sym}${data.customerName} ${data.occurredLocation} ${data.size} #${data.modelNo} ${data.descriptionENG} ${data.qty} ${qtyTxt} ${data.claimNo}. `
 
     let html: any = `<p><strong>Dear...${dear}</strong></p>
 
@@ -140,7 +140,7 @@ export class SendMailService {
     let symbol = this.getSymbol(data.occurredLocation)
 
     let qtyTxt = Number(data.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `${symbol}${data.customerName} ${data.occurredLocation} ${data.size} #${data.modelNo} ${data.descriptionENG} ${data.qty} ${qtyTxt}.`
+    let subject: any = `${symbol}${data.customerName} ${data.occurredLocation} ${data.size} #${data.modelNo} ${data.descriptionENG} ${data.qty} ${qtyTxt} ${data.claimNo}.`
 
     let html: any = `<p><strong>Dear all,</strong></p>
     <p><strong>Thank you for your support.</strong></p>
@@ -184,7 +184,7 @@ export class SendMailService {
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
 
     let reportText: any = this.getNameReport(data.name)
     let html: any = `<p><strong>Dear ${dear},</strong></p>
@@ -213,7 +213,7 @@ export class SendMailService {
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
 
     let reportText: any = this.getNameReport(data.name)
 
@@ -247,7 +247,7 @@ export class SendMailService {
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
 
     let reportText: any = this.getNameReport(data.name)
 
@@ -278,7 +278,7 @@ export class SendMailService {
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
 
     let reportText: any = this.getNameReport(data.name)
 
@@ -311,7 +311,7 @@ export class SendMailService {
     })
     let symbol = this.getSymbol(data.occurredLocation)
     let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt}.`
+    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
 
     let reportText: any = this.getNameReport(data.name)
 
