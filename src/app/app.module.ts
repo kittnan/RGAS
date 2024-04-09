@@ -55,7 +55,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NotfoundComponent,
     LoginComponent,
     SectionHeadComponent,
-    DepartmentHeadComponent
+    DepartmentHeadComponent,
   ],
   imports: [
     BrowserModule,

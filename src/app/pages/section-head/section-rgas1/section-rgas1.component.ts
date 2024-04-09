@@ -21,7 +21,7 @@ export class SectionRgas1Component implements OnInit {
   }
   // todo click row
   onClickClaimChange(event: any) {
-    if (event.status == 'wait approve') {
+    if (event.claimStatus == 'wait approve') {
       this.router.navigate(['sectionHead/approve-claim'], {
         queryParams: {
           registerNo: event.registerNo,
@@ -29,7 +29,7 @@ export class SectionRgas1Component implements OnInit {
         }
       })
     }
-    if (event.status == 'analysis') {
+    if (event.claimStatus == 'analysis') {
       this.router.navigate(['sectionHead/analysis'], {
         queryParams: {
           registerNo: event.registerNo,

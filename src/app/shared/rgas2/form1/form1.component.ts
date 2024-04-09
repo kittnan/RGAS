@@ -79,6 +79,7 @@ export interface FlowHistory {
   date: any,
 }
 
+
 @Component({
   selector: 'app-form1',
   templateUrl: './form1.component.html',
@@ -221,6 +222,8 @@ export class Form1Component implements OnInit {
 
 
   showModelCode: boolean = true
+
+
   constructor(
     public dialog: MatDialog,
     private $model: HttpModelsService,
@@ -306,6 +309,9 @@ export class Form1Component implements OnInit {
 
         let modelCommon = await lastValueFrom(this.$modelCommon.get(new HttpParams().set('modelNo', model['Model'])))
         modelCommon = modelCommon && modelCommon.length > 0 ? modelCommon[0] : null
+
+        let occurredLocation = this.getValueOfCell('R15', worksheet)
+
         this.form = {
           ...this.form,
           claimNo: this.getValueOfCell('J2', worksheet),
@@ -319,7 +325,7 @@ export class Form1Component implements OnInit {
           modelNo: model ? model['Model'] : null,
           qty: this.getValueOfCell('AV17', worksheet),
           productLotNo: this.getValueOfCell('M26', worksheet),
-          occurredLocation: this.getValueOfCell('R15', worksheet),
+          occurredLocation: occurredLocation,
 
           descriptionJP: this.getValueOfCell('J32', worksheet),
           descriptionENG: this.getValueOfCell('J37', worksheet),
@@ -330,7 +336,6 @@ export class Form1Component implements OnInit {
           modelNoSMT: modelCommon ? modelCommon['Model(SMT)'] : '',
           size: modelCommon.Size
         }
-        console.log(this.form);
         setTimeout(() => {
           this.showModelCode = true
         }, 300);
@@ -342,6 +347,7 @@ export class Form1Component implements OnInit {
       console.error('Error reading Excel file:', error);
     }
   }
+
 
   // todo upload claim information file
   async onUploadFileClaimInformation($event: any) {
@@ -453,7 +459,7 @@ export class Form1Component implements OnInit {
         })
 
         dialogEmail.afterClosed().subscribe((data: any) => {
-          if (data ===true) {
+          if (data === true) {
             this.form.flowPIC = this.sendTo
             this.form.status = 'wait approve'
             let obj: FlowHistory = {

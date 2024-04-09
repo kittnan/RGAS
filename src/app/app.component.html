@@ -2,27 +2,73 @@
   <mat-toolbar color="primary" class="example-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="cursor-pointer" (click)="snav.toggle()">
-      <img src="./assets/favicon.png"  style="height: 60px;">
-      <h1 class="name-title pointer-events-none">RGAS</h1>
+      <img src="./assets/favicon.png" class="title-img">
+      <h1 class="name-title pointer-events-none uppercase">Return</h1>
+      <h1 class="name-title pointer-events-none uppercase">Goods</h1>
+      <h1 class="name-title pointer-events-none uppercase">Authorization</h1>
+      <h1 class="name-title pointer-events-none uppercase">System</h1>
+      <h1 class="name-title-mobile pointer-events-none uppercase">RGAS</h1>
     </div>
-    <!-- <img src="../assets/logo3.png" style="width: 200px; height: 200px;"> -->
     <div class="flex-auto"></div>
-    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20">
+
+    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20" class="title-sub-menu">
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item fxLayoutAlign="start center">
+          <mat-slide-toggle color="warn" [checked]="theme" (change)="toggleTheme()">
+            <mat-icon *ngIf="theme" class="mat-18 theme-toggle">dark_mode</mat-icon>
+            <mat-icon *ngIf="!theme" class="mat-18 theme-toggle">light_mode</mat-icon>
+          </mat-slide-toggle>
+        </button>
+        <button mat-menu-item fxLayoutAlign="start center">
+          <button (click)="onClickName()">
+            <div class="flex justify-around items-center gap-1 font-bold" style="letter-spacing: 1px;">
+              <span fxFlex="100" class="text-sm capitalize ">
+                {{displayName()}}
+              </span>
+            </div>
+          </button>
+        </button>
+        <button mat-menu-item fxLayoutAlign="start center">
+          <button (click)="onClickName()">
+            <div class="flex justify-around items-center gap-1 font-bold" style="letter-spacing: 1px;">
+              <span fxFlex="100" class="text-xs capitalize ">
+                {{displayAuth()}}
+              </span>
+            </div>
+          </button>
+        </button>
+        <button mat-menu-item fxLayoutAlign="start center">
+          <button (click)="onLogout()">
+            <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+              <span  class="text-xs capitalize ">
+                Logout
+              </span>
+              <mat-icon class="mat-18">logout</mat-icon>
+            </div>
+          </button>
+        </button>
+      </mat-menu>
+    </div>
+
+    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="20" class="title-main-menu">
       <div class="flex justify-around items-center me-4 gap-1">
         <mat-slide-toggle color="warn" [checked]="theme" (change)="toggleTheme()">
           <mat-icon *ngIf="theme" class="mat-18 theme-toggle">dark_mode</mat-icon>
           <mat-icon *ngIf="!theme" class="mat-18 theme-toggle">light_mode</mat-icon>
         </mat-slide-toggle>
       </div>
-      <button (click)="onClickName()" >
+      <button (click)="onClickName()">
         <div class="flex justify-around items-center gap-1 font-bold" style="letter-spacing: 1px;">
           <mat-icon class="mat-18">
             contact_mail
           </mat-icon>
-          <span class="text-sm capitalize">
+          <span class="text-sm capitalize ">
             {{displayName()}}
           </span>
-          <span class="text-xs capitalize">
+          <span class="text-xs capitalize ">
             {{displayAuth()}}
           </span>
         </div>
@@ -72,7 +118,7 @@
       </mat-nav-list>
     </mat-sidenav>
 
-    <mat-sidenav-content class="p-4">
+    <mat-sidenav-content class="p-4 overflow-auto">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>

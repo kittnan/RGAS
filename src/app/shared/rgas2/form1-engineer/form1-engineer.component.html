@@ -1,90 +1,7 @@
 <div class="flex flex-wrap justify-center items-start w-full mt-1">
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <app-sub-title fxFlex="100" [title]="'Claim Status'" class="mt-2 mb-2"></app-sub-title>
-
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mb-1"
-        fxLayoutGap.gt-md="2">
-        <mat-card fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 ">
-          <span class="font-semibold  uppercase" style="letter-spacing: 1px;">
-            Submit customer
-          </span>
-        </mat-card>
-        <mat-card *ngIf="submitFinalReportToCustomer" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class=" bg-red">
-          <span class="font-semibold">
-            Closed
-          </span>
-        </mat-card>
-        <mat-card *ngIf="!submitFinalReportToCustomer" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class=" bg-green">
-          <span class="font-semibold">
-            Pending
-          </span>
-        </mat-card>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mb-1">
-        <mat-card fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 ">
-          <span class="font-semibold">
-            Up load OBL III
-          </span>
-        </mat-card>
-        <mat-card *ngIf="submitFinalReportToOBL" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class=" bg-red">
-          <span class="font-semibold">
-            Closed
-          </span>
-        </mat-card>
-        <mat-card *ngIf="!submitFinalReportToOBL" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class=" bg-green">
-          <span class="font-semibold">
-            Pending
-          </span>
-        </mat-card>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mb-1">
-        <mat-card *ngIf="moreThan2Month()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class="p-2 bg-green">
-          <span class="font-semibold p-4 text-center">
-            Less than 2 months
-          </span>
-        </mat-card>
-        <mat-card *ngIf="!moreThan2Month()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class="p-2 bg-red">
-          <span class="font-semibold p-4 text-center">
-            More than 2 months
-          </span>
-        </mat-card>
-        <mat-card *ngIf="moreThan15Month()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class="p-2 bg-green">
-          <span class="font-semibold p-4 text-center">
-            Less than 1.5 months
-          </span>
-        </mat-card>
-        <mat-card *ngIf="!moreThan15Month()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class="p-2 bg-red">
-          <span class="font-semibold p-4 text-center">
-            More than 1.5 months
-          </span>
-        </mat-card>
-      </div>
-    </div>
-  </div>
-
-
-
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <app-sub-title fxFlex="100" [title]="'Claim Information'" class="mt-2 mb-2"></app-sub-title>
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-2 mb-2">
-        <button mat-raised-button color="primary" (click)="fileUploadOBL.click()">
-          <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
-            <span>Upload OBL !!! {{form.no}}</span>
-            <mat-icon class="mat-18">upload</mat-icon>
-          </div>
-          <input type="file" hidden #fileUploadOBL accept=".xlsx" (change)="onUploadFile($event)">
-        </button>
-      </div>
 
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30">
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
@@ -381,57 +298,7 @@
           </button>
         </div>
 
-        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end stretch" class="mt-1">
-          <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start center">
-            <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="primary"
-              (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
-              <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-md="10">
-                <span>
-                  Copy {{form.no}}
-                </span>
-                <mat-icon class="mat-18">content_copy</mat-icon>
-              </div>
-            </button>
-            <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="warn"
-              (click)="onDelete()" class="btn-file" style="margin-right: 10px;">
-              <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayout.gt-md="10">
-                <span>
-                  Delete {{form.no}}
-                </span>
-                <mat-icon class="mat-18">delete</mat-icon>
-              </div>
-            </button>
-          </div>
-          <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="end center">
-            <button mat-raised-button color="primary" (click)="onSave()" class="btn-file" style="margin-right: 10px;">
-              <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-md="10">
-                <span>
-                  Save {{form.no}}
-                </span>
-                <mat-icon class="mat-18">save</mat-icon>
-              </div>
-            </button>
-            <mat-form-field appearance="outline" floatLabel="always" class="me-4 ">
-              <mat-label [ngClass]="{'text-red-400': !sendTo}" class="text-green-400">Send to</mat-label>
-              <mat-select [disabled]="form.status!='receive information'" [(ngModel)]="sendTo" multiple
-                (ngModelChange)="emitSaveStatus()">
-                <mat-option *ngFor="let user of userApproveClaimOption" [value]="user">
-                  {{displayName(user)}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <button [disabled]="!form.registerNo || !sendTo || (sendTo && sendTo.length==0) " mat-raised-button
-              class="btn-file btn-success" style="margin-right: 30px;" (click)="onSubmit()">
-              <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-md="10">
-                <span>
-                  Submit {{form.no}}
-                </span>
-                <mat-icon class="mat-18">done_all</mat-icon>
-              </div>
-            </button>
-          </div>
 
-        </div>
 
       </div>
 

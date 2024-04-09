@@ -8,10 +8,10 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="center center" class="mr-2">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Search Option</mat-label>
-          <mat-select [(ngModel)]="filterSelected">
-            <mat-option *ngFor="let item of filterOption" [value]="item">
+          <mat-select [(ngModel)]="filterSelected" (ngModelChange)="onSearchSelect()" >
+            <mat-option *ngFor="let item of filterOption" [value]="item.value">
               <span class="capitalize text-sm">
-                {{item}}
+                {{item.name}}
               </span>
             </mat-option>
           </mat-select>
@@ -21,14 +21,14 @@
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="center center" class="mr-4">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Search Value</mat-label>
-          <input matInput [(ngModel)]="fillSearch" (keydown.enter)="onSearchSubmit()">
+          <input matInput [placeholder]="placeholder" [(ngModel)]="fillSearch" (keydown.enter)="onSearchSubmit()">
           <button matSuffix mat-icon-button (click)="onSearchSubmit()">
             <mat-icon>search</mat-icon>
           </button>
         </mat-form-field>
       </div>
       <div fxFlex="auto"></div>
-      <div fxLayout="row wrap" fxLayoutAlign="center center">
+      <div *ngIf="showBtnNew" fxLayout="row wrap" fxLayoutAlign="center center">
         <button mat-raised-button class="btn-success" (click)="onClickNew()">
           <mat-icon class="mat-18">add_circle</mat-icon>
           New

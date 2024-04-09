@@ -140,6 +140,9 @@ export class EngineerRgasAnalysisComponent implements OnInit {
             this.information = resInformation[0]
           }
           this.form = resData.length > 0 ? resData[0] : null
+          if(this.form?.status == 'wait approve'){
+            this.router.navigate(['engineer/approve-claim'], { queryParamsHandling: 'preserve' })
+          }
           const resResult = await lastValueFrom(this.$result.get(param))
           this.form2 = resResult.length > 0 ? resResult[0] : null
           const resForm3 = await lastValueFrom(this.$report.get(param))
@@ -509,10 +512,10 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         if (v.isConfirmed) {
           await lastValueFrom(this.$claim.createOrUpdate({ ...this.form, status: 'finish' }))
           Swal.fire({
-            title:"Success",
-            icon:'success',
-            showConfirmButton:false,
-            timer:1500
+            title: "Success",
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
           })
         }
       })

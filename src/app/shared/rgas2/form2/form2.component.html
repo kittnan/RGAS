@@ -1,7 +1,7 @@
 <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-2 mb-4">
   <div *ngIf="form2" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
     <app-sub-title fxFlex="100" [title]="'Analysis Result'" class="mt-2 mb-2"></app-sub-title>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="10">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="10">
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start start">
 
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -182,7 +182,7 @@
         </div>
       </div>
     </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="20">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="20">
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Appearance Check Result </mat-label>
@@ -500,7 +500,7 @@
           </div>
         </button>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" >
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">FAR / PNN Number </mat-label>
           <input matInput [(ngModel)]="form2.supplier.farPnnNumber">
@@ -514,7 +514,7 @@
           <mat-datepicker #supplierIssueDate_dp></mat-datepicker>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" >
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">KTC Judgment </mat-label>
           <mat-select [(ngModel)]="form2.ktcJudgment">

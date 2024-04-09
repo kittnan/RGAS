@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,6 +10,10 @@ import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 
 
+interface FILTER_OPTION {
+  value: string,
+  name: string
+}
 
 @Component({
   selector: 'app-rgas1',
@@ -17,18 +21,47 @@ import { LocalStoreService } from 'src/app/services/local-store.service';
   styleUrls: ['./rgas1.component.scss']
 })
 export class Rgas1Component implements OnInit {
-  filterOption: string[] = [
-    'claimNo',
-    'PIC',
-    'modelNo',
-    'modelName',
-    'claimMonth',
-    'defect',
-    'customerName',
-    'judgment'
+  filterOption: FILTER_OPTION[] = [
+    {
+      value: 'claimNo',
+      name: 'Claim No'
+    },
+    {
+      value: 'PIC',
+      name: 'PIC'
+    },
+    {
+      value: 'modelNo',
+      name: 'Model No'
+    },
+    {
+      value: 'modelName',
+      name: 'Model Name'
+    },
+    {
+      value: 'claimMonth',
+      name: 'Claim Month'
+    },
+    {
+      value: 'customerInformation',
+      name: 'Customer Information'
+    },
+    {
+      value: 'customerName',
+      name: 'Customer Name'
+    },
+    {
+      value: 'ktcAnalysisResult',
+      name: 'KTC Analysis Result'
+    },
+    {
+      value: 'judgment',
+      name: 'Judgment'
+    },
   ]
   filterSelected: string = ''
   fillSearch: string = ''
+  placeholder: string = 'Value'
 
   displayedColumns: string[] = ['registerNo', 'no', 'claimStatus', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'occurredLocation', 'defect', 'qty', 'lotNo', 'judgment'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
@@ -39,6 +72,8 @@ export class Rgas1Component implements OnInit {
   claims: any[] = []
   @Output() onClickClaimChange: EventEmitter<any> = new EventEmitter()
   @Output() onClickNewChange: EventEmitter<any> = new EventEmitter()
+
+  @Input() showBtnNew: boolean = true
   constructor(
     private $claim: HttpClaimService,
     private $local: LocalStoreService
@@ -47,25 +82,9 @@ export class Rgas1Component implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       let params: HttpParams = new HttpParams()
+      params = new HttpParams().set('status', JSON.stringify(['receive information', 'wait approve', 'analysis']))
       this.claims = await lastValueFrom(this.$claim.getRgas1(params))
-      this.dataSource = new MatTableDataSource(this.claims.map((claim: any) => {
-        return {
-          ...claim,
-          'registerNo': claim.registerNo,
-          'no': claim.no,
-          'claimStatus': claim.status,
-          'PIC': claim.analysisPIC ? `${claim.analysisPIC?.name}` : '',
-          'claimMonth': moment(claim.dueDate).format('DD-MMM-YYYY'),
-          'claimNo': claim.claimNo,
-          'modelNo': claim.modelNo,
-          'customerName': claim.customerName,
-          'occurredLocation': claim.occurredLocation,
-          'defect': claim.descriptionENG,
-          'qty': claim.qty,
-          'lotNo': claim.productLotNo,
-          'judgment': claim.result?.ktcJudgment ? claim.result?.ktcJudgment : ''
-        }
-      }))
+      this.dataSource = new MatTableDataSource(this.claims)
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -76,8 +95,31 @@ export class Rgas1Component implements OnInit {
     }
   }
 
+  // todo onSearchSelect
+  onSearchSelect() {
+    this.fillSearch = ''
+    if (this.filterSelected == 'claimMonth') {
+      this.placeholder = 'MM-YYYY -> 02-2024'
+    }
+  }
+
   // todo search by option
-  onSearchSubmit() {
+  async onSearchSubmit() {
+    try {
+      if (this.filterSelected && this.fillSearch) {
+        let params: HttpParams = new HttpParams()
+        params = new HttpParams().set('status', JSON.stringify(['receive information', 'wait approve', 'analysis']))
+        params = params.set(this.filterSelected, this.fillSearch)
+        const resData = await lastValueFrom(this.$claim.getRgas1(params))
+        this.dataSource = new MatTableDataSource(resData)
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }, 300);
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
   }
 
   // todo search table

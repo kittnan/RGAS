@@ -14,34 +14,102 @@
   z-index: 2;
 }
 
-h1.name-title {
-  margin-left: 8px;
-  letter-spacing: 8px;
-  font-size: 35px;
-  font-weight: bolder;
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, supported by Chrome, Opera, etc. */
+@media only screen and (max-width: 1200px) {
+  h1.name-title {
+    display: none;
+  }
+
+  h1.name-title-mobile {
+    display: block;
+    margin-left: 8px;
+    letter-spacing: 8px;
+    font-size: 24px;
+    font-weight: bolder;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
 }
+
+/* Media query for desktop devices */
+@media only screen and (min-width: 1201px) {
+  h1.name-title-mobile {
+    display: none;
+  }
+
+  h1.name-title {
+    display: block;
+    margin-left: 8px;
+    letter-spacing: 5px;
+    font-size: 24px;
+    font-weight: bolder;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  h1.name-title::first-letter {
+    font-size: 35px;
+    text-decoration: underline;
+    font-family: sans-serif;
+  }
+}
+
+@media only screen and (max-width: 544px) {
+  .title-img {
+    height: 50px;
+  }
+
+  h1.name-title-mobile {
+    margin-left: 8px;
+    letter-spacing: 3px;
+    font-size: 30px;
+    font-weight: bolder;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+
+
+  .title-sub-menu {
+    display: block;
+  }
+  .title-main-menu{
+    display: none !important;
+  }
+
+
+}
+
+@media only screen and (min-width: 545px) {
+  .title-img {
+    height: 60px;
+  }
+
+
+  .title-sub-menu {
+    display: none !important;
+  }
+  .title-main-menu{
+    display: block;
+  }
+}
+
 
 .dis-text {
   -webkit-touch-callout: none;
-  /* iOS Safari */
   -webkit-user-select: none;
-  /* Safari */
   -moz-user-select: none;
-  /* Firefox */
   -ms-user-select: none;
-  /* Internet Explorer/Edge */
   user-select: none;
-  /* Non-prefixed version, supported by Chrome, Opera, etc. */
 }
 
 
@@ -89,13 +157,14 @@ footer {
   .mat-slide-toggle.mat-warn.mat-checked .mat-slide-toggle-thumb {
     background-color: #999999;
   }
+
   .theme-toggle {
     color: #353535;
   }
 }
+
 ::ng-deep .theme--light {
   .theme-toggle {
     color: #ffa02f;
   }
 }
-

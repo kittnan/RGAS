@@ -15,6 +15,7 @@ import { EngineerGuard } from './guards/engineer.guard';
 import { SectionGuard } from './guards/section.guard';
 import { InterpreterGuard } from './guards/interpreter.guard';
 import { DepartmentGuard } from './guards/department.guard';
+import { GuestModule } from './pages/guest/guest.module';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => AdminModule,
     canActivate: [AdminGuard],
+  },
+  {
+    path: 'guest',
+    loadChildren: () => GuestModule,
   },
   {
     path: 'operator',

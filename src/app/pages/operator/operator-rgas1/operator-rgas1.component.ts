@@ -24,7 +24,7 @@ export class OperatorRgas1Component implements OnInit {
 
   // todo click row
   onClickClaimChange(event: any) {
-    if (event.status == 'receive information') {
+    if (event.claimStatus == 'receive information') {
       this.router.navigate(['operator/information'], {
         queryParams: {
           registerNo: event.registerNo,
@@ -32,7 +32,7 @@ export class OperatorRgas1Component implements OnInit {
         }
       })
     }
-    if (event.status == 'wait approve') {
+    if (event.claimStatus == 'wait approve') {
       this.router.navigate(['operator/information'], {
         queryParams: {
           registerNo: event.registerNo,
@@ -40,7 +40,7 @@ export class OperatorRgas1Component implements OnInit {
         }
       })
     }
-    if (event.status == 'analysis') {
+    if (event.claimStatus == 'analysis') {
       this.router.navigate(['operator/analysis'], {
         queryParams: {
           registerNo: event.registerNo,

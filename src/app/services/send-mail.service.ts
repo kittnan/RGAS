@@ -9,77 +9,14 @@ import { LocalStoreService } from './local-store.service';
 })
 export class SendMailService {
 
-  private text = `<p><strong>Dear...All concern</strong></p>
+  private footerEmail = ``
+  // private footerEmail = `
+  // <p></p>
+  // <p><strong><span style="color:#c0392b">Please note that this email is automatically generated. Kindly refrain from replying directly to it.</span></strong></p>
 
-  <p>&nbsp;</p>
+  // <p><strong><span style="color:#c0392b">Thank you for your attention to this urgent matter.</span></strong></p>
 
-  <p><strong><span style="color:#7FFFD4">$comment</span></strong></p>
-
-  <p><strong>Please review and approve.</strong></p>
-
-  <p>&nbsp;</p>
-
-  <p><strong>Attached, you will find the necessary documentation for further investigation. Please review it promptly and take appropriate actions to address this matter.</strong></p>
-
-  <p>Click here ➡️ $link</p>
-
-  <p>&nbsp;</p>
-
-  <p><strong><span style="color:#c0392b">Please note that this email is automatically generated. Kindly refrain from replying directly to it.</span></strong></p>
-
-  <p><strong><span style="color:#c0392b">Thank you for your attention to this urgent matter.</span></strong></p>
-
-  <p><strong><span style="color:#c0392b">Best Regards,</span></strong></p>`
-
-  private text2 = `<p><strong>Dear...All</strong></p>
-
-  <p>&nbsp;</p>
-
-  <p><strong>We&#39;d like to share claim information from $type $occurredLocation $qty&nbsp;</strong></p>
-
-  <p><strong>Please see the detail below and attached file</strong><br />
-  &nbsp;</p>
-
-  <p><strong><span style="color:#7FFFD4">$comment</span></strong></p>
-
-  <p><strong>Model&nbsp; : </strong>$modelCode</p>
-
-  <p><strong>Q&#39;ty </strong>: $qty</p>
-
-  <p><strong>Lot :</strong>&nbsp;$productLotNo</p>
-
-  <p><strong>Serial :</strong>&nbsp;$serial</p>
-
-  <p><strong>Failure phenomenon :</strong>&nbsp; $failure</p>
-
-  <p><strong>Occurrence place :</strong>&nbsp;$occur</p>
-
-  <p><strong>Driving kilometer :</strong>&nbsp;$text</p>
-
-  <p>&nbsp;</p>
-
-  <p><strong>Attached, you will find the necessary documentation for further investigation. Please review it promptly and take appropriate actions to address this matter.</strong></p>
-
-  <p>Click here ➡️ $link</p>
-
-  <p>&nbsp;</p>
-
-
-
-  <p><strong><span style="color:#c0392b">Please note that this email is automatically generated. Kindly refrain from replying directly to it.</span></strong></p>
-
-  <p><strong><span style="color:#c0392b">Thank you for your attention to this urgent matter.</span></strong></p>
-
-  <p><strong><span style="color:#c0392b">Best Regards,</span></strong></p>`
-
-
-  private footerEmail = `
-  <p></p>
-  <p><strong><span style="color:#c0392b">Please note that this email is automatically generated. Kindly refrain from replying directly to it.</span></strong></p>
-
-  <p><strong><span style="color:#c0392b">Thank you for your attention to this urgent matter.</span></strong></p>
-
-  <p><strong><span style="color:#c0392b">Best Regards,</span></strong></p>`
+  // <p><strong><span style="color:#c0392b">Best Regards,</span></strong></p>`
   private symbol = [
     {
       sym: '●',
@@ -134,13 +71,12 @@ export class SendMailService {
     }
   }
   toClaimInformation(data: any, to: any[]) {
-
-    console.log(this.dearAllEmail);
-
     let symbol = this.getSymbol(data.occurredLocation)
+    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${data.registerNo}&no=${data.no}`
+
 
     let qtyTxt = Number(data.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `${symbol}${data.customerName} ${data.occurredLocation} ${data.size} #${data.modelNo} ${data.descriptionENG} ${data.qty} ${qtyTxt} ${data.claimNo}.`
+    let subject: any = `${symbol}${data.type ? data.type : ''} ${data.occurredLocation ? data.occurredLocation : ''} ${data.size ? data.size : ''} #${data.modelNo ? data.modelNo : ''} ${data.descriptionENG ? data.descriptionENG : ''} ${data.qty ? data.qty : ''} ${data.qty ? qtyTxt : ''} ${data.claimNo ? data.claimNo : ''}.`
 
     let html: any = `<p><strong>Dear all,</strong></p>
     <p><strong>Thank you for your support.</strong></p>
@@ -149,27 +85,31 @@ export class SendMailService {
     Please see details below.</p>
     <p></p>
 
-
-    <p><strong>Claim No. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${data.claimNo}</p>
-<p><strong>Defective mode. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${data.descriptionENG}</p>
-<p><strong>Q'ty. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${data.qty} ${qtyTxt}</p>
-<p><strong>Lot no. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;&nbsp;:</strong>&nbsp;${data.productLotNo}</p>
-<p><strong>Occurrence place &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${data.occurredLocation}</p>
-<p><strong>Occurrence date &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;:</strong>&nbsp;${moment(data.occurDate).format('D-MMM-YYYY')}</p>
-<p></p>
-<p><strong>Model Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;:</strong>&nbsp;${data.modelCode}</p>
-<p><strong>MDL model &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;:</strong>&nbsp;${data.modelNo}</p>
-<p><strong>PNL model &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp;:</strong>&nbsp;${data.modelNoPNL}</p>
-<p><strong>SMT model &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;:</strong>&nbsp;${data.modelNoSMT}</p>
+    <p>Claim No.:${data.claimNo}</p>
+    <p>Defective mode.:${data.descriptionENG}</p>
+    <p>Q'ty.:${data.qty} ${qtyTxt}</p>
+    <p>Lot no.:${data.productLotNo}</p>
+    <p>Occurrence place:${data.occurredLocation}</p>
+    <p>Occurrence date:${moment(data.occurDate).format('D-MMM-YYYY')}</p>
+    <p>Model Name:${data.modelCode}</p>
+    <p>MDL model:${data.modelNo}</p>
+    <p>PNL model:${data.modelNoPNL}</p>
+    <p>SMT model:${data.modelNoSMT}</p>
     <p></p>
-    <p>Dear Orawan san</p>
-    <p>CC PD-MDL members</p>
+    <p>For more detail please kindly see at below address.</p>
+    <p>Click here ➡️ <a href="${url}">RGAS</a></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p><strong>Dear Orawan san</strong></p>
+    <p><strong>CC PD-MDL members</strong></p>
     <p>Would you please verify 4M change of this claim with above information?
     Please reply to us within 28-Mar-24 as possible (Before/After 5 lots)</p>`
     html = html + this.footerEmail
     return {
       html: html,
       subject: subject,
+      // to: ['kittinan-k@kyocera.co.th'],
       to: this.dearAllEmail,
       // to: to.map((t: any) => t.email),
       cc: []
@@ -366,11 +306,12 @@ export class SendMailService {
   // }
 
   private getSymbol(value: any) {
-    let option = this.symbol.find((sym: any) => sym == sym.value == value)
+    let option = this.symbol.find((sym: any) => sym.value.includes(value))
     if (option) {
       return option.sym
+    } else {
+      return '☐'
     }
-    return '☐'
   }
 
   private getNameReport(name: any) {

@@ -32,6 +32,9 @@ import { Autocomplete2Component } from './autocomplete2/autocomplete2.component'
 import { Form4Component } from './rgas2/form4/form4.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { DialogEmailComponent } from './dialog-email/dialog-email.component';
+import { Form1EngineerComponent } from './rgas2/form1-engineer/form1-engineer.component';
+import { Form3ViewComponent } from './rgas2/form3-view/form3-view.component';
+import { Form4ViewComponent } from './rgas2/form4-view/form4-view.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -74,6 +77,9 @@ let items = [
     Autocomplete2Component,
     Form4Component,
     DialogEmailComponent,
+    Form1EngineerComponent,
+    Form3ViewComponent,
+    Form4ViewComponent,
   ],
   imports: [
     CommonModule,
@@ -105,6 +111,9 @@ let items = [
     Autocomplete2Component,
     Form4Component,
     DialogEmailComponent,
+    Form1EngineerComponent,
+    Form3ViewComponent,
+    Form4ViewComponent,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

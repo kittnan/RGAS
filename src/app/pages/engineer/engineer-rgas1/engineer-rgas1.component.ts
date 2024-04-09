@@ -20,7 +20,8 @@ export class EngineerRgas1Component implements OnInit {
   }
   // todo click row
   onClickClaimChange(event: any) {
-    if (event.status == 'receive information') {
+    console.log("🚀 ~ event:", event)
+    if (event.claimStatus == 'receive information') {
       this.router.navigate(['operator/information'], {
         queryParams: {
           registerNo: event.registerNo,
@@ -28,7 +29,7 @@ export class EngineerRgas1Component implements OnInit {
         }
       })
     }
-    if (event.status == 'wait approve') {
+    if (event.claimStatus == 'wait approve') {
       this.router.navigate(['engineer/approve-claim'], {
         queryParams: {
           registerNo: event.registerNo,
@@ -36,7 +37,7 @@ export class EngineerRgas1Component implements OnInit {
         }
       })
     }
-    if (event.status == 'analysis') {
+    if (event.claimStatus == 'analysis') {
       this.router.navigate(['engineer/analysis'], {
         queryParams: {
           registerNo: event.registerNo,

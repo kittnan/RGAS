@@ -162,6 +162,16 @@ export class LoginComponent implements OnInit {
         this.$local.setAuth(access)
         this.router.navigate(['admin']).then(() => location.reload())
         break;
+      case 'guest':
+        this.$local.setAuth(access)
+        if (this.dataParams?.registerNo && this.dataParams?.no) {
+          this.router.navigate([`${access}/view`], { queryParamsHandling: 'preserve' }).then(() => location.reload
+            ())
+        } else {
+          this.router.navigate([`${access}`]).then(() => location.reload
+            ())
+        }
+        break;
       case 'operator':
         this.$local.setAuth(access)
         if (this.dataParams?.registerNo && this.dataParams?.no) {

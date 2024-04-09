@@ -123,7 +123,7 @@ export class AppComponent {
       title: 'RGAS',
       icon: 'library_books',
       path: '',
-      roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead'],
+      roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead','guest'],
       items: [
         {
           title: 'RGAS-1',
@@ -154,6 +154,12 @@ export class AppComponent {
           icon: 'keyboard_arrow_right',
           path: 'departmentHead/rgas1',
           roles: ['admin', 'departmentHead']
+        },
+        {
+          title: 'RGAS-1',
+          icon: 'keyboard_arrow_right',
+          path: 'guest/rgas1',
+          roles: ['admin', 'guest']
         },
 
 

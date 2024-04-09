@@ -64,6 +64,37 @@ export class EngineerApproveClaimComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
+
+  async formChange() {
+    const resData = await lastValueFrom(this.$claim.createOrUpdate(this.form))
+    if (resData && resData.length > 0) {
+      this.form = resData[0]
+      this.router.navigate(['operator/information'], {
+        queryParams: {
+          registerNo: this.form.registerNo,
+          no: this.form.no
+        }
+      })
+    }
+  }
+
+
+  // todo finish form1
+  submitChange($event: any) {
+    Swal.fire({
+      title: 'Submit?',
+      icon: 'question',
+      showCancelButton: true
+    }).then(async (v: SweetAlertResult) => {
+      if (v.isConfirmed) {
+        await lastValueFrom(this.$claim.createOrUpdate($event))
+        location.reload()
+        alert('send mail')
+      }
+    })
+  }
+
+
   // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
     if (option._id && value._id) {
@@ -88,7 +119,7 @@ export class EngineerApproveClaimComponent implements OnInit {
   }
   async approve() {
     try {
-
+      const resData = await lastValueFrom(this.$claim.createOrUpdate(this.form))
       let foo = this.sendMail.toClaimInformation(this.form, this.sendTo)
       let dialogEmail = this.dialog.open(DialogEmailComponent, {
         data: foo

@@ -3,7 +3,8 @@
     <app-title fxFlex="100" [title]="'Approve Claim'"></app-title>
   </div>
   <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-    <app-form1-view fxFlex="100" [form]="form"></app-form1-view>
+    <app-form1-engineer fxFlex="100" [(form)]="form" (formChange)="formChange()"
+      (submitChange)="submitChange($event)"></app-form1-engineer>
   </div>
   <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end start" fxLayoutGap="10" class="mt-4 pe-8">
 

@@ -31,6 +31,10 @@ export class UserNewComponent implements OnInit {
   accessOption: any[] = [
 
     {
+      name: 'Guest',
+      value: "guest"
+    },
+    {
       name: 'Operator',
       value: "operator"
     },

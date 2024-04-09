@@ -19,7 +19,7 @@ export class DepartmentRgas1Component implements OnInit {
 
   // todo click row
   onClickClaimChange($event: any) {
-    if ($event.status == 'analysis') {
+    if ($event.claimStatus == 'analysis') {
       this.router.navigate(['departmentHead/analysis'], {
         queryParams: {
           registerNo: $event.registerNo,
