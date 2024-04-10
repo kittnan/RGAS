@@ -1,1 +1,109 @@
-<p>form4-view works!</p>
+<div class="flex flex-wrap justify-center items-start w-full mt-1">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <app-sub-title fxFlex="100" [title]="'Document & Verify result'" class="mt-2 mb-2"></app-sub-title>
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30">
+
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="p-2 rounded-md">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18 me-2">topic</mat-icon>
+        <span class="font-black text-label">
+          Closed / Pending
+        </span>
+      </div>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Revised FMEA</mat-label>
+        <input [disabled]="true" matInput [value]="form4?.revise">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Due date to revise FMEA</mat-label>
+        <input [disabled]="true" matInput [value]="form4?.reviseDueDate" [matDatepicker]="reviseDueDate_dp">
+        <mat-datepicker-toggle matSuffix [for]="reviseDueDate_dp"></mat-datepicker-toggle>
+        <mat-datepicker #reviseDueDate_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">FMEA revised date</mat-label>
+        <input [disabled]="true" matInput [value]="form4?.reviseDate" [matDatepicker]="reviseDate_dp">
+        <mat-datepicker-toggle matSuffix [for]="reviseDate_dp"></mat-datepicker-toggle>
+        <mat-datepicker #reviseDate_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30">
+
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="p-2 rounded-md">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18 me-2">topic</mat-icon>
+        <span class="font-black text-label">
+          Closed / Pending
+        </span>
+      </div>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Verify process</mat-label>
+        <input [disabled]="true" matInput [value]="form4?.verify">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Verify process date</mat-label>
+        <input [disabled]="true" matInput [value]="form4?.verifyDate" [matDatepicker]="verifyDate_dp">
+        <mat-datepicker-toggle matSuffix [for]="verifyDate_dp"></mat-datepicker-toggle>
+        <mat-datepicker #verifyDate_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="auto"></div>
+
+  </div>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30">
+
+    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="p-2 rounded-md">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <mat-icon class="mat-18 me-2">topic</mat-icon>
+        <span class="font-black text-label">
+          Closed / Pending
+        </span>
+      </div>
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Apply Lessons learned</mat-label>
+        <input [disabled]="true" matInput [value]="form4?.apply">
+      </mat-form-field>
+
+    </div>
+
+    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Date add in Lessons learned file</mat-label>
+        <input [disabled]="true" matInput [value]="form4?.applyDate" [matDatepicker]="applyDate_dp">
+        <mat-datepicker-toggle matSuffix [for]="applyDate_dp"></mat-datepicker-toggle>
+        <mat-datepicker #applyDate_dp></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="auto"></div>
+
+  </div>
+
+
+
+</div>

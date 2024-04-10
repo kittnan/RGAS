@@ -3,11 +3,17 @@
     <app-title fxFlex="100" [title]="'RGAS-2'"></app-title>
   </div>
   <ng-container *ngIf="show">
-    <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-      <app-form1-view [form]="form"></app-form1-view>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+      <app-form1-view [form]="form" [form2]="form2"  [form3]="form3"></app-form1-view>
     </div>
-    <div *ngIf="form2" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
       <app-form2-view fxFlex="100" [form2]="form2"></app-form2-view>
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+      <app-form3-view fxFlex="100" [form]="form3" [reportInformation]="reportInformation"></app-form3-view>
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
+      <app-form4-view fxFlex="100" [form4]="form4" ></app-form4-view>
     </div>
 
 

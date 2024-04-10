@@ -44,7 +44,7 @@ export class YearMonthComponent {
 
   chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>) {
     this.dateInput = moment(this.dateInput).set('month', normalizedMonth.month())
-    this.dateInputChange.emit(this.dateInput)
+    this.dateInputChange.emit(moment(this.dateInput).startOf('month'))
     datepicker.close();
   }
 

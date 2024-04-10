@@ -21,7 +21,7 @@ export class Form2ViewComponent implements OnInit {
   }
   // todo label show PIC
   labelShowPIC() {
-    if (this.form2.PIC) {
+    if (this.form2?.PIC) {
       let PIC = this.form2.PIC
       return PIC.name
     }
@@ -29,14 +29,20 @@ export class Form2ViewComponent implements OnInit {
   }
   // todo open file bottom
   openBottom(files: any) {
+    console.log("🚀 ~ files:", files)
     this._bottomSheet.open(FilesBottomComponent, {
-      data: files
+      data: {
+        files: files,
+        showDeleteBtn: false,
+      },
+
     })
   }
 
   // todo control badge number
   controlBadgeNumber(files: any) {
     if (files && files.length < 1) return null
+    if (!files) return null
     return files.length
   }
   // todo show user login name

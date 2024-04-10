@@ -182,7 +182,6 @@ export class Form3Component implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-
       if(this.reportInformation){
         this.dcdForm1.patchValue(this.reportInformation.ng.value1)
         this.m1eForm1.patchValue(this.reportInformation.ng.value2)

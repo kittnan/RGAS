@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpDocumentVerifiesService } from 'src/app/https/http-document-verifies.service';
 import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
+import { HttpReportInformationService } from 'src/app/https/http-report-information.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
@@ -16,9 +17,7 @@ import { LocalStoreService } from 'src/app/services/local-store.service';
 })
 export class GuestViewComponent implements OnInit {
   show: boolean = true
-  form: any = null
   userLogin: any
-  form2: any = null
   tempObj = {
     dueDate: null,
     dateSubmitToCustomer: null,
@@ -26,6 +25,8 @@ export class GuestViewComponent implements OnInit {
     index: 1,
     status: 'engineer',
   }
+  form: any
+  form2: any = null
   form3: any = {
     preReport: { ...this.tempObj },
     interims: [
@@ -60,6 +61,56 @@ export class GuestViewComponent implements OnInit {
     apply: null,
     applyDate: null,
   }
+  reportInformation: any = {
+    ng: {
+      qty: null,
+      value1: null,
+      value2: null
+    },
+    notAccepted: {
+      qty: null,
+      value1: null,
+      value2: null
+    },
+    noAbnormality: {
+      qty: null,
+      value1: null,
+      value2: null
+    },
+    withinSpec: {
+      qty: null,
+      value1: null,
+      value2: null
+    },
+    notRecurred: {
+      qty: null,
+      value1: null,
+      value2: null
+    },
+    difference: {
+      qty: null,
+      value1: null
+    },
+    causeByCustomer: null,
+    outWarranty: null,
+    rootCause: null,
+    rootCauseActions: [
+      {
+        value: null,
+        date: null,
+        index: 1
+      }
+    ],
+    leakCause: null,
+    leakCauseActions: [
+      {
+        value: null,
+        date: null,
+        index: 1
+      }
+    ],
+    _id: null
+  }
   constructor(
     private router: Router,
     private $claim: HttpClaimService,
@@ -68,7 +119,8 @@ export class GuestViewComponent implements OnInit {
     private $local: LocalStoreService,
     private $report: HttpReportService,
     private $fileUpload: HttpFileUploadService,
-    private $documentVerify: HttpDocumentVerifiesService
+    private $documentVerify: HttpDocumentVerifiesService,
+    private $information: HttpReportInformationService
 
   ) {
     this.route.queryParams.subscribe(async (params: any) => {
@@ -96,15 +148,18 @@ export class GuestViewComponent implements OnInit {
             finalReportOBL: finalReportOBL ? finalReportOBL : this.form3.finalReportOBL,
             questionAnswers: questionAnswers && questionAnswers.length > 0 ? questionAnswers : this.form3.questionAnswers,
           }
+          const resInformation = await lastValueFrom(this.$information.get(param))
+          if (resInformation && resInformation.length > 0) {
+            this.reportInformation = resInformation[0]
+          }
 
           const resDocVerify = await lastValueFrom(this.$documentVerify.get(param))
-          this.form4 =resDocVerify.length > 0 ? resDocVerify[0] : this.form4
-
+          this.form4 = resDocVerify.length > 0 ? resDocVerify[0] : this.form4
         }
       }
     })
     this.userLogin = this.$local.getProfile()
-   }
+  }
 
   ngOnInit(): void {
   }

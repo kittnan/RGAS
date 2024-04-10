@@ -1,41 +1,42 @@
 <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-2 mb-4">
-  <div *ngIf="form2" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
     <app-sub-title fxFlex="100" [title]="'Analysis Result'" class="mt-2 mb-2"></app-sub-title>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="10">
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start start">
 
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Part Receive Date</mat-label>
-            <input [disabled]="true" matInput [value]="form2.partReceivingDate | date :'dd-MMM-YY'">
+            <mat-label class="mat-label-custom">Part Receive Date</mat-label>
+            <input *ngIf="form2?.partReceivingDate" [disabled]="true" matInput [value]="form2.partReceivingDate | date :'dd-MMM-YY'">
+            <input *ngIf="!form2 || !form2.partReceivingDate" [disabled]="true" matInput>
           </mat-form-field>
 
         </div>
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
 
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>PIC</mat-label>
-            <input [disabled]="true" matInput [value]="form2.PIC?.name">
+            <mat-label class="mat-label-custom">PIC</mat-label>
+            <input [disabled]="true" matInput [value]="form2?.PIC?.name">
           </mat-form-field>
 
         </div>
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>RGA No.</mat-label>
-            <input [disabled]="true" matInput [value]="form2.rgaNo">
+            <mat-label class="mat-label-custom">RGA No.</mat-label>
+            <input [disabled]="true" matInput [value]="form2?.rgaNo">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>KTC Analysis Result</mat-label>
-            <input [disabled]="true" matInput [value]="form2.ktcAnalysisResult">
+            <mat-label class="mat-label-custom">KTC Analysis Result</mat-label>
+            <input [disabled]="true" matInput [value]="form2?.ktcAnalysisResult">
           </mat-form-field>
         </div>
 
       </div>
       <div fxFlex="100" fxFlex.gt-md="65" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2">
-          <button mat-raised-button color="primary">
+          <button [disabled]="true" mat-raised-button color="primary">
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5">
               <span>Print Label</span>
               <mat-icon class="mat-18">picture_as_pdf</mat-icon>
@@ -45,7 +46,7 @@
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2 p-1 ">
           <div fxLayoutAlign="start start" class="label-detail" style="width: 900px; height: 250px;">
             <div class="flex justify-center items-center bf" style="width: 250px; height: 250px;">
-              <img [src]="form2.qrcode" alt="" style="width: 100%; height: 100%;">
+              <img [src]="form2?.qrcode" alt="" style="width: 100%; height: 100%;">
             </div>
             <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="bt br bb"
               style="width:575px; height: 250px;">
@@ -172,173 +173,173 @@
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="20">
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Appearance Check Result </mat-label>
-          <input [disabled]="true" matInput [value]="form2.appearance?.result">
+          <mat-label class="mat-label-custom">Appearance Check Result </mat-label>
+          <input [disabled]="true" matInput [value]="form2?.appearance?.result">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis By</mat-label>
-          <input [disabled]="true" matInput [value]="displayName(form2.appearance?.analysisBy)">
+          <mat-label class="mat-label-custom">Analysis By</mat-label>
+          <input [disabled]="true" matInput [value]="displayName(form2?.appearance?.analysisBy)">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis Date</mat-label>
-          <input [disabled]="true" matInput [value]="form2.appearance?.analysisDate | date :'dd-MMM-YY'">
+          <mat-label class="mat-label-custom">Analysis Date</mat-label>
+          <input [disabled]="true" matInput [value]="form2?.appearance?.analysisDate | date :'dd-MMM-YY'">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.appearance?.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.appearance?.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form2.appearance?.files)"
+            <mat-icon [matBadge]="controlBadgeNumber(form2?.appearance?.files)"
               matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Function Check Result </mat-label>
-          <input [disabled]="true" matInput [value]="form2.function?.result">
+          <mat-label class="mat-label-custom">Function Check Result </mat-label>
+          <input [disabled]="true" matInput [value]="form2?.function?.result">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis By</mat-label>
-          <input [disabled]="true" matInput [value]="displayName(form2.function?.analysisBy)">
+          <mat-label class="mat-label-custom">Analysis By</mat-label>
+          <input [disabled]="true" matInput [value]="displayName(form2?.function?.analysisBy)">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis Date</mat-label>
-          <input [disabled]="true" matInput [value]="form2.function?.analysisDate  | date :'dd-MMM-YY'">
+          <mat-label class="mat-label-custom">Analysis Date</mat-label>
+          <input [disabled]="true" matInput [value]="form2?.function?.analysisDate  | date :'dd-MMM-YY'">
         </mat-form-field>
       </div>
       <div fxFlex=" 100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.function?.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.function?.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form2.function?.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2?.function?.files)" matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Electrical Value Check Result </mat-label>
-          <input [disabled]="true" matInput [value]="form2.electrical?.result">
+          <mat-label class="mat-label-custom">Electrical Value Check Result </mat-label>
+          <input [disabled]="true" matInput [value]="form2?.electrical?.result">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis By</mat-label>
-          <input [disabled]="true" matInput [value]="displayName(form2.electrical?.analysisBy)">
+          <mat-label class="mat-label-custom">Analysis By</mat-label>
+          <input [disabled]="true" matInput [value]="displayName(form2?.electrical?.analysisBy)">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis Date</mat-label>
-          <input [disabled]="true" matInput [value]="form2.electrical?.analysisDate  | date :'dd-MMM-YY'">
+          <mat-label class="mat-label-custom">Analysis Date</mat-label>
+          <input [disabled]="true" matInput [value]="form2?.electrical?.analysisDate  | date :'dd-MMM-YY'">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.electrical?.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.electrical?.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form2.electrical?.files)"
+            <mat-icon [matBadge]="controlBadgeNumber(form2?.electrical?.files)"
               matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Disassembly Check Result </mat-label>
-          <input [disabled]="true" matInput [value]="form2.disassembly?.result">
+          <mat-label class="mat-label-custom">Disassembly Check Result </mat-label>
+          <input [disabled]="true" matInput [value]="form2?.disassembly?.result">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis By</mat-label>
-          <input [disabled]="true" matInput [value]="form2.disassembly?.analysisBy?.name">
+          <mat-label class="mat-label-custom">Analysis By</mat-label>
+          <input [disabled]="true" matInput [value]="form2?.disassembly?.analysisBy?.name">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis Date</mat-label>
-          <input [disabled]="true" matInput [value]="form2.disassembly?.analysisDate  | date :'dd-MMM-YY'">
+          <mat-label class="mat-label-custom">Analysis Date</mat-label>
+          <input [disabled]="true" matInput [value]="form2?.disassembly?.analysisDate  | date :'dd-MMM-YY'">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.disassembly?.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.disassembly?.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form2.disassembly?.files)"
+            <mat-icon [matBadge]="controlBadgeNumber(form2?.disassembly?.files)"
               matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Microscope Check Result </mat-label>
-          <input [disabled]="true" matInput [value]="form2.microscope?.result">
+          <mat-label class="mat-label-custom">Microscope Check Result </mat-label>
+          <input [disabled]="true" matInput [value]="form2?.microscope?.result">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis By</mat-label>
-          <input [disabled]="true" matInput [value]="displayName(form2.microscope?.analysisBy)">
+          <mat-label class="mat-label-custom">Analysis By</mat-label>
+          <input [disabled]="true" matInput [value]="displayName(form2?.microscope?.analysisBy)">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis Date</mat-label>
-          <input [disabled]="true" matInput [value]="form2.microscope?.analysisDate  | date :'dd-MMM-YY'">
+          <mat-label class="mat-label-custom">Analysis Date</mat-label>
+          <input [disabled]="true" matInput [value]="form2?.microscope?.analysisDate  | date :'dd-MMM-YY'">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.microscope?.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.microscope?.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form2.microscope?.files)"
+            <mat-icon [matBadge]="controlBadgeNumber(form2?.microscope?.files)"
               matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Technical Analysis Result </mat-label>
-          <input [disabled]="true" matInput [value]="form2.technical?.result">
+          <mat-label class="mat-label-custom">Technical Analysis Result </mat-label>
+          <input [disabled]="true" matInput [value]="form2?.technical?.result">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label>Analysis Report No.</mat-label>
-          <input [disabled]="true" matInput [value]="form2.technical?.analysisReportNo">
+          <mat-label class="mat-label-custom">Analysis Report No.</mat-label>
+          <input [disabled]="true" matInput [value]="form2?.technical?.analysisReportNo">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.technical?.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.technical?.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form2.technical?.files)"
+            <mat-icon [matBadge]="controlBadgeNumber(form2?.technical?.files)"
               matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
@@ -346,37 +347,37 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch"></div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Supplier Analysis Result </mat-label>
-          <input [disabled]="true" matInput [value]="form2.supplier?.result">
+          <mat-label class="mat-label-custom">Supplier Analysis Result </mat-label>
+          <input [disabled]="true" matInput [value]="form2?.supplier?.result">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.supplier?.files)"
+        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.supplier?.files)"
           class="btn-file" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form2.supplier?.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2?.supplier?.files)" matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>FAR / PNN Number </mat-label>
-          <input [disabled]="true" matInput [value]="form2.supplier?.farPnnNumber">
+          <mat-label class="mat-label-custom">FAR / PNN Number </mat-label>
+          <input [disabled]="true" matInput [value]="form2?.supplier?.farPnnNumber">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Issue Date</mat-label>
-          <input [disabled]="true" matInput [value]="form2.supplier?.issueDate  | date :'dd-MMM-YY'">
+          <mat-label class="mat-label-custom">Issue Date</mat-label>
+          <input [disabled]="true" matInput [value]="form2?.supplier?.issueDate  | date :'dd-MMM-YY'">
         </mat-form-field>
       </div>
       <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-8">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>KTC Judgment </mat-label>
-          <input [disabled]="true" matInput [value]="form2.ktcJudgment">
+          <mat-label class="mat-label-custom">KTC Judgment </mat-label>
+          <input [disabled]="true" matInput [value]="form2?.ktcJudgment">
         </mat-form-field>
 
       </div>

@@ -1,238 +1,308 @@
 <div class="flex flex-wrap justify-center items-start w-full mt-1">
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <app-sub-title fxFlex="100" [title]="'Claim Information'" class="mt-2 mb-2"></app-sub-title>
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+        <app-sub-title fxFlex="100" [title]="'Claim Status'" class="mt-2 mb-2"></app-sub-title>
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30" class="mt-1">
+          <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mb-1"
+            fxLayoutGap.gt-md="2">
+            <mat-card fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 ">
+              <span class="font-semibold  uppercase" style="letter-spacing: 1px;">
+                Submit customer
+              </span>
+            </mat-card>
+            <mat-card *ngIf="submitFinalReportToCustomer()" fxFlex="45" fxLayout="row wrap"
+              fxLayoutAlign="center center" class=" bg-red">
+              <span class="font-semibold">
+                Closed
+              </span>
+            </mat-card>
+            <mat-card *ngIf="!submitFinalReportToCustomer()" fxFlex="45" fxLayout="row wrap"
+              fxLayoutAlign="center center" class=" bg-green">
+              <span class="font-semibold">
+                Pending
+              </span>
+            </mat-card>
+          </div>
+          <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mb-1">
+            <mat-card fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center" class="bg-1 ">
+              <span class="font-semibold">
+                Up load OBL III
+              </span>
+            </mat-card>
+            <mat-card *ngIf="submitFinalReportToOBL()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
+              class=" bg-red">
+              <span class="font-semibold">
+                Closed
+              </span>
+            </mat-card>
+            <mat-card *ngIf="!submitFinalReportToOBL()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
+              class=" bg-green">
+              <span class="font-semibold">
+                Pending
+              </span>
+            </mat-card>
+          </div>
+          <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mb-1">
+            <mat-card *ngIf="moreThan2Month()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
+              class="p-2 bg-green">
+              <span class="font-semibold p-4 text-center">
+                Less than 2 months
+              </span>
+            </mat-card>
+            <mat-card *ngIf="!moreThan2Month()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
+              class="p-2 bg-red">
+              <span class="font-semibold p-4 text-center">
+                More than 2 months
+              </span>
+            </mat-card>
+            <mat-card *ngIf="moreThan15Month()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
+              class="p-2 bg-green">
+              <span class="font-semibold p-4 text-center">
+                Less than 1.5 months
+              </span>
+            </mat-card>
+            <mat-card *ngIf="!moreThan15Month()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
+              class="p-2 bg-red">
+              <span class="font-semibold p-4 text-center">
+                More than 1.5 months
+              </span>
+            </mat-card>
+          </div>
+        </div>
+      </div>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="30">
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Claim Notification No.</mat-label>
-            <input [disabled]="true" matInput [value]="form.claimNo">
+            <mat-label class="mat-label-custom">Claim Notification No.</mat-label>
+            <input [disabled]="true" matInput [value]="form?.claimNo?form.claimNo:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>KTC Model No.</mat-label>
-            <input [disabled]="true" matInput [value]="form.modelNo">
+            <mat-label class="mat-label-custom">KTC Model No.</mat-label>
+            <input [disabled]="true" matInput [value]="form?.modelNo?form.modelNo:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Product No.</mat-label>
-            <input [disabled]="true" matInput [value]="form.productNo">
+            <mat-label class="mat-label-custom">Product No.</mat-label>
+            <input [disabled]="true" matInput [value]="form?.productNo?form.productNo:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Model PNL</mat-label>
-            <input [disabled]="true" matInput [value]="form.modelNoPNL">
+            <mat-label class="mat-label-custom">Model PNL</mat-label>
+            <input [disabled]="true" matInput [value]="form?.modelNoPNL?form.modelNoPNL:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Model SMT</mat-label>
-            <input [disabled]="true" matInput [value]="form.modelNoSMT">
+            <mat-label class="mat-label-custom">Model SMT</mat-label>
+            <input [disabled]="true" matInput [value]="form?.modelNoSMT?form.modelNoSMT:''">
           </mat-form-field>
         </div>
         <div fxFlex.gt-md="30"></div>
 
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Customer Control No.</mat-label>
-            <input [disabled]="true" matInput [value]="form.customerNo">
+            <mat-label class="mat-label-custom">Customer Control No.</mat-label>
+            <input [disabled]="true" matInput [value]="form?.customerNo?form.customerNo:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
 
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>KTC Model Code</mat-label>
-            <input [disabled]="true" matInput [value]="form.modelCode">
+            <mat-label class="mat-label-custom">KTC Model Code</mat-label>
+            <input [disabled]="true" matInput [value]="form?.modelCode?form.modelCode:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Analysis PIC</mat-label>
-            <input [disabled]="true" matInput [value]="form.analysisPIC?.name">
+            <mat-label class="mat-label-custom">Analysis PIC</mat-label>
+            <input [disabled]="true" matInput [value]="form?.analysisPIC?.name">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Customer Name Customer B Name</mat-label>
-            <input [disabled]="true" matInput [value]="form.customerName">
+            <mat-label class="mat-label-custom">Customer Name Customer B Name</mat-label>
+            <input [disabled]="true" matInput [value]="form?.customerName?form.customerName:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Type</mat-label>
-            <input [disabled]="true" matInput [value]="form.type">
+            <mat-label class="mat-label-custom">Type</mat-label>
+            <input [disabled]="true" matInput [value]="form?.type?form.type:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Description (Japanese)</mat-label>
-            <input [disabled]="true" matInput [value]="form.descriptionJP">
+            <mat-label class="mat-label-custom">Description (Japanese)</mat-label>
+            <input [disabled]="true" matInput [value]="form?.descriptionJP?form.descriptionJP:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Sales Company Customer A Name</mat-label>
-            <input [disabled]="true" matInput [value]="form.saleCompany">
+            <mat-label class="mat-label-custom">Sales Company Customer A Name</mat-label>
+            <input [disabled]="true" matInput [value]="form?.saleCompany?form.saleCompany:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Side No.</mat-label>
-            <input [disabled]="true" matInput [value]="form.sideNo">
+            <mat-label class="mat-label-custom">Side No.</mat-label>
+            <input [disabled]="true" matInput [value]="form?.sideNo?form.sideNo:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Description (English)</mat-label>
-            <input [disabled]="true" matInput [value]="form.descriptionENG">
+            <mat-label class="mat-label-custom">Description (English)</mat-label>
+            <input [disabled]="true" matInput [value]="form?.descriptionENG?form.descriptionENG:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Sales PIC</mat-label>
-            <input [disabled]="true" matInput [value]="form.salePIC">
+            <mat-label class="mat-label-custom">Sales PIC</mat-label>
+            <input [disabled]="true" matInput [value]="form?.salePIC?form.salePIC:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Q'ty</mat-label>
-            <input [disabled]="true" matInput type="number" [min]="1" [value]="form.qty">
+            <mat-label class="mat-label-custom">Q'ty</mat-label>
+            <input [disabled]="true" matInput type="number" [min]="1" [value]="form?.qty?form.qty:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Function/ Appearance</mat-label>
-            <input [disabled]="true" matInput [value]="form.functionAppearance">
+            <mat-label class="mat-label-custom">Function/ Appearance</mat-label>
+            <input [disabled]="true" matInput [value]="form?.functionAppearance?form.functionAppearance:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Returning Style</mat-label>
-            <input [disabled]="true" matInput [value]="form.returnStyle">
+            <mat-label class="mat-label-custom">Returning Style</mat-label>
+            <input [disabled]="true" matInput [value]="form?.returnStyle?form.returnStyle:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Product Lot No.</mat-label>
-            <input [disabled]="true" matInput [value]="form.productLotNo">
+            <mat-label class="mat-label-custom">Product Lot No.</mat-label>
+            <input [disabled]="true" matInput [value]="form?.productLotNo?form.productLotNo:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>AWB No.</mat-label>
-            <input [disabled]="true" matInput [value]="form.AWBNo">
+            <mat-label class="mat-label-custom">AWB No.</mat-label>
+            <input [disabled]="true" matInput [value]="form?.AWBNo?form.AWBNo:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Model Classification</mat-label>
-            <input [disabled]="true" matInput [value]="form.modelClassification">
+            <mat-label class="mat-label-custom">Model Classification</mat-label>
+            <input [disabled]="true" matInput [value]="form?.modelClassification?form.modelClassification:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <app-year-month fxFlex="100" [title]="'Production Month'" [disabled]="true"
-            [dateInput]="form.productionMonth"></app-year-month>
+            [dateInput]="form?.productionMonth"></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Inv. No.</mat-label>
-            <input [disabled]="true" matInput [value]="form.InvNo">
+            <mat-label class="mat-label-custom">Inv. No.</mat-label>
+            <input [disabled]="true" matInput [value]="form?.InvNo?form.InvNo:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <app-year-month fxFlex="100" [title]="'Calendar Year'" [disabled]="true"
-            [dateInput]="form.calendarYear"></app-year-month>
+            [dateInput]="form?.calendarYear"></app-year-month>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Commercial Distribution</mat-label>
-            <input [disabled]="true" matInput [value]="form.commercialDistribution">
+            <mat-label class="mat-label-custom">Commercial Distribution</mat-label>
+            <input [disabled]="true" matInput [value]="form?.commercialDistribution?form.commercialDistribution:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Date Received Inv.</mat-label>
-            <input [disabled]="true" matInput [value]="form.dateReceiveInv | date :'dd-MMM-YY'">
+            <mat-label class="mat-label-custom">Date Received Inv.</mat-label>
+            <input [disabled]="true" matInput [value]="form?.dateReceiveInv | date :'dd-MMM-YY'">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Claim Registering Date</mat-label>
-            <input [disabled]="true" matInput [value]="form.claimRegisterDate |date:'dd-MMM-YY'">
+            <mat-label class="mat-label-custom">Claim Registering Date</mat-label>
+            <input [disabled]="true" matInput [value]="form?.claimRegisterDate |date:'dd-MMM-YY'">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Use Appearancelication</mat-label>
-            <input [disabled]="true" matInput [value]="form.useAppearance">
+            <mat-label class="mat-label-custom">Use Appearancelication</mat-label>
+            <input [disabled]="true" matInput [value]="form?.useAppearance?form.useAppearance:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
-            <mat-label>Product Cost</mat-label>
-            <input [disabled]="true" matInput type="number" [min]="0" [value]="form.productCost">
+            <mat-label class="mat-label-custom">Product Cost</mat-label>
+            <input [disabled]="true" matInput type="number" [min]="0" [value]="form?.productCost?form.productCost:''">
           </mat-form-field>
 
           <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
-            <mat-label>Unit</mat-label>
-            <input [disabled]="true" matInput [value]="form.productCostUnit">
+            <mat-label class="mat-label-custom">Unit</mat-label>
+            <input [disabled]="true" matInput [value]="form?.productCostUnit? form.productCostUnit:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Received Information Date ( E-Form OBL III )</mat-label>
-            <input [disabled]="true" matInput [value]="form.receiveInfoDate |date:'dd-MMM-YY' ">
+            <mat-label class="mat-label-custom">Received Information Date ( E-Form OBL III )</mat-label>
+            <input [disabled]="true" matInput [value]="form?.receiveInfoDate |date:'dd-MMM-YY' ">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Occurred Location</mat-label>
-            <input [disabled]="true" matInput [value]="form.occurredLocation">
+            <mat-label class="mat-label-custom">Occurred Location</mat-label>
+            <input [disabled]="true" matInput [value]="form?.occurredLocation?form.occurredLocation:''">
           </mat-form-field>
         </div>
 
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
-            <mat-label>Transportation Cost</mat-label>
-            <input [disabled]="true" matInput type="number" [min]="0" [value]="form.transportationCost">
+            <mat-label class="mat-label-custom">Transportation Cost</mat-label>
+            <input [disabled]="true" matInput type="number" [min]="0"
+              [value]="form?.transportationCost?form.transportationCost:''">
           </mat-form-field>
 
           <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
-            <mat-label>Unit</mat-label>
-            <input [disabled]="true" matInput [value]="form.unit">
+            <mat-label class="mat-label-custom">Unit</mat-label>
+            <input [disabled]="true" matInput [value]="form?.unit?form.unit:''">
           </mat-form-field>
         </div>
 
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Importance (Claim Rank)</mat-label>
-            <input [disabled]="true" matInput [value]="form.importance">
+            <mat-label class="mat-label-custom">Importance (Claim Rank)</mat-label>
+            <input [disabled]="true" matInput [value]="form?.importance?form.importance:''">
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label>Due Date (OBL III)</mat-label>
-            <input [disabled]="true" matInput [value]="form.dueDate |date:'dd-MMM-YY' ">
+            <mat-label class="mat-label-custom">Due Date (OBL III)</mat-label>
+            <input [disabled]="true" matInput [value]="form?.dueDate |date:'dd-MMM-YY' ">
           </mat-form-field>
         </div>
 
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <app-year-month fxFlex="100" [title]="'Cost Month'" [disabled]="true"
-            [dateInput]="form.costMonth"></app-year-month>
+            [dateInput]="form?.costMonth"></app-year-month>
         </div>
 
 
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <button [disabled]="!form.files || form.files?.length==0 " fxFlex="100" fxFlex.gt-md="30" mat-raised-button
+          <button [disabled]="!form?.files || form?.files?.length==0 " fxFlex="100" fxFlex.gt-md="30" mat-raised-button
             (click)="openBottom()" class="btn-file" [ngClass.gt-md]="'m-btn-l'">
             <div fxLayout="row wrap" fxLayoutAlign="center center">
               <span>
                 View
               </span>
-              <mat-icon [matBadge]="controlBadgeNumber(form.files)" matBadgeColor="warn">attach_file</mat-icon>
+              <mat-icon [matBadge]="controlBadgeNumber(form?.files)" matBadgeColor="warn">attach_file</mat-icon>
             </div>
           </button>
         </div>

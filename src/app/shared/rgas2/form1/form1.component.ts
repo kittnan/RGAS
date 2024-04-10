@@ -612,7 +612,7 @@ export class Form1Component implements OnInit {
 
   // todo css bg1
   moreThan2Month() {
-    if (this.form2 && this.form2.partReceivingDate && this.form3 && this.form3.finalReport.dateSubmitToCustomer) {
+    if (this.form2 && this.form2.partReceivingDate && this.form3 && this.form3.finalReport && this.form3.finalReport.dateSubmitToCustomer) {
       const nextMonth = moment(this.form2.partReceivingDate).add(2, 'month')
       const today = moment(this.form3.finalReport.dateSubmitToCustomer)
       if (today > nextMonth) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 
@@ -9,13 +9,15 @@ import { FilesBottomComponent } from '../../files-bottom/files-bottom.component'
 })
 export class Form3ViewComponent implements OnInit {
 
-  form: any
-  reportInformation: any
+  @Input() form: any
+  @Input() reportInformation: any
   constructor(
     private _bottomSheet: MatBottomSheet,
+
   ) { }
 
   ngOnInit(): void {
+
   }
 
   // todo css tag report status
@@ -42,17 +44,17 @@ export class Form3ViewComponent implements OnInit {
     return files.length
   }
 
-    // todo open file bottom
-    openBottom(files: any, key: any) {
-      this._bottomSheet.open(FilesBottomComponent, {
-        data: {
-          files: files,
-          registerNo: this.form.registerNo,
-          no: this.form.no,
-          showDeleteBtn: true,
-          form: this.form[key],
-          type: 'report'
-        },
-      })
-    }
+  // todo open file bottom
+  openBottom(files: any, key: any) {
+    this._bottomSheet.open(FilesBottomComponent, {
+      data: {
+        files: files,
+        registerNo: this.form.registerNo,
+        no: this.form.no,
+        showDeleteBtn: false,
+        form: this.form[key],
+        type: 'report',
+      },
+    })
+  }
 }
