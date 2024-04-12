@@ -106,10 +106,10 @@ export class LoginComponent implements OnInit {
         heightAuto: false,
         timer: 1000
       }).then(() => {
-        this.loginForm.patchValue({
-          username: '',
-          password: ''
-        })
+        // this.loginForm.patchValue({
+        //   username: '',
+        //   password: ''
+        // })
       })
     }
   }

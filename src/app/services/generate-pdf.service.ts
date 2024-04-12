@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as htmlToImage from 'html-to-image';
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 import jsPDF from 'jspdf';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 @Injectable({
@@ -23,11 +22,12 @@ export class GeneratePdfService {
           background: 'white',
           scale: 2,
         };
-        var doc: any = new jsPDF('l', 'mm',[250,75]);
+        var doc: any = new jsPDF('l', 'mm', [500, 150]);
         for (let index = 0; index < div.length; index++) {
           const d = div[index];
-          const img = await htmlToImage.toPng(d, {
+          const img = await htmlToImage.toCanvas(d, {
             quality: 1,
+            pixelRatio:10
           })
           const bufferX = 1;
           const bufferY = 1;
@@ -61,7 +61,7 @@ export class GeneratePdfService {
                 'FAST'
               );
             } else {
-              doc = await doc.addPage([200,75], 'l');
+              doc = await doc.addPage([200, 75], 'l');
               doc = await doc.addImage(
                 img,
                 'PNG',

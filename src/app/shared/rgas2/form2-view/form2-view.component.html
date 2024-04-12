@@ -7,7 +7,8 @@
         <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Part Receive Date</mat-label>
-            <input *ngIf="form2?.partReceivingDate" [disabled]="true" matInput [value]="form2.partReceivingDate | date :'dd-MMM-YY'">
+            <input *ngIf="form2?.partReceivingDate" [disabled]="true" matInput
+              [value]="form2.partReceivingDate | date :'dd-MMM-YY'">
             <input *ngIf="!form2 || !form2.partReceivingDate" [disabled]="true" matInput>
           </mat-form-field>
 
@@ -36,7 +37,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="65" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2">
-          <button [disabled]="true" mat-raised-button color="primary">
+          <button mat-raised-button color="primary" (click)="printLabel()">
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5">
               <span>Print Label</span>
               <mat-icon class="mat-18">picture_as_pdf</mat-icon>
@@ -44,84 +45,91 @@
           </button>
         </div>
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2 p-1 ">
-          <div fxLayoutAlign="start start" class="label-detail" style="width: 900px; height: 250px;">
-            <div class="flex justify-center items-center bf" style="width: 250px; height: 250px;">
-              <img [src]="form2?.qrcode" alt="" style="width: 100%; height: 100%;">
+          <div id="print" fxLayoutAlign="start start" class="label-detail"
+            style="width: 900px; height: 260px; padding: 5px;">
+            <div class="flex justify-center items-center bf" style="width: 240px; height: 250px;">
+              <img [src]="form2?.qrcode" alt="" style="width: 225px; height: 225px;">
             </div>
             <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="bt br bb"
-              style="width:575px; height: 250px;">
+              style="width:640px; height: 250px;">
               <div fxFlex="100" fxLayoutAlign="center stretch" class="font-black bb">
                 RGA TAG
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
                   Claim no.
                 </div>
-                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
-                  Claim no.
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
+                  {{form1?.claimNo}}
                 </div>
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
                   RGA no.
                 </div>
-                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
-                  RGA no.
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 ">
+                  {{form2?.rgaNo}}
                 </div>
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
                   Customer
                 </div>
-                <div fxFlex="85" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1">
-                  Customer
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
+                  {{form1?.customerName}}
+                </div>
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
+                  Received date
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 ">
+                  {{form2?.partReceivingDate | date:'dd-MMM-YY'}}
                 </div>
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
                   Model no.
                 </div>
-                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
-                  Model no.
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
+                  {{form1?.modelNo}}
                 </div>
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
                   Model Name
                 </div>
-                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
-                  Model Name
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 ">
+                  {{form1?.modelCode}}
                 </div>
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
                   Product no.
                 </div>
-                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
-                  Product no.
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
+                  {{form1?.productNo}}
                 </div>
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
-                  Site no.
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
+                  Side no.
                 </div>
-                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
-                  Site no.
-                </div>
-              </div>
-              <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
-                  Lot no.
-                </div>
-                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 br">
-                  Lot no.
-                </div>
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
-                  Defective mode
-                </div>
-                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
-                  Defective mode
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 ">
+                  {{form1?.sideNo}}
                 </div>
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
+                  Lot no.
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
+                  {{form1?.productLotNo}}
+                </div>
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
+                  Defective mode
+                </div>
+                <div fxFlex="35" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 ">
+                  {{form1?.descriptionENG}}
+                </div>
+              </div>
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="bb">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
                   Disposition
                 </div>
-                <div fxFlex="85" fxLayout="row wrap" fxLayoutAlign="start center" class="font-medium pl-1 ">
+                <div fxFlex="85" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 ">
                   <div fxFlex="33" fxLayoutAlign="start center">
                     <input type="checkbox" (change)="controlCheckbox($event)" class="me-2 cursor-pointer">
                     <span>
@@ -156,10 +164,10 @@
                 </div>
               </div>
               <div fxFlex="100" fxLayoutAlign="center stretch" class="">
-                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-extrabold pl-1 br">
+                <div fxFlex="15" fxLayout="row wrap" fxLayoutAlign="start center" class="font-black pl-1 br">
                   PIC
                 </div>
-                <div fxFlex="85" fxLayout="row wrap" fxLayoutAlign="center center" class="font-medium ">
+                <div fxFlex="85" fxLayout="row wrap" fxLayoutAlign="center center" class="font-black ">
                   <span>
                     {{labelShowPIC()}}
                   </span>
@@ -226,7 +234,8 @@
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form2?.function?.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2?.function?.files)"
+              matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>
@@ -358,7 +367,8 @@
             <span>
               View
             </span>
-            <mat-icon [matBadge]="controlBadgeNumber(form2?.supplier?.files)" matBadgeColor="warn">attach_file</mat-icon>
+            <mat-icon [matBadge]="controlBadgeNumber(form2?.supplier?.files)"
+              matBadgeColor="warn">attach_file</mat-icon>
           </div>
         </button>
       </div>

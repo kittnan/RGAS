@@ -23,15 +23,15 @@ export class AppComponent {
   titleLong = 'Return goods authorization system ';
   theme = false;
 
-  @HostListener('document:mouseenter', ['$event'])
-  onHover(event: MouseEvent) {
-    document.title = this.title;
-  }
+  // @HostListener('document:mouseenter', ['$event'])
+  // onHover(event: MouseEvent) {
+  //   document.title = this.title;
+  // }
 
-  @HostListener('document:mouseleave', ['$event'])
-  onLeave(event: MouseEvent) {
-    document.title = this.titleLong;
-  }
+  // @HostListener('document:mouseleave', ['$event'])
+  // onLeave(event: MouseEvent) {
+  //   document.title = this.titleLong;
+  // }
 
   mobileQuery!: MediaQueryList;
 

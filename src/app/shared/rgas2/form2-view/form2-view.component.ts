@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
+import { GeneratePdfService } from 'src/app/services/generate-pdf.service';
 
 @Component({
   selector: 'app-form2-view',
@@ -8,9 +9,11 @@ import { FilesBottomComponent } from '../../files-bottom/files-bottom.component'
   styleUrls: ['./form2-view.component.scss']
 })
 export class Form2ViewComponent implements OnInit {
+  @Input() form1: any
   @Input() form2: any
   constructor(
-    private _bottomSheet: MatBottomSheet
+    private _bottomSheet: MatBottomSheet,
+    private $pdf: GeneratePdfService
   ) { }
 
   ngOnInit(): void {
@@ -51,6 +54,16 @@ export class Form2ViewComponent implements OnInit {
       return user.name
     }
     return ''
+  }
+
+
+  // todo printLabel
+  printLabel() {
+    try {
+      this.$pdf.generatePDF(`${this.form1.claimNo}-${this.form1.registerNo}`)
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
   }
 
 }
