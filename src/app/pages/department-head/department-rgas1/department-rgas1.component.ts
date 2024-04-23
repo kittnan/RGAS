@@ -18,12 +18,28 @@ export class DepartmentRgas1Component implements OnInit {
 
 
   // todo click row
-  onClickClaimChange($event: any) {
-    if ($event.claimStatus == 'analysis') {
-      this.router.navigate(['departmentHead/analysis'], {
+  onClickClaimChange(event: any) {
+    if (event.status == 'receive information') {
+      this.router.navigate(['operator/information'], {
         queryParams: {
-          registerNo: $event.registerNo,
-          no: $event.no
+          registerNo: event.registerNo,
+          no: event.no
+        }
+      })
+    }
+    if (event.status == 'wait approve') {
+      this.router.navigate(['engineer/approve-claim'], {
+        queryParams: {
+          registerNo: event.registerNo,
+          no: event.no
+        }
+      })
+    }
+    if (event.status == 'analysis') {
+      this.router.navigate(['engineer/analysis'], {
+        queryParams: {
+          registerNo: event.registerNo,
+          no: event.no
 
         }
       })

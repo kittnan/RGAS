@@ -123,6 +123,10 @@ label.ng-star-inserted {
   transform: translateY(-0.59375em) scale(.75) !important;
 }
 
+.btn-radius {
+  border-radius: 20px !important;
+}
+
 .theme {
   &--light {
     $theme: mat-light-theme($primary, $accent);
@@ -231,6 +235,18 @@ label.ng-star-inserted {
 
     .mat-input-element {
       font-size: 14px;
+    }
+
+    .table-nowrap>thead>tr>th {
+      text-wrap: nowrap !important;
+    }
+
+    .btn-name {
+      color: black;
+    }
+
+    .btn-name:hover {
+      color: #ffa02f;
     }
 
   }
@@ -348,6 +364,18 @@ label.ng-star-inserted {
 
     .mat-input-element {
       font-size: 14px;
+    }
+
+    .table-nowrap>thead>tr>th {
+      text-wrap: nowrap !important;
+    }
+
+    .btn-name {
+      color: black;
+    }
+
+    .btn-name:hover {
+      color: dodgerblue;
     }
   }
 }

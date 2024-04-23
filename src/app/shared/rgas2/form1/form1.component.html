@@ -77,7 +77,7 @@
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <app-sub-title fxFlex="100" [title]="'Claim Information'" class="mt-2 mb-2"></app-sub-title>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-2 mb-2">
-        <button mat-raised-button color="primary" (click)="fileUploadOBL.click()">
+        <button mat-raised-button color="primary" class="btn-radius" (click)="fileUploadOBL.click()">
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
             <span>Upload OBL !!! {{form.no}}</span>
             <mat-icon class="mat-18">upload</mat-icon>
@@ -148,8 +148,8 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <app-autocomplete *ngIf="typeOptionString.length>0" fxFlex="100" [title]="'Type'" [options]="typeOptionString"
-            [(value)]="form.type" (valueChange)="emitSaveStatus()"></app-autocomplete>
+          <app-autocomplete *ngIf="typeOptionString.length>0" fxFlex="100" [title]="'Internal Customer'"
+            [options]="typeOptionString" [(value)]="form.type" (valueChange)="emitSaveStatus()"></app-autocomplete>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
@@ -361,7 +361,7 @@
         <div fxFlex.gt-md="30"></div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <button [disabled]="!form.registerNo " fxFlex="100" fxFlex.gt-md="30" mat-raised-button color="accent"
-            (click)="informationFile.click()" class="btn-file">
+            (click)="informationFile.click()" class="btn-file btn-radius">
             <div fxLayout="row wrap" fxLayoutAlign="center center">
               <span>
                 Files
@@ -371,7 +371,7 @@
             <input type="file" hidden #informationFile (change)="onUploadFileClaimInformation($event);">
           </button>
           <button [disabled]="!form.files || form.files?.length==0 " fxFlex="100" fxFlex.gt-md="30" mat-raised-button
-            (click)="openBottom()" class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+            (click)="openBottom()" class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
             <div fxLayout="row wrap" fxLayoutAlign="center center">
               <span>
                 View
@@ -383,8 +383,8 @@
 
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end stretch" class="mt-1">
           <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start center">
-            <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="primary"
-              (click)="onCopy()" class="btn-file" style="margin-right: 10px;">
+            <button [disabled]="!form._id " mat-raised-button color="primary"
+              (click)="onCopy()" class="btn-file btn-radius" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-md="10">
                 <span>
                   Copy {{form.no}}
@@ -393,7 +393,7 @@
               </div>
             </button>
             <button [disabled]="!form._id || form.status!='receive information'" mat-raised-button color="warn"
-              (click)="onDelete()" class="btn-file" style="margin-right: 10px;">
+              (click)="onDelete()" class="btn-file btn-radius" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayout.gt-md="10">
                 <span>
                   Delete {{form.no}}
@@ -403,7 +403,7 @@
             </button>
           </div>
           <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="end center">
-            <button mat-raised-button color="primary" (click)="onSave()" class="btn-file" style="margin-right: 10px;">
+            <button mat-raised-button color="primary" (click)="onSave()" class="btn-file btn-radius" style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-md="10">
                 <span>
                   Save {{form.no}}
@@ -421,7 +421,7 @@
               </mat-select>
             </mat-form-field>
             <button [disabled]="!form.registerNo || !sendTo || (sendTo && sendTo.length==0) " mat-raised-button
-              class="btn-file btn-success" style="margin-right: 30px;" (click)="onSubmit()">
+              class="btn-file btn-success btn-radius" style="margin-right: 30px;" (click)="onSubmit()">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-md="10">
                 <span>
                   Submit {{form.no}}

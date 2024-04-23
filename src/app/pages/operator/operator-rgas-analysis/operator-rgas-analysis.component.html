@@ -4,16 +4,16 @@
   </div>
   <ng-container *ngIf="show">
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
-      <app-form1 [form]="form"></app-form1>
+      <app-form1 [form]="form" (copyChange)="onCopyChange($event)"></app-form1>
     </div>
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
       <app-form2 fxFlex="100" [claim]="form" [form2]="form2" (onSaveChange)="onSaveChange($event)"
-        (onSubmitChange)="onSubmitChange($event)"></app-form2>
+        (onSubmitChange)="onSubmitChange($event)" (onUploadChange)="onUploadChangeForm2($event)"></app-form2>
     </div>
     <div *ngIf="form3" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
       <app-form3 fxFlex="100" [(form)]="form3" (submitReportChange)="submitReportChange($event)"
-      (submitReportArrChange)="submitReportArrChange($event)" (approveChange)="approveChange($event)"
-      (approveArrChange)="approveArrChange($event)"></app-form3>
+        (submitReportArrChange)="submitReportArrChange($event)" (approveChange)="approveChange($event)"
+        (approveArrChange)="approveArrChange($event)"></app-form3>
     </div>
     <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
       <app-form4 fxFlex="100" [(form4)]="form4" (form4Change)="form4Change($event)"></app-form4>

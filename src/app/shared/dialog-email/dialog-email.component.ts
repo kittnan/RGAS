@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Editor } from 'ngx-editor';
@@ -17,7 +18,8 @@ export class DialogEmailComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any = '',
     private dialog: MatDialogRef<DialogEmailComponent>,
-    private $mail: HttpMailService
+    private $mail: HttpMailService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +37,11 @@ export class DialogEmailComponent implements OnInit {
   }
 
   async onSubmit() {
+    console.log(this.editor);
+
     this.data.html = this.email
+    // console.log("🚀 ~ this.email:", this.email)
+    // await lastValueFrom(this.$mail.save({ html: this.email }))
     let info = await lastValueFrom(this.$mail.send(this.data))
     this.dialog.close(true)
   }

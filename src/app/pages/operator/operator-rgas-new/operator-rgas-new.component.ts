@@ -109,7 +109,6 @@ export class OperatorRgasNewComponent implements OnInit {
       if (v.isConfirmed) {
         await lastValueFrom(this.$claim.createOrUpdate($event))
         location.reload()
-        alert('send mail')
       }
     })
   }

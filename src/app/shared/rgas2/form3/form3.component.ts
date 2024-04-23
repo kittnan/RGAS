@@ -103,6 +103,14 @@ export class Form3Component implements OnInit {
         index: 1
       }
     ],
+    internal: null,
+    internalActions: [
+      {
+        value: null,
+        date: null,
+        index: 1
+      }
+    ],
     _id: null
   }
 
@@ -282,6 +290,13 @@ export class Form3Component implements OnInit {
       value: null,
       date: null,
       index: this.reportInformation.leakCauseActions.length + 1
+    })
+  }
+  onAddNewInternalCauseAction() {
+    this.reportInformation.internalActions.push({
+      value: null,
+      date: null,
+      index: this.reportInformation.internalActions.length + 1
     })
   }
 

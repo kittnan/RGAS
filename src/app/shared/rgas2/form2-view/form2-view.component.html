@@ -37,7 +37,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="65" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-2">
-          <button mat-raised-button color="primary" (click)="printLabel()">
+          <button mat-raised-button color="primary" (click)="printLabel()" class="btn-radius">
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5">
               <span>Print Label</span>
               <mat-icon class="mat-18">picture_as_pdf</mat-icon>
@@ -173,6 +173,13 @@
                   </span>
                 </div>
               </div>
+              <div fxFlex="100" fxLayoutAlign="center stretch" class="">
+                <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="font-black bt">
+                  <span>
+                    F5110.3-1
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -199,7 +206,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center">
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.appearance?.files)"
-          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -229,7 +236,7 @@
       </div>
       <div fxFlex=" 100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.function?.files)"
-          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -259,7 +266,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.electrical?.files)"
-          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -289,7 +296,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.disassembly?.files)"
-          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -319,7 +326,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.microscope?.files)"
-          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -343,7 +350,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.technical?.files)"
-          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -362,7 +369,7 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2?.supplier?.files)"
-          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View

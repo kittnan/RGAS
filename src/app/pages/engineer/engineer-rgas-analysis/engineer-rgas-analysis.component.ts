@@ -112,6 +112,14 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         index: 1
       }
     ],
+    internal: null,
+    internalActions: [
+      {
+        value: null,
+        date: null,
+        index: 1
+      }
+    ],
     _id: null
   }
   pathFile = environment.pathSaveFile
@@ -140,7 +148,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
             this.information = resInformation[0]
           }
           this.form = resData.length > 0 ? resData[0] : null
-          if(this.form?.status == 'wait approve'){
+          if (this.form?.status == 'wait approve') {
             this.router.navigate(['engineer/approve-claim'], { queryParamsHandling: 'preserve' })
           }
           const resResult = await lastValueFrom(this.$result.get(param))
@@ -522,6 +530,19 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
+  }
+
+  copyChange(event: any) {
+    let data = event[event.length - 1]
+    this.router.navigate(['engineer/analysis'], {
+      queryParams: {
+        registerNo: data.registerNo,
+        name: data.key,
+        index: data.index,
+        no: data.no
+
+      }
+    })
   }
 
 }

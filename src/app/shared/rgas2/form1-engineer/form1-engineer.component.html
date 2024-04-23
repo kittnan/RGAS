@@ -65,7 +65,7 @@
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-          <app-autocomplete *ngIf="typeOptionString.length>0" fxFlex="100" [title]="'Type'" [options]="typeOptionString"
+          <app-autocomplete *ngIf="typeOptionString.length>0" fxFlex="100" [title]="'Internal Customer'" [options]="typeOptionString"
             [(value)]="form.type" (valueChange)="emitSaveStatus()"></app-autocomplete>
         </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
@@ -276,9 +276,9 @@
         </div>
 
         <div fxFlex.gt-md="30"></div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap="10">
           <button [disabled]="!form.registerNo " fxFlex="100" fxFlex.gt-md="30" mat-raised-button color="accent"
-            (click)="informationFile.click()" class="btn-file">
+            (click)="informationFile.click()" class="btn-file btn-radius">
             <div fxLayout="row wrap" fxLayoutAlign="center center">
               <span>
                 Files
@@ -288,7 +288,7 @@
             <input type="file" hidden #informationFile (change)="onUploadFileClaimInformation($event);">
           </button>
           <button [disabled]="!form.files || form.files?.length==0 " fxFlex="100" fxFlex.gt-md="30" mat-raised-button
-            (click)="openBottom()" class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+            (click)="openBottom()" class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
             <div fxLayout="row wrap" fxLayoutAlign="center center">
               <span>
                 View

@@ -33,7 +33,7 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'" >
 
       <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="preReportFile.click()"
-        class="btn-file">
+        class="btn-file btn-radius">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             Files
@@ -43,7 +43,7 @@
         <input type="file" hidden #preReportFile (change)="onUploadFile($event,'preReport')">
       </button>
       <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.preReport.files,'preReport')"
-        class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+        class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             View
@@ -104,7 +104,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'" >
 
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="interimFile.click()"
-          class="btn-file">
+          class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -114,7 +114,7 @@
           <input type="file" hidden #interimFile (change)="onUploadFileArr($event,'interims',i)">
         </button>
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(interim.files,'preReport')"
-          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -191,7 +191,7 @@
 
 
       <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="finalReportFile.click()"
-        class="btn-file">
+        class="btn-file btn-radius">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             Files
@@ -201,7 +201,7 @@
         <input type="file" hidden #finalReportFile (change)="onUploadFile($event,'finalReport')">
       </button>
       <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.finalReport.files,'preReport')"
-        class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+        class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             View
@@ -316,7 +316,7 @@
 
 
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="questionAnswerFile.click()"
-          class="btn-file">
+          class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -326,7 +326,7 @@
           <input type="file" hidden #questionAnswerFile (change)="onUploadFileArr($event,'questionAnswers',i)">
         </button>
         <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(questionAnswer.files,'preReport')"
-          class="btn-file" [ngClass.gt-md]="'m-btn-l'">
+          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -581,7 +581,7 @@
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom" >Root cause action </mat-label>
+          <mat-label class="mat-label-custom" >Leak cause action </mat-label>
           <input matInput [(ngModel)]="leakCauseAction.value">
         </mat-form-field>
       </div>
@@ -602,8 +602,43 @@
     </div>
   </ng-container>
 
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom" >Internal root cause </mat-label>
+        <input matInput [(ngModel)]="reportInformation.internal">
+      </mat-form-field>
+    </div>
+  </div>
+
+
+  <ng-container *ngFor="let internalAction of reportInformation.internalActions; let i=index">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom" >Internal root cause action </mat-label>
+          <input matInput [(ngModel)]="internalAction.value">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom" >Effective date</mat-label>
+          <input matInput [matDatepicker]="internalActionEffectiveDate_dp" [(ngModel)]="internalAction.date">
+          <mat-datepicker-toggle matSuffix [for]="internalActionEffectiveDate_dp"></mat-datepicker-toggle>
+          <mat-datepicker #internalActionEffectiveDate_dp></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
+      <button *ngIf="reportInformation.internalActions.length== i+1 " mat-icon-button color="primary"
+        style="margin-top: 10px;" (click)="onAddNewInternalCauseAction()"><mat-icon>add</mat-icon>
+      </button>
+
+    </div>
+  </ng-container>
+
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mt-1 pe-8">
-    <button mat-raised-button color="primary" (click)="onSaveReportInformation()" class="btn-file"
+    <button mat-raised-button color="primary" (click)="onSaveReportInformation()" class="btn-file btn-radius"
       style="margin-right: 10px;">
       <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
         <span>

@@ -4,10 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { HttpDocumentVerifiesService } from 'src/app/https/http-document-verifies.service';
+import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
+import { environment } from 'src/environments/environment';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
@@ -61,6 +63,8 @@ export class OperatorRgasAnalysisComponent implements OnInit {
     apply: null,
     applyDate: null,
   }
+  pathFile = environment.pathSaveFile
+
   constructor(
     private $claim: HttpClaimService,
     private route: ActivatedRoute,
@@ -69,7 +73,8 @@ export class OperatorRgasAnalysisComponent implements OnInit {
     private $alert: SweetAlertGeneralService,
     private $report: HttpReportService,
     private router: Router,
-    private $documentVerify: HttpDocumentVerifiesService
+    private $documentVerify: HttpDocumentVerifiesService,
+    private $fileUpload: HttpFileUploadService
 
   ) {
     this.route.queryParams.subscribe(async (params: any) => {
@@ -97,7 +102,7 @@ export class OperatorRgasAnalysisComponent implements OnInit {
             questionAnswers: questionAnswers && questionAnswers.length > 0 ? questionAnswers : this.form3.questionAnswers,
           }
           const resDocVerify = await lastValueFrom(this.$documentVerify.get(param))
-          this.form4 =resDocVerify.length > 0 ? resDocVerify[0] : this.form4
+          this.form4 = resDocVerify.length > 0 ? resDocVerify[0] : this.form4
         }
       }
     })
@@ -158,6 +163,42 @@ export class OperatorRgasAnalysisComponent implements OnInit {
     }
   }
 
+  async onUploadChangeForm2(event: any) {
+    try {
+      let path = `${this.pathFile}/${this.form.registerNo}/${this.form.no}/${event.key}/`
+
+      if (event.data._id) {
+        const formData: FormData = new FormData()
+        formData.append('path', path)
+        formData.append('file', event.file)
+        const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+        let data = this.form2[event.key]
+        data['files'] = [...data['files'], ...resFile]
+        console.log("🚀 ~ data:", data)
+        await lastValueFrom(this.$result.createOrUpdate([this.form2]))
+      } else {
+        let data = {
+          registerNo: this.form.registerNo,
+          no: this.form.no,
+          ...event.data
+        }
+        const resData = await lastValueFrom(this.$result.create(data))
+        this.form2 = resData[0]
+
+        const formData: FormData = new FormData()
+        formData.append('path', path)
+        formData.append('file', event.file)
+        const resFile = await lastValueFrom(this.$fileUpload.create(formData))
+        data = this.form2[event.key]
+        data['files'] = [...data['files'], ...resFile]
+        await lastValueFrom(this.$result.createOrUpdate([this.form2]))
+      }
+
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
 
   // todo event approve report
   async approveChange(event: any) {
@@ -208,6 +249,17 @@ export class OperatorRgasAnalysisComponent implements OnInit {
     }
   }
 
+  // todo on onCopyChange
+  onCopyChange(event: any) {
+    let lastItem = event[event.length - 1]
+    let auth = this.$local.getAuth()
+    this.router.navigate([`operator/information`], {
+      queryParams: {
+        registerNo: lastItem.registerNo,
+        no: lastItem.no
+      }
+    })
+  }
 
 
 }

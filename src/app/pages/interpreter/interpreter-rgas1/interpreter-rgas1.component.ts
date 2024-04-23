@@ -20,12 +20,12 @@ export class InterpreterRgas1Component implements OnInit {
     this.router.navigate(['operator/new'])
   }
   // todo click row
-  onClickClaimChange($event: any) {
-    if ($event.claimStatus == 'analysis') {
+  onClickClaimChange(event: any) {
+    if (event.claimStatus == 'analysis') {
       this.router.navigate(['interpreter/analysis'], {
         queryParams: {
-          registerNo: $event.registerNo,
-          no: $event.no
+          registerNo: event.registerNo,
+          no: event.no
 
         }
       })

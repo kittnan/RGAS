@@ -3,20 +3,13 @@ import { Injectable } from '@angular/core';
 import moment from 'moment';
 import { environment } from 'src/environments/environment';
 import { LocalStoreService } from './local-store.service';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SendMailService {
 
-  private footerEmail = ``
-  // private footerEmail = `
-  // <p></p>
-  // <p><strong><span style="color:#c0392b">Please note that this email is automatically generated. Kindly refrain from replying directly to it.</span></strong></p>
-
-  // <p><strong><span style="color:#c0392b">Thank you for your attention to this urgent matter.</span></strong></p>
-
-  // <p><strong><span style="color:#c0392b">Best Regards,</span></strong></p>`
   private symbol = [
     {
       sym: '●',
@@ -38,12 +31,37 @@ export class SendMailService {
 
   dearAllEmail: any
   private linkMail = environment.linkMail;
+  htmlClaimInformation: any = ''
+  htmlApproveClaim: any = ''
+  htmlReview1: any = ''
+  htmlInterpreter: any = ''
+  htmlDepartment: any = ''
+  htmlSection: any = ''
   constructor(
     private $mail: HttpMailService,
     private $local: LocalStoreService
   ) {
     this.$mail.getDearAll().subscribe((data: any) => {
       this.dearAllEmail = data.map((d: any) => d.email)
+    })
+
+    this.$mail.getTemplate(new HttpParams().set('name', 'claimInformation')).subscribe((data: any) => {
+      this.htmlClaimInformation = data[0].html
+    })
+    this.$mail.getTemplate(new HttpParams().set('name', 'approveClaim')).subscribe((data: any) => {
+      this.htmlApproveClaim = data[0].html
+    })
+    this.$mail.getTemplate(new HttpParams().set('name', 'review1')).subscribe((data: any) => {
+      this.htmlReview1 = data[0].html
+    })
+    this.$mail.getTemplate(new HttpParams().set('name', 'department')).subscribe((data: any) => {
+      this.htmlDepartment = data[0].html
+    })
+    this.$mail.getTemplate(new HttpParams().set('name', 'section')).subscribe((data: any) => {
+      this.htmlSection = data[0].html
+    })
+    this.$mail.getTemplate(new HttpParams().set('name', 'interpreter')).subscribe((data: any) => {
+      this.htmlInterpreter = data[0].html
     })
   }
 
@@ -53,16 +71,12 @@ export class SendMailService {
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
-    let symbol = this.symbol.find((sy: any) => sy.value.includes(data.occurredLocation))
 
-    let qtyTxt = Number(data.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol?.sym}${data.customerName} ${data.occurredLocation} ${data.size} #${data.modelNo} ${data.descriptionENG} ${data.qty} ${qtyTxt} ${data.claimNo}. `
+    let subject: any = this.genSubject(data)
+    let html: any = this.htmlApproveClaim
+    html = html.replaceAll('$dear', dear)
+    html = html.replaceAll('$link', url)
 
-    let html: any = `<p><strong>Dear...${dear}</strong></p>
-
-    <p>Could you please review claim information</p>
-    <p>Click here ➡️ <a href="${url}">RGAS</a></p>`
-    html = html + this.footerEmail
     return {
       html: html,
       subject: subject,
@@ -71,41 +85,36 @@ export class SendMailService {
     }
   }
   toClaimInformation(data: any, to: any[]) {
-    let symbol = this.getSymbol(data.occurredLocation)
-    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${data.registerNo}&no=${data.no}`
-
-
+    let subject: any = this.genSubjectInformation(data)
+    let html: any = this.htmlClaimInformation
     let qtyTxt = Number(data.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `${symbol}${data.type ? data.type : ''} ${data.occurredLocation ? data.occurredLocation : ''} ${data.size ? data.size : ''} #${data.modelNo ? data.modelNo : ''} ${data.descriptionENG ? data.descriptionENG : ''} ${data.qty ? data.qty : ''} ${data.qty ? qtyTxt : ''} ${data.claimNo ? data.claimNo : ''}.`
+    let type = data?.type ? data.type : '-'
+    let occurredLocation = data?.occurredLocation ? data.occurredLocation : ''
+    let claimNo = data?.claimNo ? data.claimNo : ''
+    let descriptionENG = data?.descriptionENG ? data.descriptionENG : ''
+    let qty = data?.qty ? data.qty : ''
+    let productLotNo = data?.productLotNo ? data.productLotNo : ''
+    let occurDate = data?.occurDate ? moment(data.occurDate).format('D-MMM-YYYY') : ''
+    let modelCode = data?.modelCode ? data.modelCode : ''
+    let modelNo = data?.modelNo ? data.modelNo : ''
+    let modelNoPNL = data?.modelNoPNL ? data.modelNoPNL : ''
+    let modelNoSMT = data?.modelNoSMT ? data.modelNoSMT : ''
+    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${data.registerNo}&no=${data.no}`
+    html = html.replaceAll('$type', type)
+    html = html.replaceAll('$occurredLocation', occurredLocation)
+    html = html.replaceAll('$claimNo', claimNo)
+    html = html.replaceAll('$descriptionENG', descriptionENG)
+    html = html.replaceAll('$qtyTxt', qtyTxt)
+    html = html.replaceAll('$qty', qty)
+    html = html.replaceAll('$productLotNo', productLotNo)
+    html = html.replaceAll('$occurDate', occurDate)
+    html = html.replaceAll('$modelCode', modelCode)
+    html = html.replaceAll('$modelNo', modelNo)
+    html = html.replaceAll('$modelNoPNL', modelNoPNL)
+    html = html.replaceAll('$modelNoSMT', modelNoSMT)
+    html = html.replaceAll('$link', url)
 
-    let html: any = `<p><strong>Dear all,</strong></p>
-    <p><strong>Thank you for your support.</strong></p>
 
-    <p>We would like to inform and share claim information from customer ${data.type} occurred ${data.occurredLocation}.
-    Please see details below.</p>
-    <p></p>
-
-    <p>Claim No.:${data.claimNo}</p>
-    <p>Defective mode.:${data.descriptionENG}</p>
-    <p>Q'ty.:${data.qty} ${qtyTxt}</p>
-    <p>Lot no.:${data.productLotNo}</p>
-    <p>Occurrence place:${data.occurredLocation}</p>
-    <p>Occurrence date:${moment(data.occurDate).format('D-MMM-YYYY')}</p>
-    <p>Model Name:${data.modelCode}</p>
-    <p>MDL model:${data.modelNo}</p>
-    <p>PNL model:${data.modelNoPNL}</p>
-    <p>SMT model:${data.modelNoSMT}</p>
-    <p></p>
-    <p>For more detail please kindly see at below address.</p>
-    <p>Click here ➡️ <a href="${url}">RGAS</a></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p><strong>Dear Orawan san</strong></p>
-    <p><strong>CC PD-MDL members</strong></p>
-    <p>Would you please verify 4M change of this claim with above information?
-    Please reply to us within 28-Mar-24 as possible (Before/After 5 lots)</p>`
-    html = html + this.footerEmail
     return {
       html: html,
       subject: subject,
@@ -117,27 +126,35 @@ export class SendMailService {
   }
 
   toOperator(claim: any, data: any, to: any[]) {
-    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
+    let url = `${this.linkMail}/operator/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
 
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
-    let symbol = this.getSymbol(data.occurredLocation)
-    let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
+    // let symbol = this.getSymbol(data.occurredLocation)
+    let subject: any = this.genSubject(claim)
+    let type = claim?.type ? claim.type : '-'
+    let occurredLocation = claim?.occurredLocation ? claim.occurredLocation : ''
+
+    // let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
+    // let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
 
     let reportText: any = this.getNameReport(data.name)
-    let html: any = `<p><strong>Dear ${dear},</strong></p>
-        <p><strong>Thank you for your support.</strong></p>
+    // let html: any = `<p><strong>Dear ${dear},</strong></p>
+    //     <p><strong>Thank you for your support.</strong></p>
 
-        <p>We would like to inform and share claim information from customer ${claim.type} occurred ${claim.occurredLocation}.
-        Please see details below.</p>
-        <p></p>
-        <p>Could you please review claim information ${reportText} as attached?</p>
-        <p>Click here ➡️ <a href="${url}">RGAS</a></p>
-        `
-    html = html + this.footerEmail
-
+    //     <p>We would like to inform and share claim information from customer ${claim.type} occurred ${claim.occurredLocation}.
+    //     Please see details below.</p>
+    //     <p></p>
+    //     <p>Could you please review claim information ${reportText} as attached?</p>
+    //     <p>Click here ➡️ <a href="${url}">RGAS</a></p>
+    //     `
+    let html: any = this.htmlReview1
+    html = html.replaceAll('$dear', dear)
+    html = html.replaceAll('$link', url)
+    html = html.replaceAll('$type', type)
+    html = html.replaceAll('$occurredLocation', occurredLocation)
+    html = html.replaceAll('$reportText', reportText)
     return {
       html: html,
       subject: subject,
@@ -147,30 +164,37 @@ export class SendMailService {
   }
 
   toInterpreter(claim: any, data: any, to: any[]) {
-    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
+    let url = `${this.linkMail}/interpreter/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
-    let symbol = this.getSymbol(data.occurredLocation)
-    let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
+    // let symbol = this.getSymbol(data.occurredLocation)
+    // let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
+    // let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
+    let subject: any = this.genSubject(claim)
 
     let reportText: any = this.getNameReport(data.name)
+    let type = claim?.type ? claim.type : '-'
+    let occurredLocation = claim?.occurredLocation ? claim.occurredLocation : ''
 
-    let html: any = `<p><strong>Dear ${dear},</strong></p>
-        <p><strong>Thank you for your support.</strong></p>
+    // let html: any = `<p><strong>Dear ${dear},</strong></p>
+    //     <p><strong>Thank you for your support.</strong></p>
 
-        <p>We would like to inform and share claim information from customer ${claim.type} occurred ${claim.occurredLocation}.
-        Please see details below.</p>
-        <p></p>
-        <p>Could you please translate ${reportText} as attached?</p>
-        <p><strong>Remark :</strong></p>
-        <p>Due date submit to Customer is 1-Apr-2024</p>
-        <p>Due date submit to Customer is 2-Apr-2024</p>
-        <p>Click here ➡️ <a href="${url}">RGAS</a></p>
-        `
-    html = html + this.footerEmail
-
+    //     <p>We would like to inform and share claim information from customer ${claim.type} occurred ${claim.occurredLocation}.
+    //     Please see details below.</p>
+    //     <p></p>
+    //     <p>Could you please translate ${reportText} as attached?</p>
+    //     <p><strong>Remark :</strong></p>
+    //     <p>Due date submit to Customer is 1-Apr-2024</p>
+    //     <p>Due date submit to Customer is 2-Apr-2024</p>
+    //     <p>Click here ➡️ <a href="${url}">RGAS</a></p>
+    //     `
+    let html: any = this.htmlInterpreter
+    html = html.replaceAll('$dear', dear)
+    html = html.replaceAll('$link', url)
+    html = html.replaceAll('$type', type)
+    html = html.replaceAll('$occurredLocation', occurredLocation)
+    html = html.replaceAll('$reportText', reportText)
     return {
       html: html,
       subject: subject,
@@ -180,28 +204,25 @@ export class SendMailService {
   }
 
   toDepartment(claim: any, data: any, to: any[]) {
-    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
+    let url = `${this.linkMail}/departmentHead/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
 
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
-    let symbol = this.getSymbol(data.occurredLocation)
-    let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
+    // let symbol = this.getSymbol(data.occurredLocation)
+    // let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
+    // let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
 
+    let subject: any = this.genSubject(claim)
     let reportText: any = this.getNameReport(data.name)
-
-    let html: any = `<p><strong>Dear ${dear},</strong></p>
-        <p><strong>Thank you for your support.</strong></p>
-
-        <p>We would like to inform and share claim information from customer ${claim.type} occurred ${claim.occurredLocation}.
-        Please see details below.</p>
-        <p></p>
-        <p>Could you please review ${reportText} as attached?</p>
-        <p><strong>Remark :</strong></p>
-        <p>Due date submit to Customer is 2-Apr-2024</p>
-        <p>Click here ➡️ <a href="${url}">RGAS</a></p>`
-    html = html + this.footerEmail
+    let type = claim?.type ? claim.type : '-'
+    let occurredLocation = claim?.occurredLocation ? claim.occurredLocation : ''
+    let html: any = this.htmlDepartment
+    html = html.replaceAll('$dear', dear)
+    html = html.replaceAll('$link', url)
+    html = html.replaceAll('$type', type)
+    html = html.replaceAll('$occurredLocation', occurredLocation)
+    html = html.replaceAll('$reportText', reportText)
 
     return {
       html: html,
@@ -212,30 +233,36 @@ export class SendMailService {
   }
   toSection(claim: any, data: any, to: any[]) {
 
-    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
+    let url = `${this.linkMail}/sectionHead/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
-    let symbol = this.getSymbol(data.occurredLocation)
-    let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
+    // let symbol = this.getSymbol(data.occurredLocation)
+    // let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
+    // let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
 
+    // let html2: any = `<p><strong>Dear ${dear},</strong></p>
+    //     <p><strong>Thank you for your support.</strong></p>
+
+    //     <p>We would like to inform and share claim information from customer ${claim.type} occurred ${claim.occurredLocation}.
+    //     Please see details below.</p>
+    //     <p></p>
+    //     <p>Could you please review ${reportText} as attached?</p>
+    //     <p><strong>Remark :</strong></p>
+    //     <p>1. Due date submit to Kubota san is 1-Apr-2024</p>
+    //     <p>2. Due date submit to Customer is 2-Apr-2024</p>
+    //     <p>Click here ➡️ <a href="${url}">RGAS</a></p>
+    //     `
+    let subject: any = this.genSubject(claim)
     let reportText: any = this.getNameReport(data.name)
-
-    let html: any = `<p><strong>Dear ${dear},</strong></p>
-        <p><strong>Thank you for your support.</strong></p>
-
-        <p>We would like to inform and share claim information from customer ${claim.type} occurred ${claim.occurredLocation}.
-        Please see details below.</p>
-        <p></p>
-        <p>Could you please review ${reportText} as attached?</p>
-        <p><strong>Remark :</strong></p>
-        <p>1. Due date submit to Kubota san is 1-Apr-2024</p>
-        <p>2. Due date submit to Customer is 2-Apr-2024</p>
-        <p>Click here ➡️ <a href="${url}">RGAS</a></p>
-        `
-    html = html + this.footerEmail
-
+    let type = claim?.type ? claim.type : '-'
+    let occurredLocation = claim?.occurredLocation ? claim.occurredLocation : ''
+    let html: any = this.htmlSection
+    html = html.replaceAll('$dear', dear)
+    html = html.replaceAll('$link', url)
+    html = html.replaceAll('$type', type)
+    html = html.replaceAll('$occurredLocation', occurredLocation)
+    html = html.replaceAll('$reportText', reportText)
     return {
       html: html,
       subject: subject,
@@ -244,31 +271,40 @@ export class SendMailService {
     }
   }
   toEngineer(claim: any, data: any, to: any[]) {
-    let url = `${this.linkMail}/${this.$local.getAuth()}/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
+    let url = `${this.linkMail}/engineer/analysis?registerNo=${claim.registerNo}&no=${claim.no}`
 
     let dear = to.map((t: any) => {
       return `${t.name} san `
     })
-    let symbol = this.getSymbol(data.occurredLocation)
-    let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
-    let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
+    // let symbol = this.getSymbol(data.occurredLocation)
+    // let qtyTxt = Number(claim.qty) > 1 ? 'pcs' : 'pc'
+    // let subject: any = `📦[REPORT] ${symbol}${claim.customerName} ${claim.occurredLocation} ${claim.size} #${claim.modelNo} ${claim.descriptionENG} ${claim.qty} ${qtyTxt} ${claim.claimNo}.`
+    // let subject: any = this.genSubject(claim)
 
+    // let reportText: any = this.getNameReport(data.name)
+
+    // let html: any = `<p><strong>Dear ${dear},</strong></p>
+    //     <p><strong>Thank you for your support.</strong></p>
+
+    //     <p>We would like to inform and share claim information from customer ${claim.type} occurred ${claim.occurredLocation}.
+    //     Please see details below.</p>
+    //     <p></p>
+    //     <p>Could you please review ${reportText} as attached?</p>
+    //     <p><strong>Remark :</strong></p>
+    //     <p>1. Due date submit to Kubota san is 1-Apr-2024</p>
+    //     <p>2. Due date submit to Customer is 2-Apr-2024</p>
+    //     <p>Click here ➡️ <a href="${url}">RGAS</a></p>
+    //     `
+    let subject: any = this.genSubject(claim)
     let reportText: any = this.getNameReport(data.name)
-
-    let html: any = `<p><strong>Dear ${dear},</strong></p>
-        <p><strong>Thank you for your support.</strong></p>
-
-        <p>We would like to inform and share claim information from customer ${claim.type} occurred ${claim.occurredLocation}.
-        Please see details below.</p>
-        <p></p>
-        <p>Could you please review ${reportText} as attached?</p>
-        <p><strong>Remark :</strong></p>
-        <p>1. Due date submit to Kubota san is 1-Apr-2024</p>
-        <p>2. Due date submit to Customer is 2-Apr-2024</p>
-        <p>Click here ➡️ <a href="${url}">RGAS</a></p>
-        `
-    html = html + this.footerEmail
-
+    let type = claim?.type ? claim.type : '-'
+    let occurredLocation = claim?.occurredLocation ? claim.occurredLocation : ''
+    let html: any = this.htmlSection
+    html = html.replaceAll('$dear', dear)
+    html = html.replaceAll('$link', url)
+    html = html.replaceAll('$type', type)
+    html = html.replaceAll('$occurredLocation', occurredLocation)
+    html = html.replaceAll('$reportText', reportText)
     return {
       html: html,
       subject: subject,
@@ -325,6 +361,33 @@ export class SendMailService {
       return 'Final report'
     }
     return ''
+  }
+
+  genSubject(data: any) {
+    let symbolStr = this.getSymbol(data.occurredLocation)
+    let customerName = data?.customerName ? data.customerName : ''
+    let occurredLocation = data?.occurredLocation ? data.occurredLocation : ''
+    let size = data?.size ? data.size : ''
+    let modelNo = data?.modelNo ? data.modelNo : ''
+    let descriptionENG = data?.descriptionENG ? data.descriptionENG : ''
+    let qty = data?.qty ? data.qty : ''
+    let qtyTxt = Number(data.qty) > 1 ? 'pcs' : 'pc'
+    let claimNo = data?.claimNo ? data.claimNo : ''
+    let subject: any = `📦[REPORT] ${symbolStr}${customerName} ${occurredLocation} ${size} #${modelNo} ${descriptionENG} ${qty} ${qtyTxt} ${claimNo}. `
+    return subject
+  }
+  genSubjectInformation(data: any) {
+    let symbolStr = this.getSymbol(data.occurredLocation)
+    let type = data?.type ? data.type : ''
+    let occurredLocation = data?.occurredLocation ? data.occurredLocation : ''
+    let size = data?.size ? data.size : ''
+    let modelNo = data?.modelNo ? data.modelNo : ''
+    let descriptionENG = data?.descriptionENG ? data.descriptionENG : ''
+    let qty = data?.qty ? data.qty : ''
+    let qtyTxt = Number(data.qty) > 1 ? 'pcs' : 'pc'
+    let claimNo = data?.claimNo ? data.claimNo : ''
+    let subject: any = `${symbolStr}${type} ${occurredLocation} ${size} #${modelNo} ${descriptionENG} ${qty} ${qtyTxt} ${claimNo}.`
+    return subject
   }
 
   // private genLink(status: any, registerNo: any, no: any) {

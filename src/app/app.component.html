@@ -34,7 +34,7 @@
         <button mat-menu-item fxLayoutAlign="start center">
           <button (click)="onClickName()">
             <div class="flex justify-around items-center gap-1 font-bold" style="letter-spacing: 1px;">
-              <span fxFlex="100" class="text-xs capitalize ">
+              <span fxFlex="100" class="text-xs capitalize btn-name">
                 {{displayAuth()}}
               </span>
             </div>
@@ -43,7 +43,7 @@
         <button mat-menu-item fxLayoutAlign="start center">
           <button (click)="onLogout()">
             <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
-              <span  class="text-xs capitalize ">
+              <span class="text-xs capitalize ">
                 Logout
               </span>
               <mat-icon class="mat-18">logout</mat-icon>
@@ -60,7 +60,7 @@
           <mat-icon *ngIf="!theme" class="mat-18 theme-toggle">light_mode</mat-icon>
         </mat-slide-toggle>
       </div>
-      <button (click)="onClickName()">
+      <button (click)="onClickName()"  >
         <div class="flex justify-around items-center gap-1 font-bold" style="letter-spacing: 1px;">
           <mat-icon class="mat-18">
             contact_mail

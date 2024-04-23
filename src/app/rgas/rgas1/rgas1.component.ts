@@ -143,5 +143,15 @@ export class Rgas1Component implements OnInit {
     this.onClickClaimChange.emit(row)
   }
 
+  // todo class form status
+  cssStatus(status: any) {
+    if (status) {
+      if (status == "receive information") return 'receive'
+      if (status == "wait approve") return 'waitApprove'
+      if (status == "analysis") return 'analysis'
+    }
+    return '';
+  }
+
 
 }
