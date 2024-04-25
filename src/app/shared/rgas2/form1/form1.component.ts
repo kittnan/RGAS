@@ -307,7 +307,8 @@ export class Form1Component implements OnInit {
         let occurDate = this.getValueOfCell('R17', worksheet)
         occurDate = occurDate ? moment(occurDate) : null
 
-        let modelCommon = await lastValueFrom(this.$modelCommon.get(new HttpParams().set('modelNo', model['Model'])))
+
+        let modelCommon = model? await lastValueFrom(this.$modelCommon.get(new HttpParams().set('modelNo', model['Model']))) : null
         modelCommon = modelCommon && modelCommon.length > 0 ? modelCommon[0] : null
 
         let occurredLocation = this.getValueOfCell('R15', worksheet)
@@ -334,7 +335,7 @@ export class Form1Component implements OnInit {
 
           modelNoPNL: modelCommon ? modelCommon['Model(PNL)'] : '',
           modelNoSMT: modelCommon ? modelCommon['Model(SMT)'] : '',
-          size: modelCommon.Size
+          size: modelCommon? modelCommon.Size:''
         }
         setTimeout(() => {
           this.showModelCode = true
