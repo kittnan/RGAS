@@ -108,10 +108,10 @@ export class SendMailService {
     html = html.replaceAll('$qty', qty)
     html = html.replaceAll('$productLotNo', productLotNo)
     html = html.replaceAll('$occurDate', occurDate)
-    html = html.replaceAll('$modelCode', modelCode)
-    html = html.replaceAll('$modelNo', modelNo)
     html = html.replaceAll('$modelNoPNL', modelNoPNL)
     html = html.replaceAll('$modelNoSMT', modelNoSMT)
+    html = html.replaceAll('$modelCode', modelCode)
+    html = html.replaceAll('$modelNo', modelNo)
     html = html.replaceAll('$link', url)
 
 
