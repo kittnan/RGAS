@@ -66,7 +66,7 @@ export class SendMailService {
   }
 
   toApproveClaim(data: any, to: any[]) {
-    let url = `${this.linkMail}/${this.$local.getAuth()}/approve-claim?registerNo=${data.registerNo}&no=${data.no}`
+    let url = `${this.linkMail}/engineer/approve-claim?registerNo=${data.registerNo}&no=${data.no}`
 
     let dear = to.map((t: any) => {
       return `${t.name} san `
