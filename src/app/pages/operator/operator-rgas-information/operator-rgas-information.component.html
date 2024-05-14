@@ -23,7 +23,7 @@
   </div>
   <div *ngIf="allItems && allItems.length>0" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start">
     <app-form1 fxFlex="100" [(form)]="currentItem" (formChange)="formChange()" (submitChange)="submitChange($event)"
-      (copyChange)="copyChange($event)" (deleteChange)="deleteChange($event)" [(saveStatus)]="saveStatus"></app-form1>
+      (copyChange)="copyChange($event)" (deleteChange)="deleteChange($event)" [(saveStatus)]="saveStatus" (onAutoSaveChange)="onAutoSaveChange($event)" ></app-form1>
     <!-- <ng-container *ngIf="currentItem.status!='receive information' ">
         <app-form1-view fxFlex="100" [form]="currentItem"></app-form1-view>
       </ng-container>

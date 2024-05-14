@@ -41,7 +41,7 @@ export class OperatorRgas1Component implements OnInit {
       })
     }
     if (event.claimStatus == 'analysis') {
-      this.router.navigate(['operator/analysis'], {
+      this.router.navigate(['engineer/analysis'], {
         queryParams: {
           registerNo: event.registerNo,
           no: event.no

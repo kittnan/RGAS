@@ -33,6 +33,8 @@ const moment = _rollupMoment || _moment;
   ]
 })
 export class YearMonthComponent {
+  @Input() min: Moment | null = null
+  @Input() max: Moment | null = null
 
   @Input() title: string = ''
   @Input() dateInput: any = null
@@ -46,6 +48,17 @@ export class YearMonthComponent {
     this.dateInput = moment(this.dateInput).set('month', normalizedMonth.month())
     this.dateInputChange.emit(moment(this.dateInput).startOf('month'))
     datepicker.close();
+  }
+
+  onClear(){
+    this.dateInput = '';
+  }
+  onSetValue(){
+    this.dateInput = null
+    this.dateInputChange.emit(null)
+  }
+  onSetValue2(){
+    this.dateInput = ''
   }
 
 }

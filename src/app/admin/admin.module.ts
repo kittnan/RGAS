@@ -19,6 +19,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import { M1eComponent } from './m1e/m1e.component';
 import { RPrincipleComponent } from './r-principle/r-principle.component';
 import { ModelsManageCommonComponent } from './models-manage-common/models-manage-common.component';
+import { EmailComponent } from './email/email.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ModelsManageCommonComponent } from './models-manage-common/models-manag
     M1eComponent,
     RPrincipleComponent,
     ModelsManageCommonComponent,
+    EmailComponent,
   ],
   imports: [
     CommonModule,

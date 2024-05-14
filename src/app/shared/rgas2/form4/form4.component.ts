@@ -10,6 +10,7 @@ export class Form4Component implements OnInit {
 
   @Input() form4: any
   @Output() form4Change: EventEmitter<any> = new EventEmitter()
+  @Output() autoSaveDocChange: EventEmitter<any> = new EventEmitter()
 
   options1: any = ['Need', 'No Need']
   constructor() { }
@@ -24,9 +25,12 @@ export class Form4Component implements OnInit {
       this.form4.reviseDueDate = null
     }
   }
-  emitSaveStatus() {
 
+  emitAutoSaveDoc() {
+    console.log(this.form4);
+    this.autoSaveDocChange.emit(this.form4)
   }
+
   onSave() {
     this.form4Change.emit(this.form4)
   }

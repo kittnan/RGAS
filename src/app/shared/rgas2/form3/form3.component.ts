@@ -111,6 +111,14 @@ export class Form3Component implements OnInit {
         index: 1
       }
     ],
+    internalLeak: null,
+    internalLeakActions: [
+      {
+        value: null,
+        date: null,
+        index: 1
+      }
+    ],
     _id: null
   }
 
@@ -154,6 +162,9 @@ export class Form3Component implements OnInit {
   @Output() approveArrChange: EventEmitter<any> = new EventEmitter()
   @Output() deleteArrChange: EventEmitter<any> = new EventEmitter()
   @Output() reportInformationChange: EventEmitter<any> = new EventEmitter()
+  @Output() autoSaveByKeyChange: EventEmitter<any> = new EventEmitter()
+  @Output() autoSaveByKeyArrChange: EventEmitter<any> = new EventEmitter()
+  @Output() autoSaveInformationChange: EventEmitter<any> = new EventEmitter()
 
   // ngPhenomenonForm: FormControl = new FormControl()
   // detailForm: FormControl = new FormControl()
@@ -190,7 +201,7 @@ export class Form3Component implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      if(this.reportInformation){
+      if (this.reportInformation) {
         this.dcdForm1.patchValue(this.reportInformation.ng.value1)
         this.m1eForm1.patchValue(this.reportInformation.ng.value2)
 
@@ -299,6 +310,13 @@ export class Form3Component implements OnInit {
       index: this.reportInformation.internalActions.length + 1
     })
   }
+  onAddNewInternalLeakCauseAction() {
+    this.reportInformation.internalLeakActions.push({
+      value: null,
+      date: null,
+      index: this.reportInformation.internalLeakActions.length + 1
+    })
+  }
 
   // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
@@ -387,24 +405,21 @@ export class Form3Component implements OnInit {
 
 
   onSaveReportInformation() {
-      this.reportInformation.ng.value1 = this.dcdForm1.value
-      this.reportInformation.ng.value2 = this.m1eForm1.value
+    this.reportInformation.ng.value1 = this.dcdForm1.value
+    this.reportInformation.ng.value2 = this.m1eForm1.value
 
-      this.reportInformation.notAccepted.value1 = this.dcdForm2.value
-      this.reportInformation.notAccepted.value2 = this.m1eForm2.value
+    this.reportInformation.notAccepted.value1 = this.dcdForm2.value
+    this.reportInformation.notAccepted.value2 = this.m1eForm2.value
 
-      this.reportInformation.noAbnormality.value1 = this.dcdForm3.value
-      this.reportInformation.noAbnormality.value2 = this.principleForm1.value
+    this.reportInformation.noAbnormality.value1 = this.dcdForm3.value
+    this.reportInformation.noAbnormality.value2 = this.principleForm1.value
 
-      this.reportInformation.withinSpec.value1 = this.lcdForm1.value
-      this.reportInformation.withinSpec.value2 = this.principleForm2.value
+    this.reportInformation.withinSpec.value1 = this.lcdForm1.value
+    this.reportInformation.withinSpec.value2 = this.principleForm2.value
 
-      this.reportInformation.notRecurred.value1 = this.lcdForm2.value
+    this.reportInformation.notRecurred.value1 = this.lcdForm2.value
 
-      this.reportInformation.difference.value1 = this.scdForm1.value
-
-      console.log(this.reportInformation);
-
+    this.reportInformation.difference.value1 = this.scdForm1.value
 
     this.reportInformationChange.emit(this.reportInformation)
   }
@@ -710,4 +725,47 @@ export class Form3Component implements OnInit {
     }, 50);
   }
 
+
+  // todo auto save
+  emitAutoSaveByKey(key: string) {
+    try {
+      // if (this.form2._id) {
+      //   this.form2.claimId = this.claim._id
+      //   this.onAutoSaveChange.emit({ data: this.form2 })
+      // } else {
+      //   this.onCreateChange.emit({ data: this.form2 })
+      // }
+
+
+      console.log(this.form);
+      this.autoSaveByKeyChange.emit({ data: this.form[key], key: key })
+
+      // this.reportInformationChange.emit(this.reportInformation)
+
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+  emitAutoSaveByKeyArr(key: string, i: number) {
+    this.autoSaveByKeyArrChange.emit({ data: this.form[key][i], key: key, index: i })
+  }
+
+  emitAutoSaveInformation() {
+    this.reportInformation.ng.value1 = this.dcdForm1.value
+    this.reportInformation.ng.value2 = this.m1eForm1.value
+
+    this.reportInformation.notAccepted.value1 = this.dcdForm2.value
+    this.reportInformation.notAccepted.value2 = this.m1eForm2.value
+
+    this.reportInformation.noAbnormality.value1 = this.dcdForm3.value
+    this.reportInformation.noAbnormality.value2 = this.principleForm1.value
+
+    this.reportInformation.withinSpec.value1 = this.lcdForm1.value
+    this.reportInformation.withinSpec.value2 = this.principleForm2.value
+
+    this.reportInformation.notRecurred.value1 = this.lcdForm2.value
+
+    this.reportInformation.difference.value1 = this.scdForm1.value
+    this.autoSaveInformationChange.emit(this.reportInformation)
+  }
 }

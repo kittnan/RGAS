@@ -1,0 +1,79 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+    <app-title [title]="'EMAIL'" class="w-full"></app-title>
+  </div>
+  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10">
+    <mat-form-field appearance="outline" floatLabel="always" class="flex-auto custom-form">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #search>
+    </mat-form-field>
+
+    <div class="flex-auto" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
+      <button mat-flat-button color="primary" class="btn-radius" (click)="onDownload()">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+          <span>
+            Download
+          </span>
+          <mat-icon class="mat-18">
+            file_download
+          </mat-icon>
+        </div>
+      </button>
+      <button mat-flat-button color="accent" class="btn-radius" (click)="fileUpload.click()">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
+          <span>
+            Upload
+          </span>
+          <mat-icon class="mat-18">
+            file_upload
+          </mat-icon>
+
+        </div>
+      </button>
+      <input type="file" hidden #fileUpload (change)="onUpload($event)">
+    </div>
+  </div>
+  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center" class="overflow-auto">
+    <table mat-table fxFlex="100" [dataSource]="dataSource" class="mat-elevation-z2">
+
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef>
+          No. </th>
+        <td mat-cell *matCellDef="let element;let i=index">
+          <div fxLayout="row wrap" fxLayoutAlign="start center">
+            <span>
+              {{element.no}}
+            </span>
+          </div>
+
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> name </th>
+        <td mat-cell *matCellDef="let element">
+          {{element['name']}}
+        </td>
+
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> email </th>
+        <td mat-cell *matCellDef="let element" class="font-semibold">
+          {{element['email']}}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data matching the filter "{{search.value}}"
+        </td>
+      </tr>
+    </table>
+    <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 20,dataSource.data.length]" showFirstLastButtons
+      aria-label="Select page of periodic elements">
+    </mat-paginator>
+  </div>
+</div>

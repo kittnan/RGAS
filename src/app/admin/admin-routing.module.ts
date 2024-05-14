@@ -12,6 +12,7 @@ import { FlowReportComponent } from './flow-report/flow-report.component';
 import { M1eComponent } from './m1e/m1e.component';
 import { RPrincipleComponent } from './r-principle/r-principle.component';
 import { ModelsManageCommonComponent } from './models-manage-common/models-manage-common.component';
+import { EmailComponent } from './email/email.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path: 'models-common',
     component: ModelsManageCommonComponent,
+  },
+  {
+    path: 'email',
+    component: EmailComponent,
   },
 ];
 

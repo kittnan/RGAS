@@ -16,6 +16,8 @@ import { SectionGuard } from './guards/section.guard';
 import { InterpreterGuard } from './guards/interpreter.guard';
 import { DepartmentGuard } from './guards/department.guard';
 import { GuestModule } from './pages/guest/guest.module';
+import { AllMemberModule } from './pages/all-member/all-member.module';
+import { AllMemberGuard } from './guards/all-member.guard';
 
 const routes: Routes = [
   {
@@ -60,6 +62,11 @@ const routes: Routes = [
     path: 'departmentHead',
     loadChildren: () => DepartmentHeadModule,
     canActivate: [DepartmentGuard],
+  },
+  {
+    path: 'all-member',
+    loadChildren: () => AllMemberModule,
+    canActivate: [AllMemberGuard],
   },
 
 

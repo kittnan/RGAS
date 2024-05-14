@@ -18,6 +18,7 @@ interface FORM2 {
   PIC: any,
   rgaNo: any,
   ktcAnalysisResult: any,
+  ktcAnalysisResultOther: any,
   appearance: {
     result: any,
     analysisBy: any,
@@ -131,6 +132,8 @@ export class Form2Component implements OnInit {
   @Output() onCreateChange: EventEmitter<any> = new EventEmitter()
   // todo upload event
   @Output() onUploadChange: EventEmitter<any> = new EventEmitter()
+  // todo auto save event
+  @Output() onAutoSaveChange: EventEmitter<any> = new EventEmitter()
 
   constructor(
     private $fileUpload: HttpFileUploadService,
@@ -153,6 +156,7 @@ export class Form2Component implements OnInit {
         PIC: null,
         rgaNo: null,
         ktcAnalysisResult: null,
+        ktcAnalysisResultOther: null,
         appearance: {
           result: null,
           analysisBy: null,
@@ -308,6 +312,20 @@ export class Form2Component implements OnInit {
         this.onCreateChange.emit({ data: this.form2 })
       }
 
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  // todo auto save
+  emitAutoSave() {
+    try {
+      if (this.form2._id) {
+        this.form2.claimId = this.claim._id
+        this.onAutoSaveChange.emit({ data: this.form2 })
+      } else {
+        this.onCreateChange.emit({ data: this.form2 })
+      }
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

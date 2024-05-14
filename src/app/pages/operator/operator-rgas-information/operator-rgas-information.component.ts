@@ -95,6 +95,10 @@ export class OperatorRgasInformationComponent implements OnInit {
     this.saveStatus = false
     this.$alert.success()
   }
+  async onAutoSaveChange(event:any){
+    const resData = await lastValueFrom(this.$claim.createOrUpdate(this.currentItem))
+  }
+
 
   // todo finish form1
   async submitChange(event: any) {

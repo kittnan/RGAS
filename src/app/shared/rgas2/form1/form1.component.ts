@@ -143,7 +143,8 @@ export class Form1Component implements OnInit {
   @Output() copyChange: EventEmitter<any> = new EventEmitter()
   @Output() deleteChange: EventEmitter<any> = new EventEmitter()
   @Output() saveStatusChange: EventEmitter<any> = new EventEmitter()
-
+  // todo auto save event
+  @Output() onAutoSaveChange: EventEmitter<any> = new EventEmitter()
   // todo temp option
   tempOption: any[] = [
     {
@@ -276,9 +277,6 @@ export class Form1Component implements OnInit {
       this.setDefaultValue()
     }
 
-
-
-
   }
 
   // todo set default value
@@ -308,7 +306,7 @@ export class Form1Component implements OnInit {
         occurDate = occurDate ? moment(occurDate) : null
 
 
-        let modelCommon = model? await lastValueFrom(this.$modelCommon.get(new HttpParams().set('modelNo', model['Model']))) : null
+        let modelCommon = model ? await lastValueFrom(this.$modelCommon.get(new HttpParams().set('modelNo', model['Model']))) : null
         modelCommon = modelCommon && modelCommon.length > 0 ? modelCommon[0] : null
 
         let occurredLocation = this.getValueOfCell('R15', worksheet)
@@ -335,7 +333,7 @@ export class Form1Component implements OnInit {
 
           modelNoPNL: modelCommon ? modelCommon['Model(PNL)'] : '',
           modelNoSMT: modelCommon ? modelCommon['Model(SMT)'] : '',
-          size: modelCommon? modelCommon.Size:''
+          size: modelCommon ? modelCommon.Size : ''
         }
         setTimeout(() => {
           this.showModelCode = true
@@ -439,9 +437,6 @@ export class Form1Component implements OnInit {
     this.form.flowPIC = this.userLogin
     this.form.status = 'receive information'
     this.formChange.emit(this.form)
-
-
-
   }
   // todo on finish
   onSubmit() {
@@ -590,22 +585,25 @@ export class Form1Component implements OnInit {
     return ''
   }
 
-  // todo emitSaveStatus
-  emitSaveStatus() {
-    this.saveStatusChange.emit(true)
-  }
+  // // todo emitSaveStatus
+  // emitSaveStatus() {
+  //   this.saveStatusChange.emit(true)
+  // }
 
   // todo condition show submit final report customer
   submitFinalReportToCustomer() {
-    if (this.form3 && this.form3.finalReport.files && this.form3.finalReport.files.length > 0) {
+    if (this.form3 && this.form3.finalReport.dateSubmitToCustomer) {
       return true
     }
+    // if (this.form3 && this.form3.finalReport.files && this.form3.finalReport.files.length > 0) {
+    //   return true
+    // }
     return false
   }
 
   // todo condition show submit  final report OBL
   submitFinalReportToOBL() {
-    if (this.form3 && this.form3.finalReportOBL.files && this.form3.finalReportOBL.files.length > 0) {
+    if (this.form3 && this.form3.finalReportOBL.dateSubmitToCustomer) {
       return true
     }
     return false
@@ -643,6 +641,23 @@ export class Form1Component implements OnInit {
   //   // return true
   //   return false
   // }
+
+  // todo auto save
+  emitAutoSave() {
+    if (this.form._id) {
+      this.onAutoSaveChange.emit(this.form)
+    }
+
+    // let now: FlowHistory = {
+    //   action: 'receive information',
+    //   date: new Date(),
+    //   user: this.userLogin,
+    // }
+    // this.form.flowHistory = [now]
+    // this.form.flowPIC = this.userLogin
+    // this.form.status = 'receive information'
+    // this.formChange.emit(this.form)
+  }
 
 
 }

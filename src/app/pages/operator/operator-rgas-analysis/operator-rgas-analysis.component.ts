@@ -114,14 +114,20 @@ export class OperatorRgasAnalysisComponent implements OnInit {
   }
 
   // todo save event
-  async onSaveChange($event: any) {
+  async onSaveChange(event: any) {
     try {
-      await lastValueFrom(this.$result.createOrUpdate([$event]))
+      await lastValueFrom(this.$result.createOrUpdate([event]))
       this.$alert.success()
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
   }
+
+  async onAutoSaveChange(event:any){
+    await lastValueFrom(this.$result.createOrUpdate([event]))
+
+  }
+
 
   // todo event submit
   onSubmitChange($event: any) {

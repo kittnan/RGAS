@@ -111,10 +111,16 @@ export class AppComponent {
           path: 'admin/r-principle',
           roles: ['admin']
         },
+        // {
+        //   title: 'flow',
+        //   icon: 'keyboard_arrow_right',
+        //   path: 'admin/flow-report',
+        //   roles: ['admin']
+        // },
         {
-          title: 'flow',
+          title: 'email',
           icon: 'keyboard_arrow_right',
-          path: 'admin/flow-report',
+          path: 'admin/email',
           roles: ['admin']
         },
       ]
@@ -123,13 +129,13 @@ export class AppComponent {
       title: 'RGAS',
       icon: 'library_books',
       path: '',
-      roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead','guest'],
+      roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead', 'guest'],
       items: [
         {
           title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'operator/rgas1',
-          roles: ['admin', 'operator'],
+          roles: ['operator'],
         },
         {
           title: 'RGAS-1',
@@ -141,30 +147,45 @@ export class AppComponent {
           title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'sectionHead/rgas1',
-          roles: ['admin', 'sectionHead']
+          roles: ['sectionHead']
         },
         {
           title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'interpreter/rgas1',
-          roles: ['admin', 'interpreter']
+          roles: ['interpreter']
         },
         {
           title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'departmentHead/rgas1',
-          roles: ['admin', 'departmentHead']
+          roles: ['departmentHead']
         },
         {
           title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'guest/rgas1',
-          roles: ['admin', 'guest']
+          roles: ['guest']
         },
+
 
 
       ]
     },
+    {
+      title: 'Report',
+      icon: 'description',
+      path: '',
+      roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead'],
+      items: [
+        {
+          title: 'KC-DC',
+          icon: 'keyboard_arrow_right',
+          path: 'all-member/kc-dc',
+          roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead'],
+        }
+      ]
+    }
 
   ]
 

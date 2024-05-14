@@ -20,7 +20,6 @@ export class EngineerRgas1Component implements OnInit {
   }
   // todo click row
   onClickClaimChange(event: any) {
-    console.log("🚀 ~ event:", event)
     if (event.claimStatus == 'receive information') {
       this.router.navigate(['operator/information'], {
         queryParams: {

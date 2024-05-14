@@ -20,6 +20,11 @@ export class HttpClaimService {
       params: params
     });
   }
+  getClaimData(params: HttpParams): Observable<any> {
+    return this.http.get(`${this.URL}/${this.SUB}/getClaimData`, {
+      params: params
+    });
+  }
   createOrUpdate(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/createOrUpdate`, data);
   }

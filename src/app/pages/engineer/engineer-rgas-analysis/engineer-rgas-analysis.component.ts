@@ -120,6 +120,14 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         index: 1
       }
     ],
+    internalLeak: null,
+    internalLeakActions: [
+      {
+        value: null,
+        date: null,
+        index: 1
+      }
+    ],
     _id: null
   }
   pathFile = environment.pathSaveFile
@@ -145,7 +153,10 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         if (resData && resData.length > 0) {
           const resInformation = await lastValueFrom(this.$information.get(param))
           if (resInformation && resInformation.length > 0) {
-            this.information = resInformation[0]
+            this.information = {
+              ...this.information,
+              ...resInformation[0]
+            }
           }
           this.form = resData.length > 0 ? resData[0] : null
           if (this.form?.status == 'wait approve') {
@@ -251,6 +262,19 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     }
   }
 
+  async onAutoSaveChange(event: any) {
+    try {
+      let data = {
+        ...event.data,
+        registerNo: this.form.registerNo,
+        no: this.form.no
+      }
+      await lastValueFrom(this.$result.createOrUpdate([data]))
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
   // todo event submit
   onSubmitChange($event: any) {
     try {
@@ -261,7 +285,6 @@ export class EngineerRgasAnalysisComponent implements OnInit {
 
   // todo event send report
   async submitReportChange(event: any) {
-    console.log("🚀 ~ event:", event)
     let dataUpdate = {
       registerNo: this.form.registerNo,
       name: event.key,
@@ -286,6 +309,38 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
       // this.form3 = event
       this.$alert.success()
+    }
+  }
+
+  async autoSaveByKey(event: any) {
+    let dataUpdate = {
+      registerNo: this.form.registerNo,
+      name: event.key,
+      ...event.data,
+      no: this.form.no
+    }
+    if (!dataUpdate._id) {
+      const res = await lastValueFrom(this.$report.create(dataUpdate))
+      this.form3[event.key]['_id'] = res[0]._id
+      // this.form3 = res
+    } else {
+      await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
+    }
+  }
+  async autoSaveByKeyArrChange(event: any) {
+    if (event.data._id) {
+      await lastValueFrom(this.$report.createOrUpdate([this.form3[event.key][event.index]]))
+    } else {
+      let dataUpdate = {
+        registerNo: this.form.registerNo,
+        name: event.key,
+        ...event.data,
+        no: this.form.no
+      }
+      const resData = await lastValueFrom(this.$report.create([dataUpdate]))
+      // this.form3[event.key][event.index] = resData[0]
+
+      this.form3[event.key][event.index]['_id'] = resData[0]._id
     }
   }
 
@@ -483,6 +538,22 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     }
   }
 
+  // todo auto save information
+  async emitAutoSaveInformation(event: any) {
+    if (!event._id) {
+      const res: any = await lastValueFrom(this.$information.create({ ...event, registerNo: this.form.registerNo, no: this.form.no }))
+      if (res && res.length > 0) {
+        this.information = res[0]
+      }
+      console.log("🚀 ~ this.information:", this.information)
+
+    } else {
+      await lastValueFrom(this.$information.createOrUpdate([event]))
+    }
+  }
+
+
+
   // todo form4 change
   async form4Change(event: any) {
     try {
@@ -506,6 +577,20 @@ export class EngineerRgasAnalysisComponent implements OnInit {
 
     } catch (error) {
       console.log("🚀 ~ error:", error)
+    }
+  }
+
+  async autoSaveDocChange(event: any) {
+    if (event && event._id) {
+      await lastValueFrom(this.$documentVerify.createOrUpdate([event]))
+    } else {
+      let resData = await lastValueFrom(this.$documentVerify.create({
+        ...event, registerNo: this.form.registerNo,
+        no: this.form.no
+      }))
+      if (resData && resData.length > 0) {
+        this.form4['_id'] = resData[0]._id
+      }
     }
   }
 

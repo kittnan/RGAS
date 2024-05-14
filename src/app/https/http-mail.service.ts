@@ -21,6 +21,9 @@ export class HttpMailService {
   getDearAll(): Observable<any> {
     return this.http.get(`${this.URL}/${this.SUB}/dear-all-email`);
   }
+  saveDearAll(data:any): Observable<any> {
+    return this.http.post(`${this.URL}/${this.SUB}/dear-all-email-save`,data);
+  }
   getTemplate(params: HttpParams): Observable<any> {
     return this.http.get(`${this.URL}/${this.SUB}/template`,{
       params:params

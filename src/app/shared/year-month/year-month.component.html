@@ -1,11 +1,18 @@
-<mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-  <mat-label class="mat-label-custom" >{{title}}</mat-label>
-  <input [disabled]="disabled" matInput [matDatepicker]="dp" [(ngModel)]="dateInput">
-  <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-  <mat-datepicker #dp
-                  startView="multi-year"
-                  (yearSelected)="chosenYearHandler($event)"
-                  (monthSelected)="chosenMonthHandler($event, dp)"
-                  panelClass="example-month-picker">
+<mat-form-field *ngIf="dateInput!=null" fxFlex="100" appearance="outline" floatLabel="always">
+  <mat-label class="mat-label-custom">{{title}}</mat-label>
+  <input [disabled]="disabled" matInput [matDatepicker]="dp" [(ngModel)]="dateInput" (click)="dp.open()" [min]="min" [max]="max" >
+  <mat-icon matSuffix (click)="onSetValue()" class="text-green-400" style="cursor: pointer;">toggle_on</mat-icon>
+
+  <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
+    (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+    <mat-datepicker-actions>
+      <button mat-button matDatepickerApply (click)="onClear()">Clear</button>
+    </mat-datepicker-actions>
   </mat-datepicker>
+</mat-form-field>
+
+<mat-form-field *ngIf="dateInput==null" fxFlex="100" appearance="outline" floatLabel="always">
+  <mat-label class="mat-label-custom">{{title}}</mat-label>
+  <input [readonly]="true" matInput  [value]="'-'" >
+  <mat-icon matSuffix (click)="onSetValue2()" class="text-red-400" style="cursor: pointer;">toggle_off</mat-icon>
 </mat-form-field>

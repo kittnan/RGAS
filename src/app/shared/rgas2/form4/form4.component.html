@@ -16,8 +16,8 @@
 
     <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom" >Revised FMEA</mat-label>
-        <mat-select [(ngModel)]="form4.revise" (ngModelChange)="onChangeRevise();emitSaveStatus();">
+        <mat-label class="mat-label-custom">Revised FMEA</mat-label>
+        <mat-select [(ngModel)]="form4.revise" (ngModelChange)="onChangeRevise();" (blur)="emitAutoSaveDoc();">
           <mat-option *ngFor="let option of options1" [value]="option">
             {{option}}
           </mat-option>
@@ -26,23 +26,15 @@
     </div>
 
     <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom" >Due date to revise FMEA</mat-label>
-        <input [disabled]="form4 && form4.revise=='No Need' " matInput [(ngModel)]="form4.reviseDueDate"
-          [matDatepicker]="reviseDueDate_dp" (ngModelChange)="emitSaveStatus()">
-        <mat-datepicker-toggle matSuffix [for]="reviseDueDate_dp"></mat-datepicker-toggle>
-        <mat-datepicker #reviseDueDate_dp></mat-datepicker>
-      </mat-form-field>
+      <app-date-picker-custom fxFlex="100" [title]="'Due date to revise FMEA'" [(date)]="form4.reviseDueDate"
+        (dateChange)="emitAutoSaveDoc()"></app-date-picker-custom>
+
     </div>
 
     <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom" >FMEA revised date</mat-label>
-        <input [readonly]="true" matInput [(ngModel)]="form4.reviseDate" [matDatepicker]="reviseDate_dp"
-          (ngModelChange)="emitSaveStatus()">
-        <mat-datepicker-toggle matSuffix [for]="reviseDate_dp"></mat-datepicker-toggle>
-        <mat-datepicker #reviseDate_dp></mat-datepicker>
-      </mat-form-field>
+      <app-date-picker-custom fxFlex="100" [title]="'FMEA revised date'" [(date)]="form4.reviseDate"
+        (dateChange)="emitAutoSaveDoc()"></app-date-picker-custom>
+
     </div>
 
   </div>
@@ -60,8 +52,8 @@
 
     <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom" >Verify process</mat-label>
-        <mat-select [(ngModel)]="form4.verify" (ngModelChange)="emitSaveStatus()">
+        <mat-label class="mat-label-custom">Verify process</mat-label>
+        <mat-select [(ngModel)]="form4.verify"  (blur)="emitAutoSaveDoc();">
           <mat-option *ngFor="let option of options1" [value]="option">
             {{option}}
           </mat-option>
@@ -70,13 +62,8 @@
     </div>
 
     <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom" >Verify process date</mat-label>
-        <input matInput [(ngModel)]="form4.verifyDate" [matDatepicker]="verifyDate_dp"
-          (ngModelChange)="emitSaveStatus()">
-        <mat-datepicker-toggle matSuffix [for]="verifyDate_dp"></mat-datepicker-toggle>
-        <mat-datepicker #verifyDate_dp></mat-datepicker>
-      </mat-form-field>
+      <app-date-picker-custom fxFlex="100" [title]="'Verify process date'" [(date)]="form4.verifyDate"
+        (dateChange)="emitAutoSaveDoc()"></app-date-picker-custom>
     </div>
 
     <div fxFlex="auto"></div>
@@ -96,8 +83,8 @@
 
     <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom" >Apply Lessons learned</mat-label>
-        <mat-select [(ngModel)]="form4.apply" (ngModelChange)="emitSaveStatus()">
+        <mat-label class="mat-label-custom">Apply Lessons learned</mat-label>
+        <mat-select [(ngModel)]="form4.apply" (blur)="emitAutoSaveDoc();">
           <mat-option *ngFor="let option of options1" [value]="option">
             {{option}}
           </mat-option>
@@ -106,12 +93,8 @@
     </div>
 
     <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
-      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom" >Date add in Lessons learned file</mat-label>
-        <input matInput [(ngModel)]="form4.applyDate" [matDatepicker]="applyDate_dp" (ngModelChange)="emitSaveStatus()">
-        <mat-datepicker-toggle matSuffix [for]="applyDate_dp"></mat-datepicker-toggle>
-        <mat-datepicker #applyDate_dp></mat-datepicker>
-      </mat-form-field>
+      <app-date-picker-custom fxFlex="100" [title]="'Date add in Lessons learned file'" [(date)]="form4.applyDate"
+        (dateChange)="emitAutoSaveDoc()"></app-date-picker-custom>
     </div>
 
     <div fxFlex="auto"></div>
@@ -119,7 +102,8 @@
   </div>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mt-1 pe-8">
-    <button mat-raised-button color="primary" (click)="onSave()" class="btn-file btn-radius" style="margin-right: 10px;">
+    <button mat-raised-button color="primary" (click)="onSave()" class="btn-file btn-radius"
+      style="margin-right: 10px;">
       <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
         <span>
           Save

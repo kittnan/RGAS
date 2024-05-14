@@ -58,12 +58,16 @@ export class Rgas1Component implements OnInit {
       value: 'judgment',
       name: 'Judgment'
     },
+    {
+      value: 'returnStyle',
+      name: 'Return Style'
+    },
   ]
   filterSelected: string = ''
   fillSearch: string = ''
   placeholder: string = 'Value'
 
-  displayedColumns: string[] = ['registerNo', 'no', 'claimStatus', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'occurredLocation', 'defect', 'qty', 'lotNo', 'judgment'];
+  displayedColumns: string[] = ['registerNo', 'no', 'docStatus', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'occurredLocation', 'defect', 'qty', 'lotNo', 'judgment', 'returnStyle'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -82,9 +86,19 @@ export class Rgas1Component implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       let params: HttpParams = new HttpParams()
-      params = new HttpParams().set('status', JSON.stringify(['receive information', 'wait approve', 'analysis']))
-      this.claims = await lastValueFrom(this.$claim.getRgas1(params))
-      this.dataSource = new MatTableDataSource(this.claims)
+      // params = new HttpParams().set('status', JSON.stringify(['receive information', 'wait approve', 'analysis']))
+      let resClaims = await lastValueFrom(this.$claim.getRgas1(params))
+      this.dataSource = new MatTableDataSource(resClaims.map((item: any, i: number) => {
+        let docStatus = 'Pending'
+        let document = item.document
+        if (document) {
+          if (document.apply == 'Need' && document.revise == 'Need' && document.verify == 'Need') {
+            docStatus = 'Closed'
+          }
+        }
+        item.docStatus = docStatus
+        return item
+      }))
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -146,10 +160,14 @@ export class Rgas1Component implements OnInit {
   // todo class form status
   cssStatus(status: any) {
     if (status) {
-      if (status == "receive information") return 'receive'
-      if (status == "wait approve") return 'waitApprove'
-      if (status == "analysis") return 'analysis'
+      if (status == "Closed") return 'closed'
+      if (status == "Pending") return 'pending'
     }
+    // if (status) {
+    //   if (status == "receive information") return 'receive'
+    //   if (status == "wait approve") return 'waitApprove'
+    //   if (status == "analysis") return 'analysis'
+    // }
     return '';
   }
 
