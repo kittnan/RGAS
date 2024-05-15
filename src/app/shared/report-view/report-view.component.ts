@@ -1,5 +1,5 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpReportService } from 'src/app/https/http-report.service';
@@ -12,6 +12,7 @@ import { LocalStoreService } from 'src/app/services/local-store.service';
 })
 export class ReportViewComponent implements OnInit {
   report: any = null
+  @Input() reportInput: any
   constructor(
     private route: ActivatedRoute,
     private $report: HttpReportService,
@@ -31,6 +32,7 @@ export class ReportViewComponent implements OnInit {
         const resReport = await lastValueFrom(this.$report.get(httpParams))
         if (resReport && resReport.length > 0) {
           this.report = resReport[0]
+          this.reportInput = resReport[0]
         }
       }
 

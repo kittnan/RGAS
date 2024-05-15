@@ -8,7 +8,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="center center" class="mr-2">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Search Option</mat-label>
-          <mat-select [(ngModel)]="filterSelected" (ngModelChange)="onSearchSelect()" >
+          <mat-select [(ngModel)]="filterSelected" (ngModelChange)="onSearchSelect()">
             <mat-option *ngFor="let item of filterOption" [value]="item.value">
               <span class="capitalize text-sm">
                 {{item.name}}
@@ -29,7 +29,7 @@
       </div>
       <div fxFlex="auto"></div>
       <div *ngIf="showBtnNew" fxLayout="row wrap" fxLayoutAlign="center center">
-        <button mat-raised-button class="btn-success btn-radius"  (click)="onClickNew()">
+        <button mat-raised-button class="btn-success btn-radius" (click)="onClickNew()">
           <mat-icon class="mat-18">add_circle</mat-icon>
           New
         </button>
@@ -37,11 +37,6 @@
 
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
-      <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-        <mat-label>Search</mat-label>
-        <input matInput (keyup)="applyFilter($event)" #input>
-      </mat-form-field> -->
-
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mat-elevation-z8 overflow-auto">
         <table fxFlex="100" mat-table class="table-nowrap" [dataSource]="dataSource" matSort>
 
@@ -62,8 +57,12 @@
 
           <ng-container matColumnDef="docStatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-            <td mat-cell *matCellDef="let row" class="font-bold capitalize " [class]="cssStatus(row.docStatus)" style="text-wrap: nowrap;"> {{row.docStatus}} </td>
-            <!-- <td mat-cell *matCellDef="let row" class="font-bold capitalize " [class]="cssStatus(row.claimStatus)" style="text-wrap: nowrap;"> {{row.claimStatus}} </td> -->
+            <td mat-cell *matCellDef="let row" class="font-bold capitalize " [class]="cssStatus(row.docStatus)"
+              style="text-wrap: nowrap;">
+              <span [title]="row.claimStatus">
+                {{row.docStatus}}
+              </span>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="PIC">

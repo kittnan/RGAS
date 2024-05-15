@@ -7,6 +7,8 @@ import { lastValueFrom } from 'rxjs';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import * as ExcelJS from 'exceljs';
 import * as moment from 'moment';
+import Swal from 'sweetalert2';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 @Component({
   selector: 'app-user-manage',
   templateUrl: './user-manage.component.html',
@@ -20,13 +22,19 @@ export class UserManageComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private $user: HttpUsersService
+    private $user: HttpUsersService,
+    private $alert: SweetAlertGeneralService
   ) { }
 
   async ngOnInit(): Promise<void> {
     try {
-      const resData = await lastValueFrom(this.$user.get(new HttpParams()))
+      let params: HttpParams = new HttpParams()
+      params = params.set('active', '')
+      const resData = await lastValueFrom(this.$user.get(params))
       this.dataSource = new MatTableDataSource(resData.map((item: any) => {
+        if (!item.active) {
+          item.active = false
+        }
         return {
           ...item
         }
@@ -52,17 +60,18 @@ export class UserManageComponent implements OnInit {
     this.router.navigate(['admin/users-new'])
   }
 
-  onChangeSlide(event: any, element: any) {
+  async onChangeSlide(event: any, element: any) {
     let checked = event.checked
     element.status = checked
-    // await lastValueFrom(this.$masters.update([element]))
-    // Swal.fire(`Changed data`);
+    await lastValueFrom(this.$user.update([element]))
+    Swal.fire(`Changed data`);
   }
 
   async onUpload(event: any) {
     try {
-      let file = event.target.files[0]
-      if (file) {
+      let password = prompt("Please enter your password:");
+      let file = event.target?.files[0]
+      if (file && password == 'admin@1800') {
         const workbook = new ExcelJS.Workbook();
         await workbook.xlsx.load(file);
         const worksheet: ExcelJS.Worksheet | undefined = workbook.getWorksheet(1);
@@ -101,10 +110,33 @@ export class UserManageComponent implements OnInit {
           }, 300);
 
         }
+      } else {
+        this.$alert.danger('Not found file or password is not correct !!')
       }
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
+  }
+
+  onDownload() {
+    try {
+      let password = prompt("Please enter your password:");
+      if (password == 'admin@1800') {
+
+      } else {
+        this.$alert.danger('Password is not correct !!')
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
+  onClickEmployeeCode(row: any) {
+    this.router.navigate(['admin/users-new'], {
+      queryParams: {
+        _id: row._id
+      }
+    })
   }
 
 }

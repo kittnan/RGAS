@@ -8,6 +8,7 @@
       <h1 class="name-title pointer-events-none uppercase">Authorization</h1>
       <h1 class="name-title pointer-events-none uppercase">System</h1>
       <h1 class="name-title-mobile pointer-events-none uppercase">RGAS</h1>
+
     </div>
     <div class="flex-auto"></div>
 
@@ -86,7 +87,7 @@
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'over'" [fixedInViewport]="mobileQuery.matches"
-      fixedTopGap="56" [opened]="false">
+      fixedTopGap="56" [opened]="showSideBar">
       <mat-nav-list>
         <ng-container *ngFor="let nav of fillerNav; let i=index">
           <div *ngIf="displaySideMenu(nav.roles)" class="block p-4 dis-text" style="max-width: 17rem;">
@@ -99,7 +100,7 @@
               </span>
             </div>
             <ng-container *ngFor="let item of nav.items">
-              <a *ngIf="displaySideMenu(item.roles)" mat-list-item [routerLink]="item.path" class="capitalize">
+              <a *ngIf="displaySideMenu(item.roles)" mat-list-item [routerLink]="item.path" class="capitalize" (click)="snav.close()" >
                 <div class="flex justify-start items-center gap-1">
                   <mat-icon class="mat-18">
                     {{item.icon}}

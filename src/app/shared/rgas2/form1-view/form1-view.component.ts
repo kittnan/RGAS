@@ -41,7 +41,7 @@ export class Form1ViewComponent implements OnInit {
 
   // todo condition show submit final report customer
   submitFinalReportToCustomer() {
-    if (this.form3?.finalReport?.files?.length > 0) {
+    if (this.form3 && this.form3.finalReport.dateSubmitToCustomer) {
       return true
     }
     return false
@@ -49,7 +49,7 @@ export class Form1ViewComponent implements OnInit {
 
   // todo condition show submit  final report OBL
   submitFinalReportToOBL() {
-    if (this.form3?.finalReportOBL?.files?.length > 0) {
+    if (this.form3 && this.form3.finalReportOBL.dateSubmitToCustomer) {
       return true
     }
     return false

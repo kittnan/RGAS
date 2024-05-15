@@ -14,7 +14,7 @@ export class DialogEmailComponent implements OnInit {
 
   editor!: Editor;
   email = '';
-
+  clickSubmitStatus: boolean = false
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any = '',
     private dialog: MatDialogRef<DialogEmailComponent>,
@@ -37,8 +37,7 @@ export class DialogEmailComponent implements OnInit {
   }
 
   async onSubmit() {
-    console.log(this.editor);
-
+    this.clickSubmitStatus = true
     this.data.html = this.email
     // console.log("🚀 ~ this.email:", this.email)
     // await lastValueFrom(this.$mail.save({ html: this.email }))

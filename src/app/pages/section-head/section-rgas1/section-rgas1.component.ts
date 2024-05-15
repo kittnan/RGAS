@@ -21,8 +21,19 @@ export class SectionRgas1Component implements OnInit {
   }
   // todo click row
   onClickClaimChange(event: any) {
+
+    if (event.claimStatus == 'receive information') {
+      this.router.navigate(['operator/information'], {
+        queryParams: {
+          registerNo: event.registerNo,
+          no: event.no
+        }
+      })
+    }
+
     if (event.claimStatus == 'wait approve') {
-      this.router.navigate(['sectionHead/approve-claim'], {
+      this.router.navigate(['engineer/analysis'], {
+        // this.router.navigate(['sectionHead/approve-claim'], {
         queryParams: {
           registerNo: event.registerNo,
           no: event.no
@@ -30,7 +41,7 @@ export class SectionRgas1Component implements OnInit {
       })
     }
     if (event.claimStatus == 'analysis') {
-      this.router.navigate(['sectionHead/analysis'], {
+      this.router.navigate(['engineer/analysis'], {
         queryParams: {
           registerNo: event.registerNo,
           no: event.no

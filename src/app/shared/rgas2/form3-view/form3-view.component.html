@@ -482,7 +482,7 @@
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Root cause action </mat-label>
+          <mat-label class="mat-label-custom">Leak cause action </mat-label>
           <input [disabled]="true" matInput [value]="leakCauseAction.value">
         </mat-form-field>
       </div>
@@ -492,6 +492,64 @@
           <input [disabled]="true" matInput [matDatepicker]="leakCauseActionEffectiveDate_dp" [value]="leakCauseAction.date">
           <mat-datepicker-toggle matSuffix [for]="leakCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #leakCauseActionEffectiveDate_dp></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Internal root cause </mat-label>
+        <input [disabled]="true" matInput [value]="reportInformation.internal">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let internalCauseAction of reportInformation.internalActions; let i=index">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Internal root cause action </mat-label>
+          <input [disabled]="true" matInput [value]="internalCauseAction.value">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Effective date</mat-label>
+          <input [disabled]="true" matInput [matDatepicker]="internalCauseActionEffectiveDate_dp" [value]="internalCauseAction.date">
+          <mat-datepicker-toggle matSuffix [for]="internalCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
+          <mat-datepicker #internalCauseActionEffectiveDate_dp></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
+      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Internal leak cause </mat-label>
+        <input [disabled]="true" matInput [value]="reportInformation.internalLeak">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let internalLeakCauseAction of reportInformation.internalLeakActions; let i=index">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Internal leak cause action </mat-label>
+          <input [disabled]="true" matInput [value]="internalLeakCauseAction.value">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Effective date</mat-label>
+          <input [disabled]="true" matInput [matDatepicker]="internalLeakCauseActionEffectiveDate_dp" [value]="internalLeakCauseAction.date">
+          <mat-datepicker-toggle matSuffix [for]="internalLeakCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
+          <mat-datepicker #internalLeakCauseActionEffectiveDate_dp></mat-datepicker>
         </mat-form-field>
       </div>
     </div>

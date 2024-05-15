@@ -142,7 +142,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     private $local: LocalStoreService,
     private $alert: SweetAlertGeneralService,
     private $information: HttpReportInformationService,
-    private $documentVerify: HttpDocumentVerifiesService
+    private $documentVerify: HttpDocumentVerifiesService,
   ) {
     this.route.queryParams.subscribe(async (params: any) => {
       if (params['registerNo']) {
@@ -191,14 +191,41 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async formChange() {
+  // todo form1 claim information
+  async form1_Change() {
     this.form.status = 'analysis'
     const resData = await lastValueFrom(this.$claim.createOrUpdate(this.form))
     this.$alert.success()
   }
+  form1_copyChange(event: any) {
+    let data = event[event.length - 1]
+    this.router.navigate(['engineer/analysis'], {
+      queryParams: {
+        registerNo: data.registerNo,
+        name: data.key,
+        index: data.index,
+        no: data.no
 
-  // todo save event form2
-  async onCreateChangeForm2(event: any) {
+      }
+    })
+  }
+  // todo form1 claim information
+
+  // todo form2 result
+  async form2_onSaveChange(event: any) {
+    try {
+      let data = {
+        ...event.data,
+        registerNo: this.form.registerNo,
+        no: this.form.no
+      }
+      await lastValueFrom(this.$result.createOrUpdate([data]))
+      this.$alert.success()
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+  async form2_onCreateChange(event: any) {
     try {
       let data = {
         registerNo: this.form.registerNo,
@@ -213,7 +240,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
-  async onUploadChangeForm2(event: any) {
+
+  async form2_onUploadChange(event: any) {
     try {
       let path = `${this.pathFile}/${this.form.registerNo}/${this.form.no}/${event.key}/`
 
@@ -247,22 +275,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
-
-  async onSaveChangeForm2(event: any) {
-    try {
-      let data = {
-        ...event.data,
-        registerNo: this.form.registerNo,
-        no: this.form.no
-      }
-      await lastValueFrom(this.$result.createOrUpdate([data]))
-      this.$alert.success()
-    } catch (error) {
-      console.log("🚀 ~ error:", error)
-    }
-  }
-
-  async onAutoSaveChange(event: any) {
+  async form2_onAutoSaveChange(event: any) {
     try {
       let data = {
         ...event.data,
@@ -274,17 +287,10 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
+  // todo form2 result
 
-  // todo event submit
-  onSubmitChange($event: any) {
-    try {
-    } catch (error) {
-      console.log("🚀 ~ error:", error)
-    }
-  }
-
-  // todo event send report
-  async submitReportChange(event: any) {
+  // todo form3 report
+  async form3_submitReportChange(event: any) {
     let dataUpdate = {
       registerNo: this.form.registerNo,
       name: event.key,
@@ -311,23 +317,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       this.$alert.success()
     }
   }
-
-  async autoSaveByKey(event: any) {
-    let dataUpdate = {
-      registerNo: this.form.registerNo,
-      name: event.key,
-      ...event.data,
-      no: this.form.no
-    }
-    if (!dataUpdate._id) {
-      const res = await lastValueFrom(this.$report.create(dataUpdate))
-      this.form3[event.key]['_id'] = res[0]._id
-      // this.form3 = res
-    } else {
-      await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
-    }
-  }
-  async autoSaveByKeyArrChange(event: any) {
+  async form3_submitReportArrChange(event: any) {
     if (event.data._id) {
       await lastValueFrom(this.$report.createOrUpdate([this.form3[event.key][event.index]]))
     } else {
@@ -338,13 +328,10 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         no: this.form.no
       }
       const resData = await lastValueFrom(this.$report.create([dataUpdate]))
-      // this.form3[event.key][event.index] = resData[0]
-
-      this.form3[event.key][event.index]['_id'] = resData[0]._id
+      this.form3[event.key][event.index] = resData[0]
     }
   }
-
-  async uploadChange(event: any) {
+  async form3_uploadChange(event: any) {
     let path = `${this.pathFile}/${this.form.registerNo}/${this.form.no}/${event.key}${event.data.index}/`
     if (event.data._id) {
       const formData: FormData = new FormData()
@@ -372,8 +359,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       await lastValueFrom(this.$report.createOrUpdate([data]))
     }
   }
-
-  async uploadArrChange(event: any) {
+  async form3_uploadArrChange(event: any) {
     let path = `${this.pathFile}/${this.form.registerNo}/${this.form.no}/${event.key}${event.data.index}/`
     if (event.data._id) {
       const formData: FormData = new FormData()
@@ -401,25 +387,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       await lastValueFrom(this.$report.createOrUpdate([data]))
     }
   }
-  async submitReportArrChange(event: any) {
-    if (event.data._id) {
-      await lastValueFrom(this.$report.createOrUpdate([this.form3[event.key][event.index]]))
-    } else {
-      let dataUpdate = {
-        registerNo: this.form.registerNo,
-        name: event.key,
-        ...event.data,
-        no: this.form.no
-      }
-      const resData = await lastValueFrom(this.$report.create([dataUpdate]))
-      this.form3[event.key][event.index] = resData[0]
-    }
-  }
-
-
-
-  // todo event approve report
-  async approveChange(event: any) {
+  async form3_approveChange(event: any) {
     if (event?.data.status != 'engineer') {
       this.router.navigate(['engineer/report-view'], {
         queryParams: {
@@ -448,8 +416,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       })
     }
   }
-
-  async approveArrChange(event: any) {
+  async form3_approveArrChange(event: any) {
     if (event?.data.status != 'engineer') {
       this.router.navigate(['engineer/report-view'], {
         queryParams: {
@@ -477,9 +444,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       })
     }
   }
-
-  // todo deleteArrChange
-  deleteArrChange(event: any) {
+  form3_deleteArrChange(event: any) {
     try {
       Swal.fire({
         title: 'Delete?',
@@ -515,8 +480,41 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     }
   }
 
-  // todo informationChange
-  reportInformationChange(event: any) {
+  async form3_autoSaveByKey(event: any) {
+    let dataUpdate = {
+      registerNo: this.form.registerNo,
+      name: event.key,
+      ...event.data,
+      no: this.form.no
+    }
+    if (!dataUpdate._id) {
+      const res = await lastValueFrom(this.$report.create(dataUpdate))
+      this.form3[event.key]['_id'] = res[0]._id
+      // this.form3 = res
+    } else {
+      await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
+    }
+  }
+  // todo form3 report
+
+  // todo form3 report information
+  async form3_autoSaveByKeyArrChange(event: any) {
+    if (event.data._id) {
+      await lastValueFrom(this.$report.createOrUpdate([this.form3[event.key][event.index]]))
+    } else {
+      let dataUpdate = {
+        registerNo: this.form.registerNo,
+        name: event.key,
+        ...event.data,
+        no: this.form.no
+      }
+      const resData = await lastValueFrom(this.$report.create([dataUpdate]))
+      // this.form3[event.key][event.index] = resData[0]
+
+      this.form3[event.key][event.index]['_id'] = resData[0]._id
+    }
+  }
+  form3_reportInformationChange(event: any) {
     try {
       Swal.fire({
         title: 'Save?',
@@ -537,25 +535,21 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
-
-  // todo auto save information
-  async emitAutoSaveInformation(event: any) {
+  async form3_emitAutoSaveInformation(event: any) {
     if (!event._id) {
       const res: any = await lastValueFrom(this.$information.create({ ...event, registerNo: this.form.registerNo, no: this.form.no }))
       if (res && res.length > 0) {
         this.information = res[0]
       }
-      console.log("🚀 ~ this.information:", this.information)
-
     } else {
       await lastValueFrom(this.$information.createOrUpdate([event]))
     }
   }
+  // todo form3 report information
 
 
-
-  // todo form4 change
-  async form4Change(event: any) {
+  // todo form4
+  async form4_Change(event: any) {
     try {
       Swal.fire({
         title: "Save ?",
@@ -579,8 +573,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       console.log("🚀 ~ error:", error)
     }
   }
-
-  async autoSaveDocChange(event: any) {
+  async form4_autoSaveDocChange(event: any) {
     if (event && event._id) {
       await lastValueFrom(this.$documentVerify.createOrUpdate([event]))
     } else {
@@ -593,6 +586,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       }
     }
   }
+  // todo form4
+
 
   // todo finish claim report
   onFinish() {
@@ -617,17 +612,6 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     }
   }
 
-  copyChange(event: any) {
-    let data = event[event.length - 1]
-    this.router.navigate(['engineer/analysis'], {
-      queryParams: {
-        registerNo: data.registerNo,
-        name: data.key,
-        index: data.index,
-        no: data.no
 
-      }
-    })
-  }
 
 }

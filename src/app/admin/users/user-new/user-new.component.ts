@@ -1,6 +1,7 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpUsersService } from 'src/app/https/http-users.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
@@ -68,16 +69,32 @@ export class UserNewComponent implements OnInit {
     department: new FormControl(''),
     sectionName: new FormControl(''),
     sectionCode: new FormControl(''),
+    _id: new FormControl(''),
 
   })
   constructor(
     private router: Router,
     private $user: HttpUsersService,
-    private $alert: SweetAlertGeneralService
+    private $alert: SweetAlertGeneralService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.userForm.markAllAsTouched()
+
+    this.route.queryParams.subscribe(async (params: any) => {
+      if (params && params._id) {
+        let paramGet: HttpParams = new HttpParams()
+        paramGet = paramGet.set('_id', params._id)
+        const resUser: any = await lastValueFrom(this.$user.get(paramGet))
+        if (resUser && resUser.length > 0) {
+          this.userForm.patchValue({
+            ...resUser[0]
+          })
+        }
+      }
+    })
+
   }
   onSelected() {
 
@@ -89,10 +106,23 @@ export class UserNewComponent implements OnInit {
       showCancelButton: true
     }).then((v: SweetAlertResult) => {
       if (v.isConfirmed) {
-        this.create()
+        if (this.userForm.controls._id.value) {
+          this.update()
+        } else {
+          this.create()
+        }
       }
     })
 
+  }
+
+  async update() {
+    try {
+      await lastValueFrom(this.$user.update([this.userForm.value]))
+      this.$alert.success(true)
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
   }
   async create() {
     try {

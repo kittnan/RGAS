@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { HttpDefectService } from 'src/app/https/http-defect.service';
 import * as Exceljs from 'exceljs'
 import { HttpParams } from '@angular/common/http';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 
 @Component({
   selector: 'app-defect-manage',
@@ -18,7 +19,8 @@ export class DefectManageComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   rowsLength: number = 0
   constructor(
-    private $defect: HttpDefectService
+    private $defect: HttpDefectService,
+    private $alert: SweetAlertGeneralService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -55,12 +57,27 @@ export class DefectManageComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   async onUpload(event: any) {
-    const file: any = event.target.files[0] as File;
-    const wb = new Exceljs.Workbook();
-    await wb.xlsx.load(file);
-    const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
-    const data = await this.excelSheetToObject(ws)
-    const resData = await lastValueFrom(this.$defect.import(data))
+    try {
+      let password = prompt("Please enter your password:");
+
+      const file: any = event.target?.files[0] as File;
+      if (file && password == 'admin@1800') {
+        const wb = new Exceljs.Workbook();
+        await wb.xlsx.load(file);
+        const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
+        const data = await this.excelSheetToObject(ws)
+        const resData = await lastValueFrom(this.$defect.import(data))
+        this.$alert.success(true)
+
+      } else {
+        this.$alert.danger('Not found file or password is not correct !!')
+
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+
+    }
+
   }
   excelSheetToObject(ws: Exceljs.Worksheet | undefined) {
     return new Promise(resolve => {
@@ -84,5 +101,12 @@ export class DefectManageComponent implements OnInit {
         resolve([])
       }
     })
+  }
+  onDownload() {
+    let password = prompt("Please enter your password:");
+    if (password == 'admin@1800') {
+    } else {
+      this.$alert.danger('Password is not correct !!')
+    }
   }
 }

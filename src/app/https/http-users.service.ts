@@ -23,7 +23,7 @@ export class HttpUsersService {
     return this.http.post(`${this.URL}/${this.SUB}/create`, data);
   }
   update(data: any): Observable<any> {
-    return this.http.put(`${this.URL}/${this.SUB}/update`, data);
+    return this.http.post(`${this.URL}/${this.SUB}/update`, data);
   }
   import(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/import`, data);

@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { lastValueFrom } from 'rxjs';
 import * as Exceljs from 'exceljs'
 import { HttpDCdService } from 'src/app/https/http-d-cd.service';
+import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 
 @Component({
   selector: 'app-d-cd',
@@ -17,14 +18,15 @@ export class DCdComponent implements OnInit {
   dataSource = new MatTableDataSource([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(
-    private $d_cd: HttpDCdService
+    private $d_cd: HttpDCdService,
+    private $alert: SweetAlertGeneralService
   ) { }
 
   async ngOnInit(): Promise<void> {
     let params: HttpParams = new HttpParams()
     const resData = await lastValueFrom(this.$d_cd.get(params))
-    this.dataSource = new MatTableDataSource(resData.map((item:any,i:number)=>{
-      item.No = i+1
+    this.dataSource = new MatTableDataSource(resData.map((item: any, i: number) => {
+      item.No = i + 1
       return item
     }))
     setTimeout(() => {
@@ -36,12 +38,24 @@ export class DCdComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   async onUpload(event: any) {
-    const file: any = event.target.files[0] as File;
-    const wb = new Exceljs.Workbook();
-    await wb.xlsx.load(file);
-    const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
-    const data = await this.excelSheetToObject(ws)
-    const resData = await lastValueFrom(this.$d_cd.import(data))
+    try {
+      let password = prompt("Please enter your password:");
+      const file: any = event.target?.files[0] as File;
+      if (file && password == 'admin@1800') {
+        const wb = new Exceljs.Workbook();
+        await wb.xlsx.load(file);
+        const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
+        const data = await this.excelSheetToObject(ws)
+        const resData = await lastValueFrom(this.$d_cd.import(data))
+        this.$alert.success(true)
+
+      } else {
+        this.$alert.danger('Not found file or password is not correct !!')
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+
   }
   excelSheetToObject(ws: Exceljs.Worksheet | undefined) {
     return new Promise(resolve => {
@@ -66,5 +80,11 @@ export class DCdComponent implements OnInit {
       }
     })
   }
-
+  onDownload() {
+    let password = prompt("Please enter your password:");
+    if (password == 'admin@1800') {
+    } else {
+      this.$alert.danger('Password is not correct !!')
+    }
+  }
 }

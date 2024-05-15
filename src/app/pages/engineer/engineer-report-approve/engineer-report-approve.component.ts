@@ -179,7 +179,8 @@ export class EngineerReportApproveComponent implements OnInit {
       }
       let dialogEmail = this.dialog.open(DialogEmailComponent, {
         data: foo,
-        hasBackdrop: true
+        hasBackdrop: true,
+        disableClose:true
       })
       dialogEmail.afterClosed().subscribe(async (data: any) => {
         if (data === true) {

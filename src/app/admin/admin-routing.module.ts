@@ -13,6 +13,7 @@ import { M1eComponent } from './m1e/m1e.component';
 import { RPrincipleComponent } from './r-principle/r-principle.component';
 import { ModelsManageCommonComponent } from './models-manage-common/models-manage-common.component';
 import { EmailComponent } from './email/email.component';
+import { EmailDearAllComponent } from './email-dear-all/email-dear-all.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,10 @@ const routes: Routes = [
   {
     path: 'email',
     component: EmailComponent,
+  },
+  {
+    path: 'email-dear-all',
+    component: EmailDearAllComponent,
   },
 ];
 

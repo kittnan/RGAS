@@ -9,7 +9,7 @@
     </mat-form-field>
 
     <div class="flex-auto" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
-      <button mat-flat-button color="primary">
+      <button mat-flat-button color="primary" class="btn-radius"  (click)="onDownload()">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
           <span>
             Download
@@ -19,7 +19,7 @@
           </mat-icon>
         </div>
       </button>
-      <button mat-flat-button color="primary" (click)="fileUpload.click()">
+      <button mat-flat-button color="primary" class="btn-radius"  (click)="fileUpload.click()">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
           <span>
             Upload

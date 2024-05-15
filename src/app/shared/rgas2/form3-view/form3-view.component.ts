@@ -17,6 +17,7 @@ export class Form3ViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+console.log(this.reportInformation);
 
   }
 

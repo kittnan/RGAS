@@ -254,17 +254,17 @@ export class Form1Component implements OnInit {
     let typeOptionString: string[] = this.modelOption.map((item: any) => item['Classification'] ? item['Classification'] : '').filter((item: any) => item)
     this.typeOptionString = [...new Set(typeOptionString.map(item => item))];
 
-    this.returningStyleOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['returningStyle']))))
+    this.returningStyleOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['returningStyle'])).set('status',JSON.stringify(['active']))))
 
-    this.modelClassificationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['modelClassification']))))
+    this.modelClassificationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['modelClassification'])).set('status',JSON.stringify(['active']))))
 
-    this.commercialDistributionOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['commercialDistribution']))))
+    this.commercialDistributionOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['commercialDistribution'])).set('status',JSON.stringify(['active']))))
 
-    this.useAppearancelicationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['useAppearancelication']))))
+    this.useAppearancelicationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['useAppearancelication'])).set('status',JSON.stringify(['active']))))
 
-    this.currencyOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['currency']))))
+    this.currencyOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['currency'])).set('status',JSON.stringify(['active']))))
 
-    this.occurredLocationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['occurredLocation']))))
+    this.occurredLocationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['occurredLocation'])).set('status',JSON.stringify(['active']))))
 
     if (this.form.status) {
       this.userApproveClaimOption = await lastValueFrom(this.$user.userNextApprove(new HttpParams().set('formStatus', JSON.stringify(this.form.status))))

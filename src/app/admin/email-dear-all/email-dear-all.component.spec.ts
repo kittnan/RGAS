@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Skeleton1Component } from './skeleton1.component';
+import { EmailDearAllComponent } from './email-dear-all.component';
 
-describe('Skeleton1Component', () => {
-  let component: Skeleton1Component;
-  let fixture: ComponentFixture<Skeleton1Component>;
+describe('EmailDearAllComponent', () => {
+  let component: EmailDearAllComponent;
+  let fixture: ComponentFixture<EmailDearAllComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Skeleton1Component ]
+      declarations: [ EmailDearAllComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Skeleton1Component);
+    fixture = TestBed.createComponent(EmailDearAllComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

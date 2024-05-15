@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center">
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
-    <app-title [title]="'L-CD'" class="w-full"></app-title>
+    <app-title [title]="'P-Principle'" class="w-full"></app-title>
   </div>
   <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center">
     <mat-form-field appearance="outline" floatLabel="always" class="flex-auto custom-form">
@@ -9,7 +9,7 @@
     </mat-form-field>
 
     <div class="flex-auto" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="5">
-      <button mat-flat-button color="primary">
+      <button mat-flat-button color="primary" class="btn-radius" (click)="onDownload()">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
           <span>
             Download
@@ -19,7 +19,7 @@
           </mat-icon>
         </div>
       </button>
-      <button mat-flat-button color="primary" (click)="fileUpload.click()">
+      <button mat-flat-button color="primary" class="btn-radius" (click)="fileUpload.click()">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
           <span>
             Upload

@@ -8,18 +8,16 @@
       <mat-label>Search</mat-label>
       <input matInput (keyup)="applyFilter($event)" #search>
     </mat-form-field>
-    <button mat-button (click)="onClickAddNewUser()" class="btn-success me-2">
+    <button mat-button (click)="onClickAddNewUser()" class="btn-success btn-radius me-2">
       <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
-        <span>
-          New User
-        </span>
+
         <mat-icon class="mat-18">
           person_add
         </mat-icon>
       </div>
     </button>
     <div class="flex-auto"></div>
-    <button mat-flat-button color="primary" class="me-2">
+    <button mat-flat-button color="primary" class="btn-radius me-2" (click)="onDownload()">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
         <span>
           Download
@@ -29,7 +27,7 @@
         </mat-icon>
       </div>
     </button>
-    <button mat-flat-button color="primary" (click)="fileUpload.click()">
+    <button mat-flat-button color="primary" class="btn-radius" (click)="fileUpload.click()">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5">
         <span>
           Upload
@@ -39,15 +37,19 @@
         </mat-icon>
       </div>
     </button>
-    <input type="file" #fileUpload (change)="onUpload($event)">
+    <input hidden type="file" #fileUpload (change)="onUpload($event)">
   </div>
 
-  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center">
+  <div fxFlex="80" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-8">
     <table mat-table fxFlex="100" [dataSource]="dataSource" class="mat-elevation-z2">
 
       <ng-container matColumnDef="employeeCode">
         <th mat-header-cell *matHeaderCellDef> employeeCode </th>
-        <td mat-cell *matCellDef="let element"> {{element.employeeCode}} </td>
+        <td mat-cell *matCellDef="let element">
+          <span class="text-blue-500" style="cursor: pointer;" (click)="onClickEmployeeCode(element)">
+            {{element.employeeCode}}
+          </span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="name">
@@ -62,16 +64,22 @@
 
       <ng-container matColumnDef="access">
         <th mat-header-cell *matHeaderCellDef> access </th>
-        <td mat-cell *matCellDef="let element"> {{element.access}} </td>
+        <td mat-cell *matCellDef="let element">
+          <ul fxLayout="row wrap" fxLayoutAlign="start start" style="list-style: decimal;">
+            <li fxFlex="100" *ngFor="let item of element.access; let i=index">
+              <span class="capitalize font-semibold">
+                {{item}}
+              </span>
+            </li>
+          </ul>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="active">
         <th mat-header-cell *matHeaderCellDef> active </th>
         <td mat-cell *matCellDef="let element">
-          <section>
-            <mat-slide-toggle (change)="onChangeSlide($event,element)" color="primary" [checked]="element['active']">
-            </mat-slide-toggle>
-          </section>
+          <mat-slide-toggle [(ngModel)]="element.active" (change)="onChangeSlide($event,element)" color="primary">
+          </mat-slide-toggle>
         </td>
       </ng-container>
 

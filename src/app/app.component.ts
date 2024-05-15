@@ -23,6 +23,8 @@ export class AppComponent {
   titleLong = 'Return goods authorization system ';
   theme = false;
 
+  showSideBar: boolean = false
+
   // @HostListener('document:mouseenter', ['$event'])
   // onHover(event: MouseEvent) {
   //   document.title = this.title;
@@ -123,6 +125,12 @@ export class AppComponent {
           path: 'admin/email',
           roles: ['admin']
         },
+        // {
+        //   title: 'email',
+        //   icon: 'keyboard_arrow_right',
+        //   path: 'admin/email-dear-all',
+        //   roles: ['admin']
+        // },
       ]
     },
     {
