@@ -14,7 +14,7 @@
   </div>
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="m-4 mb-8">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between start" class="overflow-auto">
-      <table fxFlex="100" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <table fxFlex="100" mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-custom">
 
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
@@ -101,7 +101,7 @@
 
         <ng-container matColumnDef="returnStyle">
           <th mat-header-cell *matHeaderCellDef> Return Style </th>
-          <td mat-cell *matCellDef="let row"> {{row.returnStyle}} </td>
+          <td mat-cell *matCellDef="let row" class="text-nowrap"> {{row.returnStyle}} </td>
         </ng-container>
 
 

@@ -254,17 +254,17 @@ export class Form1Component implements OnInit {
     let typeOptionString: string[] = this.modelOption.map((item: any) => item['Classification'] ? item['Classification'] : '').filter((item: any) => item)
     this.typeOptionString = [...new Set(typeOptionString.map(item => item))];
 
-    this.returningStyleOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['returningStyle'])).set('status',JSON.stringify(['active']))))
+    this.returningStyleOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['returningStyle'])).set('status', JSON.stringify(['active']))))
 
-    this.modelClassificationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['modelClassification'])).set('status',JSON.stringify(['active']))))
+    this.modelClassificationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['modelClassification'])).set('status', JSON.stringify(['active']))))
 
-    this.commercialDistributionOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['commercialDistribution'])).set('status',JSON.stringify(['active']))))
+    this.commercialDistributionOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['commercialDistribution'])).set('status', JSON.stringify(['active']))))
 
-    this.useAppearancelicationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['useAppearancelication'])).set('status',JSON.stringify(['active']))))
+    this.useAppearancelicationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['useAppearancelication'])).set('status', JSON.stringify(['active']))))
 
-    this.currencyOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['currency'])).set('status',JSON.stringify(['active']))))
+    this.currencyOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['currency'])).set('status', JSON.stringify(['active']))))
 
-    this.occurredLocationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['occurredLocation'])).set('status',JSON.stringify(['active']))))
+    this.occurredLocationOption = await lastValueFrom(this.$master.get(new HttpParams().set('groupName', JSON.stringify(['occurredLocation'])).set('status', JSON.stringify(['active']))))
 
     if (this.form.status) {
       this.userApproveClaimOption = await lastValueFrom(this.$user.userNextApprove(new HttpParams().set('formStatus', JSON.stringify(this.form.status))))
@@ -299,7 +299,7 @@ export class Form1Component implements OnInit {
 
       if (worksheet) {
         let modelCode = this.getValueOfCell('W8', worksheet)
-        let model: any = this.modelOption.find((item: any) => item['Model Name'] == modelCode)
+        let model: any = modelCode ? this.modelOption.find((item: any) => item['Model Name'] == modelCode) : ''
         let dueDate = this.getValueOfCell('AV21', worksheet)
         dueDate = dueDate ? moment(dueDate) : null
         let occurDate = this.getValueOfCell('R17', worksheet)

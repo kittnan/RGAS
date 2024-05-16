@@ -257,6 +257,13 @@ label.ng-star-inserted {
       color: #ffa02f;
     }
 
+    .mat-row {
+      transition: 0.25s all all;
+    }
+
+    .mat-row:hover {
+      background-color: #d0e4f1 !important;
+    }
   }
 
   &--dark {
@@ -392,6 +399,14 @@ label.ng-star-inserted {
     .angular-editor-button {
       color: white !important;
       background-color: #333 !important;
+    }
+
+    .mat-row {
+      transition: 0.25s all all !important;
+    }
+
+    .mat-row:hover {
+      background-color: #a5a5a52e !important;
     }
   }
 }

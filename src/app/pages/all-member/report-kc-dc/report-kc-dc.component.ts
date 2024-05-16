@@ -6,6 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { lastValueFrom } from 'rxjs';
 import moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report-kc-dc',
@@ -26,6 +27,7 @@ export class ReportKcDcComponent implements OnInit {
   constructor(
     private $exportKC_DC: ExportKcDcService,
     private $claim: HttpClaimService,
+    private router: Router
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -111,8 +113,13 @@ export class ReportKcDcComponent implements OnInit {
 
   // todo click claim
   onClickClaim(row: any) {
-    console.log("🚀 ~ row:", row)
     // this.onClickClaimChange.emit(row)
+    this.router.navigate(['guest/view'], {
+      queryParams: {
+        registerNo: row.registerNo,
+        no: row.no
+      }
+    })
   }
 
 }
