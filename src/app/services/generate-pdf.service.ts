@@ -22,7 +22,7 @@ export class GeneratePdfService {
           background: 'white',
           scale: 2,
         };
-        var doc: any = new jsPDF('l', 'mm', [500, 150]);
+        var doc: any = new jsPDF('l', 'mm', [60, 200]);
         for (let index = 0; index < div.length; index++) {
           const d = div[index];
           const img = await htmlToImage.toCanvas(d, {
