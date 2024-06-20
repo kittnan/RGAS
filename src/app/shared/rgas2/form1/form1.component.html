@@ -11,13 +11,13 @@
           </span>
         </mat-card>
         <mat-card *ngIf="submitFinalReportToCustomer()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class=" bg-red">
+          class=" bg-green">
           <span class="font-semibold">
             Closed
           </span>
         </mat-card>
         <mat-card *ngIf="!submitFinalReportToCustomer()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class=" bg-green">
+          class=" bg-red">
           <span class="font-semibold">
             Pending
           </span>
@@ -30,13 +30,13 @@
           </span>
         </mat-card>
         <mat-card *ngIf="submitFinalReportToOBL()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class=" bg-red">
+          class=" bg-green">
           <span class="font-semibold">
             Closed
           </span>
         </mat-card>
         <mat-card *ngIf="!submitFinalReportToOBL()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-          class=" bg-green">
+          class=" bg-red">
           <span class="font-semibold">
             Pending
           </span>
@@ -247,6 +247,12 @@
           <app-year-month fxFlex="100" [title]="'Calendar Year'" [(dateInput)]="form.calendarYear"
             (dateInputChange)="emitAutoSave()"></app-year-month>
         </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label class="mat-label-custom">Serial Lot No</mat-label>
+            <input matInput [(ngModel)]="form.serialLotNo" (blur)="emitAutoSave()">
+          </mat-form-field>
+        </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Commercial Distribution</mat-label>
@@ -300,7 +306,7 @@
             <mat-label class="mat-label-custom">Unit</mat-label>
             <mat-select [(ngModel)]="form.productCostUnit" (blur)="emitAutoSave()">
               <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
-                {{item.itemName}} : {{item.itemValue}}
+                {{item.itemValue}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -337,7 +343,7 @@
             <mat-label class="mat-label-custom">Unit</mat-label>
             <mat-select [(ngModel)]="form.unit" (dateChange)="emitAutoSave()">
               <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
-                {{item.itemName}} : {{item.itemValue}}
+                {{item.itemValue}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -355,8 +361,8 @@
 
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
 
-          <app-date-picker-custom fxFlex="100" [title]="'Due Date (OBL III)'"
-            [(date)]="form.dueDate" (dateChange)="emitAutoSave()" ></app-date-picker-custom>
+          <app-date-picker-custom fxFlex="100" [title]="'Due Date (OBL III)'" [(date)]="form.dueDate"
+            (dateChange)="emitAutoSave()"></app-date-picker-custom>
 
           <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Due Date (OBL III)</mat-label>

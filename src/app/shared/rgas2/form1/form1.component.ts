@@ -70,6 +70,7 @@ export interface FORM1 {
   productCost: any,
   productCostUnit: any,
   size: any,
+  serialLotNo: any,
 }
 
 export interface FlowHistory {
@@ -129,7 +130,8 @@ export class Form1Component implements OnInit {
     flowHistory: [],
     productCost: null,
     productCostUnit: null,
-    size: ''
+    size: '',
+    serialLotNo: ''
   }
   @Input() form2: any = null
   @Input() form3: any = null

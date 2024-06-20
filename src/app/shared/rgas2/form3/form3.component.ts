@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { lastValueFrom } from 'rxjs';
@@ -11,6 +11,7 @@ import { HttpUsersService } from 'src/app/https/http-users.service';
 
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 import { FormControl } from '@angular/forms';
+import moment from 'moment';
 
 @Component({
   selector: 'app-form3',
@@ -188,7 +189,7 @@ export class Form3Component implements OnInit {
 
   scdForm1: FormControl = new FormControl('')
 
-
+  workingDateMaster: any
   constructor(
     private _bottomSheet: MatBottomSheet,
     private $d_cd: HttpDCdService,
@@ -197,10 +198,16 @@ export class Form3Component implements OnInit {
     private $m1e: HttpM1eService,
     private $principle: HttpPrincipleService,
     private $user: HttpUsersService,
+    private http: HttpClient
   ) { }
 
   async ngOnInit(): Promise<void> {
     try {
+
+      let resData: any = await lastValueFrom(this.http.get("http://10.200.90.152:4012/date_masterGet"))
+      if (resData && resData.length > 0) {
+      }
+
       if (this.reportInformation) {
         this.dcdForm1.patchValue(this.reportInformation.ng.value1)
         this.m1eForm1.patchValue(this.reportInformation.ng.value2)

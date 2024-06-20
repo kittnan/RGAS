@@ -165,6 +165,12 @@
           <app-year-month fxFlex="100" [title]="'Calendar Year'" [(dateInput)]="form.calendarYear"
             (dateInputChange)="emitSaveStatus()"></app-year-month>
         </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label class="mat-label-custom">Serial Lot No</mat-label>
+            <input matInput [(ngModel)]="form.serialLotNo" (blur)="emitSaveStatus()">
+          </mat-form-field>
+        </div>
         <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Commercial Distribution</mat-label>

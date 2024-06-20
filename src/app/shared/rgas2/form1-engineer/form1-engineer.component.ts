@@ -68,7 +68,9 @@ export class Form1EngineerComponent implements OnInit {
    flowHistory: [],
    productCost: null,
    productCostUnit: null,
-   size: ''
+   size: '',
+   serialLotNo: '',
+
  }
  @Input() form2: any = null
  @Input() form3: any = null

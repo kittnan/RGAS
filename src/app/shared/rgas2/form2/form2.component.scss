@@ -24,3 +24,15 @@
 .btn-file{
   margin: 0.25em 0 ;
 }
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #000; /* Default border color */
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}

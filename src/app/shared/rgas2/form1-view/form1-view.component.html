@@ -11,14 +11,14 @@
                 Submit customer
               </span>
             </mat-card>
-            <mat-card *ngIf="submitFinalReportToCustomer()" fxFlex="45" fxLayout="row wrap"
-              fxLayoutAlign="center center" class=" bg-red">
+            <mat-card *ngIf="submitFinalReportToCustomer()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
+              class=" bg-green">
               <span class="font-semibold">
                 Closed
               </span>
             </mat-card>
-            <mat-card *ngIf="!submitFinalReportToCustomer()" fxFlex="45" fxLayout="row wrap"
-              fxLayoutAlign="center center" class=" bg-green">
+            <mat-card *ngIf="!submitFinalReportToCustomer()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
+              class=" bg-red">
               <span class="font-semibold">
                 Pending
               </span>
@@ -31,13 +31,13 @@
               </span>
             </mat-card>
             <mat-card *ngIf="submitFinalReportToOBL()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-              class=" bg-red">
+              class=" bg-green">
               <span class="font-semibold">
                 Closed
               </span>
             </mat-card>
             <mat-card *ngIf="!submitFinalReportToOBL()" fxFlex="45" fxLayout="row wrap" fxLayoutAlign="center center"
-              class=" bg-green">
+              class=" bg-red">
               <span class="font-semibold">
                 Pending
               </span>
