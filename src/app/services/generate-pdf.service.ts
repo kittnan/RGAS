@@ -20,14 +20,14 @@ export class GeneratePdfService {
 
         const options = {
           background: 'white',
-          scale: 2,
+          scale: 3,
         };
         var doc: any = new jsPDF('l', 'mm', [60, 200]);
         for (let index = 0; index < div.length; index++) {
           const d = div[index];
           const img = await htmlToImage.toCanvas(d, {
             quality: 1,
-            pixelRatio:10
+            pixelRatio: 10
           })
           const bufferX = 1;
           const bufferY = 1;
@@ -39,14 +39,14 @@ export class GeneratePdfService {
             doc = await doc.addImage(
               img,
               'PNG',
-              bufferX,
-              bufferY,
+              0,
+              0,
               pdfWidth,
               pdfHeight,
               undefined,
               'FAST'
             );
-            await doc.save(`${name}.pdf`);
+            await doc.save(`${name}-test.pdf`);
             this.$loader.stop()
           } else {
             if (index === 0) {
