@@ -7,6 +7,7 @@ import { HttpDCdService } from 'src/app/https/http-d-cd.service';
 import * as Exceljs from 'exceljs'
 import { HttpLCdService } from 'src/app/https/http-l-cd.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
+import { ExcelService } from 'src/app/services/excel.service';
 
 @Component({
   selector: 'app-l-cd',
@@ -21,7 +22,8 @@ export class LCdComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(
     private $l_cd: HttpLCdService,
-    private $alert: SweetAlertGeneralService
+    private $alert: SweetAlertGeneralService,
+    private $excel: ExcelService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -47,7 +49,7 @@ export class LCdComponent implements OnInit {
         const wb = new Exceljs.Workbook();
         await wb.xlsx.load(file);
         const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
-        const data = await this.excelSheetToObject(ws)
+        const data = await this.$excel.excelSheetToObject(ws)
         const resData = await lastValueFrom(this.$l_cd.import(data))
         this.$alert.success(true)
 
@@ -61,33 +63,15 @@ export class LCdComponent implements OnInit {
     }
 
   }
-  excelSheetToObject(ws: Exceljs.Worksheet | undefined) {
-    return new Promise(resolve => {
-      let data: any = [];
-      if (ws) {
-        let head: any = []
-        ws.eachRow({ includeEmpty: false }, (row, rowNumber) => {
-          if (rowNumber == 1) {
-            head = row.values
-            head = head.map((h: any) => h.replaceAll('.', ''))
-          } else {
-            const rowData: any = {};
-            row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-              rowData[`${head[colNumber]}`] = cell.value;
-            });
-            data.push(rowData);
-          }
-        });
-        resolve(data)
-      } else {
-        resolve([])
-      }
-    })
-  }
 
-  onDownload() {
+
+  async onDownload() {
     let password = prompt("Please enter your password:");
     if (password == 'admin@1800') {
+      let resModels = await lastValueFrom(this.$l_cd.get(new HttpParams()))
+      if (resModels.length > 0) {
+        this.$excel.export(resModels, 'RGAS_L_CD_master')
+      }
     } else {
       this.$alert.danger('Password is not correct !!')
     }

@@ -12,7 +12,7 @@ export class HttpDefectService {
   private SUB = 'defect'
   constructor(private http: HttpClient) { }
 
-  get(): Observable<any> {
+  get(p0: HttpParams): Observable<any> {
     return this.http.get(`${this.URL}/${this.SUB}`);
   }
   table(params: HttpParams): Observable<any> {

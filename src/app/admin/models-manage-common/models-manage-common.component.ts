@@ -7,6 +7,8 @@ import { HttpModelsService } from 'src/app/https/http-models.service';
 import * as Exceljs from 'exceljs'
 import { HttpModelsCommonService } from 'src/app/https/http-models-common.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
+import { saveAs } from 'file-saver';
+import { ExcelService } from 'src/app/services/excel.service';
 
 @Component({
   selector: 'app-models-manage-common',
@@ -20,7 +22,8 @@ export class ModelsManageCommonComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(
     private $model: HttpModelsCommonService,
-    private $alert: SweetAlertGeneralService
+    private $alert: SweetAlertGeneralService,
+    private $excel: ExcelService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -43,7 +46,7 @@ export class ModelsManageCommonComponent implements OnInit {
         const wb = new Exceljs.Workbook();
         await wb.xlsx.load(file);
         const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
-        const data = await this.excelSheetToObject(ws)
+        const data = await this.$excel.excelSheetToObject(ws)
         const resData = await lastValueFrom(this.$model.import(data))
         this.$alert.success(true)
       } else {
@@ -55,32 +58,15 @@ export class ModelsManageCommonComponent implements OnInit {
     }
 
   }
-  excelSheetToObject(ws: Exceljs.Worksheet | undefined) {
-    return new Promise(resolve => {
-      let data: any = [];
-      if (ws) {
-        let head: any = []
-        ws.eachRow({ includeEmpty: false }, (row, rowNumber) => {
-          if (rowNumber == 1) {
-            head = row.values
-            head = head.map((h: any) => h.replaceAll('.', ''))
-          } else {
-            const rowData: any = {};
-            row.eachCell({ includeEmpty: true }, (cell, colNumber) => {
-              rowData[`${head[colNumber]}`] = cell.value;
-            });
-            data.push(rowData);
-          }
-        });
-        resolve(data)
-      } else {
-        resolve([])
-      }
-    })
-  }
-  onDownload() {
+
+  async onDownload() {
     let password = prompt("Please enter your password:");
     if (password == 'admin@1800') {
+
+      let resModels = await lastValueFrom(this.$model.get(new HttpParams()))
+      if (resModels.length > 0) {
+        this.$excel.export(resModels, 'RGAS_models_common_master')
+      }
     } else {
       this.$alert.danger('Password is not correct !!')
     }
