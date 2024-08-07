@@ -31,6 +31,21 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     index: 1,
     status: 'engineer',
   }
+  tempCauseObj = {
+    cause: {
+      value1: '',
+      value2: '',
+      value3: '',
+    },
+    action: {
+      value1: '',
+      value2: '',
+      value3: '',
+      value4: '',
+      date: '',
+    }
+
+  }
   form3: any = {
     preReport: { ...this.tempObj },
     interims: [
@@ -128,7 +143,11 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         index: 1
       }
     ],
-    _id: null
+    _id: null,
+    causes: [{
+      ...this.tempCauseObj,
+      index: 1
+    }]
   }
   pathFile = environment.pathSaveFile
 
@@ -479,6 +498,41 @@ export class EngineerRgasAnalysisComponent implements OnInit {
 
     }
   }
+  form3_Info_deleteArrChange(event: any) {
+    try {
+      Swal.fire({
+        title: 'Delete?',
+        icon: 'question',
+        showCancelButton: true
+      }).then(async (v: SweetAlertResult) => {
+        if (v.isConfirmed) {
+          let data = this.information[event.key][event.index];
+          if (data && data._id) {
+            if (data.files && data.files.length > 0) {
+              for (let index = 0; index < data.files.length; index++) {
+                const file = data.files[index];
+                if (index + 1 == data.files.length) {
+                  await lastValueFrom(this.$fileUpload.delete({
+                    path_file: file.delete_path
+                  }))
+                  await lastValueFrom(this.$report.delete({ _id: data._id }))
+                  this.information[event.key] = this.information[event.key].filter((item: any) => item.index != data.index)
+                }
+              }
+            } else {
+              await lastValueFrom(this.$report.delete({ _id: data._id }))
+              this.information[event.key] = this.information[event.key].filter((item: any) => item.index != data.index)
+            }
+          }else{
+            this.information[event.key] = this.information[event.key].filter((item: any) => item.index != data.index)
+          }
+        }
+      });
+    } catch (error) {
+      console.log("🚀 ~ error:", error);
+
+    }
+  }
 
   async form3_autoSaveByKey(event: any) {
     let dataUpdate = {
@@ -490,9 +544,14 @@ export class EngineerRgasAnalysisComponent implements OnInit {
     if (!dataUpdate._id) {
       const res = await lastValueFrom(this.$report.create(dataUpdate))
       this.form3[event.key]['_id'] = res[0]._id
-      // this.form3 = res
     } else {
       await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
+      const dataUpdateDateSubmit = {
+        registerNo: dataUpdate.registerNo,
+        name: dataUpdate.name,
+        dateSubmitToCustomer: dataUpdate.dateSubmitToCustomer
+      }
+      await lastValueFrom(this.$report.updateManyByRegisterNo(dataUpdateDateSubmit))
     }
   }
   // todo form3 report
@@ -501,6 +560,12 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   async form3_autoSaveByKeyArrChange(event: any) {
     if (event.data._id) {
       await lastValueFrom(this.$report.createOrUpdate([this.form3[event.key][event.index]]))
+      const dataUpdateDateSubmit = {
+        registerNo: event.data.registerNo,
+        name: event.data.name,
+        dateSubmitToCustomer: event.data.dateSubmitToCustomer
+      }
+      await lastValueFrom(this.$report.updateManyByRegisterNo(dataUpdateDateSubmit))
     } else {
       let dataUpdate = {
         registerNo: this.form.registerNo,
@@ -509,7 +574,6 @@ export class EngineerRgasAnalysisComponent implements OnInit {
         no: this.form.no
       }
       const resData = await lastValueFrom(this.$report.create([dataUpdate]))
-      // this.form3[event.key][event.index] = resData[0]
 
       this.form3[event.key][event.index]['_id'] = resData[0]._id
     }

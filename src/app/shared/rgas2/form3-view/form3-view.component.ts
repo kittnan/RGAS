@@ -11,6 +11,9 @@ export class Form3ViewComponent implements OnInit {
 
   @Input() form: any
   @Input() reportInformation: any
+  reReportOption: any = ['Pre', 'Pre(J)']
+  interimOption: any = ['In', 'In(J)']
+  finalReportOption: any = ['F', 'F(J)']
   constructor(
     private _bottomSheet: MatBottomSheet,
 

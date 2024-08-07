@@ -36,7 +36,24 @@ export class Form3Component implements OnInit {
     dueDate: null,
     dateSubmitToCustomer: null,
     files: [],
-    status: 'engineer'
+    status: 'engineer',
+    language: 'ENG'
+  }
+
+  tempCauseObj = {
+    cause: {
+      value1: '',
+      value2: '',
+      value3: '',
+    },
+    action: {
+      value1: '',
+      value2: '',
+      value3: '',
+      value4: '',
+      date: '',
+    }
+
   }
 
   @Input() form: any = {
@@ -88,6 +105,7 @@ export class Form3Component implements OnInit {
     },
     causeByCustomer: null,
     outWarranty: null,
+
     rootCause: null,
     rootCauseActions: [
       {
@@ -120,7 +138,11 @@ export class Form3Component implements OnInit {
         index: 1
       }
     ],
-    _id: null
+    _id: null,
+    causes: [{
+      ...this.tempCauseObj,
+      index: 1
+    }]
   }
 
   // todo PIC Option
@@ -162,6 +184,7 @@ export class Form3Component implements OnInit {
   @Output() approveChange: EventEmitter<any> = new EventEmitter()
   @Output() approveArrChange: EventEmitter<any> = new EventEmitter()
   @Output() deleteArrChange: EventEmitter<any> = new EventEmitter()
+  @Output() deleteInfoArrChange: EventEmitter<any> = new EventEmitter()
   @Output() reportInformationChange: EventEmitter<any> = new EventEmitter()
   @Output() autoSaveByKeyChange: EventEmitter<any> = new EventEmitter()
   @Output() autoSaveByKeyArrChange: EventEmitter<any> = new EventEmitter()
@@ -190,6 +213,17 @@ export class Form3Component implements OnInit {
   scdForm1: FormControl = new FormControl('')
 
   workingDateMaster: any
+
+  reReportOption: any = ['Pre', 'Pre(J)']
+  interimOption: any = ['In', 'In(J)']
+  finalReportOption: any = ['F', 'F(J)']
+
+  causeOption1: any = ['Customer', 'Internal']
+  causeOption2: any = ['Root cause', 'Leak cause']
+
+  actionOption1: any = ['Customer', 'Internal']
+  actionOption2: any = ['Root cause', 'Leak cause']
+  actionOption3: any = ['KTC', 'Material']
   constructor(
     private _bottomSheet: MatBottomSheet,
     private $d_cd: HttpDCdService,
@@ -324,6 +358,12 @@ export class Form3Component implements OnInit {
       index: this.reportInformation.internalLeakActions.length + 1
     })
   }
+  onAddNewCause() {
+    this.reportInformation.causes.push({
+      ...this.tempCauseObj,
+      index: this.reportInformation.causes.length + 1
+    })
+  }
 
   // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
@@ -408,6 +448,9 @@ export class Form3Component implements OnInit {
   // todo onClickDeleteArr
   onClickDeleteArr(key: string, i: number) {
     this.deleteArrChange.emit({ key: key, index: i })
+  }
+  onClickDeleteInfoArr(key: string, i: number) {
+    this.deleteInfoArrChange.emit({ key: key, index: i })
   }
 
 
@@ -736,19 +779,7 @@ export class Form3Component implements OnInit {
   // todo auto save
   emitAutoSaveByKey(key: string) {
     try {
-      // if (this.form2._id) {
-      //   this.form2.claimId = this.claim._id
-      //   this.onAutoSaveChange.emit({ data: this.form2 })
-      // } else {
-      //   this.onCreateChange.emit({ data: this.form2 })
-      // }
-
-
-      console.log(this.form);
       this.autoSaveByKeyChange.emit({ data: this.form[key], key: key })
-
-      // this.reportInformationChange.emit(this.reportInformation)
-
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

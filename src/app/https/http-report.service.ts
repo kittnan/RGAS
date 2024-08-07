@@ -28,6 +28,9 @@ export class HttpReportService {
   createOrUpdate(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/createOrUpdate`, data);
   }
+  updateManyByRegisterNo(data: any): Observable<any> {
+    return this.http.put(`${this.URL}/${this.SUB}/updateManyByRegisterNo`, data);
+  }
   delete(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/delete`, data);
   }

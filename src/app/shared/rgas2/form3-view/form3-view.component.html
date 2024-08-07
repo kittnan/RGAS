@@ -13,7 +13,17 @@
         </span>
       </div>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Language</mat-label>
+        <mat-select [disabled]="true" [(ngModel)]="form.preReport.language">
+          <mat-option *ngFor="let option of reReportOption" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Due Date</mat-label>
         <input [disabled]="true" matInput [value]="form?.preReport?.dueDate" [matDatepicker]="preReportDueDate_dp">
@@ -21,7 +31,7 @@
         <mat-datepicker #preReportDueDate_dp></mat-datepicker>
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Date Submit To Customer</mat-label>
         <input [disabled]="true" matInput [value]="form?.preReport?.dateSubmitToCustomer"
@@ -32,7 +42,8 @@
     </div>
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
 
-      <button [disabled]="true" fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" class="btn-file btn-radius">
+      <button [disabled]="true" fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent"
+        class="btn-file btn-radius">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             Files
@@ -64,7 +75,17 @@
           </span>
         </div>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Language</mat-label>
+          <mat-select [disabled]="true" [(ngModel)]="interim.language">
+            <mat-option *ngFor="let option of interimOption" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Due Date</mat-label>
           <input [disabled]="true" matInput [value]="interim?.dueDate" [matDatepicker]="interimDueDate_dp">
@@ -72,7 +93,7 @@
           <mat-datepicker #interimDueDate_dp></mat-datepicker>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Date Submit To Customer</mat-label>
           <input [disabled]="true" matInput [value]="interim?.dateSubmitToCustomer"
@@ -83,7 +104,8 @@
       </div>
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
 
-        <button [disabled]="true" fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" class="btn-file btn-radius">
+        <button [disabled]="true" fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent"
+          class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -120,16 +142,25 @@
         </span>
       </div>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Language</mat-label>
+        <mat-select [disabled]="true" [(ngModel)]="form.finalReport.language">
+          <mat-option *ngFor="let option of finalReportOption" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Due Date</mat-label>
-        <input [disabled]="true" matInput [value]="form?.finalReport?.dueDate"
-          [matDatepicker]="finalReportDueDate_dp">
+        <input [disabled]="true" matInput [value]="form?.finalReport?.dueDate" [matDatepicker]="finalReportDueDate_dp">
         <mat-datepicker-toggle matSuffix [for]="finalReportDueDate_dp"></mat-datepicker-toggle>
         <mat-datepicker #finalReportDueDate_dp></mat-datepicker>
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Date Submit To Customer</mat-label>
         <input [disabled]="true" matInput [value]="form?.finalReport?.dateSubmitToCustomer"
@@ -141,7 +172,8 @@
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
 
 
-      <button [disabled]="true" fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" class="btn-file btn-radius">
+      <button [disabled]="true" fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent"
+        class="btn-file btn-radius">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             Files
@@ -236,7 +268,8 @@
 
 
 
-        <button [disabled]="true" fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" class="btn-file btn-radius">
+        <button [disabled]="true" fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent"
+          class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -460,7 +493,8 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Effective date</mat-label>
-          <input [disabled]="true" matInput [matDatepicker]="rootCauseActionEffectiveDate_dp" [value]="rootCauseAction.date">
+          <input [disabled]="true" matInput [matDatepicker]="rootCauseActionEffectiveDate_dp"
+            [value]="rootCauseAction.date">
           <mat-datepicker-toggle matSuffix [for]="rootCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #rootCauseActionEffectiveDate_dp></mat-datepicker>
         </mat-form-field>
@@ -489,7 +523,8 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Effective date</mat-label>
-          <input [disabled]="true" matInput [matDatepicker]="leakCauseActionEffectiveDate_dp" [value]="leakCauseAction.date">
+          <input [disabled]="true" matInput [matDatepicker]="leakCauseActionEffectiveDate_dp"
+            [value]="leakCauseAction.date">
           <mat-datepicker-toggle matSuffix [for]="leakCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #leakCauseActionEffectiveDate_dp></mat-datepicker>
         </mat-form-field>
@@ -518,7 +553,8 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Effective date</mat-label>
-          <input [disabled]="true" matInput [matDatepicker]="internalCauseActionEffectiveDate_dp" [value]="internalCauseAction.date">
+          <input [disabled]="true" matInput [matDatepicker]="internalCauseActionEffectiveDate_dp"
+            [value]="internalCauseAction.date">
           <mat-datepicker-toggle matSuffix [for]="internalCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #internalCauseActionEffectiveDate_dp></mat-datepicker>
         </mat-form-field>
@@ -547,7 +583,8 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Effective date</mat-label>
-          <input [disabled]="true" matInput [matDatepicker]="internalLeakCauseActionEffectiveDate_dp" [value]="internalLeakCauseAction.date">
+          <input [disabled]="true" matInput [matDatepicker]="internalLeakCauseActionEffectiveDate_dp"
+            [value]="internalLeakCauseAction.date">
           <mat-datepicker-toggle matSuffix [for]="internalLeakCauseActionEffectiveDate_dp"></mat-datepicker-toggle>
           <mat-datepicker #internalLeakCauseActionEffectiveDate_dp></mat-datepicker>
         </mat-form-field>

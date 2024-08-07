@@ -13,11 +13,21 @@
         </span>
       </div>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Language</mat-label>
+        <mat-select [(ngModel)]="form.preReport.language" (ngModelChange)="emitAutoSaveByKey('preReport')">
+          <mat-option *ngFor="let option of reReportOption" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Due Date'" [(date)]="form.preReport.dueDate"
         (dateChange)="emitAutoSaveByKey('preReport')"></app-date-picker-custom>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Date Submit To Customer'"
         [(date)]="form.preReport.dateSubmitToCustomer"
         (dateChange)="emitAutoSaveByKey('preReport')"></app-date-picker-custom>
@@ -77,11 +87,21 @@
           </span>
         </div>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Language</mat-label>
+          <mat-select [(ngModel)]="interim.language" (ngModelChange)="emitAutoSaveByKeyArr('interims',i)">
+            <mat-option *ngFor="let option of interimOption" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
         <app-date-picker-custom fxFlex="100" [title]="'Due Date'" [(date)]="interim.dueDate"
           (dateChange)="emitAutoSaveByKeyArr('interims',i)"></app-date-picker-custom>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
         <app-date-picker-custom fxFlex="100" [title]="'Date Submit To Customer'" [(date)]="interim.dateSubmitToCustomer"
           (dateChange)="emitAutoSaveByKeyArr('interims',i)"></app-date-picker-custom>
       </div>
@@ -154,11 +174,21 @@
         </span>
       </div>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+        <mat-label class="mat-label-custom">Language</mat-label>
+        <mat-select [(ngModel)]="form.finalReport.language" (ngModelChange)="emitAutoSaveByKey('finalReport')">
+          <mat-option *ngFor="let option of finalReportOption" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Due Date'" [(date)]="form.finalReport.dueDate"
         (dateChange)="emitAutoSaveByKey('finalReport')"></app-date-picker-custom>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Date Submit To Customer'"
         [(date)]="form.finalReport.dateSubmitToCustomer"
         (dateChange)="emitAutoSaveByKey('finalReport')"></app-date-picker-custom>
@@ -494,37 +524,105 @@
       </mat-form-field>
     </div>
   </div>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+  <!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Root cause </mat-label>
         <input matInput [(ngModel)]="reportInformation.rootCause" (blur)="emitAutoSaveInformation()">
       </mat-form-field>
     </div>
-  </div>
+  </div> -->
 
-  <ng-container *ngFor="let rootCauseAction of reportInformation.rootCauseActions; let i=index">
+  <ng-container *ngFor="let cause of reportInformation.causes; let i=index">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Root cause action </mat-label>
-          <input matInput [(ngModel)]="rootCauseAction.value" (blur)="emitAutoSaveInformation()">
+
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Cause</mat-label>
+          <mat-select [(ngModel)]="cause.cause.value1">
+            <mat-option *ngFor="let option of causeOption1" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-        <app-date-picker-custom fxFlex="100" [title]="'Effective date'" [(date)]="rootCauseAction.date"
-          (dateChange)="emitAutoSaveInformation()"></app-date-picker-custom>
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom"></mat-label>
+          <mat-select [(ngModel)]="cause.cause.value2">
+            <mat-option *ngFor="let option of causeOption2" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
+      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-4'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom"> </mat-label>
+          <input matInput [(ngModel)]="cause.cause.value3">
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Action</mat-label>
+          <mat-select [(ngModel)]="cause.action.value1">
+            <mat-option *ngFor="let option of actionOption1" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom"></mat-label>
+          <mat-select [(ngModel)]="cause.action.value2">
+            <mat-option *ngFor="let option of actionOption2" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom"></mat-label>
+          <mat-select [(ngModel)]="cause.action.value3">
+            <mat-option *ngFor="let option of actionOption3" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom"> </mat-label>
+          <input matInput [(ngModel)]="cause.action.value4">
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <app-date-picker-custom fxFlex="100" [title]="'Effective date'"
+          [(date)]="cause.action.date"></app-date-picker-custom>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="5" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+          <button *ngIf="i!==0" mat-icon-button color="warn" (click)="onClickDeleteInfoArr('causes',i)">
+            <mat-icon class="mat-18">delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="reportInformation.rootCauseActions.length== i+1 " mat-icon-button color="primary"
-        style="margin-top: 10px;" (click)="onAddNewRootCauseAction()"><mat-icon>add</mat-icon>
+      <button *ngIf="reportInformation.causes.length== i+1 " mat-icon-button color="primary" style="margin-top: 10px;"
+        (click)="onAddNewCause()"><mat-icon>add</mat-icon>
       </button>
 
     </div>
   </ng-container>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+  <!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Leak cause </mat-label>
@@ -614,7 +712,7 @@
       </button>
 
     </div>
-  </ng-container>
+  </ng-container> -->
 
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mt-1 pe-8">
