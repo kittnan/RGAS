@@ -12,6 +12,7 @@ import { EngineerReportApproveComponent } from './engineer-report-approve/engine
 import { EngineerReportViewComponent } from './engineer-report-view/engineer-report-view.component';
 import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer-rgas-analysis.component';
 import { EngineerRgasNewComponent } from './engineer-rgas-new/engineer-rgas-new.component';
+import { EngineerEstimateShipmentComponent } from './engineer-estimate-shipment/engineer-estimate-shipment.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { EngineerRgasNewComponent } from './engineer-rgas-new/engineer-rgas-new.
     EngineerReportApproveComponent,
     EngineerReportViewComponent,
     EngineerRgasAnalysisComponent,
-    EngineerRgasNewComponent
+    EngineerRgasNewComponent,
+    EngineerEstimateShipmentComponent
   ],
   imports: [
     CommonModule,
