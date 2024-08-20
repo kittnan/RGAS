@@ -37,10 +37,8 @@
 
     </div>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mat-elevation-z8 overflow-auto">
-        <table fxFlex="100" mat-table class="table-nowrap" [dataSource]="dataSource" matSort>
-
-
+      <div class="mat-elevation-z8 mat-table-custom">
+        <table mat-table class="table-nowrap" [dataSource]="dataSource" matSort>
           <ng-container matColumnDef="registerNo">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> register No </th>
             <td mat-cell *matCellDef="let row">
@@ -121,7 +119,7 @@
           </ng-container>
 
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
           <tr class="mat-row" *matNoDataRow>
@@ -132,9 +130,11 @@
 
       </div>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mat-elevation-z8 overflow-auto">
-        <mat-paginator fxFlex="100" [pageSizeOptions]="[ 10, 25,50, 100,dataSource.filteredData.length]"
-          aria-label="Select page of users"></mat-paginator>
+        <mat-paginator fxFlex="100" [pageSizeOptions]="[ 10, 25,50, 100,itemCount]" [length]="itemCount"
+          (page)="onPageChange($event)" [showFirstLastButtons]="true" aria-label="Select page of users"></mat-paginator>
+        <mat-progress-bar *ngIf="isLoading" fxFlex="100" mode="query" style="margin: 1rem 0;"></mat-progress-bar>
       </div>
+
     </div>
   </div>
 </div>

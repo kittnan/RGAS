@@ -37,6 +37,7 @@ import { Form4ViewComponent } from './rgas2/form4-view/form4-view.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { DatePickerCustomComponent } from './date-picker-custom/date-picker-custom.component';
 import { ReportKcDcComponent } from '../pages/all-member/report-kc-dc/report-kc-dc.component';
+import { Autocomplete3Component } from './autocomplete3/autocomplete3.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -83,6 +84,7 @@ let items = [
     Form4ViewComponent,
     DatePickerCustomComponent,
     ReportKcDcComponent,
+    Autocomplete3Component,
   ],
   imports: [
     CommonModule,
@@ -119,6 +121,7 @@ let items = [
     Form4ViewComponent,
     DatePickerCustomComponent,
     ReportKcDcComponent,
+    Autocomplete3Component,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

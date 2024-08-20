@@ -1,9 +1,10 @@
 <div class="flex flex-wrap justify-center items-start w-full mt-1">
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <app-sub-title fxFlex="100" [title]="'Report'" class="mt-2 mb-2"></app-sub-title>
+    <app-sub-title fxFlex="100" [title]="'Report'" class="mt-20 mb-2"></app-sub-title>
   </div>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-1">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutAlign.gt-sm="space-between stretch"
+    class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="'me-8'"
       class="p-2 rounded-md" [class]="cssTagReportStatus(form.preReport.status)">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -13,29 +14,34 @@
         </span>
       </div>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-8'">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Language</mat-label>
         <mat-select [(ngModel)]="form.preReport.language" (ngModelChange)="emitAutoSaveByKey('preReport')">
+          <mat-option [value]="null"></mat-option>
           <mat-option *ngFor="let option of reReportOption" [value]="option">
             {{option}}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="15" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Due Date'" [(date)]="form.preReport.dueDate"
         (dateChange)="emitAutoSaveByKey('preReport')"></app-date-picker-custom>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="15" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Date Submit To Customer'"
         [(date)]="form.preReport.dateSubmitToCustomer"
         (dateChange)="emitAutoSaveByKey('preReport')"></app-date-picker-custom>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-1'">
 
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="preReportFile.click()"
-        class="btn-file btn-radius">
+      <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+        (click)="preReportFile.click()" class="btn-file btn-radius">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             Files
@@ -44,8 +50,8 @@
         </div>
         <input type="file" hidden #preReportFile (change)="onUploadFile($event,'preReport')">
       </button>
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.preReport.files,'preReport')"
-        class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
+      <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
+        (click)="openBottom(form.preReport.files,'preReport')" class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             View
@@ -77,7 +83,8 @@
   </div>
 
   <ng-container *ngFor="let interim of form.interims; let i=index">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="'me-8'"
         class="p-2 rounded-md" [class]="cssTagReportStatus(interim.status)">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -87,28 +94,33 @@
           </span>
         </div>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Language</mat-label>
           <mat-select [(ngModel)]="interim.language" (ngModelChange)="emitAutoSaveByKeyArr('interims',i)">
+            <mat-option [value]="null"></mat-option>
             <mat-option *ngFor="let option of interimOption" [value]="option">
               {{option}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <div fxFlex="100" fxFlex.gt-md="15" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
         <app-date-picker-custom fxFlex="100" [title]="'Due Date'" [(date)]="interim.dueDate"
           (dateChange)="emitAutoSaveByKeyArr('interims',i)"></app-date-picker-custom>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <div fxFlex="100" fxFlex.gt-md="15" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
         <app-date-picker-custom fxFlex="100" [title]="'Date Submit To Customer'" [(date)]="interim.dateSubmitToCustomer"
           (dateChange)="emitAutoSaveByKeyArr('interims',i)"></app-date-picker-custom>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-1'">
 
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="interimFile.click()"
-          class="btn-file btn-radius">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+          (click)="interimFile.click()" class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -117,8 +129,8 @@
           </div>
           <input type="file" hidden #interimFile (change)="onUploadFileArr($event,'interims',i)">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(interim.files,'preReport')"
-          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
+          (click)="openBottom(interim.files,'preReport')" class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -161,7 +173,8 @@
 
   </ng-container>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" class="mt-8">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutAlign.gt-sm="space-between stretch"
+    class="mt-8">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="'me-8'"
       class="p-2 rounded-md" [class]="cssTagReportStatus(form.finalReport.status)">
       <div fxLayout="row wrap" fxLayoutAlign="start center">
@@ -174,30 +187,33 @@
         </span>
       </div>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-8'">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Language</mat-label>
         <mat-select [(ngModel)]="form.finalReport.language" (ngModelChange)="emitAutoSaveByKey('finalReport')">
+          <mat-option [value]="null"></mat-option>
           <mat-option *ngFor="let option of finalReportOption" [value]="option">
             {{option}}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="15" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Due Date'" [(date)]="form.finalReport.dueDate"
         (dateChange)="emitAutoSaveByKey('finalReport')"></app-date-picker-custom>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="15" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Date Submit To Customer'"
         [(date)]="form.finalReport.dateSubmitToCustomer"
         (dateChange)="emitAutoSaveByKey('finalReport')"></app-date-picker-custom>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
-
-
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="finalReportFile.click()"
-        class="btn-file btn-radius">
+    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-1'">
+      <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+        (click)="finalReportFile.click()" class="btn-file btn-radius">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             Files
@@ -206,8 +222,9 @@
         </div>
         <input type="file" hidden #finalReportFile (change)="onUploadFile($event,'finalReport')">
       </button>
-      <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form.finalReport.files,'preReport')"
-        class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
+      <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
+        (click)="openBottom(form.finalReport.files,'preReport')" class="btn-file btn-radius"
+        [ngClass.gt-md]="'m-btn-l'">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
           <span>
             View
@@ -217,7 +234,7 @@
       </button>
 
     </div>
-    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
         <ng-container *ngIf="form.finalReport.status =='finish'">
           <button mat-icon-button color="primary" style="margin-left: 5px;" (click)="onSubmitReport('finalReport')">
@@ -239,7 +256,8 @@
     </div>
   </div>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+    class="mt-1">
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="'me-8'"
       class="p-2 rounded-md" [class]="cssTagReportStatus(form.finalReportOBL.status)">
       <div fxLayout="row wrap" fxLayoutAlign="start center">
@@ -252,16 +270,19 @@
         </span>
       </div>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Due Date'" [(date)]="form.finalReportOBL.dueDate"
         (dateChange)="emitAutoSaveByKey('finalReportOBL')"></app-date-picker-custom>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-8'">
       <app-date-picker-custom fxFlex="100" [title]="'Date To Upload'"
         [(date)]="form.finalReportOBL.dateSubmitToCustomer"
         (dateChange)="emitAutoSaveByKey('finalReportOBL')"></app-date-picker-custom>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+    <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+      [ngClass.gt-md]="'me-1'">
       <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">PIC</mat-label>
         <mat-select [(ngModel)]="form.finalReportOBL.PIC" [compareWith]="objectComparisonFunction"
@@ -272,7 +293,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
         <button mat-icon-button color="primary" style="margin-left: 5px;" (click)="onSubmitReport('finalReportOBL')">
           <mat-icon>save</mat-icon>
@@ -282,7 +303,8 @@
   </div>
 
   <ng-container *ngFor="let questionAnswer of form.questionAnswers; let i=index">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" [ngClass.gt-md]="'me-8'"
         class="p-2 rounded-md" [class]="cssTagReportStatus(questionAnswer.status)">
         <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -292,21 +314,24 @@
           </span>
         </div>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
         <app-date-picker-custom fxFlex="100" [title]="'Due Date'" [(date)]="questionAnswer.dueDate"
           (dateChange)="emitAutoSaveByKeyArr('questionAnswers',i)"></app-date-picker-custom>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
         <app-date-picker-custom fxFlex="100" [title]="'Date Submit To Customer'"
           [(date)]="questionAnswer.dateSubmitToCustomer"
           (dateChange)="emitAutoSaveByKeyArr('questionAnswers',i)"></app-date-picker-custom>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="me-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        class="me-1">
 
 
 
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="questionAnswerFile.click()"
-          class="btn-file btn-radius">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+          (click)="questionAnswerFile.click()" class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -315,8 +340,9 @@
           </div>
           <input type="file" hidden #questionAnswerFile (change)="onUploadFileArr($event,'questionAnswers',i)">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(questionAnswer.files,'preReport')"
-          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
+          (click)="openBottom(questionAnswer.files,'preReport')" class="btn-file btn-radius"
+          [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -327,7 +353,7 @@
 
       </div>
 
-      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
           <button *ngIf="i!==0" mat-icon-button color="warn" (click)="onClickDeleteArr('questionAnswers',i)">
             <mat-icon class="mat-18">delete</mat-icon>
@@ -361,245 +387,279 @@
   </ng-container>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <app-sub-title fxFlex="100" [title]="'Report Information'" class="mt-2 mb-2"></app-sub-title>
-  </div>
-
-  <h1 hidden>REPORT INFORMATION</h1>
-
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">NG</mat-label>
-        <input matInput type="number" [(ngModel)]="reportInformation.ng.qty" (blur)="emitAutoSaveInformation()">
-        <span matSuffix>pcs</span>
-      </mat-form-field>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Defect phenomenon (Major classification)'"
-        [options]="dcdOption1" [(myControl)]="dcdForm1"
-        (myControlChange)="onChangeAutoComplete2($event,'ng','value1'); onChangeDcd1();emitAutoSaveInformation()"></app-autocomplete2>
-
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Defect details classification (5M1E)'"
-        [options]="m1eOption1" [(myControl)]="m1eForm1"
-        (myControlChange)="onChangeAutoComplete2($event,'ng','value2'); onChangeM1e1();emitAutoSaveInformation()"></app-autocomplete2>
-
-    </div>
-  </div>
-
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Not accepted</mat-label>
-        <input matInput type="number" [(ngModel)]="reportInformation.notAccepted.qty"
-          (blur)="emitAutoSaveInformation()">
-        <span matSuffix>pcs</span>
-      </mat-form-field>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100"
-        [title]="'Detailed phenomenon (Middle classification)'" [options]="dcdOption2" [(myControl)]="dcdForm2"
-        (myControlChange)="onChangeAutoComplete2($event,'notAccepted','value1');onChangeDcd2();emitAutoSaveInformation()"></app-autocomplete2>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-
-
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Defect cause classification (5M1E)'"
-        [options]="m1eOption2" [(myControl)]="m1eForm2"
-        (myControlChange)="onChangeAutoComplete2($event,'notAccepted','value2'); onChangeM1e2();emitAutoSaveInformation()"></app-autocomplete2>
-
-    </div>
-  </div>
-
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">No abnormality</mat-label>
-        <input matInput type="number" [(ngModel)]="reportInformation.noAbnormality.qty"
-          (blur)="emitAutoSaveInformation()">
-        <span matSuffix>pcs</span>
-      </mat-form-field>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Cause (Minor classification)'"
-        [options]="dcdOption3" [(myControl)]="dcdForm3"
-        (myControlChange)="onChangeAutoComplete2($event,'noAbnormality','value1'); onChangeDcd3();emitAutoSaveInformation()"></app-autocomplete2>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Rule 3-principle ※ Occurrence'"
-        [options]="principleOption1" [(myControl)]="principleForm1"
-        (myControlChange)="onChangeAutoComplete2($event,'noAbnormality','value2'); onChangePrinciple1();emitAutoSaveInformation()"></app-autocomplete2>
-
-    </div>
-  </div>
-
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Within spec</mat-label>
-        <input matInput type="number" [(ngModel)]="reportInformation.withinSpec.qty" (blur)="emitAutoSaveInformation()">
-        <span matSuffix>pcs</span>
-      </mat-form-field>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Occurrence process category'"
-        [options]="lcdOption1" [(myControl)]="lcdForm1"
-        (myControlChange)="onChangeAutoComplete2($event,'withinSpec','value1'); onChangeLcd1();emitAutoSaveInformation()"></app-autocomplete2>
-
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-
-
-
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Rule 3-principle ※ Outflow'"
-        [options]="principleOption2" [(myControl)]="principleForm2"
-        (myControlChange)="onChangeAutoComplete2($event,'withinSpec','value2'); onChangePrinciple2();emitAutoSaveInformation()"></app-autocomplete2>
-
-    </div>
-  </div>
-
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Not recurred</mat-label>
-        <input matInput type="number" [(ngModel)]="reportInformation.notRecurred.qty"
-          (blur)="emitAutoSaveInformation()">
-        <span matSuffix>pcs</span>
-      </mat-form-field>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Occurrence process category details'"
-        [options]="lcdOption2" [(myControl)]="lcdForm2"
-        (myControlChange)="onChangeAutoComplete2($event,'notRecurred','value1'); onChangeLcd2();emitAutoSaveInformation()"></app-autocomplete2>
-
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">IATF no.</mat-label>
-        <input matInput [(ngModel)]="reportInformation.notRecurred.value2" (blur)="emitAutoSaveInformation()">
-      </mat-form-field>
-    </div>
+    <app-sub-title fxFlex="100" [title]="'Report Information'" class="mt-20 mb-2"></app-sub-title>
   </div>
 
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Difference between Report and Real cause</mat-label>
-        <input matInput type="number" [(ngModel)]="reportInformation.difference.qty" (blur)="emitAutoSaveInformation()">
-        <span matSuffix>pcs</span>
-      </mat-form-field>
-    </div>
-    <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
 
-      <app-autocomplete2 *ngIf="refreshAutocomplete" fxFlex="100" [title]="'Maker name'" [options]="scdOption1"
-        [(myControl)]="scdForm1"
-        (myControlChange)="onChangeAutoComplete2($event,'difference','value1'); emitAutoSaveInformation()"></app-autocomplete2>
+
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <h1 hidden>REPORT INFORMATION</h1>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"
+      fxLayoutAlign.gt-sm="space-between stretch" class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">NG</mat-label>
+          <input matInput type="number" [(ngModel)]="reportInformation.ng.qty" (blur)="emitAutoSaveInformation()">
+          <span matSuffix>pcs</span>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <app-autocomplete3 fxFlex="100" [title]="'Defect phenomenon (Major classification)'" [options]="dcdOption1"
+          [(myControl)]="dcdForm1"
+          (myControlChange)="onChangeAutoComplete3($event,'ng','value1'); onChangeDcd1(); "></app-autocomplete3>
+
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+
+        <app-autocomplete3 fxFlex="100" [title]="'Defect details classification (5M1E)'" [options]="m1eOption1"
+          [(myControl)]="m1eForm1"
+          (myControlChange)="onChangeAutoComplete3($event,'ng','value2'); onChangeM1e1();"></app-autocomplete3>
+
+      </div>
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Not accepted</mat-label>
+          <input matInput type="number" [(ngModel)]="reportInformation.notAccepted.qty"
+            (blur)="emitAutoSaveInformation()">
+          <span matSuffix>pcs</span>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+
+        <app-autocomplete3 fxFlex="100" [title]="'Detailed phenomenon (Middle classification)'" [options]="dcdOption2"
+          [(myControl)]="dcdForm2"
+          (myControlChange)="onChangeAutoComplete3($event,'notAccepted','value1');onChangeDcd2();"></app-autocomplete3>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+
+
+        <app-autocomplete3 fxFlex="100" [title]="'Defect cause classification (5M1E)'" [options]="m1eOption2"
+          [(myControl)]="m1eForm2"
+          (myControlChange)="onChangeAutoComplete3($event,'notAccepted','value2'); onChangeM1e2();"></app-autocomplete3>
+
+      </div>
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">No abnormality</mat-label>
+          <input matInput type="number" [(ngModel)]="reportInformation.noAbnormality.qty"
+            (blur)="emitAutoSaveInformation()">
+          <span matSuffix>pcs</span>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+
+        <app-autocomplete3 fxFlex="100" [title]="'Cause (Minor classification)'" [options]="dcdOption3"
+          [(myControl)]="dcdForm3"
+          (myControlChange)="onChangeAutoComplete3($event,'noAbnormality','value1'); onChangeDcd3();"></app-autocomplete3>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+
+        <app-autocomplete3 fxFlex="100" [title]="'Rule 3-principle ※ Occurrence'" [options]="principleOption1"
+          [(myControl)]="principleForm1"
+          (myControlChange)="onChangeAutoComplete3($event,'noAbnormality','value2'); onChangePrinciple1();"></app-autocomplete3>
+
+      </div>
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Within spec</mat-label>
+          <input matInput type="number" [(ngModel)]="reportInformation.withinSpec.qty"
+            (blur)="emitAutoSaveInformation()">
+          <span matSuffix>pcs</span>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+
+        <app-autocomplete3 fxFlex="100" [title]="'Occurrence process category'" [options]="lcdOption1"
+          [(myControl)]="lcdForm1"
+          (myControlChange)="onChangeAutoComplete3($event,'withinSpec','value1'); onChangeLcd1();3"></app-autocomplete3>
+
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+
+
+
+        <app-autocomplete3 fxFlex="100" [title]="'Rule 3-principle ※ Outflow'" [options]="principleOption2"
+          [(myControl)]="principleForm2"
+          (myControlChange)="onChangeAutoComplete3($event,'withinSpec','value2'); onChangePrinciple2();"></app-autocomplete3>
+
+      </div>
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Not recurred</mat-label>
+          <input matInput type="number" [(ngModel)]="reportInformation.notRecurred.qty"
+            (blur)="emitAutoSaveInformation()">
+          <span matSuffix>pcs</span>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+
+        <app-autocomplete3 fxFlex="100" [title]="'Occurrence process category details'" [options]="lcdOption2"
+          [(myControl)]="lcdForm2"
+          (myControlChange)="onChangeAutoComplete3($event,'notRecurred','value1'); onChangeLcd2();"></app-autocomplete3>
+
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">IATF no.</mat-label>
+          <input matInput [(ngModel)]="reportInformation.notRecurred.value2" (blur)="emitAutoSaveInformation()">
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Difference between Report and Real cause</mat-label>
+          <input matInput type="number" [(ngModel)]="reportInformation.difference.qty"
+            (blur)="emitAutoSaveInformation()">
+          <span matSuffix>pcs</span>
+        </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <app-autocomplete3 fxFlex="100" [title]="'Maker name'" [options]="scdOption1" [(myControl)]="scdForm1"
+          (myControlChange)="onChangeAutoComplete3($event,'difference','value1'); "></app-autocomplete3>
+      </div>
+
+    </div>
+
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Caused by Customer </mat-label>
+          <input matInput [(ngModel)]="reportInformation.causeByCustomer" (blur)="emitAutoSaveInformation()">
+          <span matSuffix>pcs</span>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-8'">
+        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
+          <mat-label class="mat-label-custom">Out of Warranty by Customer </mat-label>
+          <input matInput [(ngModel)]="reportInformation.outWarranty" (blur)="emitAutoSaveInformation()">
+          <span matSuffix>pcs</span>
+        </mat-form-field>
+      </div>
     </div>
 
   </div>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Caused by Customer </mat-label>
-        <input matInput [(ngModel)]="reportInformation.causeByCustomer" (blur)="emitAutoSaveInformation()">
-        <span matSuffix>pcs</span>
-      </mat-form-field>
-    </div>
-  </div>
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Out of Warranty by Customer </mat-label>
-        <input matInput [(ngModel)]="reportInformation.outWarranty" (blur)="emitAutoSaveInformation()">
-        <span matSuffix>pcs</span>
-      </mat-form-field>
-    </div>
-  </div>
-  <!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Root cause </mat-label>
-        <input matInput [(ngModel)]="reportInformation.rootCause" (blur)="emitAutoSaveInformation()">
-      </mat-form-field>
-    </div>
-  </div> -->
 
   <ng-container *ngFor="let cause of reportInformation.causes; let i=index">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+      class="mt-1">
 
-      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+      <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-1'">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Cause</mat-label>
           <mat-select [(ngModel)]="cause.cause.value1">
+            <mat-option [value]="null"></mat-option>
             <mat-option *ngFor="let option of causeOption1" [value]="option">
               {{option}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+      <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-1'">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom"></mat-label>
           <mat-select [(ngModel)]="cause.cause.value2">
+            <mat-option [value]="null"></mat-option>
             <mat-option *ngFor="let option of causeOption2" [value]="option">
               {{option}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-4'">
+      <div fxFlex="100" fxFlex.gt-md="15" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-4'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom"> </mat-label>
           <input matInput [(ngModel)]="cause.cause.value3">
         </mat-form-field>
       </div>
 
-      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+      <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-1'">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Action</mat-label>
           <mat-select [(ngModel)]="cause.action.value1">
+            <mat-option [value]="null"></mat-option>
             <mat-option *ngFor="let option of actionOption1" [value]="option">
               {{option}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+      <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-1'">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom"></mat-label>
           <mat-select [(ngModel)]="cause.action.value2">
+            <mat-option [value]="null"></mat-option>
             <mat-option *ngFor="let option of actionOption2" [value]="option">
               {{option}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+      <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-1'">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom"></mat-label>
           <mat-select [(ngModel)]="cause.action.value3">
+            <mat-option [value]="null"></mat-option>
             <mat-option *ngFor="let option of actionOption3" [value]="option">
               {{option}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="15" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-1'">
+      <div fxFlex="100" fxFlex.gt-md="15" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+        [ngClass.gt-md]="'me-1'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom"> </mat-label>
           <input matInput [(ngModel)]="cause.action.value4">
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="10" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+      <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
         <app-date-picker-custom fxFlex="100" [title]="'Effective date'"
           [(date)]="cause.action.date"></app-date-picker-custom>
       </div>
@@ -622,105 +682,12 @@
     </div>
   </ng-container>
 
-  <!-- <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Leak cause </mat-label>
-        <input matInput [(ngModel)]="reportInformation.leakCause" (blur)="emitAutoSaveInformation()">
-      </mat-form-field>
-    </div>
-  </div>
-
-  <ng-container *ngFor="let leakCauseAction of reportInformation.leakCauseActions; let i=index">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Leak cause action </mat-label>
-          <input matInput [(ngModel)]="leakCauseAction.value" (blur)="emitAutoSaveInformation()">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-        <app-date-picker-custom fxFlex="100" [title]="'Effective date'" [(date)]="leakCauseAction.date"
-          (dateChange)="emitAutoSaveInformation()"></app-date-picker-custom>
-      </div>
-    </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="reportInformation.leakCauseActions.length== i+1 " mat-icon-button color="primary"
-        style="margin-top: 10px;" (click)="onAddNewLeakCauseAction()"><mat-icon>add</mat-icon>
-      </button>
-
-    </div>
-  </ng-container>
-
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Internal root cause </mat-label>
-        <input matInput [(ngModel)]="reportInformation.internal" (blur)="emitAutoSaveInformation()">
-      </mat-form-field>
-    </div>
-  </div>
-
-
-  <ng-container *ngFor="let internalAction of reportInformation.internalActions; let i=index">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Internal root cause action </mat-label>
-          <input matInput [(ngModel)]="internalAction.value">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-        <app-date-picker-custom fxFlex="100" [title]="'Effective date'" [(date)]="internalAction.date"
-          (dateChange)="emitAutoSaveInformation()"></app-date-picker-custom>
-      </div>
-    </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="reportInformation.internalActions.length== i+1 " mat-icon-button color="primary"
-        style="margin-top: 10px;" (click)="onAddNewInternalCauseAction()"><mat-icon>add</mat-icon>
-      </button>
-
-    </div>
-  </ng-container>
-
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" class>
-      <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-        <mat-label class="mat-label-custom">Internal leak cause </mat-label>
-        <input matInput [(ngModel)]="reportInformation.internalLeak" (blur)="emitAutoSaveInformation()">
-      </mat-form-field>
-    </div>
-  </div>
-
-
-  <ng-container *ngFor="let internalLeakAction of reportInformation.internalLeakActions; let i=index">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <div fxFlex="100" fxFlex.gt-md="52" fxLayout="row wrap" fxLayoutAlign="start stretch" [ngClass.gt-md]="'me-8'">
-        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Internal leak cause action </mat-label>
-          <input matInput [(ngModel)]="internalLeakAction.value" (blur)="emitAutoSaveInformation()">
-        </mat-form-field>
-      </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-        <app-date-picker-custom fxFlex="100" [title]="'Effective date'" [(date)]="internalLeakAction.date"
-          (dateChange)="emitAutoSaveInformation()"></app-date-picker-custom>
-      </div>
-    </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center center">
-      <button *ngIf="reportInformation.internalLeakActions.length== i+1 " mat-icon-button color="primary"
-        style="margin-top: 10px;" (click)="onAddNewInternalLeakCauseAction()"><mat-icon>add</mat-icon>
-      </button>
-
-    </div>
-  </ng-container> -->
-
-
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mt-1 pe-8">
-    <button mat-raised-button color="primary" (click)="onSaveReportInformation()" class="btn-file btn-radius"
+    <button mat-raised-button (click)="onSaveReportInformation()" class="btn-file btn-radius btn-save"
       style="margin-right: 10px;">
       <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
         <span>
-          Save
+          Save Report Information
         </span>
         <mat-icon class="mat-18">save</mat-icon>
       </div>

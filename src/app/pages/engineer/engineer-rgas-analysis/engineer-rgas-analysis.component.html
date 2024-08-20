@@ -28,9 +28,10 @@
       <app-form4 fxFlex="100" [(form4)]="form4" (form4Change)="form4_Change($event)"
         (autoSaveDocChange)="form4_autoSaveDocChange($event)"></app-form4>
     </div>
-    <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-8">
-      <button mat-raised-button color="primary" (click)="onFinish()" class="btn-success btn-radius"
-        style="margin-right: 10px;">
+    <mat-divider fxFlex="100" class="mt-20"></mat-divider>
+    <div *ngIf="form" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-28">
+      <button mat-raised-button (click)="onFinish()" class="btn-success btn-radius"
+        style="margin-right: 10px;padding: 0.2rem 9rem; font-size: 1.2rem;">
         <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
           <span>
             Finish
@@ -39,6 +40,5 @@
         </div>
       </button>
     </div>
-
   </ng-container>
 </div>

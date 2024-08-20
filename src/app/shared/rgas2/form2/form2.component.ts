@@ -218,7 +218,7 @@ export class Form2Component implements OnInit {
 
   // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
-    if (option._id && value._id) {
+    if (option?._id && value?._id) {
       return option._id === value._id;
     }
     return false

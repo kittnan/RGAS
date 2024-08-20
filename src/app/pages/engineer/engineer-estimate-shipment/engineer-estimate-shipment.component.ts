@@ -16,15 +16,28 @@ export class EngineerEstimateShipmentComponent implements OnInit {
   displayedColumns: string[] = [];
   columns: any = []
   dataSource = new MatTableDataSource([])
+  yearSelect: number | string = '2024'
+
+  monthOption: any = []
+  monthAllSelect: boolean = false
   constructor(
     private $model: HttpModelsService,
-    private $estimate: HttpEstimateShipmentService
+    private $estimate: HttpEstimateShipmentService,
   ) { }
 
   async ngOnInit(): Promise<void> {
     try {
       let resModels: any = await lastValueFrom(this.$model.get(new HttpParams()))
-      let months: any = await this.generateMonthsArray()
+      let resDataOfYear: any = await lastValueFrom(this.$estimate.get(new HttpParams().set('year', this.yearSelect)))
+      console.log("🚀 ~ resDataOfYear:", resDataOfYear)
+      let monthOption: any = await this.generateMonthsArray()
+      this.monthOption = monthOption.map((month: any) => {
+        return {
+          month: month,
+          value: false
+        }
+      })
+      let months: any = await this.generateMonthsArray('Jan')
       this.columns = [
         {
           columnDef: 'Model',
@@ -100,6 +113,13 @@ export class EngineerEstimateShipmentComponent implements OnInit {
           year: moment().format('YYYY')
         }
       })
+      body = body.map((item: any) => {
+        let it = resDataOfYear.find((item2: any) => item2.Model == item.Model)
+        if (it) {
+          return it
+        }
+        return item
+      })
       this.dataSource = new MatTableDataSource(body)
     } catch (error) {
       console.log("🚀 ~ error:", error)
@@ -107,19 +127,24 @@ export class EngineerEstimateShipmentComponent implements OnInit {
     }
   }
 
-  generateMonthsArray() {
+  generateMonthsArray(select: string | null = null) {
     return new Promise(resolve => {
       let month: any[] = []
       const startOfYear = moment().startOf('year');
       for (let i = 0; i < 12; i++) {
-        month.push(startOfYear.clone().add(i, 'months').format('MMM-YY'));
+        if (select) {
+          if (startOfYear.clone().add(i, 'months').format('MMM') == select) {
+            month.push(startOfYear.clone().add(i, 'months').format('MMM-YY'));
+          }
+        } else {
+          month.push(startOfYear.clone().add(i, 'months').format('MMM-YY'));
+        }
       }
       resolve(month)
     })
   }
 
-  async foo(row: any, col: any) {
-    console.log(row, col);
+  async onSubmit(row: any, col: any) {
     await lastValueFrom(this.$estimate.createOrUpdate([row]))
   }
 

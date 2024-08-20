@@ -61,3 +61,12 @@
   color: rgb(90, 190, 90);
 
 }
+
+.mat-table-custom{
+  height: 70vh;
+  width: 100%;
+  overflow: auto;
+}
+.mat-table-custom > table{
+  width: 100%;
+}

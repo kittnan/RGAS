@@ -1,22 +1,15 @@
 <div fxLayout="row wrap" fxLayoutAlign="center stretch" class="mt-2 mb-4">
   <div *ngIf="form2" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" class="mt-1">
-    <app-sub-title fxFlex="100" [title]="'Analysis Result'" class="mt-2 mb-2"></app-sub-title>
+    <app-sub-title fxFlex="100" [title]="'Analysis Result'" class="mt-20 mb-2"></app-sub-title>
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="10">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start start">
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="100" fxLayout="row wrap" fxLayoutAlign="start start"
+        fxLayoutAlign.gt-sm="space-between stretch">
 
-        <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="100" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <app-date-picker-custom fxFlex="100" [title]="'Part Receive Date'" [(date)]="form2.partReceivingDate"
             (dateChange)="emitAutoSave()"></app-date-picker-custom>
-          <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label class="mat-label-custom">Part Receive Date</mat-label>
-            <input matInput [matDatepicker]="partReceiveDate_dp" [(ngModel)]="form2.partReceivingDate">
-            <mat-datepicker-toggle matSuffix [for]="partReceiveDate_dp"></mat-datepicker-toggle>
-            <mat-datepicker #partReceiveDate_dp></mat-datepicker>
-          </mat-form-field> -->
-
         </div>
-        <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
-
+        <div fxFlex="100" fxFlex.gt-md="100" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">PIC</mat-label>
             <mat-select [compareWith]="objectComparisonFunction" [(ngModel)]="form2.PIC" (blur)="emitAutoSave()">
@@ -27,19 +20,19 @@
           </mat-form-field>
 
         </div>
-        <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="100" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">RGA No.</mat-label>
             <input matInput [(ngModel)]="form2.rgaNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="100" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">KTC Analysis Result</mat-label>
             <input matInput [(ngModel)]="form2.ktcAnalysisResult" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="100" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Other</mat-label>
             <textarea matInput [rows]="3" [(ngModel)]="form2.ktcAnalysisResultOther" (blur)="emitAutoSave()"></textarea>
@@ -198,8 +191,9 @@
         </div>
       </div>
     </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="20">
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+      fxLayoutGap.gt-md="20">
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Appearance Check Result </mat-label>
           <mat-select [(ngModel)]="form2.appearance.result" (blur)="emitAutoSave()">
@@ -209,7 +203,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Analysis By</mat-label>
           <mat-select [(ngModel)]="form2.appearance.analysisBy" [compareWith]="objectComparisonFunction"
@@ -220,20 +214,13 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <app-date-picker-custom fxFlex="100" [title]="'Analysis Date'" [(date)]="form2.appearance.analysisDate"
           (dateChange)="emitAutoSave()"></app-date-picker-custom>
-        <!--
-        <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form2.appearance.analysisDate" [matDatepicker]="appearance_dp">
-          <mat-datepicker-toggle matSuffix [for]="appearance_dp"></mat-datepicker-toggle>
-          <mat-datepicker #appearance_dp></mat-datepicker>
-        </mat-form-field> -->
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="appearanceFile.click()"
-          class="btn-file btn-radius">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start center">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+          (click)="appearanceFile.click()" class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -242,7 +229,7 @@
           </div>
           <input type="file" hidden #appearanceFile (change)="onUploadFile($event,'appearance')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
           (click)="openBottom(form2.appearance.files,'appearance')" class="btn-file btn-radius"
           [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -254,7 +241,7 @@
           </div>
         </button>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Function Check Result </mat-label>
           <mat-select [(ngModel)]="form2.function.result" (blur)="emitAutoSave()">
@@ -264,7 +251,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Analysis By</mat-label>
           <mat-select [(ngModel)]="form2.function.analysisBy" [compareWith]="objectComparisonFunction"
@@ -275,20 +262,13 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <app-date-picker-custom fxFlex="100" [title]="'Analysis Date'" [(date)]="form2.function.analysisDate"
           (dateChange)="emitAutoSave()"></app-date-picker-custom>
-
-        <!-- <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form2.function.analysisDate" [matDatepicker]="function_dp">
-          <mat-datepicker-toggle matSuffix [for]="function_dp"></mat-datepicker-toggle>
-          <mat-datepicker #function_dp></mat-datepicker>
-        </mat-form-field> -->
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="functionFile.click()"
-          class="btn-file btn-radius">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+          (click)="functionFile.click()" class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -297,8 +277,8 @@
           </div>
           <input type="file" hidden #functionFile (change)="onUploadFile($event,'function')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.function.files,'function')"
-          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
+          (click)="openBottom(form2.function.files,'function')" class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -307,7 +287,7 @@
           </div>
         </button>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Electrical Value Check Result </mat-label>
           <mat-select [(ngModel)]="form2.electrical.result" (blur)="emitAutoSave()">
@@ -317,7 +297,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Analysis By</mat-label>
           <mat-select [(ngModel)]="form2.electrical.analysisBy" [compareWith]="objectComparisonFunction"
@@ -328,20 +308,13 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <app-date-picker-custom fxFlex="100" [title]="'Analysis Date'" [(date)]="form2.electrical.analysisDate"
           (dateChange)="emitAutoSave()"></app-date-picker-custom>
-
-        <!-- <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form2.electrical.analysisDate" [matDatepicker]="electrical_dp">
-          <mat-datepicker-toggle matSuffix [for]="electrical_dp"></mat-datepicker-toggle>
-          <mat-datepicker #electrical_dp></mat-datepicker>
-        </mat-form-field> -->
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="electricalFile.click()"
-          class="btn-file btn-radius">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+          (click)="electricalFile.click()" class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -350,7 +323,7 @@
           </div>
           <input type="file" hidden #electricalFile (change)="onUploadFile($event,'electrical')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
           (click)="openBottom(form2.electrical.files,'electrical')" class="btn-file btn-radius"
           [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -362,7 +335,7 @@
           </div>
         </button>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Disassembly Check Result </mat-label>
           <mat-select [(ngModel)]="form2.disassembly.result" (blur)="emitAutoSave()">
@@ -373,7 +346,7 @@
         </mat-form-field>
 
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Analysis By</mat-label>
           <mat-select [(ngModel)]="form2.disassembly.analysisBy" [compareWith]="objectComparisonFunction"
@@ -384,20 +357,13 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <app-date-picker-custom fxFlex="100" [title]="'Analysis Date'" [(date)]="form2.disassembly.analysisDate"
           (dateChange)="emitAutoSave()"></app-date-picker-custom>
-
-        <!-- <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form2.disassembly.analysisDate" [matDatepicker]="disassembly_dp">
-          <mat-datepicker-toggle matSuffix [for]="disassembly_dp"></mat-datepicker-toggle>
-          <mat-datepicker #disassembly_dp></mat-datepicker>
-        </mat-form-field> -->
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="disassemblyFile.click()"
-          class="btn-file btn-radius">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+          (click)="disassemblyFile.click()" class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -406,7 +372,7 @@
           </div>
           <input type="file" hidden #disassemblyFile (change)="onUploadFile($event,'disassembly')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
           (click)="openBottom(form2.disassembly.files,'disassembly')" class="btn-file btn-radius"
           [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -418,7 +384,7 @@
           </div>
         </button>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Microscope Check Result </mat-label>
           <mat-select [(ngModel)]="form2.microscope.result" (blur)="emitAutoSave()">
@@ -428,7 +394,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Analysis By</mat-label>
           <mat-select [(ngModel)]="form2.microscope.analysisBy" [compareWith]="objectComparisonFunction"
@@ -439,20 +405,13 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <app-date-picker-custom fxFlex="100" [title]="'Analysis Date'" [(date)]="form2.microscope.analysisDate"
           (dateChange)="emitAutoSave()"></app-date-picker-custom>
-
-        <!-- <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Analysis Date</mat-label>
-          <input matInput [(ngModel)]="form2.microscope.analysisDate" [matDatepicker]="microscope_dp">
-          <mat-datepicker-toggle matSuffix [for]="microscope_dp"></mat-datepicker-toggle>
-          <mat-datepicker #microscope_dp></mat-datepicker>
-        </mat-form-field> -->
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="microscopeFile.click()"
-          class="btn-file btn-radius">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+          (click)="microscopeFile.click()" class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -461,7 +420,7 @@
           </div>
           <input type="file" hidden #microscopeFile (change)="onUploadFile($event,'microscope')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
           (click)="openBottom(form2.microscope.files,'microscope')" class="btn-file btn-radius"
           [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -474,21 +433,21 @@
         </button>
       </div>
 
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Technical Analysis Result </mat-label>
           <input matInput [(ngModel)]="form2.technical.result" (blur)="emitAutoSave()">
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Analysis Report No.</mat-label>
           <input matInput [(ngModel)]="form2.technical.analysisReportNo" (blur)="emitAutoSave()">
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="technicalFile.click()"
-          class="btn-file btn-radius">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+          (click)="technicalFile.click()" class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -497,8 +456,9 @@
           </div>
           <input type="file" hidden #technicalFile (change)="onUploadFile($event,'technical')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.technical.files,'technical')"
-          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
+          (click)="openBottom(form2.technical.files,'technical')" class="btn-file btn-radius"
+          [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -507,9 +467,9 @@
           </div>
         </button>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch"></div>
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"></div>
 
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">Supplier Analysis Result </mat-label>
           <mat-select [(ngModel)]="form2.supplier.result" (blur)="emitAutoSave()">
@@ -519,9 +479,9 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button color="accent" (click)="supplierFile.click()"
-          class="btn-file btn-radius">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button color="accent"
+          (click)="supplierFile.click()" class="btn-file btn-radius">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               Files
@@ -530,8 +490,8 @@
           </div>
           <input type="file" hidden #supplierFile (change)="onUploadFile($event,'supplier')">
         </button>
-        <button fxFlex="100" fxFlex.gt-md="45" mat-raised-button (click)="openBottom(form2.supplier.files,'supplier')"
-          class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
+        <button fxFlex="100" fxFlex.gt-md="45" fxFlex.gt-sm="45" mat-raised-button
+          (click)="openBottom(form2.supplier.files,'supplier')" class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
           <div fxLayout="row wrap" fxLayoutAlign="center center">
             <span>
               View
@@ -540,24 +500,17 @@
           </div>
         </button>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">FAR / PNN Number </mat-label>
           <input matInput [(ngModel)]="form2.supplier.farPnnNumber" (blur)="emitAutoSave()">
         </mat-form-field>
       </div>
-      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <app-date-picker-custom fxFlex="100" [title]="'Issue Date'" [(date)]="form2.supplier.issueDate"
           (dateChange)="emitAutoSave()"></app-date-picker-custom>
-
-        <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Issue Date</mat-label>
-          <input matInput [(ngModel)]="form2.supplier.issueDate" [matDatepicker]="supplierIssueDate_dp">
-          <mat-datepicker-toggle matSuffix [for]="supplierIssueDate_dp"></mat-datepicker-toggle>
-          <mat-datepicker #supplierIssueDate_dp></mat-datepicker>
-        </mat-form-field> -->
       </div>
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+      <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label class="mat-label-custom">KTC Judgment </mat-label>
           <mat-select [(ngModel)]="form2.ktcJudgment" (blur)="emitAutoSave()">
@@ -572,23 +525,14 @@
     </div>
 
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mt-1 pe-8">
-      <button mat-raised-button color="primary" (click)="onSave()" class="btn-success btn-radius"
-        style="margin-right: 10px;">
+      <button mat-raised-button (click)="onSave()" class="btn-success btn-radius btn-save" style="margin-right: 10px;">
         <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
           <span>
-            Save
+            Save Analysis Result
           </span>
           <mat-icon class="mat-18">save</mat-icon>
         </div>
       </button>
-      <!-- <button mat-raised-button color="primary" (click)="onSubmit()">
-        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
-          <span>
-            Submit
-          </span>
-          <mat-icon class="mat-18">done_all</mat-icon>
-        </div>
-      </button> -->
     </div>
 
   </div>

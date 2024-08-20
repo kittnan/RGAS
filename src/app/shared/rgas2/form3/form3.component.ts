@@ -11,7 +11,6 @@ import { HttpUsersService } from 'src/app/https/http-users.service';
 
 import { FilesBottomComponent } from '../../files-bottom/files-bottom.component';
 import { FormControl } from '@angular/forms';
-import moment from 'moment';
 
 @Component({
   selector: 'app-form3',
@@ -190,13 +189,6 @@ export class Form3Component implements OnInit {
   @Output() autoSaveByKeyArrChange: EventEmitter<any> = new EventEmitter()
   @Output() autoSaveInformationChange: EventEmitter<any> = new EventEmitter()
 
-  // ngPhenomenonForm: FormControl = new FormControl()
-  // detailForm: FormControl = new FormControl()
-  // notAcceptedP: FormControl = new FormControl()
-
-
-  // todo test
-  refreshAutocomplete: boolean = true
   dcdForm1: FormControl = new FormControl('')
   dcdForm2: FormControl = new FormControl('')
   dcdForm3: FormControl = new FormControl('')
@@ -224,6 +216,8 @@ export class Form3Component implements OnInit {
   actionOption1: any = ['Customer', 'Internal']
   actionOption2: any = ['Root cause', 'Leak cause']
   actionOption3: any = ['KTC', 'Material']
+
+
   constructor(
     private _bottomSheet: MatBottomSheet,
     private $d_cd: HttpDCdService,
@@ -232,15 +226,10 @@ export class Form3Component implements OnInit {
     private $m1e: HttpM1eService,
     private $principle: HttpPrincipleService,
     private $user: HttpUsersService,
-    private http: HttpClient
   ) { }
 
   async ngOnInit(): Promise<void> {
     try {
-
-      let resData: any = await lastValueFrom(this.http.get("http://10.200.90.152:4012/date_masterGet"))
-      if (resData && resData.length > 0) {
-      }
 
       if (this.reportInformation) {
         this.dcdForm1.patchValue(this.reportInformation.ng.value1)
@@ -305,7 +294,6 @@ export class Form3Component implements OnInit {
       let userParam2 = new HttpParams().set('access', JSON.stringify(['operator']))
       this.PICOption = await lastValueFrom(this.$user.get(userParam2))
 
-      this.onRefreshAutocomplete()
 
     } catch (error) {
       console.log("🚀 ~ error:", error)
@@ -493,46 +481,37 @@ export class Form3Component implements OnInit {
   }
 
   // todo onChangeAutoComplete
-  // onChangeAutoComplete(event: any, key1: string, key2: string) {
-  //   // if (key1 && key2) {
-  //   //   this.reportInformation[key1][key2] = event
-  //   // } else {
-  //   //   this.reportInformation[key1] = event
-  //   // }
-  // }
-  onChangeAutoComplete2(event: FormControl, key1: string, key2: string) {
+  onChangeAutoComplete3(event: FormControl, key1: string, key2: string) {
     if (key1 && key2) {
       this.reportInformation[key1][key2] = event.value
     } else {
       this.reportInformation[key1] = event.value
     }
+    this.emitAutoSaveInformation()
   }
 
   onChangeDcd1() {
     try {
-
       if (this.dcdOption1.some((item: any) => item == this.dcdForm1.value)) {
         this.dcdOption2 = this.dcdOption.filter((item: any) => this.dcdForm1.value == item['Defect Phenomenon'])
         this.dcdOption2 = [...new Set(this.dcdOption2.map((item: any) => item['Detailed phenomenon']))].filter((item: any) => item)
 
         let value1 = this.dcdOption2.find((item: any) => item == this.dcdForm2.value) ? this.dcdForm2.value : ''
-        this.dcdForm2.patchValue(value1)
+        this.dcdForm2.patchValue(value1, { emitEvent: false })
 
 
         this.dcdOption3 = this.dcdOption.filter((item: any) => this.dcdForm1.value == item['Defect Phenomenon'])
         this.dcdOption3 = [...new Set(this.dcdOption3.map((item: any) => item['Cause']))].filter((item: any) => item)
 
         let value2 = this.dcdOption3.find((item: any) => item == this.dcdForm3.value) ? this.dcdForm3.value : ''
-        this.dcdForm3.patchValue(value2)
+        this.dcdForm3.patchValue(value2, { emitEvent: false })
 
-        this.onRefreshAutocomplete()
       }
-      if (this.dcdForm1.value.trim() == '' && this.dcdForm2.value.trim() == '' && this.dcdForm3.value.trim() == '') {
+      if (this.dcdForm1.value?.trim() == '' && this.dcdForm2.value?.trim() == '' && this.dcdForm3.value?.trim() == '') {
 
         this.dcdOption1 = [...new Set(this.dcdOption.map((item: any) => item['Defect Phenomenon']))].filter((item: any) => item)
         this.dcdOption2 = [...new Set(this.dcdOption.map((item: any) => item['Detailed phenomenon']))].filter((item: any) => item)
         this.dcdOption3 = [...new Set(this.dcdOption.map((item: any) => item['Cause']))].filter((item: any) => item)
-        this.onRefreshAutocomplete()
 
       }
 
@@ -551,22 +530,20 @@ export class Form3Component implements OnInit {
         this.dcdOption1 = [...new Set(this.dcdOption1.map((item: any) => item['Defect Phenomenon']))].filter((item: any) => item)
 
         let value1 = this.dcdOption1.find((item: any) => item == this.dcdForm1.value) ? this.dcdForm1.value : ''
-        this.dcdForm1.patchValue(value1)
+        this.dcdForm1.patchValue(value1, { emitEvent: false })
 
         this.dcdOption3 = this.dcdOption.filter((item: any) => this.dcdForm2.value == item['Detailed phenomenon'])
         this.dcdOption3 = [...new Set(this.dcdOption3.map((item: any) => item['Cause']))].filter((item: any) => item)
 
         let value2 = this.dcdOption3.find((item: any) => item == this.dcdForm3.value) ? this.dcdForm3.value : ''
-        this.dcdForm3.patchValue(value2)
+        this.dcdForm3.patchValue(value2, { emitEvent: false })
 
-        this.onRefreshAutocomplete()
       }
-      if (this.dcdForm1.value.trim() == '' && this.dcdForm2.value.trim() == '' && this.dcdForm3.value.trim() == '') {
+      if (this.dcdForm1.value?.trim() == '' && this.dcdForm2.value?.trim() == '' && this.dcdForm3.value?.trim() == '') {
 
         this.dcdOption1 = [...new Set(this.dcdOption.map((item: any) => item['Defect Phenomenon']))].filter((item: any) => item)
         this.dcdOption2 = [...new Set(this.dcdOption.map((item: any) => item['Detailed phenomenon']))].filter((item: any) => item)
         this.dcdOption3 = [...new Set(this.dcdOption.map((item: any) => item['Cause']))].filter((item: any) => item)
-        this.onRefreshAutocomplete()
 
       }
 
@@ -585,23 +562,21 @@ export class Form3Component implements OnInit {
 
 
         let value1 = this.dcdOption2.find((item: any) => item == this.dcdForm2.value) ? this.dcdForm2.value : ''
-        this.dcdForm2.patchValue(value1)
+        this.dcdForm2.patchValue(value1, { emitEvent: false })
 
         this.dcdOption1 = this.dcdOption.filter((item: any) => this.dcdForm3.value == item['Cause'])
         this.dcdOption1 = [...new Set(this.dcdOption1.map((item: any) => item['Defect Phenomenon']))].filter((item: any) => item)
 
         let value2 = this.dcdOption1.find((item: any) => item == this.dcdForm1.value) ? this.dcdForm1.value : ''
-        this.dcdForm1.patchValue(value2)
-        this.onRefreshAutocomplete()
+        this.dcdForm1.patchValue(value2, { emitEvent: false })
       }
 
 
-      if (this.dcdForm1.value.trim() == '' && this.dcdForm2.value.trim() == '' && this.dcdForm3.value.trim() == '') {
+      if (this.dcdForm1.value?.trim() == '' && this.dcdForm2.value?.trim() == '' && this.dcdForm3.value?.trim() == '') {
 
         this.dcdOption1 = [...new Set(this.dcdOption.map((item: any) => item['Defect Phenomenon']))].filter((item: any) => item)
         this.dcdOption2 = [...new Set(this.dcdOption.map((item: any) => item['Detailed phenomenon']))].filter((item: any) => item)
         this.dcdOption3 = [...new Set(this.dcdOption.map((item: any) => item['Cause']))].filter((item: any) => item)
-        this.onRefreshAutocomplete()
 
       }
 
@@ -619,17 +594,15 @@ export class Form3Component implements OnInit {
         this.lcdOption2 = [...new Set(this.lcdOption2.map((item: any) => item['Occurrence process category details']))].filter((item: any) => item)
 
         let value1 = this.lcdOption2.find((item: any) => item == this.lcdForm2.value) ? this.lcdForm2.value : ''
-        this.lcdForm2.patchValue(value1)
-        this.onRefreshAutocomplete()
+        this.lcdForm2.patchValue(value1, { emitEvent: false })
 
       }
 
 
-      if (this.lcdForm1.value.trim() == '' && this.lcdForm2.value.trim() == '') {
+      if (this.lcdForm1.value?.trim() == '' && this.lcdForm2.value?.trim() == '') {
 
         this.lcdOption1 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process category details']))]
         this.lcdOption2 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process category']))]
-        this.onRefreshAutocomplete()
 
       }
 
@@ -646,17 +619,15 @@ export class Form3Component implements OnInit {
 
 
         let value1 = this.lcdOption1.find((item: any) => item == this.lcdForm1.value) ? this.lcdForm1.value : ''
-        this.lcdForm1.patchValue(value1)
-        this.onRefreshAutocomplete()
+        this.lcdForm1.patchValue(value1, { emitEvent: false })
 
       }
 
 
-      if (this.lcdForm1.value.trim() == '' && this.lcdForm2.value.trim() == '') {
+      if (this.lcdForm1.value?.trim() == '' && this.lcdForm2.value?.trim() == '') {
 
         this.lcdOption1 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process category details']))]
         this.lcdOption2 = [...new Set(this.lcdOption.map((item: any) => item['Occurrence process category']))]
-        this.onRefreshAutocomplete()
 
       }
     } catch (error) {
@@ -674,15 +645,13 @@ export class Form3Component implements OnInit {
 
 
         let value1 = this.m1eOption2.find((item: any) => item == this.m1eForm2.value) ? this.m1eForm2.value : ''
-        this.m1eForm2.patchValue(value1)
-        this.onRefreshAutocomplete()
+        this.m1eForm2.patchValue(value1, { emitEvent: false })
       }
 
-      if (this.m1eForm1.value.trim() == '' && this.m1eForm2.value.trim() == '') {
+      if (this.m1eForm1.value?.trim() == '' && this.m1eForm2.value?.trim() == '') {
 
         this.m1eOption1 = [...new Set(this.m1eOption.map((item: any) => item['Details']))]
         this.m1eOption2 = [...new Set(this.m1eOption.map((item: any) => item['Cause']))]
-        this.onRefreshAutocomplete()
 
       }
     } catch (error) {
@@ -700,14 +669,12 @@ export class Form3Component implements OnInit {
 
 
         let value1 = this.m1eOption1.find((item: any) => item == this.m1eForm1.value) ? this.m1eForm1.value : ''
-        this.m1eForm1.patchValue(value1)
-        this.onRefreshAutocomplete()
+        this.m1eForm1.patchValue(value1, { emitEvent: false })
       }
 
-      if (this.m1eForm1.value.trim() == '' && this.m1eForm2.value.trim() == '') {
+      if (this.m1eForm1.value?.trim() == '' && this.m1eForm2.value?.trim() == '') {
         this.m1eOption1 = [...new Set(this.m1eOption.map((item: any) => item['Details']))]
         this.m1eOption2 = [...new Set(this.m1eOption.map((item: any) => item['Cause']))]
-        this.onRefreshAutocomplete()
 
       }
     } catch (error) {
@@ -725,14 +692,12 @@ export class Form3Component implements OnInit {
 
 
         let value1 = this.principleOption2.find((item: any) => item == this.principleForm2.value) ? this.principleForm2.value : ''
-        this.principleForm2.patchValue(value1)
-        this.onRefreshAutocomplete()
+        this.principleForm2.patchValue(value1, { emitEvent: false })
       }
 
-      if (this.principleForm1.value.trim() == '' && this.principleForm2.value.trim() == '') {
+      if (this.principleForm1.value?.trim() == '' && this.principleForm2.value?.trim() == '') {
         this.principleOption1 = [...new Set(this.principleOption.map((item: any) => item['Outflow cause(Leak cause)']))]
         this.principleOption2 = [...new Set(this.principleOption.map((item: any) => item['Total code']))]
-        this.onRefreshAutocomplete()
 
       }
 
@@ -752,14 +717,12 @@ export class Form3Component implements OnInit {
 
 
         let value1 = this.principleOption1.find((item: any) => item == this.principleForm1.value) ? this.principleForm1.value : ''
-        this.principleForm1.patchValue(value1)
-        this.onRefreshAutocomplete()
+        this.principleForm1.patchValue(value1, { emitEvent: false })
       }
 
-      if (this.principleForm1.value.trim() == '' && this.principleForm2.value.trim() == '') {
+      if (this.principleForm1.value?.trim() == '' && this.principleForm2.value?.trim() == '') {
         this.principleOption1 = [...new Set(this.principleOption.map((item: any) => item['Outflow cause(Leak cause)']))]
         this.principleOption2 = [...new Set(this.principleOption.map((item: any) => item['Total code']))]
-        this.onRefreshAutocomplete()
 
       }
 
@@ -767,12 +730,6 @@ export class Form3Component implements OnInit {
       console.log("🚀 ~ error:", error)
 
     }
-  }
-  onRefreshAutocomplete() {
-    this.refreshAutocomplete = false
-    setTimeout(() => {
-      this.refreshAutocomplete = true
-    }, 50);
   }
 
 

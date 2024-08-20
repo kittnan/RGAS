@@ -21,6 +21,7 @@ interface FILTER_OPTION {
   styleUrls: ['./rgas1.component.scss']
 })
 export class Rgas1Component implements OnInit {
+
   filterOption: FILTER_OPTION[] = [
     {
       value: 'claimNo',
@@ -69,7 +70,8 @@ export class Rgas1Component implements OnInit {
 
   displayedColumns: string[] = ['registerNo', 'no', 'docStatus', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'occurredLocation', 'defect', 'qty', 'lotNo', 'judgment', 'returnStyle'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
-
+  itemCount: number = 10
+  isLoading: boolean = false
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -85,32 +87,58 @@ export class Rgas1Component implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
-      let params: HttpParams = new HttpParams()
-      // params = new HttpParams().set('status', JSON.stringify(['receive information', 'wait approve', 'analysis']))
-      let resClaims = await lastValueFrom(this.$claim.getRgas1(params))
-      this.dataSource = new MatTableDataSource(resClaims.map((item: any, i: number) => {
-        let docStatus = 'Pending'
-        let document = item.document
-        if (document) {
-          if (document.apply == 'Need' && document.revise == 'Need' && document.verify == 'Need') {
-            docStatus = 'Closed'
-          }
-        }
-        item.docStatus = docStatus
-        return item
-      }))
-      setTimeout(() => {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      }, 300);
+      this.getData()
     } catch (error) {
       console.log("🚀 ~ error:", error)
 
     }
   }
 
+  async getData(sort: number = -1, skip: number = 0, limit: number = 10) {
+    this.isLoading = true
+    let params: HttpParams = new HttpParams()
+    params = params.set('sort', sort)
+    params = params.set('skip', skip)
+    params = params.set('limit', limit)
+    if (this.filterSelected) {
+      params = params.set(this.filterSelected, this.fillSearch)
+    }
+    let len = await lastValueFrom(this.$claim.getRgas1(params.set('len', 'y')))
+    let resClaims = await lastValueFrom(this.$claim.getRgas1(params.delete('len')))
+    this.dataSource = new MatTableDataSource(resClaims.map((item: any, i: number) => {
+      let docStatus = 'Pending'
+      let document = item.document
+      if (document) {
+        if (document.apply == 'Need' && document.revise == 'Need' && document.verify == 'Need') {
+          docStatus = 'Closed'
+        }
+      }
+      item.docStatus = docStatus
+      return item
+    }))
+    if (this.dataSource) {
+      setTimeout(() => {
+        this.dataSource.sort = this.sort;
+        if (len && len.length > 0) {
+          const count = len[0]['count']
+          this.itemCount = count
+        }
+        this.isLoading = false;
+
+      }, 300);
+    }
+  }
+
+  async onPageChange(e: any) {
+    let skip = e.pageIndex * e.pageSize
+    this.getData(-1, skip, e.pageSize)
+  }
+
+
   // todo onSearchSelect
   onSearchSelect() {
+    console.log('foo');
+
     this.fillSearch = ''
     if (this.filterSelected == 'claimMonth') {
       this.placeholder = 'MM-YYYY -> 02-2024'
@@ -120,17 +148,19 @@ export class Rgas1Component implements OnInit {
   // todo search by option
   async onSearchSubmit() {
     try {
-      if (this.filterSelected && this.fillSearch) {
-        let params: HttpParams = new HttpParams()
-        params = new HttpParams().set('status', JSON.stringify(['receive information', 'wait approve', 'analysis']))
-        params = params.set(this.filterSelected, this.fillSearch)
-        const resData = await lastValueFrom(this.$claim.getRgas1(params))
-        this.dataSource = new MatTableDataSource(resData)
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        }, 300);
-      }
+      // if (this.filterSelected) {
+      //   let params: HttpParams = new HttpParams()
+      //   params = new HttpParams().set('status', JSON.stringify(['receive information', 'wait approve', 'analysis']))
+      //   params = params.set(this.filterSelected, this.fillSearch)
+      //   const resData = await lastValueFrom(this.$claim.getRgas1(params))
+      //   this.dataSource = new MatTableDataSource(resData)
+      //   setTimeout(() => {
+      //     this.dataSource.paginator = this.paginator;
+      //     this.dataSource.sort = this.sort;
+      //   }, 300);
+      // }
+      this.getData()
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }

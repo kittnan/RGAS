@@ -1,9 +1,10 @@
 <div class="flex flex-wrap justify-center items-start w-full mt-1">
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-    <app-sub-title fxFlex="100" [title]="'Document & Verify result'" class="mt-2 mb-2"></app-sub-title>
+    <app-sub-title fxFlex="100" [title]="'Document & Verify result'" class="mt-20 mb-2"></app-sub-title>
   </div>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+    fxLayoutGap.gt-md="30">
 
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="p-2 rounded-md">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -14,7 +15,7 @@
       </div>
     </div>
 
-    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-md="24" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Revised FMEA</mat-label>
         <mat-select [(ngModel)]="form4.revise" (ngModelChange)="onChangeRevise();" (blur)="emitAutoSaveDoc();">
@@ -25,13 +26,13 @@
       </mat-form-field>
     </div>
 
-    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-md="24" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <app-date-picker-custom fxFlex="100" [title]="'Due date to revise FMEA'" [(date)]="form4.reviseDueDate"
         (dateChange)="emitAutoSaveDoc()"></app-date-picker-custom>
 
     </div>
 
-    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-md="24" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <app-date-picker-custom fxFlex="100" [title]="'FMEA revised date'" [(date)]="form4.reviseDate"
         (dateChange)="emitAutoSaveDoc()"></app-date-picker-custom>
 
@@ -39,7 +40,8 @@
 
   </div>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+    fxLayoutGap.gt-md="30">
 
     <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="p-2 rounded-md">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
@@ -50,10 +52,10 @@
       </div>
     </div>
 
-    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-md="24" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Verify process</mat-label>
-        <mat-select [(ngModel)]="form4.verify"  (blur)="emitAutoSaveDoc();">
+        <mat-select [(ngModel)]="form4.verify" (blur)="emitAutoSaveDoc();">
           <mat-option *ngFor="let option of options1" [value]="option">
             {{option}}
           </mat-option>
@@ -61,18 +63,20 @@
       </mat-form-field>
     </div>
 
-    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-md="24" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <app-date-picker-custom fxFlex="100" [title]="'Verify process date'" [(date)]="form4.verifyDate"
         (dateChange)="emitAutoSaveDoc()"></app-date-picker-custom>
     </div>
 
-    <div fxFlex="auto"></div>
+    <div fxShow.gt-md fxFlex.gt-md="24"></div>
 
   </div>
 
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+    fxLayoutGap.gt-md="30">
 
-    <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="start center" class="p-2 rounded-md">
+    <div fxFlex="100" fxFlex.gt-md="20"  fxLayout="row wrap" fxLayoutAlign="start center"
+      class="p-2 rounded-md">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
         <mat-icon class="mat-18 me-2">topic</mat-icon>
         <span class="font-black text-label">
@@ -81,7 +85,7 @@
       </div>
     </div>
 
-    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-md="24" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
         <mat-label class="mat-label-custom">Apply Lessons learned</mat-label>
         <mat-select [(ngModel)]="form4.apply" (blur)="emitAutoSaveDoc();">
@@ -92,21 +96,21 @@
       </mat-form-field>
     </div>
 
-    <div fxFlex="100" fxFlex.gt-md="24" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxFlex.gt-md="24" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
       <app-date-picker-custom fxFlex="100" [title]="'Date add in Lessons learned file'" [(date)]="form4.applyDate"
         (dateChange)="emitAutoSaveDoc()"></app-date-picker-custom>
     </div>
 
-    <div fxFlex="auto"></div>
+    <div fxShow.gt-md fxFlex.gt-md="24"></div>
+
 
   </div>
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end center" class="mt-1 pe-8">
-    <button mat-raised-button color="primary" (click)="onSave()" class="btn-file btn-radius"
-      style="margin-right: 10px;">
+    <button mat-raised-button (click)="onSave()" class="btn-file btn-radius btn-save" style="margin-right: 10px;">
       <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="10">
         <span>
-          Save
+          Save Doc/Verify
         </span>
         <mat-icon class="mat-18">save</mat-icon>
       </div>

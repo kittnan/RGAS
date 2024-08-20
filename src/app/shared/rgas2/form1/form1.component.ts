@@ -296,9 +296,10 @@ export class Form1Component implements OnInit {
     const workbook = new ExcelJS.Workbook();
     try {
       await workbook.xlsx.load(file);
-
-      const worksheet: ExcelJS.Worksheet | undefined = workbook.getWorksheet(1);
-
+      if (!workbook) throw 'Excel file not correct!'
+      let worksheets: any[] = workbook.worksheets
+      if (!worksheets || worksheets?.length == 0) throw 'Not found worksheet!'
+      const worksheet: ExcelJS.Worksheet | undefined = worksheets[0]
       if (worksheet) {
         let modelCode = this.getValueOfCell('W8', worksheet)
         let model: any = modelCode ? this.modelOption.find((item: any) => item['Model Name'] == modelCode) : ''

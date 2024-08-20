@@ -264,6 +264,12 @@ label.ng-star-inserted {
     .mat-row:hover {
       background-color: #d0e4f1 !important;
     }
+
+    .btn-save {
+      background-color: #115b85;
+      color: white;
+
+    }
   }
 
   &--dark {
@@ -407,6 +413,11 @@ label.ng-star-inserted {
 
     .mat-row:hover {
       background-color: #a5a5a52e !important;
+    }
+
+    .btn-save {
+      background-color: #115b85;
+      color: white;
     }
   }
 }

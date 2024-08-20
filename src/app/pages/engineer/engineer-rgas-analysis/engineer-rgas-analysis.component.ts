@@ -8,7 +8,6 @@ import { HttpFileUploadService } from 'src/app/https/http-file-upload.service';
 import { HttpReportInformationService } from 'src/app/https/http-report-information.service';
 import { HttpReportService } from 'src/app/https/http-report.service';
 import { HttpResultService } from 'src/app/https/http-result.service';
-import { HttpUsersService } from 'src/app/https/http-users.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { SweetAlertGeneralService } from 'src/app/services/sweet-alert-general.service';
 import { environment } from 'src/environments/environment';
@@ -316,15 +315,6 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       ...event.data,
       no: this.form.no
     }
-    // const resData = await lastValueFrom(this.$report.create([dataUpdate]))
-    // this.form3[event.key] = resData[0]
-
-    // this.router.navigate(['engineer/report-approve'], {
-    //   queryParams: {
-    //     claimId: this.form._id,
-    //     type: 'preReport'
-    //   }
-    // })
 
     if (!dataUpdate._id) {
       const res = await lastValueFrom(this.$report.create(dataUpdate))
@@ -332,7 +322,6 @@ export class EngineerRgasAnalysisComponent implements OnInit {
       this.$alert.success()
     } else {
       await lastValueFrom(this.$report.createOrUpdate([dataUpdate]))
-      // this.form3 = event
       this.$alert.success()
     }
   }
@@ -488,8 +477,8 @@ export class EngineerRgasAnalysisComponent implements OnInit {
               await lastValueFrom(this.$report.delete({ _id: data._id }))
               this.form3[event.key] = this.form3[event.key].filter((item: any) => item.index != data.index)
             }
-
-
+          }else{
+            this.form3[event.key] = this.form3[event.key].filter((item: any) => item.index != data.index)
           }
         }
       });
@@ -601,6 +590,7 @@ export class EngineerRgasAnalysisComponent implements OnInit {
   }
   async form3_emitAutoSaveInformation(event: any) {
     if (!event._id) {
+      delete event._id
       const res: any = await lastValueFrom(this.$information.create({ ...event, registerNo: this.form.registerNo, no: this.form.no }))
       if (res && res.length > 0) {
         this.information = res[0]

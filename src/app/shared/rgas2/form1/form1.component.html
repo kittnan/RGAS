@@ -75,7 +75,7 @@
 
   <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch">
     <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" class="mt-1">
-      <app-sub-title fxFlex="100" [title]="'Claim Information'" class="mt-2 mb-2"></app-sub-title>
+      <app-sub-title fxFlex="100" [title]="'Claim Information'" class="mt-20 mb-2"></app-sub-title>
       <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="center start" class="mt-2 mb-2">
         <button mat-raised-button color="primary" class="btn-radius" (click)="fileUploadOBL.click()">
           <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around center">
@@ -86,51 +86,56 @@
         </button>
       </div>
 
-      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutGap.gt-md="30">
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+      <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
+        fxLayoutGap.gt-md="30" fxLayoutGap.gt-sm="10">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="text-red-500">Claim Notification No.</mat-label>
             <input matInput [(ngModel)]="form.claimNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">KTC Model No.</mat-label>
             <input matInput [(ngModel)]="form.modelNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Product No.</mat-label>
             <input matInput [(ngModel)]="form.productNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Model PNL</mat-label>
             <input matInput [(ngModel)]="form.modelNoPNL" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Model SMT</mat-label>
             <input matInput [(ngModel)]="form.modelNoSMT" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex.gt-md="30"></div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxShow.gt-md fxFlex.gt-md="30"></div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Customer Control No.</mat-label>
             <input matInput [(ngModel)]="form.customerNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <app-autocomplete *ngIf="modelOptionString.length>0 && showModelCode " fxFlex="100" [title]="'KTC Model Code'"
             [options]="modelOptionString" [(value)]="form.modelCode"
             (valueChange)="onChangeModelCode($event); emitAutoSave();"></app-autocomplete>
 
         </div>
-        <div fxFlex=" 100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex=" 100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Analysis PIC</mat-label>
             <mat-select [(ngModel)]="form.analysisPIC" [compareWith]="objectComparisonFunction" (blur)="emitAutoSave()">
@@ -140,53 +145,59 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Customer Name Customer B Name</mat-label>
             <input matInput [(ngModel)]="form.customerName" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <app-autocomplete *ngIf="typeOptionString.length>0" fxFlex="100" [title]="'Internal Customer'"
             [options]="typeOptionString" [(value)]="form.type" (valueChange)="emitAutoSave()"></app-autocomplete>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Description (Japanese)</mat-label>
             <input matInput [(ngModel)]="form.descriptionJP" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Sales Company Customer A Name</mat-label>
             <input matInput [(ngModel)]="form.saleCompany" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Side No.</mat-label>
             <input matInput [(ngModel)]="form.sideNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Description (English)</mat-label>
             <input matInput [(ngModel)]="form.descriptionENG" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Sales PIC</mat-label>
             <input matInput [(ngModel)]="form.salePIC" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Q'ty</mat-label>
             <input matInput type="number" [min]="1" [(ngModel)]="form.qty" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Function/ Appearance</mat-label>
             <mat-select [(ngModel)]="form.functionAppearance" (blur)="emitAutoSave()">
@@ -196,7 +207,8 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Returning Style</mat-label>
             <mat-select [(ngModel)]="form.returnStyle" (blur)="emitAutoSave()">
@@ -206,20 +218,22 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Product Lot No.</mat-label>
             <input matInput [(ngModel)]="form.productLotNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">AWB No.</mat-label>
             <input matInput [(ngModel)]="form.AWBNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
 
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Model Classification</mat-label>
             <mat-select [(ngModel)]="form.modelClassification" (blur)="emitAutoSave()">
@@ -231,29 +245,32 @@
         </div>
 
 
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <app-year-month fxFlex="100" [title]="'Production Month'" [(dateInput)]="form.productionMonth"
             (dateInputChange)="emitAutoSave()"></app-year-month>
         </div>
 
 
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Inv. No.</mat-label>
             <input matInput [(ngModel)]="form.InvNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <app-year-month fxFlex="100" [title]="'Calendar Year'" [(dateInput)]="form.calendarYear"
             (dateInputChange)="emitAutoSave()"></app-year-month>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Serial Lot No</mat-label>
             <input matInput [(ngModel)]="form.serialLotNo" (blur)="emitAutoSave()">
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Commercial Distribution</mat-label>
             <mat-select [(ngModel)]="form.commercialDistribution" (blur)="emitAutoSave()">
@@ -263,31 +280,18 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <app-date-picker-custom fxFlex="100" [title]="'Date Received Inv.'" [(date)]="form.dateReceiveInv"
             (dateChange)="emitAutoSave()"></app-date-picker-custom>
-          <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label class="mat-label-custom">Date Received Inv.</mat-label>
-            <input matInput [(ngModel)]="form.dateReceiveInv" [matDatepicker]="dateReceive_dp"
-              (ngModelChange)="emitSaveStatus()">
-            <mat-datepicker-toggle matSuffix [for]="dateReceive_dp"></mat-datepicker-toggle>
-            <mat-datepicker #dateReceive_dp></mat-datepicker>
-          </mat-form-field> -->
-        </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
 
+        </div>
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <app-date-picker-custom fxFlex="100" [title]="'Claim Registering Date'" [(date)]="form.claimRegisterDate"
             (dateChange)="emitAutoSave()"></app-date-picker-custom>
-
-          <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label class="mat-label-custom">Claim Registering Date</mat-label>
-            <input matInput [(ngModel)]="form.claimRegisterDate" [matDatepicker]="claimRegister_dp"
-              (ngModelChange)="emitSaveStatus()">
-            <mat-datepicker-toggle matSuffix [for]="claimRegister_dp"></mat-datepicker-toggle>
-            <mat-datepicker #claimRegister_dp></mat-datepicker>
-          </mat-form-field> -->
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Use Appearancelication</mat-label>
             <mat-select [(ngModel)]="form.useAppearance" (blur)="emitAutoSave()">
@@ -297,12 +301,12 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" fxFlex.gt-md="70" fxFlex.gt-sm="60" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Product Cost</mat-label>
             <input matInput type="number" [min]="0" [(ngModel)]="form.productCost" (blur)="emitAutoSave()">
           </mat-form-field>
-          <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+          <mat-form-field fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="40" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Unit</mat-label>
             <mat-select [(ngModel)]="form.productCostUnit" (blur)="emitAutoSave()">
               <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
@@ -311,20 +315,13 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <app-date-picker-custom fxFlex="100" [title]="'Received Information Date ( E-Form OBL III )'"
             [(date)]="form.receiveInfoDate" (dateChange)="emitAutoSave()"></app-date-picker-custom>
-
-          <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label class="mat-label-custom">Received Information Date ( E-Form OBL III )</mat-label>
-            <input matInput [(ngModel)]="form.receiveInfoDate" [matDatepicker]="receiveInfo_dp"
-              (ngModelChange)="emitSaveStatus()">
-            <mat-datepicker-toggle matSuffix [for]="receiveInfo_dp"></mat-datepicker-toggle>
-            <mat-datepicker #receiveInfo_dp></mat-datepicker>
-          </mat-form-field> -->
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Occurred Location</mat-label>
             <mat-select [(ngModel)]="form.occurredLocation" (dateChange)="emitAutoSave()">
@@ -334,12 +331,12 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <mat-form-field fxFlex="100" fxFlex.gt-md="70" appearance="outline" floatLabel="always">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <mat-form-field fxFlex="100" fxFlex.gt-md="70" fxFlex.gt-sm="60" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Transportation Cost</mat-label>
             <input matInput type="number" [min]="0" [(ngModel)]="form.transportationCost" (dateChange)="emitAutoSave()">
           </mat-form-field>
-          <mat-form-field fxFlex="100" fxFlex.gt-md="30" appearance="outline" floatLabel="always">
+          <mat-form-field fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="40" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Unit</mat-label>
             <mat-select [(ngModel)]="form.unit" (dateChange)="emitAutoSave()">
               <mat-option *ngFor="let item of currencyOption" [value]="item.itemValue">
@@ -348,7 +345,8 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
             <mat-label class="mat-label-custom">Importance (Claim Rank)</mat-label>
             <mat-select [(ngModel)]="form.importance" (dateChange)="emitAutoSave()">
@@ -359,27 +357,19 @@
           </mat-form-field>
         </div>
 
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch" class="">
-
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
+          class="">
           <app-date-picker-custom fxFlex="100" [title]="'Due Date (OBL III)'" [(date)]="form.dueDate"
             (dateChange)="emitAutoSave()"></app-date-picker-custom>
-
-          <!-- <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-            <mat-label class="mat-label-custom">Due Date (OBL III)</mat-label>
-            <input matInput [(ngModel)]="form.dueDate" [matDatepicker]="dueDate_dp" (ngModelChange)="emitSaveStatus()">
-            <mat-datepicker-toggle matSuffix [for]="dueDate_dp"></mat-datepicker-toggle>
-            <mat-datepicker #dueDate_dp></mat-datepicker>
-          </mat-form-field> -->
         </div>
 
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+        <div fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
           <app-year-month fxFlex="100" [title]="'Cost Month'" [(dateInput)]="form.costMonth"
             (dateInputChange)="emitAutoSave()"></app-year-month>
         </div>
 
-        <div fxFlex.gt-md="30"></div>
-        <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-          <button [disabled]="!form.registerNo " fxFlex="100" fxFlex.gt-md="30" mat-raised-button color="accent"
+        <di1v fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch">
+          <button [disabled]="!form.registerNo " fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" mat-raised-button color="accent"
             (click)="informationFile.click()" class="btn-file btn-radius">
             <div fxLayout="row wrap" fxLayoutAlign="center center">
               <span>
@@ -389,7 +379,7 @@
             </div>
             <input type="file" hidden #informationFile (change)="onUploadFileClaimInformation($event);">
           </button>
-          <button [disabled]="!form.files || form.files?.length==0 " fxFlex="100" fxFlex.gt-md="30" mat-raised-button
+          <button [disabled]="!form.files || form.files?.length==0 " fxFlex="100" fxFlex.gt-md="30" fxFlex.gt-sm="45" mat-raised-button
             (click)="openBottom()" class="btn-file btn-radius" [ngClass.gt-md]="'m-btn-l'">
             <div fxLayout="row wrap" fxLayoutAlign="center center">
               <span>
@@ -398,7 +388,7 @@
               <mat-icon [matBadge]="controlBadgeNumber(form.files)" matBadgeColor="warn">attach_file</mat-icon>
             </div>
           </button>
-        </div>
+        </di1v>
 
         <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end stretch" class="mt-1">
           <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="start center">
@@ -422,11 +412,11 @@
             </button>
           </div>
           <div fxFlex="50" fxLayout="row wrap" fxLayoutAlign="end center">
-            <button mat-raised-button color="primary" (click)="onSave()" class="btn-file btn-radius"
+            <button mat-raised-button (click)="onSave()" class="btn-file btn-radius btn-save"
               style="margin-right: 10px;">
               <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-md="10">
                 <span>
-                  Save {{form.no}}
+                  Save Claim Information {{form.no}}
                 </span>
                 <mat-icon class="mat-18">save</mat-icon>
               </div>

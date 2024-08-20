@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Rgas1Component } from 'src/app/rgas/rgas1/rgas1.component';
 
 @Component({
   selector: 'app-engineer-rgas1',
@@ -20,6 +21,8 @@ export class EngineerRgas1Component implements OnInit {
   }
   // todo click row
   onClickClaimChange(event: any) {
+    console.log(event.claimStatus);
+
     if (event.claimStatus == 'receive information') {
       this.router.navigate(['operator/information'], {
         queryParams: {
@@ -37,6 +40,15 @@ export class EngineerRgas1Component implements OnInit {
       })
     }
     if (event.claimStatus == 'analysis') {
+      this.router.navigate(['engineer/analysis'], {
+        queryParams: {
+          registerNo: event.registerNo,
+          no: event.no
+
+        }
+      })
+    }
+    if (event.claimStatus == 'finish') {
       this.router.navigate(['engineer/analysis'], {
         queryParams: {
           registerNo: event.registerNo,
