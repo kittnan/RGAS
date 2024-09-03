@@ -131,6 +131,13 @@ export class AppComponent {
         //   path: 'admin/email-dear-all',
         //   roles: ['admin']
         // },
+
+        {
+          title: 'rgas1',
+          icon: 'keyboard_arrow_right',
+          path: 'admin/rgas1',
+          roles: ['admin']
+        },
       ]
     },
     {

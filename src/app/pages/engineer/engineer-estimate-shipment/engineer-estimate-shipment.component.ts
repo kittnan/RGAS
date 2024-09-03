@@ -38,6 +38,7 @@ export class EngineerEstimateShipmentComponent implements OnInit {
         }
       })
       let months: any = await this.generateMonthsArray('Jan')
+      console.log("🚀 ~ months:", months)
       this.columns = [
         {
           columnDef: 'Model',

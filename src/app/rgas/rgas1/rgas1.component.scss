@@ -48,25 +48,41 @@
 .receive {
   color: darkseagreen;
 }
+
 .waitApprove {
   color: #ff2da9;
 }
+
 .analysis {
   color: sandybrown;
 }
-.closed{
+
+.closed {
   color: #333;
 }
-.pending{
-  color: rgb(90, 190, 90);
 
+.closed {
+  color: rgb(90, 190, 90);
 }
 
-.mat-table-custom{
+.pending {
+  color: #f75d5d;
+}
+
+.text-red {
+  color: #f75d5d;
+}
+
+.text-green {
+  color: rgb(90, 190, 90);
+}
+
+.mat-table-custom {
   height: 70vh;
   width: 100%;
   overflow: auto;
 }
-.mat-table-custom > table{
+
+.mat-table-custom>table {
   width: 100%;
 }

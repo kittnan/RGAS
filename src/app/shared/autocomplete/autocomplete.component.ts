@@ -26,7 +26,7 @@ export class AutocompleteComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(option => option?.toLowerCase().includes(filterValue));
+    return this.options.filter(option => option?.toString().toLowerCase());
   }
   onChange() {
     // this.myControlChange.emit(this.myControl.value)

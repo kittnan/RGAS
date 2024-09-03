@@ -422,8 +422,8 @@
       </div>
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
-      class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"
+      fxLayoutAlign.gt-sm="space-between stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
         [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
@@ -450,8 +450,8 @@
       </div>
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
-      class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"
+      fxLayoutAlign.gt-sm="space-between stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
         [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
@@ -477,8 +477,8 @@
       </div>
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
-      class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"
+      fxLayoutAlign.gt-sm="space-between stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
         [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
@@ -507,8 +507,8 @@
       </div>
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
-      class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"
+      fxLayoutAlign.gt-sm="space-between stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
         [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
@@ -535,8 +535,8 @@
     </div>
 
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
-      class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"
+      fxLayoutAlign.gt-sm="space-between stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
         [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
@@ -554,8 +554,8 @@
 
     </div>
 
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch" fxLayoutAlign.gt-sm="space-between stretch"
-      class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"
+      fxLayoutAlign.gt-sm="space-between stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
         [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
@@ -565,8 +565,8 @@
         </mat-form-field>
       </div>
     </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"fxLayoutAlign.gt-sm="space-between stretch"
-      class="mt-1">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign.gt-md="start stretch"
+      fxLayoutAlign.gt-sm="space-between stretch" class="mt-1">
       <div fxFlex="100" fxFlex.gt-md="20" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
         [ngClass.gt-md]="'me-8'">
         <mat-form-field fxFlex="100" fxFlex.gt-md="100" appearance="outline" floatLabel="always">
@@ -587,7 +587,7 @@
       <div fxFlex="100" fxFlex.gt-md="10" fxFlex.gt-sm="45" fxLayout="row wrap" fxLayoutAlign="start stretch"
         [ngClass.gt-md]="'me-1'">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label class="mat-label-custom">Cause</mat-label>
+          <mat-label class="mat-label-custom">Cause {{cause.cause.value1}} </mat-label>
           <mat-select [(ngModel)]="cause.cause.value1">
             <mat-option [value]="null"></mat-option>
             <mat-option *ngFor="let option of causeOption1" [value]="option">

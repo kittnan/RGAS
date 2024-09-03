@@ -1,15 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+import { HttpClaimService } from 'src/app/https/http-claim.service';
 
 @Component({
-  selector: 'app-engineer-rgas1',
-  templateUrl: './engineer-rgas1.component.html',
-  styleUrls: ['./engineer-rgas1.component.scss']
+  selector: 'app-admin-rgas1',
+  templateUrl: './admin-rgas1.component.html',
+  styleUrls: ['./admin-rgas1.component.scss']
 })
-export class EngineerRgas1Component implements OnInit {
+export class AdminRgas1Component implements OnInit {
+
 
   constructor(
-    private router: Router
+    private router: Router,
+    private $claim: HttpClaimService
   ) { }
 
   ngOnInit(): void {
@@ -55,4 +59,16 @@ export class EngineerRgas1Component implements OnInit {
       })
     }
   }
+
+  async onClaimChange(e: any) {
+    try {
+      console.log(e);
+      e.status = 'cancel'
+      let res: any = await lastValueFrom(this.$claim.createOrUpdate(e))
+      location.reload()
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
+  }
+
 }

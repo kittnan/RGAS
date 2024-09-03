@@ -9,6 +9,7 @@
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Search Option</mat-label>
           <mat-select [(ngModel)]="filterSelected" (ngModelChange)="onSearchSelect()">
+            <mat-option value=""> </mat-option>
             <mat-option *ngFor="let item of filterOption" [value]="item.value">
               <span class="capitalize text-sm">
                 {{item.name}}
@@ -42,9 +43,20 @@
           <ng-container matColumnDef="registerNo">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> register No </th>
             <td mat-cell *matCellDef="let row">
-              <span class="text-link" (click)="onClickClaim(row)">
-                {{row.registerNo}}
-              </span>
+              <ng-container *ngIf="adminValidate()">
+                <span class="text-link" [matMenuTriggerFor]="menu">
+                  {{row.registerNo}}
+                </span>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item  (click)="onClickClaim(row)">View</button>
+                  <button mat-menu-item (click)="cancelClaim(row)">Cancel</button>
+                </mat-menu>
+              </ng-container>
+              <ng-container *ngIf="!adminValidate()">
+                <span class="text-link" (click)="onClickClaim(row)">
+                  {{row.registerNo}}
+                </span>
+              </ng-container>
             </td>
           </ng-container>
 
@@ -62,11 +74,26 @@
               </span>
             </td>
           </ng-container>
+          <ng-container matColumnDef="status1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> More Than 2 Month </th>
+            <td mat-cell *matCellDef="let row" style="text-wrap: nowrap;" [class]="cssStatus1(moreThan2Month(row))">
+              {{moreThan2Month(row)}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status2">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> More Than 1.5 Month </th>
+            <td mat-cell *matCellDef="let row" style="text-wrap: nowrap;" [class]="cssStatus2(moreThan15Month(row))">
+              {{moreThan15Month(row)}}
+            </td>
+          </ng-container>
 
           <ng-container matColumnDef="PIC">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> PIC </th>
             <td mat-cell *matCellDef="let row" class="font-bold" style="text-wrap: nowrap;"> {{row.PIC}} </td>
           </ng-container>
+
+
 
           <ng-container matColumnDef="claimMonth">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Claim Month </th>

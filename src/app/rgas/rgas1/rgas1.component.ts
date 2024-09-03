@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { lastValueFrom } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 
 interface FILTER_OPTION {
@@ -68,7 +69,7 @@ export class Rgas1Component implements OnInit {
   fillSearch: string = ''
   placeholder: string = 'Value'
 
-  displayedColumns: string[] = ['registerNo', 'no', 'docStatus', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'occurredLocation', 'defect', 'qty', 'lotNo', 'judgment', 'returnStyle'];
+  displayedColumns: string[] = ['registerNo', 'no', 'docStatus', 'status1', 'status2', 'PIC', 'claimMonth', 'claimNo', 'modelNo', 'customerName', 'occurredLocation', 'defect', 'qty', 'lotNo', 'judgment', 'returnStyle'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource()
   itemCount: number = 10
   isLoading: boolean = false
@@ -78,8 +79,14 @@ export class Rgas1Component implements OnInit {
   claims: any[] = []
   @Output() onClickClaimChange: EventEmitter<any> = new EventEmitter()
   @Output() onClickNewChange: EventEmitter<any> = new EventEmitter()
+  @Output() onClaimChange: EventEmitter<any> = new EventEmitter()
 
   @Input() showBtnNew: boolean = true
+
+  paginatorData: any = {
+    skip: 0,
+    limit: 10
+  }
   constructor(
     private $claim: HttpClaimService,
     private $local: LocalStoreService
@@ -90,55 +97,86 @@ export class Rgas1Component implements OnInit {
       this.getData()
     } catch (error) {
       console.log("🚀 ~ error:", error)
-
     }
   }
 
   async getData(sort: number = -1, skip: number = 0, limit: number = 10) {
-    this.isLoading = true
-    let params: HttpParams = new HttpParams()
-    params = params.set('sort', sort)
-    params = params.set('skip', skip)
-    params = params.set('limit', limit)
-    if (this.filterSelected) {
-      params = params.set(this.filterSelected, this.fillSearch)
-    }
-    let len = await lastValueFrom(this.$claim.getRgas1(params.set('len', 'y')))
-    let resClaims = await lastValueFrom(this.$claim.getRgas1(params.delete('len')))
-    this.dataSource = new MatTableDataSource(resClaims.map((item: any, i: number) => {
-      let docStatus = 'Pending'
-      let document = item.document
-      if (document) {
-        if (document.apply == 'Need' && document.revise == 'Need' && document.verify == 'Need') {
-          docStatus = 'Closed'
-        }
+    try {
+      this.isLoading = true
+      const localStr: any = localStorage.getItem('RGAS_rgas1')
+      if (localStr) {
+        this.paginatorData = JSON.parse(localStr)
       }
-      item.docStatus = docStatus
-      return item
-    }))
-    if (this.dataSource) {
-      setTimeout(() => {
-        this.dataSource.sort = this.sort;
-        if (len && len.length > 0) {
-          const count = len[0]['count']
-          this.itemCount = count
+      let params: HttpParams = new HttpParams()
+      params = params.set('sort', sort)
+      params = params.set('skip', this.paginatorData.skip)
+      params = params.set('limit', this.paginatorData.limit)
+      params = params.set('no_status', JSON.stringify(['cancel']))
+      if (this.paginatorData.filterSelected) {
+        params = params.set(this.paginatorData.filterSelected, this.paginatorData.fillSearch)
+      }
+      let len = await lastValueFrom(this.$claim.getRgas1(params.set('len', 'y')))
+      let resClaims = await lastValueFrom(this.$claim.getRgas1(params.delete('len')))
+      this.dataSource = new MatTableDataSource(resClaims.map((item: any, i: number) => {
+        let docStatus = 'Pending'
+        let document = item.document
+        if (document) {
+          if (document.apply && document.revise && document.verify) {
+            docStatus = 'Closed'
+          }
         }
-        this.isLoading = false;
+        item.docStatus = docStatus
+        item.claimStatus = item.status
+        item.PIC = item.analysisPIC?.name
+        item.defect = item.results?.ktcAnalysisResult
+        item.lotNo = item.productLotNo
+        item.judgment = item.results?.ktcJudgment
+        item.claimMonth = moment(item.claimRegisterDate).format('MMM-YY')
+        return item
+      }))
+      if (this.dataSource) {
+        setTimeout(() => {
+          this.dataSource.sort = this.sort;
+          if (len && len.length > 0) {
+            const count = len[0]['count']
+            this.itemCount = count
+          }
 
-      }, 300);
+          setTimeout(() => {
+            this.paginator.pageIndex = this.paginatorData?.pageIndex ? this.paginatorData?.pageIndex : 0
+            this.paginator.pageSize = this.paginatorData?.pageSize ? this.paginatorData?.pageSize : 10
+            this.paginator.pageSizeOptions = this.paginator.pageSizeOptions.sort((a: any, b: any) => a - b)
+            this.filterSelected = this.paginatorData.filterSelected
+            this.fillSearch = this.paginatorData.fillSearch
+
+            let div: any = document.querySelector('.mat-table-custom')
+            if (div) {
+              div.scrollTop = this.paginatorData.scrollTop
+              div.scrollLeft = this.paginatorData.scrollLeft
+            }
+          }, 0);
+
+          this.isLoading = false;
+        }, 0);
+      }
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
     }
   }
 
   async onPageChange(e: any) {
     let skip = e.pageIndex * e.pageSize
-    this.getData(-1, skip, e.pageSize)
+    this.paginatorData.skip = skip
+    this.paginatorData.limit = e.pageSize
+    this.paginatorData.pageSize = e.pageSize
+    this.paginatorData.pageIndex = e.pageIndex
+    this.saveLocalStorage()
+    this.getData(-1)
   }
 
 
   // todo onSearchSelect
   onSearchSelect() {
-    console.log('foo');
-
     this.fillSearch = ''
     if (this.filterSelected == 'claimMonth') {
       this.placeholder = 'MM-YYYY -> 02-2024'
@@ -148,22 +186,23 @@ export class Rgas1Component implements OnInit {
   // todo search by option
   async onSearchSubmit() {
     try {
-      // if (this.filterSelected) {
-      //   let params: HttpParams = new HttpParams()
-      //   params = new HttpParams().set('status', JSON.stringify(['receive information', 'wait approve', 'analysis']))
-      //   params = params.set(this.filterSelected, this.fillSearch)
-      //   const resData = await lastValueFrom(this.$claim.getRgas1(params))
-      //   this.dataSource = new MatTableDataSource(resData)
-      //   setTimeout(() => {
-      //     this.dataSource.paginator = this.paginator;
-      //     this.dataSource.sort = this.sort;
-      //   }, 300);
-      // }
+      this.paginatorData.skip = 0
+      this.paginatorData.limit = 10
+      this.paginatorData.pageSize = 10
+      this.paginatorData.pageIndex = 0
+      this.paginatorData.filterSelected = this.filterSelected
+      this.paginatorData.fillSearch = this.fillSearch
+      this.saveLocalStorage()
       this.getData()
 
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
+  }
+
+  // todo save local
+  saveLocalStorage() {
+    localStorage.setItem('RGAS_rgas1', JSON.stringify(this.paginatorData))
   }
 
   // todo search table
@@ -179,11 +218,16 @@ export class Rgas1Component implements OnInit {
   // todo click new claim
   onClickNew() {
     this.onClickNewChange.emit()
-    // this.router.navigateByUrl("operator/rgas2")
   }
 
   // todo click claim
   onClickClaim(row: any) {
+    let div: any = document.querySelector('.mat-table-custom')
+    if (div) {
+      this.paginatorData.scrollTop = div.scrollTop
+      this.paginatorData.scrollLeft = div.scrollLeft
+      this.saveLocalStorage()
+    }
     this.onClickClaimChange.emit(row)
   }
 
@@ -193,13 +237,64 @@ export class Rgas1Component implements OnInit {
       if (status == "Closed") return 'closed'
       if (status == "Pending") return 'pending'
     }
-    // if (status) {
-    //   if (status == "receive information") return 'receive'
-    //   if (status == "wait approve") return 'waitApprove'
-    //   if (status == "analysis") return 'analysis'
-    // }
     return '';
   }
+  moreThan2Month(row: any) {
+    const finalReport = row.reports?.find((item: any) => item.name == 'finalReport')
+    const result = row.results
+    if (finalReport?.dateSubmitToCustomer && result?.partReceivingDate) {
+      const nextMonth = moment(result.partReceivingDate).add(2, 'month')
+      const today = moment(finalReport.dateSubmitToCustomer)
+      if (today > nextMonth) {
+        return 'More than 2 months'
+      }
+    }
+    return 'Less than 2 months'
+  }
+  moreThan15Month(row: any) {
+    const finalReport = row.reports?.find((item: any) => item.name == 'finalReport')
+    const result = row.results
+    if (finalReport?.dateSubmitToCustomer && result?.partReceivingDate) {
+      const nextMonth = moment(result.partReceivingDate).add(1.5, 'month')
+      const today = moment(finalReport.dateSubmitToCustomer)
+      if (today > nextMonth) {
+        return 'More than 1.5 months'
+      }
+    }
+    return 'Less than 1.5 months'
+  }
+  cssStatus1(text: any) {
+    if (text == 'More than 2 months') {
+      return 'text-red'
+    }
+    return 'text-green'
+  }
+  cssStatus2(text: any) {
+    if (text == 'More than 1.5 months') {
+      return 'text-red'
+    }
+    return 'text-green'
+  }
 
+  adminValidate() {
+    if (this.$local.getAuth() == 'admin') {
+      return true
+    }
+    return false
+  }
+
+  // todo cancel claim
+  cancelClaim(row: any) {
+    Swal.fire({
+      title: `Do you want to delete register no ${row.registerNo}`,
+      text: `claim ${row.claimNo}`,
+      icon: 'question',
+      showCancelButton: true
+    }).then((v: SweetAlertResult) => {
+      if (v.isConfirmed) {
+        this.onClaimChange.emit(row)
+      }
+    })
+  }
 
 }

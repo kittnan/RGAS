@@ -347,12 +347,23 @@ export class Form3Component implements OnInit {
     })
   }
   onAddNewCause() {
-    this.reportInformation.causes.push({
-      ...this.tempCauseObj,
+    const newObj = {
+      cause: {
+        value1: '',
+        value2: '',
+        value3: '',
+      },
+      action: {
+        value1: '',
+        value2: '',
+        value3: '',
+        value4: '',
+        date: '',
+      },
       index: this.reportInformation.causes.length + 1
-    })
+    }
+    this.reportInformation.causes.push({ ...newObj })
   }
-
   // todo form html fn
   public objectComparisonFunction = function (option: any, value: any): boolean {
     if (option._id && value._id)

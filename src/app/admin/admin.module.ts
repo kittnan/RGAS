@@ -21,6 +21,7 @@ import { RPrincipleComponent } from './r-principle/r-principle.component';
 import { ModelsManageCommonComponent } from './models-manage-common/models-manage-common.component';
 import { EmailComponent } from './email/email.component';
 import { EmailDearAllComponent } from './email-dear-all/email-dear-all.component';
+import { AdminRgas1Component } from './admin-rgas1/admin-rgas1.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { EmailDearAllComponent } from './email-dear-all/email-dear-all.component
     ModelsManageCommonComponent,
     EmailComponent,
     EmailDearAllComponent,
+    AdminRgas1Component,
   ],
   imports: [
     CommonModule,
