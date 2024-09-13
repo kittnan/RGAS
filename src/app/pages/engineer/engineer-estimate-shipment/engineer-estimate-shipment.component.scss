@@ -1,5 +1,5 @@
 .container {
-  height: 80vh;
+  height: 50vh;
   width: 100%;
   max-width: 100%;
   overflow: auto;
@@ -14,7 +14,8 @@ td.mat-column-star {
   padding-right: 8px;
 }
 
-th.mat-column-position, td.mat-column-position {
+th.mat-column-position,
+td.mat-column-position {
   padding-left: 8px;
 }
 
@@ -25,7 +26,24 @@ th.mat-column-position, td.mat-column-position {
 .mat-table-sticky-border-elem-left {
   border-right: 1px solid #e0e0e0;
 }
+
 .input-number {
   border: 1px solid black;
   width: 4rem;
 }
+
+.highlight-td {
+  background-color: yellow;
+  /* Change this color to whatever you like */
+  transition: background-color 0.5s ease-in-out;
+}
+
+.highlight-td:focus {
+  background-color: lightgreen;
+  /* This could be another color to transition to on hover */
+}
+
+.text-month {
+  color: #718fff;
+}
+

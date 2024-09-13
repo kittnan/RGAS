@@ -13,6 +13,7 @@ import { EngineerReportViewComponent } from './engineer-report-view/engineer-rep
 import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer-rgas-analysis.component';
 import { EngineerRgasNewComponent } from './engineer-rgas-new/engineer-rgas-new.component';
 import { EngineerEstimateShipmentComponent } from './engineer-estimate-shipment/engineer-estimate-shipment.component';
+import { SafeHtmlPipe } from './engineer-estimate-shipment/safeHtml.pipe';
 
 
 @NgModule({
@@ -25,14 +26,15 @@ import { EngineerEstimateShipmentComponent } from './engineer-estimate-shipment/
     EngineerReportViewComponent,
     EngineerRgasAnalysisComponent,
     EngineerRgasNewComponent,
-    EngineerEstimateShipmentComponent
+    EngineerEstimateShipmentComponent,
+    SafeHtmlPipe
   ],
   imports: [
     CommonModule,
     EngineerRoutingModule,
     SharedModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class EngineerModule { }

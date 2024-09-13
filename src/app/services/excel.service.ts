@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as Exceljs from 'exceljs'
 import { saveAs } from 'file-saver';
+import moment from 'moment';
 @Injectable({
   providedIn: 'root'
 })
@@ -58,7 +59,7 @@ export class ExcelService {
         ws.eachRow({ includeEmpty: false }, (row, rowNumber) => {
           if (rowNumber == 1) {
             head = row.values
-            head = head.map((h: any) => h.replaceAll('.', ''))
+            head = head.map((h: any) => h.includes('.') ? h.replaceAll('.', '') : h)
           } else {
             const rowData: any = {};
             row.eachCell({ includeEmpty: true }, (cell, colNumber) => {

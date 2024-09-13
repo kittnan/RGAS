@@ -1,18 +1,51 @@
 <div fxLayout="row wrap" fxLayoutAlign="start center">
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id explicabo beatae excepturi, quas aut neque est tempora
-  similique illum possimus delectus pariatur consequatur, assumenda natus. Ullam nisi enim maiores minus!
+  <h1>
+    Estimate Delivery Shipment
+  </h1>
 </div>
-<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="20">
-  <mat-checkbox [(ngModel)]="monthAllSelect" class="example-margin">All month</mat-checkbox>
-  <ng-container *ngFor="let item of monthOption; let i=index">
-    <mat-checkbox [(ngModel)]="item.value" class="example-margin">{{item.month}}</mat-checkbox>
-  </ng-container>
+<div *ngIf="!iframeSrc" fxLayout="row wrap" fxLayoutAlign="start center">
+  <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <ng-container *ngFor="let item of yearOption; let i=index">
+      <button mat-button (click)="changeYear(item);">
+        {{item}}
+      </button>
+    </ng-container>
+  </div>
+  <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayoutGap="20">
+      <button mat-raised-button color="primary" (click)="fileUpload.click()">
+        Upload
+      </button>
+      <input hidden #fileUpload type="file" accept=".xlsx" (change)="uploadAndPreview($event)">
+      <button mat-raised-button color="accent">
+        Download
+      </button>
+    </div>
+  </div>
+</div>
 
+<div *ngIf="iframeSrc" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-4">
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayoutGap="20">
+    <button mat-raised-button (click)="cancel()">
+      Cancel
+    </button>
+    <button mat-raised-button (click)="uploadSubmit()">
+      Submit
+    </button>
+  </div>
 </div>
-<button mat-button>
-  {{yearSelect}}
-</button>
-<section class="container">
+
+
+
+<div *ngIf="!iframeSrc" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30" class="mt-6 mb-2">
+  <mat-checkbox [(ngModel)]="monthAllSelect" class="example-margin" (ngModelChange)="checkAllMonth()">All
+    month</mat-checkbox>
+  <ng-container *ngFor="let item of monthOption; let i=index">
+    <mat-checkbox [(ngModel)]="item.value" [ngClass]="{'text-month': item.value}"
+      (ngModelChange)="checkMonth()">{{item.month}}</mat-checkbox>
+  </ng-container>
+</div>
+<section *ngIf="!iframeSrc" class="container">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
     <ng-container *ngFor="let column of columns;let i_col = index">
       <ng-container [matColumnDef]="column.columnDef" [sticky]="i_col<=7?true:false">
@@ -23,19 +56,36 @@
           <td mat-cell *matCellDef="let row" sticky>
             {{column.cell(row)}}
           </td>
+
+
         </ng-container>
         <ng-container *ngIf="column.type=='input'">
-          <td mat-cell *matCellDef="let row">
-            <input type="number" [(ngModel)]="row[column.columnDef]" class="input-number"
-              (keydown.enter)="onSubmit(row,column)">
+          <td mat-cell *matCellDef="let row;let i_row=index;">
+            <input type="number" [(ngModel)]="row[column.columnDef]" [attr.id]="i_row+'-'+i_col" class="input-number"
+              (click)="inputFocus(i_col,i_row)" (keydown.enter)="onSubmit(row,column,i_col,i_row)">
           </td>
         </ng-container>
       </ng-container>
     </ng-container>
 
+
+    <ng-container *ngFor="let columnName of columns2" [matColumnDef]="columnName">
+      <td mat-footer-cell *matFooterCellDef="let row; let i = index">
+        foo
+      </td>
+    </ng-container>
+
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
     <cdk-virtual-scroll-viewport itemSize="50" minBufferPx="200" maxBufferPx="400" class="example-viewport">
       <tr cdkVirtualFor mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </cdk-virtual-scroll-viewport>
+
+    <tr mat-footer-row *matFooterRowDef="columns2; sticky: true"></tr>
   </table>
 </section>
+<iframe *ngIf="iframeSrc" [src]="iframeSrc |safeHtml " width="100%" height="600px"></iframe>
+<!-- <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" />
+<div id="sheet-container" style="display:none;"></div>
+<button *ngIf="iframeSrc" (click)="downloadImage()">Download Image</button>
+<img *ngIf="iframeSrc" [src]="iframeSrc" alt="Excel Preview" /> -->

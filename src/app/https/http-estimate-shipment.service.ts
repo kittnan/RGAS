@@ -18,6 +18,9 @@ export class HttpEstimateShipmentService {
       params: params
     });
   }
+  yearOption(): Observable<any> {
+    return this.http.get(`${this.URL}/${this.SUB}/yearOption`);
+  }
   create(data: any): Observable<any> {
     return this.http.post(`${this.URL}/${this.SUB}/create`, data);
   }
