@@ -9,6 +9,7 @@ import { EngineerReportViewComponent } from './engineer-report-view/engineer-rep
 import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer-rgas-analysis.component';
 import { EngineerRgasNewComponent } from './engineer-rgas-new/engineer-rgas-new.component';
 import { EngineerEstimateShipmentComponent } from './engineer-estimate-shipment/engineer-estimate-shipment.component';
+import { EngineerEstimateShipment2Component } from './engineer-estimate-shipment2/engineer-estimate-shipment2.component';
 
 const routes: Routes = [
   {
@@ -46,7 +47,7 @@ const routes: Routes = [
   },
   {
     path: 'estimate-shipment',
-    component: EngineerEstimateShipmentComponent
+    component: EngineerEstimateShipment2Component
   },
   { path: '**', component: NotfoundComponent }
 

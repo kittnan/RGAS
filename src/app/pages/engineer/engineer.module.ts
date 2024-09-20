@@ -14,6 +14,7 @@ import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer
 import { EngineerRgasNewComponent } from './engineer-rgas-new/engineer-rgas-new.component';
 import { EngineerEstimateShipmentComponent } from './engineer-estimate-shipment/engineer-estimate-shipment.component';
 import { SafeHtmlPipe } from './engineer-estimate-shipment/safeHtml.pipe';
+import { EngineerEstimateShipment2Component } from './engineer-estimate-shipment2/engineer-estimate-shipment2.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { SafeHtmlPipe } from './engineer-estimate-shipment/safeHtml.pipe';
     EngineerRgasAnalysisComponent,
     EngineerRgasNewComponent,
     EngineerEstimateShipmentComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    EngineerEstimateShipment2Component
   ],
   imports: [
     CommonModule,

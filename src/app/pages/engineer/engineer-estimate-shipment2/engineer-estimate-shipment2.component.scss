@@ -1,0 +1,33 @@
+.viewport {
+  overflow-x: auto;
+  height: calc(100vh - 300px); /* Adjust according to the header height */
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background: white; /* Ensure the background color is set */
+  z-index: 1; /* Ensure header is above table rows */
+}
+
+.sticky-header th {
+  padding: 10px; /* Adjust padding as needed */
+  border-bottom: 1px solid #ddd; /* Optional: add border for better separation */
+}
+table>thead>tr>th,
+table>tbody>tr>td,
+table>tfoot>tr>td {
+  border: 1px solid;
+  padding: 5px;
+  font-size: 12px;
+}
+
+
+.input-number {
+  border: 1px solid black;
+  width: 80px;
+}
