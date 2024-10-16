@@ -41,14 +41,16 @@
       <div class="mat-elevation-z8 mat-table-custom">
         <table mat-table class="table-nowrap" [dataSource]="dataSource" matSort>
           <ng-container matColumnDef="registerNo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> register No </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              register No
+            </th>
             <td mat-cell *matCellDef="let row">
               <ng-container *ngIf="adminValidate()">
                 <span class="text-link" [matMenuTriggerFor]="menu">
                   {{row.registerNo}}
                 </span>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item  (click)="onClickClaim(row)">View</button>
+                  <button mat-menu-item (click)="onClickClaim(row)">View</button>
                   <button mat-menu-item (click)="cancelClaim(row)">Cancel</button>
                 </mat-menu>
               </ng-container>

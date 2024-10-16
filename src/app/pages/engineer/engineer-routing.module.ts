@@ -10,6 +10,8 @@ import { EngineerRgasAnalysisComponent } from './engineer-rgas-analysis/engineer
 import { EngineerRgasNewComponent } from './engineer-rgas-new/engineer-rgas-new.component';
 import { EngineerEstimateShipmentComponent } from './engineer-estimate-shipment/engineer-estimate-shipment.component';
 import { EngineerEstimateShipment2Component } from './engineer-estimate-shipment2/engineer-estimate-shipment2.component';
+import { EngineerDeliveryComponent } from './engineer-delivery/engineer-delivery.component';
+import { EngineerDeliveryViewComponent } from './engineer-delivery-view/engineer-delivery-view.component';
 
 const routes: Routes = [
   {
@@ -48,6 +50,14 @@ const routes: Routes = [
   {
     path: 'estimate-shipment',
     component: EngineerEstimateShipment2Component
+  },
+  {
+    path: 'delivery',
+    component: EngineerDeliveryComponent
+  },
+  {
+    path: 'delivery-view',
+    component: EngineerDeliveryViewComponent
   },
   { path: '**', component: NotfoundComponent }
 

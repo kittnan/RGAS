@@ -1,0 +1,218 @@
+<div fxLayout="row wrap" fxLayoutAlign="center start">
+  <div class="flex justify-center items-start w-full">
+    <app-title [title]="'RGAS-1'" class="w-full"></app-title>
+  </div>
+  <div fxFlex="95" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+
+      <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="center center" class="mr-2">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Search Option</mat-label>
+          <mat-select [(ngModel)]="filterSelected" (ngModelChange)="onSearchSelect()">
+            <mat-option value=""> </mat-option>
+            <mat-option *ngFor="let item of filterOption" [value]="item.value">
+              <span class="capitalize text-sm">
+                {{item.name}}
+              </span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="center center" class="mr-4">
+        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+          <mat-label>Search Value</mat-label>
+          <input matInput [placeholder]="placeholder" [(ngModel)]="fillSearch" (keydown.enter)="onSearchSubmit()">
+          <button matSuffix mat-icon-button (click)="onSearchSubmit()">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div fxFlex="auto"></div>
+      <div *ngIf="showBtnNew" fxLayout="row wrap" fxLayoutAlign="center center">
+        <button mat-raised-button class="btn-success btn-radius" (click)="onClickNew()">
+          <mat-icon class="mat-18">add_circle</mat-icon>
+          New
+        </button>
+      </div>
+
+    </div>
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
+      <nz-table #basicTable [nzBordered]="true" [nzVirtualItemSize]="54" [nzData]="antTableData"
+        [nzVirtualForTrackBy]="trackByIndex" [nzFrontPagination]="false" [nzShowPagination]="false"
+        [nzScroll]="{ x: '1200px', y: '400px' }">
+        <!-- <nz-table #basicTable [nzData]="antTableData" style="width: 100%;" [nzPageSize]="pageSize" nzShowSizeChanger
+        [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)" [nzLoading]="loading"
+        [nzScroll]="{ x: '1200px'}" [nzTotal]="total"> -->
+
+        <thead>
+          <tr>
+            <th nzWidth="200px">RegisterNo</th>
+            <th nzWidth="200px">Page no.</th>
+            <th nzWidth="200px">Status</th>
+            <th nzWidth="200px">More Than 2 Month</th>
+            <th nzWidth="200px">More Than 1.5 Month</th>
+            <th nzWidth="200px">PIC</th>
+            <th nzWidth="200px">Claim Month</th>
+            <th nzWidth="200px">Claim No</th>
+            <th nzWidth="200px">Model No</th>
+            <th nzWidth="200px">Customer Name</th>
+            <th nzWidth="200px">Occurred Location</th>
+            <th nzWidth="200px">Defect</th>
+            <th nzWidth="200px">Q'ty</th>
+            <th nzWidth="200px">Lot No.</th>
+            <th nzWidth="200px">Judgment</th>
+            <th nzWidth="200px">Return Style</th>
+          </tr>
+          <tr>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'registerNo')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'no')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'docStatus')" />
+              </nz-input-group>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'PIC')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'claimMonth')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'claimNo')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'modelNo')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'customerName')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'occurredLocation')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'defect')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'qty')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'lotNo')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'judgment')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input type="text" nz-input (keydown.enter)="onFilter2($event,'returnStyle')" />
+              </nz-input-group>
+            </th>
+            <ng-template #prefixTemplateUser>
+              <span class="material-icons-outlined" style="font-size: 14px;">
+                search
+              </span>
+            </ng-template>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of basicTable.data">
+            <td>
+              <ng-container *ngIf="adminValidate()">
+                <span class="text-link" [matMenuTriggerFor]="menu">
+                  {{row.registerNo}}
+                </span>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="onClickClaim(row)">View</button>
+                  <button mat-menu-item (click)="cancelClaim(row)">Cancel</button>
+                </mat-menu>
+              </ng-container>
+              <ng-container *ngIf="!adminValidate()">
+                <span class="text-link" (click)="onClickClaim(row)">
+                  {{row.registerNo}}
+                </span>
+              </ng-container>
+            </td>
+            <td>
+              {{row.no}}
+            </td>
+            <td class="font-bold capitalize" [class]="cssStatus(row.docStatus)">
+              <span [title]="row.claimStatus">
+                {{row.docStatus}}
+              </span>
+            </td>
+            <td style="text-wrap: nowrap;" [class]="cssStatus1(row.moreThan2Month)">
+              {{row.moreThan2Month}}
+            </td>
+            <td style="text-wrap: nowrap;" [class]="cssStatus2(row.moreThan15Month)">
+              {{row.moreThan15Month}}
+            </td>
+            <td class="font-bold" style="text-wrap: nowrap;"> {{row.PIC}} </td>
+            <td> {{row.claimMonth}} </td>
+            <td class="font-bold"> {{row.claimNo}} </td>
+            <td> {{row.modelNo}} </td>
+            <td> {{row.customerName}} </td>
+            <td> {{row.occurredLocation}} </td>
+            <td> {{row.defect}} </td>
+            <td> {{row.qty}} </td>
+            <td> {{row.lotNo}} </td>
+            <td> {{row.judgment}} </td>
+            <td> {{row.returnStyle}} </td>
+
+          </tr>
+        </tbody>
+      </nz-table>
+      <!-- <nz-table nzShowSizeChanger [nzData]="listOfRandomUser" [nzFrontPagination]="false" [nzLoading]="loading"
+        [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
+        (nzQueryParams)="onQueryParamsChange($event)">
+        <thead>
+          <tr>
+            <th nzColumnKey="name" [nzSortFn]="true">Name</th>
+            <th nzColumnKey="gender" [nzFilters]="filterGender" [nzFilterFn]="true">Gender</th>
+            <th nzColumnKey="email" [nzSortFn]="true">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (data of listOfRandomUser; track data) {
+          <tr>
+            <td>{{ data.name.first }} {{ data.name.last }}</td>
+            <td>{{ data.gender }}</td>
+            <td>{{ data.email }}</td>
+          </tr>
+          }
+        </tbody>
+      </nz-table> -->
+    </div>
+  </div>
+</div>

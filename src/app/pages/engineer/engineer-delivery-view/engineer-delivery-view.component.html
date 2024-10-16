@@ -1,0 +1,160 @@
+<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10">
+  <nz-date-picker nzMode="year" [nzFormat]="dateFormat" [(ngModel)]="year" (ngModelChange)="getData()"></nz-date-picker>
+  <span class="material-icons-outlined user-select" style="cursor: pointer;" (click)="decreaseYear();getData()">
+    chevron_left
+  </span>
+  <span class="material-icons-outlined user-select" style="cursor: pointer;" (click)="increaseYear();getData()">
+    navigate_next
+  </span>
+  <button mat-raised-button color="primary" [routerLink]="'/engineer/delivery'" style="background-color: #12bdce;">
+    <span class="material-icons-outlined">
+      file_upload
+    </span>
+    Upload
+  </button>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-5 mb-5">
+  <mat-slide-toggle class="example-margin" color="primary" [(ngModel)]="tableHeadShow" style="letter-spacing: 2px;">
+    Show Summarize
+  </mat-slide-toggle>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10">
+  <nz-table #basicTable [nzData]="dataSet" nzSize="small" [nzFrontPagination]="false" [nzShowPagination]="false"
+    [nzVirtualItemSize]="10" [nzVirtualForTrackBy]="trackByIndex" [nzScroll]="{ x: '1200px', y: '500px' }">
+    <thead>
+      <tr>
+        <th nzWidth="100px" [nzLeft]="true">
+          Model
+        </th>
+        <th nzWidth="100px">
+          KYD Cd
+        </th>
+        <th nzWidth="200px">
+          Model Name
+        </th>
+        <th nzWidth="100px">
+          Biz Segment
+        </th>
+        <th nzWidth="100px">
+          Process
+        </th>
+        <th nzWidth="100px">
+          Customer
+        </th>
+        <th nzWidth="100px">
+          Classification
+        </th>
+        <th nzWidth="200px">
+          Project Name
+        </th>
+        <th nzWidth="100px">
+        </th>
+        <ng-container *ngFor="let head of headersAddition; let i=index">
+          <th nzWidth="100px">
+            {{head}}
+          </th>
+        </ng-container>
+      </tr>
+      <ng-container *ngIf="tableHeadShow">
+        <ng-container *ngFor="let su of sum; let i=index">
+          <tr>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+              {{su.name}}
+            </th>
+            <th>
+              {{su.keyName}}
+            </th>
+            <ng-container *ngFor="let head of headersAddition; let i=index">
+              <th nzWidth="100px">
+                {{su.data[head].str}}
+              </th>
+            </ng-container>
+          </tr>
+        </ng-container>
+      </ng-container>
+
+
+
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let data of basicTable.data">
+        <tr>
+          <td  [nzLeft]="true">
+            {{data['Model']}}
+          </td>
+          <td>
+            {{data['KYD Cd']}}
+          </td>
+          <td>
+            {{data['Model Name']}}
+          </td>
+          <td>
+            {{data['Biz Segment']}}
+          </td>
+          <td>
+            {{data['Process']}}
+          </td>
+          <td>
+            {{data['Customer']}}
+          </td>
+          <td>
+            {{data['Classification']}}
+          </td>
+          <td>
+            {{data['Project Name']}}
+          </td>
+          <td>
+            Estimate
+          </td>
+          <ng-container *ngFor="let head of headersAddition; let i=index">
+            <td nzWidth="100px">
+              {{showDataRow(data,head)}}
+            </td>
+          </ng-container>
+        </tr>
+        <tr>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+            Actual
+          </td>
+          <ng-container *ngFor="let head of headersAddition; let i=index">
+            <td nzWidth="100px">
+              {{showDataRow2(data,head)}}
+            </td>
+          </ng-container>
+        </tr>
+      </ng-container>
+
+
+    </tbody>
+  </nz-table>
+</div>

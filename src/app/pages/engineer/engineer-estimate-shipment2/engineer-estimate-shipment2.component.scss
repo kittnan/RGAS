@@ -1,33 +1,84 @@
 .viewport {
   overflow-x: auto;
-  height: calc(100vh - 300px); /* Adjust according to the header height */
+  height: calc(100vh - 300px);
+  /* Adjust according to the header height */
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 }
+
 .sticky-header {
   position: sticky;
   top: 0;
-  background: white; /* Ensure the background color is set */
-  z-index: 1; /* Ensure header is above table rows */
+  background: white;
+  /* Ensure the background color is set */
+  z-index: 1;
+  /* Ensure header is above table rows */
 }
 
 .sticky-header th {
-  padding: 10px; /* Adjust padding as needed */
-  border-bottom: 1px solid #ddd; /* Optional: add border for better separation */
+  padding: 10px;
+  /* Adjust padding as needed */
+  border-bottom: 1px solid #ddd;
+  /* Optional: add border for better separation */
 }
-table>thead>tr>th,
-table>tbody>tr>td,
-table>tfoot>tr>td {
-  border: 1px solid;
-  padding: 5px;
-  font-size: 12px;
-}
+
+// table>thead>tr>th,
+// table>tbody>tr>td,
+// table>tfoot>tr>td {
+//   border: 1px solid;
+//   padding: 5px;
+//   font-size: 12px;
+//   letter-spacing: 2px;
+// }
 
 
 .input-number {
   border: 1px solid black;
-  width: 80px;
+  width: 100%;
+  text-align: end;
+}
+
+
+.table-container {
+  position: relative;
+  max-height: 400px;
+  overflow-y: auto;
+  /* ทำให้มีการเลื่อนของตารางได้ */
+}
+
+.fixed-footer {
+  position: sticky;
+  bottom: 0;
+  background-color: #fff;
+  border-top: 1px solid #e8e8e8;
+  text-align: center;
+  font-weight: bold;
+  padding: 16px;
+}
+
+.highlight-td {
+  background-color: rgb(224, 224, 224);
+  transition: background-color 0.5s ease-in-out;
+}
+
+.highlight-td-active {
+  background-color: #94e3e2;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.highlight-td:focus {
+  background-color: #bdffbd;
+}
+
+.text-month {
+  font-weight: bold;
+}
+
+.ant-table-tbody>tr>td,
+.ant-table-thead>tr>th {
+  font-size: 12px !important;
 }

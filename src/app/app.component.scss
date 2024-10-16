@@ -82,7 +82,8 @@
   .title-sub-menu {
     display: block;
   }
-  .title-main-menu{
+
+  .title-main-menu {
     display: none !important;
   }
 
@@ -98,7 +99,8 @@
   .title-sub-menu {
     display: none !important;
   }
-  .title-main-menu{
+
+  .title-main-menu {
     display: block;
   }
 }
@@ -161,10 +163,44 @@ footer {
   .theme-toggle {
     color: #353535;
   }
+
+  .btn-active {
+    background-color: #2fff9e;
+    color: black;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .ant-table-footer,
+  .ant-table-thead>tr>th,
+  .ant-table-cell,
+  .ant-table-cell-fix-left,
+  .ant-table-cell-fix-right {
+    background-color: #333;
+    color: whitesmoke;
+  }
+
+  .ant-table-tbody>tr.ant-table-row:hover>td,
+  .ant-table-tbody>tr>td.ant-table-cell-row-hover {
+    background-color: #5c5c5c;
+    color: whitesmoke;
+  }
 }
 
 ::ng-deep .theme--light {
   .theme-toggle {
     color: #ffa02f;
+  }
+
+  .btn-active {
+    background-color: #ffa02f;
+    color: whitesmoke;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .ant-table-thead>tr>th {
+    background-color: whitesmoke;
+    color: black;
   }
 }

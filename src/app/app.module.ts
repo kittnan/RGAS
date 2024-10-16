@@ -25,7 +25,8 @@ import { LoginComponent } from './shared/login/login.component';
 import { SectionHeadComponent } from './pages/section-head/section-head.component';
 import { DepartmentHeadComponent } from './pages/department-head/department-head.component';
 import { JwtInterceptor } from './auth/jwt.interceptor';
-
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US } from 'ng-zorro-antd/i18n';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MMM-YY',
@@ -85,7 +86,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
       provide:HTTP_INTERCEPTORS,
       useClass:JwtInterceptor,
       multi:true
-    }
+    },
+    { provide: NZ_I18N, useValue: en_US }
   ],
   bootstrap: [AppComponent],
   exports: [

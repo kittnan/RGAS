@@ -1,0 +1,48 @@
+<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10">
+  <nz-date-picker *ngIf="!conditionLoading()" nzMode="month" [nzFormat]="dateFormat" [(ngModel)]="month"></nz-date-picker>
+  <span *ngIf="!conditionLoading()" class="material-icons-outlined user-select" style="cursor: pointer;" (click)="decreaseMonth()">
+    chevron_left
+  </span>
+  <span *ngIf="!conditionLoading()" class="material-icons-outlined user-select" style="cursor: pointer;" (click)="increaseMonth()">
+    navigate_next
+  </span>
+  <button *ngIf="!conditionLoading()" [disabled]="!month" mat-raised-button color="primary" (click)="file.click()" style="background-color: #12bdce;">
+    <span class="material-icons-outlined">
+      post_add
+      </span>
+    Choose File
+  </button>
+  <input hidden #file type="file" (change)="upload($event)" accept=".xlsx,.xlsm">
+  <button *ngIf="!conditionLoading()" [disabled]="!month || !file.value" mat-raised-button color="primary" (click)="submit()" style="background-color: #53afff;">
+    <span class="material-icons-outlined">
+      file_upload
+      </span>
+    Upload
+  </button>
+  <span id="statusMessage">กรุณาเลือกเดือนและไฟล์เพื่ออัปโหลด</span>
+  <nz-spin nzSimple *ngIf="conditionLoading()"></nz-spin>
+</div>
+<nz-skeleton  *ngIf="conditionLoading()" [nzLoading]="true"></nz-skeleton>
+<div *ngIf="!conditionLoading()" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10">
+  <nz-table #basicTable [nzData]="dataSet" nzSize="small" [nzFrontPagination]="false" [nzShowPagination]="false"
+    [nzScroll]="{ x: '1200px', y: '500px' }">
+    <thead>
+      <tr>
+        <ng-container *ngFor="let head of headers; let i=index">
+          <th nzWidth="200px">
+            {{head}}
+          </th>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <ng-container *ngFor="let head of headers; let i=index">
+          <td nzWidth="200px">
+            {{data[head]}}
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

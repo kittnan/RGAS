@@ -206,13 +206,10 @@ export class Rgas1Component implements OnInit {
   }
 
   // todo search table
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  applyFilter(event: Event, column: string): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    // this.filterValues[column] = filterValue;
+    // this.dataSource.filter = JSON.stringify(this.filterValues);
   }
 
   // todo click new claim

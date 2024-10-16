@@ -38,7 +38,13 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { DatePickerCustomComponent } from './date-picker-custom/date-picker-custom.component';
 import { ReportKcDcComponent } from '../pages/all-member/report-kc-dc/report-kc-dc.component';
 import { Autocomplete3Component } from './autocomplete3/autocomplete3.component';
-
+import { Rgas1AntComponent } from '../rgas/rgas1-ant/rgas1-ant.component';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { Rgas1AntVirtualTableComponent } from '../rgas/rgas1-ant-virtual-table/rgas1-ant-virtual-table.component';
 export const MY_FORMATS = {
   parse: {
     dateInput: 'DD-MMM-YY',
@@ -59,7 +65,10 @@ let items = [
   TitleComponent,
   Rgas1Component,
   Rgas2Component,
-  DialogCommentComponent
+  DialogCommentComponent,
+  Rgas1AntComponent,
+  Rgas1AntVirtualTableComponent,
+
 ]
 
 @NgModule({
@@ -95,7 +104,12 @@ let items = [
     ReactiveFormsModule,
     HttpClientModule,
     NgxEditorModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NzTableModule,
+    NzInputModule,
+    NzSkeletonModule,
+    NzDatePickerModule,
+    NzSpinModule
   ],
   exports: [
     ...items,
@@ -122,6 +136,11 @@ let items = [
     DatePickerCustomComponent,
     ReportKcDcComponent,
     Autocomplete3Component,
+    NzTableModule,
+    NzInputModule,
+    NzSkeletonModule,
+    NzDatePickerModule,
+    NzSpinModule
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

@@ -20,6 +20,11 @@ export class HttpClaimService {
       params: params
     });
   }
+  getRgas1Virtual(params: HttpParams): Observable<any> {
+    return this.http.get(`${this.URL}/${this.SUB}/getRgas1Virtual`, {
+      params: params
+    });
+  }
   getClaimData(params: HttpParams): Observable<any> {
     return this.http.get(`${this.URL}/${this.SUB}/getClaimData`, {
       params: params

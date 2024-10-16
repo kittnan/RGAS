@@ -1,0 +1,13 @@
+.user-select {
+  user-select: none;
+  /* ป้องกันการเลือกข้อความ */
+}
+
+.ant-table-tbody>tr>td,
+.ant-table-thead>tr>th {
+  font-size: 12px !important;
+}
+
+.ant-table-cell {
+  font-size: 12px !important;
+}

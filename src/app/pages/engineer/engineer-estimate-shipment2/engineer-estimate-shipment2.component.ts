@@ -1,21 +1,29 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import html2canvas from 'html2canvas';
 import moment from 'moment';
+import { NzTableComponent } from 'ng-zorro-antd/table';
 import { lastValueFrom } from 'rxjs';
 import { HttpEstimateShipmentService } from 'src/app/https/http-estimate-shipment.service';
 import { HttpModelsService } from 'src/app/https/http-models.service';
-import * as Exceljs from 'exceljs'
 import { ExcelService } from 'src/app/services/excel.service';
 import * as XLSX from 'xlsx';
-import html2canvas from 'html2canvas';
+import { DialogEngineerEstimateShipment2Component } from './dialog-engineer-estimate-shipment2/dialog-engineer-estimate-shipment2.component';
+export interface VirtualDataInterface {
+  index: number;
+  name: string;
+  age: number;
+  address: string;
+}
 @Component({
   selector: 'app-engineer-estimate-shipment2',
   templateUrl: './engineer-estimate-shipment2.component.html',
   styleUrls: ['./engineer-estimate-shipment2.component.scss']
 })
+
 export class EngineerEstimateShipment2Component implements OnInit {
-  iframeSrc: any
+  @ViewChild('virtualTable', { static: false }) nzTableComponent?: NzTableComponent<VirtualDataInterface>;
   yearOption: any = []
   yearSelect: number | string = '2024'
 
@@ -26,17 +34,43 @@ export class EngineerEstimateShipment2Component implements OnInit {
   columnRef: any = []
 
   rows: any = []
+  rows2: any = []
+  sum: any = [
+    {
+      name: 'TOTAL',
+      target: '',
+      data: {}
+    },
+    {
+      name: 'AUTO',
+      target: 'AUTO',
+      data: {}
+    },
+    {
+      name: 'TFTM  HUD',
+      target: 'TFTM  HUD',
+      data: {}
+    },
+    {
+      name: 'INDUSTRY',
+      target: 'INDUSTRY',
+      data: {}
+    },
+    {
+      name: 'Nippon seiki',
+      target: 'Nippon seiki',
+      data: {}
+    },
+  ]
   file: any
-
-  displayedColumns: string[] = ['column1', 'column2', 'column3']; // Replace with your actual column names
-  dataSource = []; // Replace with your actual data source
-  itemSize = 50; // Adjust according to your row height
-
-
+  tableHeadShow: boolean = true
+  load: boolean = false
+  iframeSrc: any = ''
   constructor(
     private $model: HttpModelsService,
     private $estimate: HttpEstimateShipmentService,
-    private $excel: ExcelService
+    private $excel: ExcelService,
+    public $dialog: MatDialog
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -46,7 +80,6 @@ export class EngineerEstimateShipment2Component implements OnInit {
       // this.monthSelect = await this.generateMonthsArray('Jan')
 
       const resYearOption: any = await lastValueFrom(this.$estimate.yearOption())
-      console.log("🚀 ~ resYearOption:", resYearOption)
       this.yearOption = resYearOption.map((item: any) => item._id)
       this.getData()
     } catch (error) {
@@ -55,12 +88,14 @@ export class EngineerEstimateShipment2Component implements OnInit {
     }
   }
   changeYear(year: any) {
+    this.checkMonth()
     this.yearSelect = Number(year)
     this.monthSelect = []
     this.getData()
   }
   async getData() {
     try {
+      this.load = true
       const monthOption: any = await this.generateMonthsArray()
       this.monthOption = monthOption.map((month: any) => {
         if (this.monthSelect.some((m: any) => m == month)) {
@@ -85,7 +120,8 @@ export class EngineerEstimateShipment2Component implements OnInit {
           type: 'text',
           cell: (elm: any) => elm['Model'],
           width: '100px',
-          align: 'start'
+          align: 'start',
+          nzLeft: true
         },
         {
           columnDef: 'KYD Cd',
@@ -93,7 +129,8 @@ export class EngineerEstimateShipment2Component implements OnInit {
           type: 'text',
           cell: (elm: any) => elm['KYD Cd'],
           width: '100px',
-          align: 'start'
+          align: 'start',
+          nzLeft: false
         },
         {
           columnDef: 'Model Name',
@@ -101,15 +138,17 @@ export class EngineerEstimateShipment2Component implements OnInit {
           type: 'text',
           cell: (elm: any) => elm['Model Name'],
           width: '150px',
-          align: 'start'
+          align: 'start',
+          nzLeft: false
         },
         {
           columnDef: 'Biz Segment',
           header: 'Biz Segment',
           type: 'text',
           cell: (elm: any) => elm['Biz Segment'],
-          width: '100px',
-          align: 'start'
+          width: '120px',
+          align: 'start',
+          nzLeft: false
         },
         {
           columnDef: 'Process',
@@ -117,7 +156,8 @@ export class EngineerEstimateShipment2Component implements OnInit {
           type: 'text',
           cell: (elm: any) => elm['Process'],
           width: '100px',
-          align: 'start'
+          align: 'start',
+          nzLeft: false
         },
         {
           columnDef: 'Customer',
@@ -125,7 +165,8 @@ export class EngineerEstimateShipment2Component implements OnInit {
           type: 'text',
           cell: (elm: any) => elm['Customer'],
           width: '100px',
-          align: 'start'
+          align: 'start',
+          nzLeft: false
         },
         {
           columnDef: 'Classification',
@@ -133,7 +174,8 @@ export class EngineerEstimateShipment2Component implements OnInit {
           type: 'text',
           cell: (elm: any) => elm['Classification'],
           width: '150px',
-          align: 'start'
+          align: 'start',
+          nzLeft: false
         },
         {
           columnDef: 'Project Name',
@@ -141,7 +183,8 @@ export class EngineerEstimateShipment2Component implements OnInit {
           type: 'text',
           cell: (elm: any) => elm['Project Name'],
           width: '300px',
-          align: 'start'
+          align: 'start',
+          nzLeft: false
         },
       ]
 
@@ -151,13 +194,13 @@ export class EngineerEstimateShipment2Component implements OnInit {
           header: month,
           type: 'input',
           cell: (elm: any) => elm[month],
-          width: '100px',
-          align: 'center'
+          width: '150px',
+          align: 'right',
+          nzLeft: false
         }
       })
       this.columnRef = this.columnRef.concat(columnMonth)
 
-      this.displayedColumns = this.columnRef.map((item: any) => item.columnDef)
       let newMonthObj: any = {}
       this.monthSelect.map((col: any, i: number) => {
         newMonthObj[col] = ''
@@ -169,26 +212,76 @@ export class EngineerEstimateShipment2Component implements OnInit {
           year: this.yearSelect
         }
       })
-      body = body.map((item: any) => {
+      body = body.map((item: any, index: number) => {
+        item.index = index
         let it = resDataOfYear.find((item2: any) => item2.Model == item.Model)
         if (it) {
           return it
         }
         return item
       })
-      console.log("🚀 ~ this.columnRef:", this.columnRef)
-
-      console.log("🚀 ~ body:", body)
       this.rows = body
+      this.sumFooter()
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
+      this.load = false
+    } finally {
+      this.load = false
     }
   }
-
-  getColumnType(column: string): string {
-    // Return the type of column, e.g., 'text' or 'input'
-    return 'text'; // Adjust based on your column types
+  sumFooter() {
+    const columnFooter = this.columnRef.map((col: any) => col.columnDef)
+    columnFooter.forEach((col: any) => {
+      if (col.includes('-')) {
+        this.sum.map((sum: any) => {
+          if (sum.target == '') {
+            sum.data[col] = this.showSumMonth(col)
+          } else {
+            sum.data[col] = this.showSum(col, 'Biz Segment', 'Process', sum.target)
+          }
+        })
+      } else {
+        this.sum.map((sum: any) => {
+          if (sum.target == '') {
+            sum.data[col] = ''
+          } else {
+            sum.data[col] = ''
+          }
+        })
+      }
+    })
   }
+  trackByIndex(_: number, data: VirtualDataInterface): number {
+    return data.index;
+  }
+  showSumMonth(columnDef: string) {
+    const sumNum: number = this.rows.reduce((p: any, n: any) => {
+      if (!isNaN(Number(n[columnDef]))) {
+        p += Number(n[columnDef])
+      }
+      return p
+    }, 0)
+    const str: string = sumNum > 0 ? sumNum.toLocaleString() : ''
+    return str
+  }
+  showSum(columnDef: string, key: string, key2: string, value: string) {
+    const sumNum: number = this.rows.reduce((p: any, n: any) => {
+      if (n[key] == value || n[key2] == value) {
+        if (!isNaN(Number(n[columnDef]))) {
+          p += Number(n[columnDef])
+        }
+      }
+      return p
+    }, 0)
+    const str: string = sumNum > 0 ? sumNum.toLocaleString() : ''
+    return str
+  }
+  // getColumnType(column: string): string {
+  //   // Return the type of column, e.g., 'text' or 'input'
+  //   return 'text'; // Adjust based on your column types
+  // }
+
 
   generateMonthsArray(select: string | null = null) {
     return new Promise(resolve => {
@@ -226,6 +319,19 @@ export class EngineerEstimateShipment2Component implements OnInit {
         ${htmlString}
       `;
         this.iframeSrc = 'data:text/html;base64,' + this.base64EncodeUnicode(styledHtmlString)
+        const dialogRef = this.$dialog.open(DialogEngineerEstimateShipment2Component, {
+          data: {
+            src: 'data:text/html;base64,' + this.base64EncodeUnicode(styledHtmlString),
+            file: this.file,
+            yearSelect: this.yearSelect
+          },
+          width: '90%',
+          height: '85%'
+        }).afterClosed().subscribe((data: any) => {
+          if (data) {
+            this.getData()
+          }
+        })
       }
       reader.readAsArrayBuffer(file);
     }
@@ -276,23 +382,7 @@ export class EngineerEstimateShipment2Component implements OnInit {
   cancel() {
     location.reload()
   }
-  async uploadSubmit() {
-    try {
-      if (this.file) {
-        const wb = new Exceljs.Workbook();
-        await wb.xlsx.load(this.file);
-        const ws: Exceljs.Worksheet | undefined = wb.getWorksheet(1);
-        const data: any = await this.$excel.excelSheetToObject(ws)
-        if (data?.length != 0) {
-          data.forEach((d: any) => d.year = this.yearSelect);
-          const resUpdateEstimate = await lastValueFrom(this.$estimate.createOrUpdate(data))
-          location.reload()
-        }
-      }
-    } catch (error) {
-      console.log("🚀 ~ error:", error)
-    }
-  }
+
   checkAllMonth() {
     setTimeout(() => {
       if (this.monthAllSelect) {
@@ -316,5 +406,34 @@ export class EngineerEstimateShipment2Component implements OnInit {
       this.monthSelect = this.monthOption.filter((month: any) => month.value).map((month: any) => month.month)
       this.getData()
     }, 300);
+  }
+  async onSubmit(row: any, col: any, i_col: number, i_row: number, event: KeyboardEvent) {
+
+    if (event.code == 'Tab') {
+      const id = i_row + 'x' + i_col
+      const id_next = i_row + 'x' + i_col + 1
+      const res = await lastValueFrom(this.$estimate.createOrUpdate([row]))
+      let div1: any | null = document.getElementById(id)
+      let div2: any | null = document.getElementById(id_next)
+      this.sumFooter()
+      if (div1 && div2 && res) {
+        div2.focus()
+        div2.select()
+        div1.classList.add('highlight-td-active')
+      }
+    }
+    if (event.code == 'Enter') {
+      const id = i_row + 'x' + i_col
+      const id_next = i_row + 1 + 'x' + i_col
+      const res = await lastValueFrom(this.$estimate.createOrUpdate([row]))
+      let div1: any | null = document.getElementById(id)
+      let div2: any | null = document.getElementById(id_next)
+      this.sumFooter()
+      if (div2 && res) {
+        div2.focus()
+        div2.select()
+        div1.classList.add('highlight-td-active')
+      }
+    }
   }
 }

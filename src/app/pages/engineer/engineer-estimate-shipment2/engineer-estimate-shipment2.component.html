@@ -1,50 +1,136 @@
 <div fxLayout="row wrap" fxLayoutAlign="start center">
-  <h1>
+  <label class="text-lg font-bold" style="letter-spacing: 2px;">
     Estimate Delivery Shipment
-  </h1>
+  </label>
 </div>
-<div *ngIf="!iframeSrc" fxLayout="row wrap" fxLayoutAlign="start center">
+<div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-5 mb-5">
   <div fxFlex="70" fxLayout="row wrap" fxLayoutAlign="start stretch">
     <ng-container *ngFor="let item of yearOption; let i=index">
-      <button mat-button (click)="changeYear(item);">
+      <button mat-button [ngClass]="{'btn-active': yearSelect==item}" (click)="changeYear(item);">
         {{item}}
       </button>
     </ng-container>
   </div>
   <div fxFlex="30" fxLayout="row wrap" fxLayoutAlign="start stretch">
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayoutGap="20">
-      <button mat-raised-button color="primary" (click)="fileUpload.click()">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="end stretch" fxLayoutGap="20">
+      <button mat-raised-button color="primary" (click)="fileUpload.click()" style="letter-spacing: 2px;">
         Upload
       </button>
       <input hidden #fileUpload type="file" accept=".xlsx" (change)="uploadAndPreview($event)">
-      <button mat-raised-button color="accent">
+      <button mat-raised-button color="accent" style="letter-spacing: 2px;">
         Download
       </button>
     </div>
   </div>
 </div>
 
-<div *ngIf="iframeSrc" fxLayout="row wrap" fxLayoutAlign="start center" class="mb-4">
-  <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayoutGap="20">
-    <button mat-raised-button (click)="cancel()">
-      Cancel
-    </button>
-    <button mat-raised-button (click)="uploadSubmit()">
-      Submit
-    </button>
-  </div>
-</div>
 
-
-
-<div *ngIf="!iframeSrc" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30" class="mt-6 mb-2">
+<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="30" class="mt-6 mb-2">
   <mat-checkbox [(ngModel)]="monthAllSelect" class="example-margin" (ngModelChange)="checkAllMonth()">All
     month</mat-checkbox>
   <ng-container *ngFor="let item of monthOption; let i=index">
-    <mat-checkbox [(ngModel)]="item.value" [ngClass]="{'text-month': item.value}"
-      (ngModelChange)="checkMonth()">{{item.month}}</mat-checkbox>
+    <mat-checkbox [(ngModel)]="item.value" [ngClass]="{'text-month': item.value}" (ngModelChange)="checkMonth()"
+      style="letter-spacing: 2px;">{{item.month}}</mat-checkbox>
   </ng-container>
 </div>
+<div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-5 mb-5">
+  <mat-slide-toggle class="example-margin" color="primary" [(ngModel)]="tableHeadShow" style="letter-spacing: 2px;">
+    Show Summarize
+  </mat-slide-toggle>
+</div>
+
+<nz-skeleton *ngIf="load" [nzActive]="true" [nzLoading]="true" [nzRound]="true"></nz-skeleton>
+<nz-table *ngIf="!load" #table1 [nzData]="rows" nzSize="small" [nzFrontPagination]="false" [nzShowPagination]="false"
+  [nzVirtualItemSize]="10" [nzVirtualForTrackBy]="trackByIndex"  [nzScroll]="{ x: '1200px', y: '500px' }" style="margin-bottom: 3rem;">
+  <thead>
+    <tr>
+      <ng-container *ngFor="let column of columnRef; let i=index">
+        <th [nzLeft]="column.nzLeft" [nzWidth]="column.width" [nzAlign]="column.align" style="letter-spacing: 2px;">
+          {{column.columnDef}}</th>
+      </ng-container>
+    </tr>
+
+    <ng-container *ngFor="let su of sum; let i=index">
+      <tr *ngIf="tableHeadShow">
+        <ng-container *ngFor="let column of columnRef; let i=index">
+          <ng-container *ngIf="i==0">
+            <th [nzLeft]="column.nzLeft" [nzWidth]="column.width" nzAlign="right">
+              {{su.name}}
+            </th>
+          </ng-container>
+          <ng-container *ngIf="i>=1 && i<=7">
+            <th [nzLeft]="column.nzLeft" [nzWidth]="column.width">
+            </th>
+          </ng-container>
+          <ng-container *ngIf="i>=8">
+            <th [nzLeft]="column.nzLeft" [nzAlign]="column.align" [nzWidth]="column.width" style="color: #7373ff;">
+              {{su.data[column.columnDef]}}
+            </th>
+          </ng-container>
+        </ng-container>
+      </tr>
+    </ng-container>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of table1.data;let i_row=index">
+      <ng-container *ngFor="let column of columnRef; let i_col=index">
+        <ng-container *ngIf="column.type=='text'">
+          <td [nzLeft]="column.nzLeft">
+            {{row[column.columnDef]}}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="column.type=='input'">
+          <td [nzLeft]="column.nzLeft">
+            <input [attr.id]="i_row+'x'+i_col" type="number" nz-input class="input-number highlight-td"
+              [(ngModel)]="row[column.columnDef]" (keydown)="onSubmit(row,'',i_col,i_row,$event)" />
+          </td>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </tbody>
+</nz-table>
+
+<!-- <nz-table *ngIf="!load" #table1 [nzData]="rows" nzSize="small" [nzFrontPagination]="false" [nzShowPagination]="false"
+  [nzVirtualItemSize]="54" [nzVirtualForTrackBy]="trackByIndex" [nzScroll]="{ x: '1200px', y: '500px' }" >
+  <thead>
+    <tr>
+      <ng-container *ngFor="let column of columnRef; let i=index">
+        <th [nzLeft]="column.nzLeft" [nzWidth]="column.width" [nzAlign]="column.align">{{column.columnDef}}</th>
+      </ng-container>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let column of columnRef; let i=index">
+        <ng-container *ngIf="column.type=='text'">
+          <th [nzLeft]="column.nzLeft" [nzWidth]="column.width">
+          </th>
+        </ng-container>
+        <ng-container *ngIf="column.type=='input'">
+          <th [nzLeft]="column.nzLeft" [nzAlign]="column.align" [nzWidth]="column.width" style="color: #7373ff;">
+            {{sum[column.columnDef]}}
+          </th>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of table1.data;let i_row=index">
+      <ng-container *ngFor="let column of columnRef; let i_col=index">
+        <ng-container *ngIf="column.type=='text'">
+          <td [nzLeft]="column.nzLeft">
+            {{row[column.columnDef]}}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="column.type=='input'">
+          <td [nzLeft]="column.nzLeft">
+            <input [attr.id]="i_row+'x'+i_col" type="number" nz-input class="input-number highlight-td"
+              [(ngModel)]="row[column.columnDef]" (keydown)="onSubmit(row,'',i_col,i_row,$event)" />
+          </td>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </tbody>
+</nz-table> -->
+
 
 
 <!-- <div class="container">
@@ -69,8 +155,111 @@
   </cdk-virtual-scroll-viewport>
 </div> -->
 
+<!-- <div class="table-container">
+  <nz-table #table1 [nzData]="rows" nzSize="small" [nzFrontPagination]="false" [nzShowPagination]="false"
+    [nzVirtualItemSize]="54" [nzVirtualForTrackBy]="trackByIndex">
+    <thead>
+      <tr>
+        <ng-container *ngFor="let column of columnRef; let i=index">
+          <ng-container *ngIf="i<=7">
+            <th nzLeft [nzWidth]="column.width">{{column.columnDef}}</th>
+          </ng-container>
+          <ng-container *ngIf="i>=8">
+            <th [nzWidth]="column.width">{{column.columnDef}}</th>
+          </ng-container>
+        </ng-container>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of table1.data">
+        <ng-container *ngFor="let column of columnRef; let i=index">
+          <ng-container *ngIf="column.type=='text'">
+            <td nzLeft>
+              {{row[column.columnDef]}}
+            </td>
+          </ng-container>
+          <ng-container *ngIf="column.type=='input'">
+            <td>
+              <input type="number" nz-input class="input-number" />
+            </td>
+          </ng-container>
+        </ng-container>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <ng-container *ngFor="let column of columnRef; let i=index">
+          <ng-container *ngIf="column.type=='text'">
+            <td nzLeft>
+            </td>
+          </ng-container>
+          <ng-container *ngIf="column.type=='input'">
+            <td>
+              {{column.header}}
+            </td>
+          </ng-container>
+        </ng-container>
+      </tr>
+    </tfoot>
+  </nz-table>
+  <div class="fixed-footer">
+    <table>
+      <colgroup>
+        <ng-container *ngFor="let column of columnRef; let i=index">
+          <col [width]="column.width">
+        </ng-container>
+      </colgroup>
+      <tr>
+        <ng-container *ngFor="let column of columnRef; let i=index">
+          <ng-container *ngIf="column.type=='text'">
+            <td nzLeft>
+            </td>
+          </ng-container>
+          <ng-container *ngIf="column.type=='input'">
+            <td>
+              {{column.header}}
+            </td>
+          </ng-container>
+        </ng-container>
+      </tr>
+    </table>
+  </div>
+</div> -->
 
-<div class="container">
+
+<!-- <nz-table #table2 [nzData]="rows2" nzSize="small" [nzFrontPagination]="false" [nzShowPagination]="false"
+  [nzVirtualItemSize]="54" [nzVirtualForTrackBy]="trackByIndex" [nzScroll]="{ x: '1200px', y: '500px' }">
+  <thead>
+    <tr>
+      <ng-container *ngFor="let column of columnRef; let i=index">
+        <ng-container *ngIf="i<=7">
+          <th nzLeft [nzWidth]="column.width"></th>
+        </ng-container>
+        <ng-container *ngIf="i>=8">
+          <th [nzWidth]="column.width"></th>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of table2.data">
+      <ng-container *ngFor="let column of columnRef; let i=index">
+        <ng-container *ngIf="column.type=='text'">
+          <td nzLeft>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="column.type=='input'">
+          <td>
+            {{column.header}}
+          </td>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </tbody>
+</nz-table> -->
+
+
+<!-- <div class="container">
   <cdk-virtual-scroll-viewport [itemSize]="20" class="viewport">
     <table>
       <colgroup>
@@ -102,4 +291,4 @@
       </tfoot>
     </table>
   </cdk-virtual-scroll-viewport>
-</div>
+</div> -->

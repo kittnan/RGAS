@@ -182,9 +182,6 @@ export class AppComponent {
           path: 'guest/rgas1',
           roles: ['guest']
         },
-
-
-
       ]
     },
     {
@@ -197,6 +194,18 @@ export class AppComponent {
           title: 'KC-DC',
           icon: 'keyboard_arrow_right',
           path: 'all-member/kc-dc',
+          roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead'],
+        },
+        {
+          title: 'Estimate shipment',
+          icon: 'keyboard_arrow_right',
+          path: 'engineer/estimate-shipment',
+          roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead'],
+        },
+        {
+          title: 'Delivery shipment',
+          icon: 'keyboard_arrow_right',
+          path: 'engineer/delivery-view',
           roles: ['admin', 'operator', 'engineer', 'sectionHead', 'interpreter', 'departmentHead'],
         }
       ]

@@ -16,7 +16,9 @@ import { EngineerEstimateShipmentComponent } from './engineer-estimate-shipment/
 import { SafeHtmlPipe } from './engineer-estimate-shipment/safeHtml.pipe';
 import { EngineerEstimateShipment2Component } from './engineer-estimate-shipment2/engineer-estimate-shipment2.component';
 
-
+import { DialogEngineerEstimateShipment2Component } from './engineer-estimate-shipment2/dialog-engineer-estimate-shipment2/dialog-engineer-estimate-shipment2.component';
+import { EngineerDeliveryComponent } from './engineer-delivery/engineer-delivery.component';
+import { EngineerDeliveryViewComponent } from './engineer-delivery-view/engineer-delivery-view.component';
 @NgModule({
   declarations: [
     EngineerComponent,
@@ -29,7 +31,10 @@ import { EngineerEstimateShipment2Component } from './engineer-estimate-shipment
     EngineerRgasNewComponent,
     EngineerEstimateShipmentComponent,
     SafeHtmlPipe,
-    EngineerEstimateShipment2Component
+    EngineerEstimateShipment2Component,
+    DialogEngineerEstimateShipment2Component,
+    EngineerDeliveryComponent,
+    EngineerDeliveryViewComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +42,7 @@ import { EngineerEstimateShipment2Component } from './engineer-estimate-shipment
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
+
   ]
 })
 export class EngineerModule { }
