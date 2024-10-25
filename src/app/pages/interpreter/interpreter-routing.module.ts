@@ -4,6 +4,7 @@ import { InterpreterRgas1Component } from './interpreter-rgas1/interpreter-rgas1
 import { InterpreterRgasAnalysisComponent } from './interpreter-rgas-analysis/interpreter-rgas-analysis.component';
 import { InterpreterReportApproveComponent } from './interpreter-report-approve/interpreter-report-approve.component';
 import { InterpreterReportViewComponent } from './interpreter-report-view/interpreter-report-view.component';
+import { InterpreterRgas1AntComponent } from './interpreter-rgas1-ant/interpreter-rgas1-ant.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'rgas1',
     component: InterpreterRgas1Component
+  },
+  {
+    path: 'rgas1-ant',
+    component: InterpreterRgas1AntComponent
   },
   {
     path: 'analysis',

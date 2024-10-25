@@ -1,14 +1,10 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import moment from 'moment';
 import { NzTableQueryParams } from 'ng-zorro-antd/table';
-import { catchError, delay, lastValueFrom, map, of } from 'rxjs';
+import { catchError, delay, map, of } from 'rxjs';
 import { HttpClaimService } from 'src/app/https/http-claim.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
-import Swal, { SweetAlertResult } from 'sweetalert2';
 interface FILTER_OPTION {
   value: string,
   name: string
@@ -20,26 +16,7 @@ interface FILTER_OPTION {
 })
 export class Rgas1AntComponent implements OnInit {
 
-  listOfData: any[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    }
-  ];
+  listOfData: any[] = [];
 
   filterOption: FILTER_OPTION[] = [
     {
@@ -83,236 +60,186 @@ export class Rgas1AntComponent implements OnInit {
       name: 'Return Style'
     },
   ]
-  filterSelected: string = ''
-  fillSearch: string = ''
   placeholder: string = 'Value'
 
-  dataSource: MatTableDataSource<any> = new MatTableDataSource()
-  itemCount: number = 10
-  isLoading: boolean = false
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  claims: any[] = []
   @Output() onClickClaimChange: EventEmitter<any> = new EventEmitter()
   @Output() onClickNewChange: EventEmitter<any> = new EventEmitter()
   @Output() onClaimChange: EventEmitter<any> = new EventEmitter()
-
   @Input() showBtnNew: boolean = true
 
-  paginatorData: any = {
-    skip: 0,
-    limit: 10
-  }
 
-  orgData: any = []
-  antTableData: any = []
-  total: number = 300
+  //  ! define --------------------------------
+  paginatorData = {
+    skip: 0,
+    filterSelected: '',
+    fillSearch: '',
+    pageIndex: 1,
+    pageSize: 10,
+    scrollTop: 0,
+    scrollLeft: 0
+  }
+  pageSizeOption: number[] = [10, 20, 50, 100]
+  refPageSizeOption: number[] = [10, 20, 50, 100]
+  antTableData: readonly any[] = []
+  total: number = 0
   pageSize = 10;
   pageIndex = 1;
   loading: boolean = false
+  filterHeaders: any[] = []
+  sortHeaders: any[] = []
+
+  tempFilterDate: any
+  // @ViewChild('tableBody', { static: true }) nzTable!: ElementRef;
+  @ViewChild('nzTable', { static: false }) nzTable?: ElementRef<any>;
+  scrollPosition = 0;
   constructor(
     private $claim: HttpClaimService,
-    private $local: LocalStoreService
+    private $local: LocalStoreService,
   ) { }
 
-  // async ngOnInit(): Promise<void> {
-  //   try {
-  //     this.getData()
-  //   } catch (error) {
-  //     console.log("🚀 ~ error:", error)
-  //   }
-  // }
-  // async getData() {
-  //   console.log(this.paginatorData);
-
-  //   const localStr: any = localStorage.getItem('RGAS_rgas1')
-  //   if (localStr) {
-  //     this.paginatorData = JSON.parse(localStr)
-  //   }
-  //   let params: HttpParams = new HttpParams()
-  //   params.append('sort', -1)
-  //   params = params.set('skip', 0)
-  //   params = params.set('limit', 99999999999)
-  //   params = params.set('no_status', JSON.stringify(['cancel']))
-  //   if (this.paginatorData.filterSelected) {
-  //     params.append(this.paginatorData.filterSelected, this.paginatorData.fillSearch)
-  //   }
-  //   this.loading = true
-  //   this.$claim.getRgas1(params.set('len', 'y')).pipe(
-  //     delay(1000),
-  //     map((item) => {
-  //       return item[0].count
-  //     }),
-  //     catchError((error) => {
-  //       console.error('An error occurred:', error);
-  //       // You can return an empty array or handle the error in a way that makes sense for your app
-  //       return of(0)
-  //     })
-  //   ).subscribe(
-  //     (count: any) => {
-  //       console.log("🚀 ~ count:", count)
-  //       this.total = count
-  //     },
-  //     (error) => {
-  //       console.error('Subscription error:', error);
-  //     }
-  //   )
-  //   this.$claim.getRgas1(params).pipe(
-  //     delay(1),
-  //     map((items) => {
-  //       items.forEach((item: any) => {
-  //         item.moreThan2Month = this.moreThan2Month(item);
-  //         item.moreThan15Month = this.moreThan15Month(item);
-  //         item.docStatus = 'Pending';
-  //         if (item.document) {
-  //           if (item.document.apply && item.document.revise && item.document.verify) {
-  //             item.docStatus = 'Closed';
-  //           }
-  //         }
-  //         item.claimStatus = item.status;
-  //         item.PIC = item.analysisPIC?.name;
-  //         item.defect = item.results?.ktcAnalysisResult;
-  //         item.lotNo = item.productLotNo;
-  //         item.judgment = item.results?.ktcJudgment;
-  //         item.claimMonth = moment(item.claimRegisterDate).format('MMM-YY');
-  //       });
-  //       return items;
-  //     }),
-  //     catchError((error) => {
-  //       console.error('An error occurred:', error);
-  //       // You can return an empty array or handle the error in a way that makes sense for your app
-  //       return of([]); // Return an empty array as fallback
-  //     })
-  //   ).subscribe(
-  //     (result: any) => {
-  //       // this.total=0
-  //       this.orgData = []
-  //       this.antTableData = []
-  //       this.orgData = result
-  //       this.antTableData = result;
-  //       this.loading = false
-  //     },
-  //     (error) => {
-  //       // Optionally, you can handle errors here as well, but it's better to handle them in catchError
-  //       console.error('Subscription error:', error);
-  //     }
-  //   );
-
-
-  // }
-  // onQueryParamsChange(params: NzTableQueryParams): void {
-  //   console.log(params);
-  //   const { pageSize, pageIndex, sort, filter } = params;
-  //   const currentSort = sort.find(item => item.value !== null);
-  //   const sortField = (currentSort && currentSort.key) || null;
-  //   const sortOrder = (currentSort && currentSort.value) || null;
-  //   this.loadDataFromServer(pageIndex, pageSize, sortField, sortOrder, filter);
-  // }
-  // loadDataFromServer(
-  //   pageIndex: number,
-  //   pageSize: number,
-  //   sortField: string | null,
-  //   sortOrder: string | null,
-  //   filter: Array<{ key: string; value: string[] }>
-  // ): void {
-  //   // this.loading = true;
-  //   // this.randomUserService.getUsers(pageIndex, pageSize, sortField, sortOrder, filter).subscribe(data => {
-  //   //   this.loading = false;
-  //   //   this.total = 200; // mock the total data here
-  //   //   this.listOfRandomUser = data.results;
-  //   // });
-  //   this.paginatorData.limit = pageSize
-  //   this.paginatorData.skip = (pageIndex - 1) * pageSize
-  //   this.getData()
-  // }
-  trackByIndex(_: number, data: any): number {
-    return data.index;
-  }
-  ngOnInit(): void {
-    this.getData()
-  }
-  getData() {
-    let params: HttpParams = new HttpParams()
-    params.append('sort', -1)
-    params = params.set('skip', 0)
-    params = params.set('limit', 99999999999)
-    params = params.set('no_status', JSON.stringify(['cancel']))
-    if (this.paginatorData.filterSelected) {
-      params.append(this.paginatorData.filterSelected, this.paginatorData.fillSearch)
-    }
-    this.$claim.getRgas1(params).pipe(
-      delay(1),
-      map((items) => {
-        items.forEach((item: any, i: number) => {
-          item.moreThan2Month = this.moreThan2Month(item);
-          item.moreThan15Month = this.moreThan15Month(item);
-          item.docStatus = 'Pending';
-          if (item.document) {
-            if (item.document.apply && item.document.revise && item.document.verify) {
-              item.docStatus = 'Closed';
-            }
-          }
-          item.claimStatus = item.status;
-          item.PIC = item.analysisPIC?.name;
-          item.defect = item.results?.ktcAnalysisResult;
-          item.lotNo = item.productLotNo;
-          item.judgment = item.results?.ktcJudgment;
-          item.claimMonth = moment(item.claimRegisterDate).format('MMM-YY');
-          item.index = i
-        });
-        return items;
-      }),
-      catchError((error) => {
-        console.error('An error occurred:', error);
-        // You can return an empty array or handle the error in a way that makes sense for your app
-        return of([]); // Return an empty array as fallback
-      })
-    ).subscribe(
-      (result: any) => {
-        // this.total=0
-        this.orgData = []
-        this.antTableData = []
-        this.orgData = result
-        this.antTableData = result;
-        this.loading = false
-      },
-      (error) => {
-        // Optionally, you can handle errors here as well, but it's better to handle them in catchError
-        console.error('Subscription error:', error);
+  async ngOnInit(): Promise<void> {
+    try {
+      const localStr: any = localStorage.getItem('RGAS_rgas1_ant')
+      if (localStr) {
+        this.paginatorData = JSON.parse(localStr)
       }
-    );
+      const localStr2: any = localStorage.getItem('RGAS_rgas1_ant_filterHeaders')
+      if (localStr2) {
+        this.filterHeaders = JSON.parse(localStr2)
+
+      }
+      const localStr3: any = localStorage.getItem('RGAS_rgas1_ant_sortHeaders')
+      if (localStr3) {
+        this.sortHeaders = JSON.parse(localStr3)
+      }
+      this.getTotal2()
+    } catch (error) {
+      console.log("🚀 ~ error:", error)
+    }
   }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      let div: any = document.querySelector('.ant-table-body')
+      if (div) {
+        div.scrollTo({
+          top: this.paginatorData.scrollTop,
+          left: this.paginatorData.scrollLeft,
+          behavior: 'smooth' // เพิ่มความนุ่มนวลในการเลื่อน
+        });
+      }
+      this.filterHeaders.forEach((a: any) => {
+        let divFilter: any = document.querySelector(`#filter-${a.key}`)
+        if (divFilter) {
+          if (a.key == 'claimMonth') {
+            this.tempFilterDate = moment(a.value, 'MMM-YY').toDate()
+          } else {
+            divFilter.value = a.value
+          }
+        }
+      });
 
-  onSearchSelect() {
+    }, 1000);
 
+  }
+  // ! -----------------------------------------------------------------------------------------------------------------
+  onChangeSelect() {
+    this.paginatorData.fillSearch = ''
   }
   async onSearchSubmit() {
     try {
-      this.paginatorData.filterSelected = this.filterSelected
-      this.paginatorData.fillSearch = this.fillSearch
       this.saveLocalStorage()
-      this.getData()
-
+      this.getTotal2()
+      this.getData2(this.paginatorData.skip, this.paginatorData.pageSize)
     } catch (error) {
       console.log("🚀 ~ error:", error)
     }
   }
   saveLocalStorage() {
-    localStorage.setItem('RGAS_rgas1', JSON.stringify(this.paginatorData))
+    localStorage.setItem('RGAS_rgas1_ant', JSON.stringify(this.paginatorData))
+    localStorage.setItem('RGAS_rgas1_ant_filterHeaders', JSON.stringify(this.filterHeaders))
+    localStorage.setItem('RGAS_rgas1_ant_sortHeaders', JSON.stringify(this.sortHeaders))
   }
+  clearFilter() {
+    this.filterHeaders = []
+    this.tempFilterDate = null
+    localStorage.removeItem('RGAS_rgas1_ant')
+    localStorage.removeItem('RGAS_rgas1_ant_filterHeaders')
+    localStorage.removeItem('RGAS_rgas1_ant_sortHeaders')
+    this.paginatorData = {
+      fillSearch: '',
+      filterSelected: '',
+      pageIndex: 1,
+      pageSize: 10,
+      skip: 0,
+      scrollTop: 0,
+      scrollLeft: 0
+    }
+    this.sortHeaders = [
+      {
+        key: 'registerNo',
+        value: -1
+      }
+    ]
+    this.saveLocalStorage()
+    location.reload()
+    // this.getTotal2()
+    // this.getData2(this.paginatorData.skip, this.paginatorData.pageSize)
+  }
+  clearFilter2() {
+    localStorage.removeItem('RGAS_rgas1_ant_filterHeaders')
+    localStorage.removeItem('RGAS_rgas1_ant_sortHeaders')
+    this.filterHeaders.forEach((a: any) => {
+      let divFilter: any = document.querySelector(`#filter-${a.key}`)
+      if (divFilter) {
+        divFilter.value = ''
+      }
+    });
+    this.filterHeaders = []
+    this.sortHeaders = []
+    this.tempFilterDate = null
+    this.paginatorData = {
+      fillSearch: '',
+      filterSelected: '',
+      pageIndex: 1,
+      pageSize: 10,
+      skip: 0,
+      scrollTop: 0,
+      scrollLeft: 0
+    }
+    this.sortHeaders = [
+      {
+        key: 'registerNo',
+        value: -1
+      }
+    ]
+    this.saveLocalStorage()
+    this.getTotal2()
+    this.getData2(this.paginatorData.skip, this.paginatorData.pageSize)
+  }
+  // todo click new claim
   onClickNew() {
-
+    this.onClickNewChange.emit()
   }
+
   adminValidate() {
-    return true
+    if (this.$local.getAuth() == 'admin') {
+      return true
+    }
+    return false
   }
   onClickClaim(row: any) {
-
+    let div: any = document.querySelector('.ant-table-body')
+    if (div) {
+      this.paginatorData.scrollTop = div.scrollTop
+      this.paginatorData.scrollLeft = div.scrollLeft
+      this.saveLocalStorage()
+    }
+    this.onClickClaimChange.emit(row)
   }
   cancelClaim(row: any) {
 
   }
+
   cssStatus(status: any) {
     if (status) {
       if (status == "Closed") return 'closed'
@@ -357,8 +284,165 @@ export class Rgas1AntComponent implements OnInit {
     return 'Less than 1.5 months'
   }
   onFilter2(e: any, key: string) {
+    if (key == 'claimMonth') {
+      if (this.tempFilterDate) {
+        if (this.filterHeaders.some((value: any) => value.key == key)) {
+          const item = this.filterHeaders.find((value: any) => value.key == key)
+          item.value = moment(this.tempFilterDate).format('MMM-YY')
+        } else {
+          this.filterHeaders.push({
+            key: key,
+            value: moment(this.tempFilterDate).format('MMM-YY')
+          })
+        }
+      } else {
+        this.filterHeaders = this.filterHeaders.filter((value: any) => value.key != key)
+      }
 
+    } else {
+      if (e.target.value?.trim()) {
+        if (this.filterHeaders.some((value: any) => value.key == key)) {
+          const item = this.filterHeaders.find((value: any) => value.key == key)
+          item.value = e.target.value
+        } else {
+          this.filterHeaders.push({
+            key: key,
+            value: e.target.value
+          })
+        }
+      } else {
+        this.filterHeaders = this.filterHeaders.filter((value: any) => value.key != key)
+      }
+    }
+    this.saveLocalStorage()
+    this.confirm()
+  }
+  confirm() {
+    this.getTotal2()
+    this.getData2(this.paginatorData.skip, this.paginatorData.pageSize)
+  }
+  getTotal2() {
+    let params: HttpParams = new HttpParams()
+    params = params.set('sort', -1)
+    params = params.set('skip', this.paginatorData.skip)
+    params = params.set('limit', this.paginatorData.pageSize)
+    params = params.set('no_status', JSON.stringify(['cancel']))
+    if (this.paginatorData.filterSelected) {
+      params = params.set(this.paginatorData.filterSelected, this.paginatorData.fillSearch)
+    }
+    params = params.set('filterHeaders', JSON.stringify(this.filterHeaders))
+    params = params.set('sortHeaders', JSON.stringify(this.sortHeaders))
+
+    this.$claim.getRgas1_new(params.set('len', 'y')).pipe(
+      delay(1),
+      map((item) => {
+        if (item?.length != 0) {
+          return item[0].count
+        }
+        return 0
+      }),
+      catchError((error) => {
+        console.error('An error occurred:', error);
+        // You can return an empty array or handle the error in a way that makes sense for your app
+        return of(0)
+      })
+    ).subscribe(
+      (count: any) => {
+        this.total = count
+        this.pageSizeOption = []
+        this.pageSizeOption = [...this.refPageSizeOption]
+        this.pageSizeOption = this.pageSizeOption.filter((a: any) => a < count)
+        this.pageSizeOption.push(count)
+        this.pageSizeOption = this.pageSizeOption.sort((a: number, b: number) => a - b)
+
+      },
+      (error) => {
+        console.error('Subscription error:', error);
+      }
+    )
   }
 
+  async getData2(skip: number, limit: number) {
 
+
+    let params: HttpParams = new HttpParams()
+    params = params.set('sort', -1)
+    params = params.set('skip', skip)
+    params = params.set('limit', limit)
+    params = params.set('no_status', JSON.stringify(['cancel']))
+    if (this.paginatorData.filterSelected) {
+      params = params.set(this.paginatorData.filterSelected, this.paginatorData.fillSearch)
+    }
+    params = params.set('filterHeaders', JSON.stringify(this.filterHeaders))
+    params = params.set('sortHeaders', JSON.stringify(this.sortHeaders))
+    this.$claim.getRgas1_new(params).pipe(
+      delay(1),
+      map((items) => {
+        items.forEach((item: any) => {
+          item.moreThan2Month = this.moreThan2Month(item);
+          item.moreThan15Month = this.moreThan15Month(item);
+        });
+        return items;
+      }),
+      catchError((error) => {
+        console.error('An error occurred:', error);
+        // You can return an empty array or handle the error in a way that makes sense for your app
+        return of([]); // Return an empty array as fallback
+      })
+    ).subscribe(
+      (result: any) => {
+        this.loading = false
+        this.antTableData = result
+      },
+      (error) => {
+        // Optionally, you can handle errors here as well, but it's better to handle them in catchError
+        console.error('Subscription error:', error);
+      }
+    );
+  }
+  onQueryParamsChange2(params: NzTableQueryParams): void {
+    const { pageSize, pageIndex, sort, filter } = params;
+    const currentSort = sort.find(item => item.value !== null);
+    const sortField = (currentSort && currentSort.key) || null;
+    const sortOrder = (currentSort && currentSort.value) || null;
+    this.loadDataFromServer2(pageIndex, pageSize, sortField, sortOrder, filter);
+  }
+  loadDataFromServer2(
+    pageIndex: number,
+    pageSize: number,
+    sortField: string | null,
+    sortOrder: string | null,
+    filter: Array<{ key: string; value: string[] }>
+  ): void {
+    this.loading = true;
+    const skip = Math.abs((pageIndex - 1) * pageSize)
+    this.paginatorData.pageSize = pageSize
+    this.paginatorData.skip = skip
+    this.getData2(this.paginatorData.skip, this.paginatorData.pageSize)
+  }
+  cssHeaderFilterActive(key: string) {
+    if (this.filterHeaders.some((value: any) => value.key == key)) return 'header-text-active'
+    return ''
+  }
+  handleSort(key: string) {
+    let item = this.sortHeaders.find((a: any) => a.key == key)
+    if (item && item.value == -1) {
+      item.value = 1
+    } else if (item && item.value == 1) {
+      item.value = null
+    } else {
+      this.sortHeaders.push({
+        key: key,
+        value: -1
+      })
+    }
+    this.sortHeaders = this.sortHeaders.filter((item: any) => item.value)
+    this.confirm()
+  }
+  controlSort(key: string) {
+    let item = this.sortHeaders.find((a: any) => a.key == key)
+    if (item && item.value == -1) return 'arrow_downward'
+    if (item && item.value == 1) return 'arrow_upward'
+    return ''
+  }
 }

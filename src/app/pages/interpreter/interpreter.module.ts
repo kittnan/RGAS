@@ -9,6 +9,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { InterpreterRgasAnalysisComponent } from './interpreter-rgas-analysis/interpreter-rgas-analysis.component';
 import { InterpreterReportApproveComponent } from './interpreter-report-approve/interpreter-report-approve.component';
 import { InterpreterReportViewComponent } from './interpreter-report-view/interpreter-report-view.component';
+import { InterpreterRgas1AntComponent } from './interpreter-rgas1-ant/interpreter-rgas1-ant.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { InterpreterReportViewComponent } from './interpreter-report-view/interp
     InterpreterRgas1Component,
     InterpreterRgasAnalysisComponent,
     InterpreterReportApproveComponent,
-    InterpreterReportViewComponent
+    InterpreterReportViewComponent,
+    InterpreterRgas1AntComponent
   ],
   imports: [
     CommonModule,

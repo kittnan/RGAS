@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { DepartmentRgasAnalysisComponent } from './department-rgas-analysis/department-rgas-analysis.component';
 import { DepartmentReportApproveComponent } from './department-report-approve/department-report-approve.component';
 import { DepartmentReportViewComponent } from './department-report-view/department-report-view.component';
+import { DepartmentRgas1AntComponent } from './department-rgas1-ant/department-rgas1-ant.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { DepartmentReportViewComponent } from './department-report-view/departme
     DepartmentRgas1Component,
     DepartmentRgasAnalysisComponent,
     DepartmentReportApproveComponent,
-    DepartmentReportViewComponent
+    DepartmentReportViewComponent,
+    DepartmentRgas1AntComponent
   ],
   imports: [
     CommonModule,

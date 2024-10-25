@@ -183,7 +183,43 @@ footer {
   .ant-table-tbody>tr.ant-table-row:hover>td,
   .ant-table-tbody>tr>td.ant-table-cell-row-hover {
     background-color: #5c5c5c;
-    color: whitesmoke;
+  }
+
+  .ant-table-thead>tr>th:hover {
+    background-color: #5c5c5c;
+    color: rgb(110, 148, 252);
+  }
+
+  .header-text-active {
+    color: #6095f4 !important;
+    text-decoration: underline
+  }
+
+  .ant-statistic-content {
+    font-size: 16px;
+  }
+
+  .static-est>.ant-statistic-content {
+    color: rgb(13, 148, 201);
+    font-weight: 500;
+  }
+
+  .static-act>.ant-statistic-content {
+    color: rgb(99 165 90);
+    font-weight: 500;
+  }
+
+  .static-act>.ant-statistic-title {
+    color: rgb(204, 204, 204);
+  }
+
+  .static-est>.ant-statistic-title {
+    color: rgb(204, 204, 204);
+  }
+  .glass{
+    padding: 3px 15px;
+    background: rgb(69, 69, 69);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   }
 }
 
@@ -203,4 +239,50 @@ footer {
     background-color: whitesmoke;
     color: black;
   }
+
+  .ant-table-tbody>tr.ant-table-row:hover>td,
+  .ant-table-tbody>tr>td.ant-table-cell-row-hover {
+    background-color: #cecece;
+  }
+
+  .ant-table-thead>tr>th:hover {
+    background-color: #cecece;
+    color: rgb(110, 148, 252);
+  }
+
+  .header-text-active {
+    color: #6095f4 !important;
+    text-decoration: underline
+  }
+
+  .ant-statistic-content {
+    font-size: 16px;
+  }
+
+  .static-est>.ant-statistic-content {
+    color: rgb(13, 148, 201);
+    font-weight: 500;
+  }
+
+  .static-act>.ant-statistic-content {
+    color: rgb(99 165 90);
+    font-weight: 500;
+  }
+
+  .static-act>.ant-statistic-title {
+    color: rgb(56, 56, 56);
+  }
+
+  .static-est>.ant-statistic-title {
+    color: rgb(56, 56, 56);
+  }
+
+  .glass {
+    padding: 3px 15px;
+    // background: rgb(248 248 248);
+    // box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-bottom: 2px solid;
+  }
+
+
 }

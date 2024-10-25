@@ -14,6 +14,37 @@
   </button>
 </div>
 <div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-5 mb-5">
+  <mat-slide-toggle class="example-margin" color="primary" [(ngModel)]="staticDisplayShow" style="letter-spacing: 2px;">
+    Show Customer Summarize
+  </mat-slide-toggle>
+</div>
+<ng-container *ngIf="staticDisplayShow">
+
+  <div *ngFor="let staticData of staticDataDisplay; let i_staticData=index" fxLayout="row wrap"
+    fxLayoutAlign="center center" class="mt-5 mb-5">
+
+    <div fxFlex="fill" fxLayout="row wrap" fxLayoutAlign="start center" class="glass">
+      <nz-statistic [nzValue]="'Est'" [nzTitle]="staticData.customer" class="static-est"
+        style="width: 200px;"></nz-statistic>
+      <div fxFlex="auto" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10">
+        <nz-statistic *ngFor="let data of staticData.data; let i_data=index" [nzValue]="(data.est | number)!"
+          [nzTitle]="data.month" class="static-est" style="width: 100px;"></nz-statistic>
+      </div>
+    </div>
+    <div fxFlex="fill" fxLayout="row wrap" fxLayoutAlign="start center" class="glass">
+      <nz-statistic [nzValue]="'Act'" [nzTitle]="" class="static-act" style="width: 200px;"></nz-statistic>
+      <div fxFlex="auto" fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10">
+        <nz-statistic *ngFor="let data of staticData.data; let i_data=index" [nzValue]="(data.act | number)!"
+          [nzTitle]="" class="static-act" style="width: 100px;"></nz-statistic>
+      </div>
+    </div>
+
+
+
+  </div>
+</ng-container>
+
+<div fxLayout="row wrap" fxLayoutAlign="start center" class="mt-5 mb-5">
   <mat-slide-toggle class="example-margin" color="primary" [(ngModel)]="tableHeadShow" style="letter-spacing: 2px;">
     Show Summarize
   </mat-slide-toggle>
@@ -93,7 +124,7 @@
     <tbody>
       <ng-container *ngFor="let data of basicTable.data">
         <tr>
-          <td  [nzLeft]="true">
+          <td [nzLeft]="true">
             {{data['Model']}}
           </td>
           <td>

@@ -8,7 +8,7 @@
       <div fxFlex="100" fxFlex.gt-md="20" fxLayout="row wrap" fxLayoutAlign="center center" class="mr-2">
         <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
           <mat-label>Search Option</mat-label>
-          <mat-select [(ngModel)]="filterSelected" (ngModelChange)="onSearchSelect()">
+          <mat-select [(ngModel)]="paginatorData.filterSelected" (ngModelChange)="onChangeSelect()">
             <mat-option value=""> </mat-option>
             <mat-option *ngFor="let item of filterOption" [value]="item.value">
               <span class="capitalize text-sm">
@@ -19,15 +19,28 @@
         </mat-form-field>
       </div>
 
-      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="center center" class="mr-4">
-        <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
-          <mat-label>Search Value</mat-label>
-          <input matInput [placeholder]="placeholder" [(ngModel)]="fillSearch" (keydown.enter)="onSearchSubmit()">
-          <button matSuffix mat-icon-button (click)="onSearchSubmit()">
-            <mat-icon>search</mat-icon>
-          </button>
-        </mat-form-field>
+      <div fxFlex="100" fxFlex.gt-md="30" fxLayout="row wrap" fxLayoutAlign="start center" class="mr-4">
+        <ng-container *ngIf="paginatorData.filterSelected!='claimMonth'">
+          <mat-form-field fxFlex="100" appearance="outline" floatLabel="always">
+            <mat-label>Search Value</mat-label>
+            <input matInput [placeholder]="placeholder" [(ngModel)]="paginatorData.fillSearch"
+              (keydown.enter)="onSearchSubmit()">
+            <button matSuffix mat-icon-button (click)="onSearchSubmit()">
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+        </ng-container>
+        <ng-container *ngIf="paginatorData.filterSelected=='claimMonth'">
+          <nz-range-picker nzMode="month" nzFormat="MMM-YY" [(ngModel)]="paginatorData.fillSearch"
+            (ngModelChange)="onSearchSubmit()"></nz-range-picker>
+        </ng-container>
       </div>
+      <button mat-icon-button color="primary" (click)="clearFilter()">
+        <span class="material-icons-outlined">
+          restart_alt
+        </span>
+        Clear Filter
+      </button>
       <div fxFlex="auto"></div>
       <div *ngIf="showBtnNew" fxLayout="row wrap" fxLayoutAlign="center center">
         <button mat-raised-button class="btn-success btn-radius" (click)="onClickNew()">
@@ -37,47 +50,181 @@
       </div>
 
     </div>
-    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center">
-      <nz-table #basicTable [nzBordered]="true" [nzVirtualItemSize]="54" [nzData]="antTableData"
-        [nzVirtualForTrackBy]="trackByIndex" [nzFrontPagination]="false" [nzShowPagination]="false"
-        [nzScroll]="{ x: '1200px', y: '400px' }">
-        <!-- <nz-table #basicTable [nzData]="antTableData" style="width: 100%;" [nzPageSize]="pageSize" nzShowSizeChanger
-        [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)" [nzLoading]="loading"
-        [nzScroll]="{ x: '1200px'}" [nzTotal]="total"> -->
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="start center" class="mt-3">
+      <nz-table #nzTable nzShowSizeChanger [nzData]="antTableData" [nzFrontPagination]="false" [nzLoading]="loading"
+        [nzTotal]="total" [nzPageSize]="paginatorData.pageSize" [nzPageIndex]="paginatorData.pageIndex"
+        (nzQueryParams)="onQueryParamsChange2($event)" [nzPageSizeOptions]="pageSizeOption"
+        [nzScroll]="{ x: '1200px', y: '55vh' }" class="mat-table-custom">
 
         <thead>
           <tr>
-            <th nzWidth="200px">RegisterNo</th>
-            <th nzWidth="200px">Page no.</th>
-            <th nzWidth="200px">Status</th>
-            <th nzWidth="200px">More Than 2 Month</th>
-            <th nzWidth="200px">More Than 1.5 Month</th>
-            <th nzWidth="200px">PIC</th>
-            <th nzWidth="200px">Claim Month</th>
-            <th nzWidth="200px">Claim No</th>
-            <th nzWidth="200px">Model No</th>
-            <th nzWidth="200px">Customer Name</th>
-            <th nzWidth="200px">Occurred Location</th>
-            <th nzWidth="200px">Defect</th>
-            <th nzWidth="200px">Q'ty</th>
-            <th nzWidth="200px">Lot No.</th>
-            <th nzWidth="200px">Judgment</th>
-            <th nzWidth="200px">Return Style</th>
+            <th nzWidth="150px" [class]="cssHeaderFilterActive('registerNo')" (click)="handleSort('registerNo')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  RegisterNo
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('registerNo')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="100px" [class]="cssHeaderFilterActive('no')" (click)="handleSort('no')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Page no.
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('no')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="130px" [class]="cssHeaderFilterActive('docStatus')" (click)="handleSort('docStatus')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Status
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('docStatus')}}
+                </span>
+              </div>
+            </th>
+
+            <th nzWidth="200px" [class]="cssHeaderFilterActive('')">More Than 2 Month</th>
+            <th nzWidth="200px" [class]="cssHeaderFilterActive('')">More Than 1.5 Month</th>
+
+            <th nzWidth="150px" [class]="cssHeaderFilterActive('PIC')" (click)="handleSort('PIC')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  PIC
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('PIC')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="150px" [class]="cssHeaderFilterActive('claimMonth')" (click)="handleSort('claimMonth')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Claim Month
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('claimMonth')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="150px" [class]="cssHeaderFilterActive('claimNo')" (click)="handleSort('claimNo')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Claim No
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('claimNo')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="120px" [class]="cssHeaderFilterActive('modelNo')" (click)="handleSort('modelNo')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Model No
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('modelNo')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="200px" [class]="cssHeaderFilterActive('customerName')" (click)="handleSort('customerName')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Customer Name
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('customerName')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="200px" [class]="cssHeaderFilterActive('occurredLocation')"
+              (click)="handleSort('occurredLocation')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Occurred Location
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('occurredLocation')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="200px" [class]="cssHeaderFilterActive('defect')" (click)="handleSort('defect')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Defect
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('defect')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="100px" [class]="cssHeaderFilterActive('qty')" (click)="handleSort('qty')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Q'ty
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('qty')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="200px" [class]="cssHeaderFilterActive('lotNo')" (click)="handleSort('lotNo')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Lot No.
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('lotNo')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="200px" [class]="cssHeaderFilterActive('judgment')" (click)="handleSort('judgment')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Judgment
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('judgment')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="200px" [class]="cssHeaderFilterActive('returnStyle')" (click)="handleSort('returnStyle')">
+              <div fxLayout="row wrap" fxLayoutAlign="center center" style="cursor: pointer;">
+                <span>
+                  Return Style
+                </span>
+                <span class="material-icons-outlined" style="font-size: 16px;">
+                  {{controlSort('returnStyle')}}
+                </span>
+              </div>
+            </th>
+            <th nzWidth="70px" [nzRight]="true">
+              <button mat-icon-button color="warn" (click)="clearFilter2()">
+                <span class="material-icons-outlined">
+                  restart_alt
+                </span>
+              </button>
+            </th>
           </tr>
           <tr>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'registerNo')" />
+                <input id="filter-registerNo" type="text" nz-input (keydown.enter)="onFilter2($event,'registerNo')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'no')" />
+                <input id="filter-no" type="text" nz-input (keydown.enter)="onFilter2($event,'no')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'docStatus')" />
+                <input id="filter-docStatus" type="text" nz-input (keydown.enter)="onFilter2($event,'docStatus')" />
               </nz-input-group>
             </th>
             <th>
@@ -86,58 +233,62 @@
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'PIC')" />
+                <input id="filter-PIC" type="text" nz-input (keydown.enter)="onFilter2($event,'PIC')" />
+              </nz-input-group>
+            </th>
+            <th>
+              <nz-date-picker id="filter-claimMonth" nzMode="month" nzFormat="MMM-YY" [(ngModel)]="tempFilterDate"
+                (ngModelChange)="onFilter2($event,'claimMonth')"></nz-date-picker>
+            </th>
+            <th>
+              <nz-input-group [nzPrefix]="prefixTemplateUser">
+                <input id="filter-claimNo" type="text" nz-input (keydown.enter)="onFilter2($event,'claimNo')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'claimMonth')" />
+                <input id="filter-modelNo" type="text" nz-input (keydown.enter)="onFilter2($event,'modelNo')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'claimNo')" />
+                <input id="filter-customerName" type="text" nz-input
+                  (keydown.enter)="onFilter2($event,'customerName')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'modelNo')" />
+                <input id="filter-occurredLocation" type="text" nz-input
+                  (keydown.enter)="onFilter2($event,'occurredLocation')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'customerName')" />
+                <input id="filter-defect" type="text" nz-input (keydown.enter)="onFilter2($event,'defect')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'occurredLocation')" />
+                <input id="filter-qty" type="text" nz-input (keydown.enter)="onFilter2($event,'qty')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'defect')" />
+                <input id="filter-lotNo" type="text" nz-input (keydown.enter)="onFilter2($event,'lotNo')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'qty')" />
+                <input id="filter-judgment" type="text" nz-input (keydown.enter)="onFilter2($event,'judgment')" />
               </nz-input-group>
             </th>
             <th>
               <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'lotNo')" />
+                <input id="filter-returnStyle" type="text" nz-input (keydown.enter)="onFilter2($event,'returnStyle')" />
               </nz-input-group>
             </th>
             <th>
-              <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'judgment')" />
-              </nz-input-group>
-            </th>
-            <th>
-              <nz-input-group [nzPrefix]="prefixTemplateUser">
-                <input type="text" nz-input (keydown.enter)="onFilter2($event,'returnStyle')" />
-              </nz-input-group>
+
             </th>
             <ng-template #prefixTemplateUser>
               <span class="material-icons-outlined" style="font-size: 14px;">
@@ -147,7 +298,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of basicTable.data">
+          <tr *ngFor="let row of antTableData;let i=index">
             <td>
               <ng-container *ngIf="adminValidate()">
                 <span class="text-link" [matMenuTriggerFor]="menu">
@@ -172,10 +323,10 @@
                 {{row.docStatus}}
               </span>
             </td>
-            <td style="text-wrap: nowrap;" [class]="cssStatus1(row.moreThan2Month)">
+            <td style="text-wrap: nowrap;font-weight: 500;" [class]="cssStatus1(row.moreThan2Month)">
               {{row.moreThan2Month}}
             </td>
-            <td style="text-wrap: nowrap;" [class]="cssStatus2(row.moreThan15Month)">
+            <td style="text-wrap: nowrap;font-weight: 500;" [class]="cssStatus2(row.moreThan15Month)">
               {{row.moreThan15Month}}
             </td>
             <td class="font-bold" style="text-wrap: nowrap;"> {{row.PIC}} </td>
@@ -189,30 +340,10 @@
             <td> {{row.lotNo}} </td>
             <td> {{row.judgment}} </td>
             <td> {{row.returnStyle}} </td>
-
+            <td></td>
           </tr>
         </tbody>
       </nz-table>
-      <!-- <nz-table nzShowSizeChanger [nzData]="listOfRandomUser" [nzFrontPagination]="false" [nzLoading]="loading"
-        [nzTotal]="total" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex"
-        (nzQueryParams)="onQueryParamsChange($event)">
-        <thead>
-          <tr>
-            <th nzColumnKey="name" [nzSortFn]="true">Name</th>
-            <th nzColumnKey="gender" [nzFilters]="filterGender" [nzFilterFn]="true">Gender</th>
-            <th nzColumnKey="email" [nzSortFn]="true">Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (data of listOfRandomUser; track data) {
-          <tr>
-            <td>{{ data.name.first }} {{ data.name.last }}</td>
-            <td>{{ data.gender }}</td>
-            <td>{{ data.email }}</td>
-          </tr>
-          }
-        </tbody>
-      </nz-table> -->
     </div>
   </div>
 </div>

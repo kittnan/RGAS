@@ -19,6 +19,8 @@ import { EngineerEstimateShipment2Component } from './engineer-estimate-shipment
 import { DialogEngineerEstimateShipment2Component } from './engineer-estimate-shipment2/dialog-engineer-estimate-shipment2/dialog-engineer-estimate-shipment2.component';
 import { EngineerDeliveryComponent } from './engineer-delivery/engineer-delivery.component';
 import { EngineerDeliveryViewComponent } from './engineer-delivery-view/engineer-delivery-view.component';
+import { EngineerRgas1AntComponent } from './engineer-rgas1-ant/engineer-rgas1-ant.component';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 @NgModule({
   declarations: [
     EngineerComponent,
@@ -34,7 +36,8 @@ import { EngineerDeliveryViewComponent } from './engineer-delivery-view/engineer
     EngineerEstimateShipment2Component,
     DialogEngineerEstimateShipment2Component,
     EngineerDeliveryComponent,
-    EngineerDeliveryViewComponent
+    EngineerDeliveryViewComponent,
+    EngineerRgas1AntComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +45,7 @@ import { EngineerDeliveryViewComponent } from './engineer-delivery-view/engineer
     SharedModule,
     ReactiveFormsModule,
     FormsModule,
+    NzStatisticModule
 
   ]
 })

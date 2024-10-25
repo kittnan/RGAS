@@ -153,9 +153,21 @@ export class AppComponent {
           roles: ['operator'],
         },
         {
+          title: 'RGAS-1_new ⭐',
+          icon: 'keyboard_arrow_right',
+          path: 'operator/rgas1-ant',
+          roles: ['admin', 'operator']
+        },
+        {
           title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'engineer/rgas1',
+          roles: ['admin', 'engineer']
+        },
+        {
+          title: 'RGAS-1_new ⭐',
+          icon: 'keyboard_arrow_right',
+          path: 'engineer/rgas1-ant',
           roles: ['admin', 'engineer']
         },
         {
@@ -165,10 +177,22 @@ export class AppComponent {
           roles: ['sectionHead']
         },
         {
+          title: 'RGAS-1_new ⭐',
+          icon: 'keyboard_arrow_right',
+          path: 'sectionHead/rgas1-ant',
+          roles: ['admin', 'sectionHead']
+        },
+        {
           title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'interpreter/rgas1',
           roles: ['interpreter']
+        },
+        {
+          title: 'RGAS-1_new ⭐',
+          icon: 'keyboard_arrow_right',
+          path: 'interpreter/rgas1-ant',
+          roles: ['admin', 'interpreter']
         },
         {
           title: 'RGAS-1',
@@ -177,10 +201,22 @@ export class AppComponent {
           roles: ['departmentHead']
         },
         {
+          title: 'RGAS-1_new ⭐',
+          icon: 'keyboard_arrow_right',
+          path: 'departmentHead/rgas1-ant',
+          roles: ['admin', 'departmentHead']
+        },
+        {
           title: 'RGAS-1',
           icon: 'keyboard_arrow_right',
           path: 'guest/rgas1',
           roles: ['guest']
+        },
+        {
+          title: 'RGAS-1_new ⭐',
+          icon: 'keyboard_arrow_right',
+          path: 'guest/rgas1-ant',
+          roles: ['admin', 'guest']
         },
       ]
     },

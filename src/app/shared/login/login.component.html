@@ -29,7 +29,7 @@
       </div>
 
       <div>
-        <mat-slide-toggle (change)="onCheckSSO($event)" >Sign in with SSO </mat-slide-toggle>
+        <mat-slide-toggle (change)="onCheckSSO($event)">Sign in with SSO </mat-slide-toggle>
       </div>
 
       <div>
@@ -41,7 +41,7 @@
         <button *ngIf="!SSOCheck" type="submit"
           class="flex w-full justify-center rounded-md  px-3 py-1.5 text-sm font-semibold leading-6 text-slate-600 shadow-sm hover:bg-green-400 "
           style="background-color: #A4E4DC;">Sign
-          in  </button>
+          in </button>
       </div>
     </form>
 
@@ -52,6 +52,7 @@
   </div>
 
 </div>
+
 <div *ngIf="loginStatus()" class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8"
   style="background-image: url('./assets/5291450.jpg');">
   <ul [@fadeInOnEnter]>

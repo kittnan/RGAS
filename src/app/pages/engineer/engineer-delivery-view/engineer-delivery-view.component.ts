@@ -92,6 +92,8 @@ export class EngineerDeliveryViewComponent implements OnInit {
     // },
   ]
   tableHeadShow: boolean = true
+  staticDisplayShow: boolean = false
+  staticDataDisplay: any[] = []
   constructor(
     private $shipment: HttpEstimateShipmentService,
     private $loader: NgxUiLoaderService
@@ -115,7 +117,9 @@ export class EngineerDeliveryViewComponent implements OnInit {
         item.index = index
         return item
       })
+      console.log("🚀 ~ this.dataSet:", this.dataSet)
       this.configTable(resDataOfYear)
+
     } catch (error) {
       console.log("🚀 ~ error:", error)
       this.$loader.stopAll()
@@ -154,6 +158,39 @@ export class EngineerDeliveryViewComponent implements OnInit {
     this.headersAddition = sortedDates
     this.sumFooter()
     // this.headers = [...this.headers, ...headerAddition]
+
+    // todo create static data display
+    const unique = [...new Set(this.dataSet.map((item: any) => item.Customer))].filter((item: any) => item)
+    const staticData = unique.map((customer: any) => {
+      const monthValueArr = this.headersAddition.map((month: string) => {
+        let actKey = `act-${month.split('-')[0]}`
+        let estKey = `est-${month.split('-')[0]}`
+        let foo = this.dataSet.filter((a: any) => a.Customer === customer)
+        let foo2 = foo.reduce((p: any, n: any) => {
+          if (!isNaN(n[actKey])) {
+            p += n[actKey]
+          }
+          return p
+        }, 0)
+        let foo3 = foo.reduce((p: any, n: any) => {
+          if (!isNaN(n[estKey])) {
+            p += n[estKey]
+          }
+          return p
+        }, 0)
+        return {
+          month: month,
+          act: foo2,
+          est: foo3
+        }
+      })
+      return {
+        customer: customer,
+        data: monthValueArr
+      }
+    })
+    this.staticDataDisplay = staticData
+    console.log("🚀 ~ this.staticDataDisplay:", this.staticDataDisplay)
   }
   private mappingHeaderAddition(firstObj: any) {
     return new Promise(resolve => {
@@ -204,9 +241,9 @@ export class EngineerDeliveryViewComponent implements OnInit {
         if (sum.target == '') {
           sum.data[col] = this.showSumMonth(col2)
         } else {
-          if(sum.target == 'AUTO'){
+          if (sum.target == 'AUTO') {
             sum.data[col] = this.showSum(col2, 'Biz Segment', '', sum.target)
-          }else{
+          } else {
             sum.data[col] = this.showSum(col2, 'Biz Segment', 'Process', sum.target)
           }
         }

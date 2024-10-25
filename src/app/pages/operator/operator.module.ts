@@ -11,6 +11,7 @@ import { OperatorRgasInformationComponent } from './operator-rgas-information/op
 import { OperatorRgasAnalysisComponent } from './operator-rgas-analysis/operator-rgas-analysis.component';
 import { OperatorReportViewComponent } from './operator-report-view/operator-report-view.component';
 import { OperatorReportKcDcComponent } from './operator-report-kc-dc/operator-report-kc-dc.component';
+import { OperatorRgas1AntComponent } from './operator-rgas1-ant/operator-rgas1-ant.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { OperatorReportKcDcComponent } from './operator-report-kc-dc/operator-re
     OperatorRgasAnalysisComponent,
     OperatorReportViewComponent,
     OperatorReportKcDcComponent,
+    OperatorRgas1AntComponent,
   ],
   imports: [
     CommonModule,

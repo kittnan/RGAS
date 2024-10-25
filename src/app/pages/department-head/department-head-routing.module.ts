@@ -4,6 +4,7 @@ import { DepartmentRgas1Component } from './department-rgas1/department-rgas1.co
 import { DepartmentRgasAnalysisComponent } from './department-rgas-analysis/department-rgas-analysis.component';
 import { DepartmentReportApproveComponent } from './department-report-approve/department-report-approve.component';
 import { DepartmentReportViewComponent } from './department-report-view/department-report-view.component';
+import { DepartmentRgas1AntComponent } from './department-rgas1-ant/department-rgas1-ant.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'rgas1',
     component: DepartmentRgas1Component
+  },
+  {
+    path: 'rgas1-ant',
+    component: DepartmentRgas1AntComponent
   },
   {
     path: 'analysis',
