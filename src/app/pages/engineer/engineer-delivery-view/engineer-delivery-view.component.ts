@@ -160,12 +160,12 @@ export class EngineerDeliveryViewComponent implements OnInit {
     // this.headers = [...this.headers, ...headerAddition]
 
     // todo create static data display
-    const unique = [...new Set(this.dataSet.map((item: any) => item.Customer))].filter((item: any) => item)
+    const unique = [...new Set(this.dataSet.map((item: any) => item.Classification))].filter((item: any) => item).sort((a:any,b:any)=> a.toLowerCase().localeCompare(b.toLowerCase()))
     const staticData = unique.map((customer: any) => {
       const monthValueArr = this.headersAddition.map((month: string) => {
         let actKey = `act-${month.split('-')[0]}`
         let estKey = `est-${month.split('-')[0]}`
-        let foo = this.dataSet.filter((a: any) => a.Customer === customer)
+        let foo = this.dataSet.filter((a: any) => a.Classification === customer)
         let foo2 = foo.reduce((p: any, n: any) => {
           if (!isNaN(n[actKey])) {
             p += n[actKey]
@@ -190,7 +190,6 @@ export class EngineerDeliveryViewComponent implements OnInit {
       }
     })
     this.staticDataDisplay = staticData
-    console.log("🚀 ~ this.staticDataDisplay:", this.staticDataDisplay)
   }
   private mappingHeaderAddition(firstObj: any) {
     return new Promise(resolve => {

@@ -13,6 +13,7 @@ import { EngineerEstimateShipment2Component } from './engineer-estimate-shipment
 import { EngineerDeliveryComponent } from './engineer-delivery/engineer-delivery.component';
 import { EngineerDeliveryViewComponent } from './engineer-delivery-view/engineer-delivery-view.component';
 import { EngineerRgas1AntComponent } from './engineer-rgas1-ant/engineer-rgas1-ant.component';
+import { EngineerClaimVerificationComponent } from './engineer-claim-verification/engineer-claim-verification.component';
 
 const routes: Routes = [
   {
@@ -63,6 +64,10 @@ const routes: Routes = [
   {
     path: 'delivery-view',
     component: EngineerDeliveryViewComponent
+  },
+  {
+    path: 'claim-verification',
+    component: EngineerClaimVerificationComponent
   },
   { path: '**', component: NotfoundComponent }
 

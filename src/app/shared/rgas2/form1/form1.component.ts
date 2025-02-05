@@ -386,7 +386,12 @@ export class Form1Component implements OnInit {
   // todo excel fn
   getValueOfCell(address: string, ws: ExcelJS.Worksheet) {
     let value: any = ws.getCell(address).value
+    if(address =='M26'){
+    }
     value = value?.result ? value.result : value
+    if(value['formula']){
+      value = ''
+    }
     return value
   }
 
